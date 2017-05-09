@@ -11,6 +11,7 @@ class WechatController extends Controller
      *
      * @return string
      */
+    
     public function serve()
     {
 
