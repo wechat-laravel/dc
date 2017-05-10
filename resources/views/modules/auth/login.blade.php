@@ -46,13 +46,9 @@
                             <div class="form-group">
                                 <input type="password" class="form-control" id="exampleInputPassword1" placeholder="请输入账号密码">
                             </div>
-                            <div class="from-group">
-                                <div class="row">
-                                    <div class="col-xs-8">
-                                        <input type="text" class="form-control" placeholder="请输入验证码">
-                                    </div>
-                                    <img src="/captcha?captcha={{ time() }}" alt="">
-                                </div>
+                            <div class="input-group">
+                                <input type="text" class="form-control" placeholder="请输入验证码">
+                                <span class="input-group-addon" id="vcode" style="padding: 0 0"><img src="/captcha?captcha={{ time() }}" alt=""></span>
                             </div>
                             <div class="checkbox">
                                 <label class="pull-left">
