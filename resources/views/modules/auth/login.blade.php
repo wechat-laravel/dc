@@ -30,29 +30,44 @@
         <div class="container-fluid">
             <div class="row">
                 <div class="col-xs-10 col-xs-offset-1 col-sm-8 col-sm-offset-2 col-md-6 col-md-offset-3 col-lg-4 col-lg-offset-4" id="logindev">
-                    {{--<h1 class="text-center">asd</h1>--}}
-                    <div class="jumbotron">
+                    <h3 class="text-center">
+                        <img class="logo-img" width="45px" height="45px;" src="{{ URL::asset('assets/images/z_logoo.png') }}">
+                        <span>乐其意</span>
+                    </h3>
                         <form>
-                            <div class="form-group has-success has-feedback">
-                                <input type="text" class="form-control" id="inputSuccess2" aria-describedby="inputSuccess2Status">
-                                <span class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true"></span>
-                                <span id="inputSuccess2Status" class="sr-only">(success)</span>
-                            </div>
+                            {{--<div class="form-group has-success has-feedback">--}}
+                                {{--<input type="text" class="form-control" id="inputSuccess2" aria-describedby="inputSuccess2Status">--}}
+                                {{--<span class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true"></span>--}}
+                                {{--<span id="inputSuccess2Status" class="sr-only">(success)</span>--}}
+                            {{--</div>--}}
                             <div class="form-group ">
-                                <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Email">
+                                <input type="email" class="form-control" id="exampleInputEmail1" placeholder="请输入邮箱账号">
                             </div>
                             <div class="form-group">
-                                <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
+                                <input type="password" class="form-control" id="exampleInputPassword1" placeholder="请输入账号密码">
+                            </div>
+                            <div class="from-group">
+                                <div class="row">
+                                    <div class="col-xs-8">
+                                        <input type="text" class="form-control" placeholder="请输入验证码">
+                                    </div>
+                                    <img src="/captcha?captcha={{ time() }}" alt="">
+                                </div>
                             </div>
                             <div class="checkbox">
-                                <label>
-                                    <input type="checkbox"> Remember Me
+                                <label class="pull-left">
+                                    <input type="checkbox"> 记住我
+                                </label>
+                                <label class="pull-right">
+                                    <span><a href="">忘记密码了？</a></span>
                                 </label>
                             </div>
-                            <button type="submit" class="btn btn-primary btn-block">Submit</button>
-                            <button type="submit" class="btn btn-success btn-block">Submit</button>
+                            <div class="clearfix"></div>
+                            <div style="margin-top: 10px;">
+                                <button type="submit" class="btn btn-primary btn-block">登录</button>
+                                <button type="submit" class="btn btn-success btn-block">注册账号</button>
+                            </div>
                         </form>
-                    </div>
                 </div>
             </div>
         </div>

@@ -144,7 +144,9 @@ return [
         App\Providers\AuthServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
+
         Overtrue\LaravelWechat\ServiceProvider::class,
+        Mews\Captcha\CaptchaServiceProvider::class,
 
     ],
 
@@ -195,6 +197,7 @@ return [
         'View'      => Illuminate\Support\Facades\View::class,
 
         'WeChat'    => Overtrue\LaravelWechat\Facade::class,
+        'Captcha'   => Mews\Captcha\Facades\Captcha::class,
 
     ],
 
