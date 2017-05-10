@@ -44,7 +44,7 @@
                             </div>
                             <div class="clearfix"></div>
                             <div style="margin-top: 10px;">
-                                <button type="submit" class="btn btn-primary btn-block">注册</button>
+                                <button type="submit" class="btn btn-primary btn-block">登录</button>
                                 <a class="btn btn-success btn-block" href="/auth/register">注册账号</a>
                             </div>
                         </form>
