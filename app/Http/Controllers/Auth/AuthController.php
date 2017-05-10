@@ -64,9 +64,17 @@ class AuthController extends Controller
     }
 
 
-    public function getLogin(){
+    public function getLogin()
+    {
 
         return view('modules.auth.login');
+
+    }
+
+    public function getRegister()
+    {
+
+        return view('modules.auth.register');
 
     }
 
