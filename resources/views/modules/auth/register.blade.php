@@ -10,8 +10,19 @@
     <link href="{{ URL::asset('assets/css/bootstrap.min.css') }}" rel="stylesheet">
     <link href="{{ URL::asset('assets/css/auth/login.css') }}" rel="stylesheet">
 </head>
+<style>
+    .ms-controller{
+        visibility: hidden
+    }
+</style>
 <body>
-<div class="container-fluid">
+<div class="container-fluid" ms-controller="register" class="ms-controller">
+    <div class="row">
+        <div class="alert alert-danger alert-dismissible fade in" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>
+            <p class="text-center">抱歉！您的输入有误.</p>
+        </div>
+    </div>
     <div class="row">
         <div class="col-xs-10 col-xs-offset-1 col-sm-8 col-sm-offset-2 col-md-6 col-md-offset-3 col-lg-4 col-lg-offset-4" id="logindev">
             <h3 class="text-center">
@@ -20,22 +31,21 @@
             </h3>
             <form>
                 <div class="form-group ">
-                    <input type="email" class="form-control" id="exampleInputEmail1" placeholder="请输入注册邮箱">
+                    <input type="text" name="email" class="form-control"  placeholder="请输入注册邮箱">
                 </div>
                 <div class="form-group">
-                    <input type="password" class="form-control" id="exampleInputPassword1" placeholder="请输入注册密码">
+                    <input type="password" name="password" class="form-control"  placeholder="请输入注册密码">
                 </div>
-                <div class="input-group">
-                    <input type="text" class="form-control" placeholder="请输入验证码">
-                    <span class="input-group-btn">
-                        <button class="btn btn-default" type="button">获取验证码</button>
-                    </span>
+                <div class="form-group">
+                    <div class="input-group">
+                        <input type="text" name="captcha" class="form-control" placeholder="请输入验证码">
+                        <span class="input-group-btn">
+                            <button class="btn btn-default" type="button">获取验证码</button>
+                        </span>
+                    </div>
                 </div>
-                <div class="clearfix"></div>
-                <div style="margin-top: 10px;">
                     <button type="submit" class="btn btn-success btn-block">注册</button>
                     <a class="btn btn-primary btn-block" href="/auth/login">登录已有账号</a>
-                </div>
             </form>
         </div>
     </div>
@@ -44,4 +54,8 @@
 </body>
 <script type="text/javascript" src="{{ URL::asset('assets/js/jquery.min.js') }}"></script>
 <script type="text/javascript" src="{{ URL::asset('assets/js/bootstrap.min.js') }}"></script>
+<script type="text/javascript" src="{{ URL::asset('assets/js/bootstrapValidator.min.js') }}"></script>
+<script type="text/javascript" src="{{ URL::asset('assets/js/avalon.min.js') }}"></script>
+<script type="text/javascript" src="{{ URL::asset('assets/js/auth/register.js') }}"></script>
+
 </html>
