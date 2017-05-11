@@ -24,8 +24,9 @@
                 <img class="logo-img" width="45px" height="45px;" src="{{ URL::asset('assets/images/z_logo.png') }}">
                 <span>乐其意</span>
             </h3>
-            <form>
-                <div class="form-group ">
+            <form class="register form">
+                {!! csrf_field() !!}
+                <div class="form-group">
                     <input type="text" name="email" class="form-control"  placeholder="请输入注册邮箱">
                 </div>
                 <div class="form-group">
@@ -39,8 +40,10 @@
                         </span>
                     </div>
                 </div>
+                <div class="form-group">
                     <button type="submit" class="btn btn-success btn-block">注册</button>
-                    <a class="btn btn-primary btn-block" href="/auth/login">登录已有账号</a>
+                </div>
+                <a class="btn btn-primary btn-block" href="/auth/login">登录已有账号</a>
             </form>
         </div>
     </div>

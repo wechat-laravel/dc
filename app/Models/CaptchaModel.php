@@ -10,10 +10,6 @@ class CaptchaModel extends Model
 
     protected $fillable   = ['user_id','mobile','vcode','email'];
 
-    //存入UNIX时间戳
-    protected $dateFormat = 'U';
-
-
     public function getCreatedAtAttribute($value)
     {
         return empty($value) ? '' : date('Y-m-d H:i:s',$value);

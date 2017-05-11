@@ -33,7 +33,21 @@ $(function () {
         }
     }).on('success.form.bv', function(e) {
         e.preventDefault();
-        alert("验证通过");
+        var data = $('.register.form').serialize();
+        $.ajax({
+            url: '/auth/register',
+            type: 'POST',
+            data: data,
+            datatype: 'text'
+        }).done(function(ret){
+            if (!ret.success){
+                $('#error-show').html(vm.tml);
+                $('#errinfo').text(ret.msg);
+            }else{
+                window.location = '/';
+            }
+            $('form').bootstrapValidator('disableSubmitButtons', false);
+        });
     });
 });
 var vm = avalon.define({

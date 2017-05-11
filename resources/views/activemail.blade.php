@@ -7,7 +7,7 @@
             乐其意-DC网站
         </div>
         <div style="font-size: 17px;color: #13243f;font-family: Lato;font-weight: 400;margin-top:9px; margin-bottom: 2px;">
-            一个可以，随时预约查询店家坐席与店内点单的网站！
+            一个可以预约、查询坐席、点单的网站！
         </div>
         <div style="font-size: 17px;color: #13243f;font-family: Lato;font-weight: 400;
         line-height: 23px;margin-top: 9px;max-width: 538px;">
