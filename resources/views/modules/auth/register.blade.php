@@ -11,17 +11,12 @@
     <link href="{{ URL::asset('assets/css/auth/login.css') }}" rel="stylesheet">
 </head>
 <style>
-    .ms-controller{
-        visibility: hidden
-    }
+    [ms-controller]{visibility: hidden;}
 </style>
 <body>
 <div class="container-fluid" ms-controller="register" class="ms-controller">
     <div class="row">
-        <div class="alert alert-danger alert-dismissible fade in" role="alert">
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>
-            <p class="text-center">抱歉！您的输入有误.</p>
-        </div>
+        <div id="error-show"></div>
     </div>
     <div class="row">
         <div class="col-xs-10 col-xs-offset-1 col-sm-8 col-sm-offset-2 col-md-6 col-md-offset-3 col-lg-4 col-lg-offset-4" id="logindev">
@@ -40,7 +35,7 @@
                     <div class="input-group">
                         <input type="text" name="captcha" class="form-control" placeholder="请输入验证码">
                         <span class="input-group-btn">
-                            <button class="btn btn-default" type="button">获取验证码</button>
+                            <a class="btn btn-primary" :click="@onVcode" :class="[@start !== 60 ? 'disabled': '']">获取验证码<span id="times"></span></a>
                         </span>
                     </div>
                 </div>

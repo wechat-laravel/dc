@@ -36,10 +36,43 @@ $(function () {
         alert("验证通过");
     });
 });
-// var vm = avalon.define({
-//
-//     $id     : 'register',
-//     debug   : false
-//
-//
-// });
+var vm = avalon.define({
+    $id          : 'register',
+    start        : 60,
+    tml          : "<div class='alert alert-danger alert-dismissible fade in' role='alert'><button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>×</span></button><p id='errinfo'>123</p></div>",
+    //获取邮箱验证码
+    onVcode      : function () {
+        var email =  $("input[name=email]").val();
+        if (email){
+            if (vm.start === 60){
+                $.ajax({
+                    url     : '/auth/send?email='+email,
+                    success : function (ret) {
+                        if(!ret.success){
+                            $('#error-show').html(vm.tml);
+                            $('#errinfo').text(ret.msg);
+                        }else{
+                            vm.start = 59;
+                            setTimeout(function () {
+                                vm.onVcode()
+                            }, 1000);
+                        }
+                    }
+                })
+            }else if (vm.start > 0 && vm.start !==60) {
+                $('#times').text('(' + vm.start + 's)');
+                setTimeout(function () {
+                    vm.onVcode()
+                }, 1000);
+                vm.start = vm.start - 1;
+            } else {
+                $('#times').text('');
+                vm.start = 60;
+                return false;
+            }
+        }else{
+            $('#error-show').html(vm.tml);
+            $('#errinfo').text('请输入邮箱账号！');
+        }
+    }
+});
