@@ -52,8 +52,13 @@
     <body>
         <div class="container">
             <div class="content">
-                <div class="title">Dc.le71.cn</div>
+                <div class="title" onclick="goUrl()">Dc.le71.cn</div>
             </div>
         </div>
     </body>
+    <script type="text/javascript">
+        function goUrl(){
+            window.location = "/admin"
+        }
+    </script>
 </html>
