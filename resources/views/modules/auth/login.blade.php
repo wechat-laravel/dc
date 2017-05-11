@@ -14,16 +14,11 @@
         <div class="container-fluid">
             <div class="row">
                 <div class="col-xs-10 col-xs-offset-1 col-sm-8 col-sm-offset-2 col-md-6 col-md-offset-3 col-lg-4 col-lg-offset-4" id="logindev">
-                    <h3 class="text-center">
+                    <h3 class="text-center" style="margin-bottom: 30px;">
                         <img class="logo-img" width="45px" height="45px;" src="{{ URL::asset('assets/images/z_logoo.png') }}">
                         <span>乐其意</span>
                     </h3>
                         <form>
-                            {{--<div class="form-group has-success has-feedback">--}}
-                                {{--<input type="text" class="form-control" id="inputSuccess2" aria-describedby="inputSuccess2Status">--}}
-                                {{--<span class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true"></span>--}}
-                                {{--<span id="inputSuccess2Status" class="sr-only">(success)</span>--}}
-                            {{--</div>--}}
                             <div class="form-group ">
                                 <input type="email" class="form-control" id="exampleInputEmail1" placeholder="请输入邮箱账号">
                             </div>
