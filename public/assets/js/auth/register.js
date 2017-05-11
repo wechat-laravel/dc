@@ -17,15 +17,14 @@ $(function () {
                 }
             },
             password: {
-                message: '用户名验证失败',
                 validators: {
                     notEmpty: {
-                        message: '用户名不能为空'
+                        message: '密码不能为空'
                     },
                     stringLength :{
                         min    : 6,
                         max    : 32,
-                        message: '长度范围请控制在6-32位'
+                        message: '密码长度为6~32位'
                     }
                     
                 }

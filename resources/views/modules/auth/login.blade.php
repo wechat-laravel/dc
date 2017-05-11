@@ -13,22 +13,28 @@
     <body>
         <div class="container-fluid">
             <div class="row">
-                <div class="col-xs-10 col-xs-offset-1 col-sm-8 col-sm-offset-2 col-md-6 col-md-offset-3 col-lg-4 col-lg-offset-4" id="logindev">
+                <div id="error-show"></div>
+            </div>
+            <div class="row">
+                <div class="col-xs-10 col-xs-offset-1 col-sm-8 col-sm-offset-2 col-md-6 col-md-offset-3 col-lg-2 col-lg-offset-5" id="logindev">
                     <h3 class="text-center" style="margin-bottom: 30px;">
                         <img class="logo-img" width="45px" height="45px;" src="{{ URL::asset('assets/images/z_logo.png') }}">
                         <span>乐其意</span>
                     </h3>
-                        <form>
-                            <div class="form-group ">
-                                <input type="email" class="form-control" id="exampleInputEmail1" placeholder="请输入邮箱账号">
+                        <form class="login form">
+                            {!! csrf_field() !!}
+                            <div class="form-group">
+                                <input type="text" name="email" class="form-control"  placeholder="请输入邮箱账号">
                             </div>
                             <div class="form-group">
-                                <input type="password" class="form-control" id="exampleInputPassword1" placeholder="请输入账号密码">
+                                <input type="password" name="password" class="form-control"  placeholder="请输入账号密码">
                             </div>
                             <div class="form-group">
                                 <div class="input-group">
-                                    <input type="text" class="form-control" placeholder="请输入验证码">
-                                    <span class="input-group-addon" id="vcode" style="padding: 0 0"><img src="/captcha?captcha={{ time() }}" alt=""></span>
+                                    <input type="text" name="captcha"  class="form-control" placeholder="请输入验证码">
+                                    <span class="input-group-addon" style="padding: 0 0">
+                                        <img id="captcha" src="" alt="验证码" title="点击刷新验证码" onclick="onCaptcha()">
+                                    </span>
                                 </div>
                             </div>
                             <div class="form-group">
@@ -41,11 +47,11 @@
                                     </label>
                                 </div>
                             </div>
-                            <div class="clearfix"></div>
-                            <div style="margin-top: 10px;">
+                            <div class="clearfix" style="margin-bottom: 10px;"></div>
+                            <div class="form-group">
                                 <button type="submit" class="btn btn-primary btn-block">登录</button>
-                                <a class="btn btn-success btn-block" href="/auth/register">注册账号</a>
                             </div>
+                            <a class="btn btn-success btn-block" href="/auth/register">注册账号</a>
                         </form>
                 </div>
             </div>
@@ -54,4 +60,6 @@
     </body>
     <script type="text/javascript" src="{{ URL::asset('assets/js/jquery.min.js') }}"></script>
     <script type="text/javascript" src="{{ URL::asset('assets/js/bootstrap.min.js') }}"></script>
+    <script type="text/javascript" src="{{ URL::asset('assets/js/bootstrapValidator.min.js') }}"></script>
+    <script type="text/javascript" src="{{ URL::asset('assets/js/auth/login.js') }}"></script>
 </html>

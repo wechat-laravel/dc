@@ -40,49 +40,56 @@ class AuthController extends Controller
         $this->middleware('guest', ['except' => 'getLogout']);
     }
 
-    /**
-     * Get a validator for an incoming registration request.
-     *
-     * @param  array  $data
-     * @return \Illuminate\Contracts\Validation\Validator
-     */
-    protected function validator(array $data)
-    {
-        return Validator::make($data, [
-            'name' => 'required|max:255',
-            'email' => 'required|email|max:255|unique:users',
-            'password' => 'required|confirmed|min:6',
-        ]);
-    }
-
-    /**
-     * Create a new user instance after a valid registration.
-     *
-     * @param  array  $data
-     * @return User
-     */
-    protected function create(array $data)
-    {
-        return UserModel::create([
-            'name' => $data['name'],
-            'email' => $data['email'],
-            'password' => bcrypt($data['password']),
-        ]);
-    }
-
 
     public function getLogin()
     {
-//        $user = UserModel::select()->get();
-//
-//        return response($user);
 
         return view('modules.auth.login');
 
     }
 
-    public function postLogin()
+    public function postLogin(Request $request)
     {
+
+        $input = $request->only(['email','password']);
+
+        $validator = Validator::make($input,[
+
+            'email' => 'required',
+
+            'password' => 'required',
+
+        ]);
+
+        if($validator->fails()){
+
+            return response()->json(['success'=>false,'msg'=>'缺少必要的字段！']);
+
+        }
+
+        try{
+
+            $user = UserModel::where('email',$input['email'])->first();
+
+            if (!$user) return  response()->json(['success'=>false,'msg'=>'该邮箱未注册使用！']);
+
+            $bool = Hash::check($input['password'],$user->password);
+
+            if (!$bool){
+
+                return  response()->json(['success'=>false,'msg'=>'用户密码错误! ']);
+
+            }
+
+            Auth::loginUsingId($user->id);
+
+
+        }catch (\Exception $e){
+
+            return response()->json(['success'=>false,'msg'=>'登录失败!']);
+        }
+
+        return response()->json(['success'=>true,'msg'=>'登录成功！']);
 
     }
 
@@ -137,7 +144,7 @@ class AuthController extends Controller
 
                 }else{
 
-                    if ($captcha_exists->vcode !== $input['captcha']){
+                    if (strtolower($captcha_exists->vcode) !== strtolower($input['captcha'])){
                         //验证码输错,计数+1
                         $captcha_exists->count +=1;
 
