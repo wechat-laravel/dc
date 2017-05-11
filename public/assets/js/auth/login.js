@@ -53,13 +53,13 @@ $(function () {
                         data: data,
                         datatype: 'text'
                     }).done(function(ret){
-                        console.log(ret);
-                        // if (!ret.success){
-                        //
-                        // }else{
-                        //     window.location = '/';
-                        // }
-
+                        if (!ret.success){
+                            $('#captcha').attr('src','/captcha?'+Math.random().toString(36).substr(2));
+                            $('#error-show').html(tml);
+                            $('#errinfo').text(ret.msg);
+                        }else{
+                            window.location = '/';
+                        }
                     });
                 }else{
                     $('#captcha').attr('src','/captcha?'+Math.random().toString(36).substr(2));
