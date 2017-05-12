@@ -37,7 +37,7 @@
                             <span class="label label-success">4</span>
                         </a>
                         <ul class="dropdown-menu">
-                            <li class="header">You have 4 messages</li>
+                            <li class="header">你有4条消息</li>
                             <li>
                                 <!-- inner menu: contains the actual data -->
                                 <ul class="menu">
@@ -47,10 +47,10 @@
                                                 <img src="{{ URL::asset('assets/images/user.jpg') }}" class="img-circle" alt="User Image">
                                             </div>
                                             <h4>
-                                                Support Team
-                                                <small><i class="fa fa-clock-o"></i> 5 mins</small>
+                                                甄子丹
+                                                <small><i class="fa fa-clock-o"></i> 5 分钟前</small>
                                             </h4>
-                                            <p>Why not buy a new awesome theme?</p>
+                                            <p>下周一起去巴黎玩。</p>
                                         </a>
                                     </li>
                                     <!-- end message -->
@@ -60,10 +60,10 @@
                                                 <img src="{{ URL::asset('assets/images/user.jpg') }}" class="img-circle" alt="User Image">
                                             </div>
                                             <h4>
-                                                AdminLTE Design Team
-                                                <small><i class="fa fa-clock-o"></i> 2 hours</small>
+                                                杰森斯坦森
+                                                <small><i class="fa fa-clock-o"></i> 2 小时前</small>
                                             </h4>
-                                            <p>Why not buy a new awesome theme?</p>
+                                            <p>晚上记得过来一起喝酒。</p>
                                         </a>
                                     </li>
                                     <li>
@@ -72,10 +72,10 @@
                                                 <img src="{{ URL::asset('assets/images/user.jpg') }}" class="img-circle" alt="User Image">
                                             </div>
                                             <h4>
-                                                Developers
-                                                <small><i class="fa fa-clock-o"></i> Today</small>
+                                                范迪塞尔
+                                                <small><i class="fa fa-clock-o"></i> 今天</small>
                                             </h4>
-                                            <p>Why not buy a new awesome theme?</p>
+                                            <p>周六晚上，秋名山见</p>
                                         </a>
                                     </li>
                                     <li>
@@ -84,10 +84,10 @@
                                                 <img src="{{ URL::asset('assets/images/user.jpg') }}" class="img-circle" alt="User Image">
                                             </div>
                                             <h4>
-                                                Sales Department
-                                                <small><i class="fa fa-clock-o"></i> Yesterday</small>
+                                                史泰龙
+                                                <small><i class="fa fa-clock-o"></i> 昨天</small>
                                             </h4>
-                                            <p>Why not buy a new awesome theme?</p>
+                                            <p>敢死队要拍4.你过来嘛？</p>
                                         </a>
                                     </li>
                                     <li>
@@ -96,15 +96,15 @@
                                                 <img src="{{ URL::asset('assets/images/user.jpg') }}" class="img-circle" alt="User Image">
                                             </div>
                                             <h4>
-                                                Reviewers
-                                                <small><i class="fa fa-clock-o"></i> 2 days</small>
+                                                扎克伯格
+                                                <small><i class="fa fa-clock-o"></i> 2 天前</small>
                                             </h4>
-                                            <p>Why not buy a new awesome theme?</p>
+                                            <p>中国的市场交给你了。</p>
                                         </a>
                                     </li>
                                 </ul>
                             </li>
-                            <li class="footer"><a href="#">See All Messages</a></li>
+                            <li class="footer"><a href="#">查看所有消息</a></li>
                         </ul>
                     </li>
                     <!-- Notifications: style can be found in dropdown.less -->
@@ -114,7 +114,7 @@
                             <span class="label label-warning">10</span>
                         </a>
                         <ul class="dropdown-menu">
-                            <li class="header">You have 10 notifications</li>
+                            <li class="header">你有10个通知</li>
                             <li>
                                 <!-- inner menu: contains the actual data -->
                                 <ul class="menu">
@@ -156,7 +156,7 @@
                             <span class="label label-danger">9</span>
                         </a>
                         <ul class="dropdown-menu">
-                            <li class="header">You have 9 tasks</li>
+                            <li class="header">你有9个待处理事务</li>
                             <li>
                                 <!-- inner menu: contains the actual data -->
                                 <ul class="menu">
@@ -227,7 +227,7 @@
                     <li class="dropdown user user-menu">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                             <img src="{{ URL::asset('assets/images/user.jpg') }}" class="user-image" alt="User Image">
-                            <span class="hidden-xs">Alexander Pierce</span>
+                            <span class="hidden-xs">管理员</span>
                         </a>
                         <ul class="dropdown-menu">
                             <!-- User image -->
@@ -235,8 +235,8 @@
                                 <img src="{{ URL::asset('assets/images/user.jpg') }}" class="img-circle" alt="User Image">
 
                                 <p>
-                                    Alexander Pierce - Web Developer
-                                    <small>Member since Nov. 2012</small>
+                                    系统管理员
+                                    <small>创建时间：2017/5/12</small>
                                 </p>
                             </li>
                             <!-- Menu Body -->
@@ -260,7 +260,7 @@
                                     <a href="#" class="btn btn-default btn-flat">Profile</a>
                                 </div>
                                 <div class="pull-right">
-                                    <a href="#" class="btn btn-default btn-flat">Sign out</a>
+                                    <a href="/auth/logout" class="btn btn-default btn-flat">退出</a>
                                 </div>
                             </li>
                         </ul>
@@ -283,8 +283,8 @@
                     <img src="{{ URL::asset('assets/images/user.jpg') }}" class="img-circle" alt="User Image">
                 </div>
                 <div class="pull-left info">
-                    <p>Alexander Pierce</p>
-                    <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
+                    <p>管理员</p>
+                    <a href="#"><i class="fa fa-circle text-success"></i> 在线</a>
                 </div>
             </div>
             <!-- search form -->
@@ -300,7 +300,7 @@
             <!-- /.search form -->
             <!-- sidebar menu: : style can be found in sidebar.less -->
             <ul class="sidebar-menu">
-                <li class="header">MAIN NAVIGATION</li>
+                <li class="header">菜单列表</li>
                 <li class="active treeview">
                     <a href="#">
                         <i class="fa fa-dashboard"></i> <span>Dashboard</span>
@@ -309,8 +309,8 @@
             </span>
                     </a>
                     <ul class="treeview-menu">
-                        <li class="active"><a href="index.html"><i class="fa fa-circle-o"></i> Dashboard v1</a></li>
-                        <li><a href="index2.html"><i class="fa fa-circle-o"></i> Dashboard v2</a></li>
+                        <li class="active"><a href="#"><i class="fa fa-circle-o"></i> Dashboard v1</a></li>
+                        <li><a href="#"><i class="fa fa-circle-o"></i> Dashboard v2</a></li>
                     </ul>
                 </li>
                 <li class="treeview">
@@ -322,14 +322,14 @@
             </span>
                     </a>
                     <ul class="treeview-menu">
-                        <li><a href="pages/layout/top-nav.html"><i class="fa fa-circle-o"></i> Top Navigation</a></li>
-                        <li><a href="pages/layout/boxed.html"><i class="fa fa-circle-o"></i> Boxed</a></li>
-                        <li><a href="pages/layout/fixed.html"><i class="fa fa-circle-o"></i> Fixed</a></li>
-                        <li><a href="pages/layout/collapsed-sidebar.html"><i class="fa fa-circle-o"></i> Collapsed Sidebar</a></li>
+                        <li><a href="#"><i class="fa fa-circle-o"></i> Top Navigation</a></li>
+                        <li><a href="#"><i class="fa fa-circle-o"></i> Boxed</a></li>
+                        <li><a href="#"><i class="fa fa-circle-o"></i> Fixed</a></li>
+                        <li><a href="#"><i class="fa fa-circle-o"></i> Collapsed Sidebar</a></li>
                     </ul>
                 </li>
                 <li>
-                    <a href="pages/widgets.html">
+                    <a href="#">
                         <i class="fa fa-th"></i> <span>Widgets</span>
             <span class="pull-right-container">
               <small class="label pull-right bg-green">new</small>
@@ -345,10 +345,10 @@
             </span>
                     </a>
                     <ul class="treeview-menu">
-                        <li><a href="pages/charts/chartjs.html"><i class="fa fa-circle-o"></i> ChartJS</a></li>
-                        <li><a href="pages/charts/morris.html"><i class="fa fa-circle-o"></i> Morris</a></li>
-                        <li><a href="pages/charts/flot.html"><i class="fa fa-circle-o"></i> Flot</a></li>
-                        <li><a href="pages/charts/inline.html"><i class="fa fa-circle-o"></i> Inline charts</a></li>
+                        <li><a href="#"><i class="fa fa-circle-o"></i> ChartJS</a></li>
+                        <li><a href="#"><i class="fa fa-circle-o"></i> Morris</a></li>
+                        <li><a href="#"><i class="fa fa-circle-o"></i> Flot</a></li>
+                        <li><a href="#"><i class="fa fa-circle-o"></i> Inline charts</a></li>
                     </ul>
                 </li>
                 <li class="treeview">
@@ -360,12 +360,12 @@
             </span>
                     </a>
                     <ul class="treeview-menu">
-                        <li><a href="pages/UI/general.html"><i class="fa fa-circle-o"></i> General</a></li>
-                        <li><a href="pages/UI/icons.html"><i class="fa fa-circle-o"></i> Icons</a></li>
-                        <li><a href="pages/UI/buttons.html"><i class="fa fa-circle-o"></i> Buttons</a></li>
-                        <li><a href="pages/UI/sliders.html"><i class="fa fa-circle-o"></i> Sliders</a></li>
-                        <li><a href="pages/UI/timeline.html"><i class="fa fa-circle-o"></i> Timeline</a></li>
-                        <li><a href="pages/UI/modals.html"><i class="fa fa-circle-o"></i> Modals</a></li>
+                        <li><a href="#"><i class="fa fa-circle-o"></i> General</a></li>
+                        <li><a href="#"><i class="fa fa-circle-o"></i> Icons</a></li>
+                        <li><a href="#"><i class="fa fa-circle-o"></i> Buttons</a></li>
+                        <li><a href="#"><i class="fa fa-circle-o"></i> Sliders</a></li>
+                        <li><a href="#"><i class="fa fa-circle-o"></i> Timeline</a></li>
+                        <li><a href="#"><i class="fa fa-circle-o"></i> Modals</a></li>
                     </ul>
                 </li>
                 <li class="treeview">
@@ -376,9 +376,9 @@
             </span>
                     </a>
                     <ul class="treeview-menu">
-                        <li><a href="pages/forms/general.html"><i class="fa fa-circle-o"></i> General Elements</a></li>
-                        <li><a href="pages/forms/advanced.html"><i class="fa fa-circle-o"></i> Advanced Elements</a></li>
-                        <li><a href="pages/forms/editors.html"><i class="fa fa-circle-o"></i> Editors</a></li>
+                        <li><a href="#"><i class="fa fa-circle-o"></i> General Elements</a></li>
+                        <li><a href="#"><i class="fa fa-circle-o"></i> Advanced Elements</a></li>
+                        <li><a href="#"><i class="fa fa-circle-o"></i> Editors</a></li>
                     </ul>
                 </li>
                 <li class="treeview">
@@ -389,12 +389,12 @@
             </span>
                     </a>
                     <ul class="treeview-menu">
-                        <li><a href="pages/tables/simple.html"><i class="fa fa-circle-o"></i> Simple tables</a></li>
-                        <li><a href="pages/tables/data.html"><i class="fa fa-circle-o"></i> Data tables</a></li>
+                        <li><a href="#"><i class="fa fa-circle-o"></i> Simple tables</a></li>
+                        <li><a href="#"><i class="fa fa-circle-o"></i> Data tables</a></li>
                     </ul>
                 </li>
                 <li>
-                    <a href="pages/calendar.html">
+                    <a href="#">
                         <i class="fa fa-calendar"></i> <span>Calendar</span>
             <span class="pull-right-container">
               <small class="label pull-right bg-red">3</small>
@@ -403,7 +403,7 @@
                     </a>
                 </li>
                 <li>
-                    <a href="pages/mailbox/mailbox.html">
+                    <a href="#">
                         <i class="fa fa-envelope"></i> <span>Mailbox</span>
             <span class="pull-right-container">
               <small class="label pull-right bg-yellow">12</small>
@@ -420,15 +420,15 @@
             </span>
                     </a>
                     <ul class="treeview-menu">
-                        <li><a href="pages/examples/invoice.html"><i class="fa fa-circle-o"></i> Invoice</a></li>
-                        <li><a href="pages/examples/profile.html"><i class="fa fa-circle-o"></i> Profile</a></li>
-                        <li><a href="pages/examples/login.html"><i class="fa fa-circle-o"></i> Login</a></li>
-                        <li><a href="pages/examples/register.html"><i class="fa fa-circle-o"></i> Register</a></li>
-                        <li><a href="pages/examples/lockscreen.html"><i class="fa fa-circle-o"></i> Lockscreen</a></li>
-                        <li><a href="pages/examples/404.html"><i class="fa fa-circle-o"></i> 404 Error</a></li>
-                        <li><a href="pages/examples/500.html"><i class="fa fa-circle-o"></i> 500 Error</a></li>
-                        <li><a href="pages/examples/blank.html"><i class="fa fa-circle-o"></i> Blank Page</a></li>
-                        <li><a href="pages/examples/pace.html"><i class="fa fa-circle-o"></i> Pace Page</a></li>
+                        <li><a href="#"><i class="fa fa-circle-o"></i> Invoice</a></li>
+                        <li><a href="#"><i class="fa fa-circle-o"></i> Profile</a></li>
+                        <li><a href="#"><i class="fa fa-circle-o"></i> Login</a></li>
+                        <li><a href="#"><i class="fa fa-circle-o"></i> Register</a></li>
+                        <li><a href="#"><i class="fa fa-circle-o"></i> Lockscreen</a></li>
+                        <li><a href="#"><i class="fa fa-circle-o"></i> 404 Error</a></li>
+                        <li><a href="#"><i class="fa fa-circle-o"></i> 500 Error</a></li>
+                        <li><a href="#"><i class="fa fa-circle-o"></i> Blank Page</a></li>
+                        <li><a href="#"><i class="fa fa-circle-o"></i> Pace Page</a></li>
                     </ul>
                 </li>
                 <li class="treeview">
@@ -492,10 +492,9 @@
     <!-- /.content-wrapper -->
     <footer class="main-footer">
         <div class="pull-right hidden-xs">
-            <b>Version</b> 2.3.12
+            <b>版本</b> 1.0.0
         </div>
-        <strong>Copyright &copy; 2014-2016 <a href="http://almsaeedstudio.com">Almsaeed Studio</a>.</strong> All rights
-        reserved.
+        <strong>Copyright &copy; 2017/5/11-2017/5/12 <a href="http://hackqy.com">Hackqy</a>.</strong> 版权所有保留
     </footer>
 
     <!-- Control Sidebar -->
