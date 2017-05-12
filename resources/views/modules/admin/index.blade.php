@@ -761,9 +761,6 @@
 
 <!-- jQuery 2.2.3 -->
 <script src="{{ URL::asset('assets/js/jquery.min.js') }}"></script>
-<script>
-    $.widget.bridge('uibutton', $.ui.button);
-</script>
 <script src="{{ URL::asset('assets/js/bootstrap.min.js') }}"></script>
 <script src="{{ URL::asset('assets/js/adminlte/app.min.js') }}"></script>
 <script src="{{ URL::asset('assets/js/adminlte/demo.js') }}"></script>
