@@ -87,7 +87,10 @@ class WechatController extends Controller
                 ],
             ],
         ];
-//        $menu->add($buttons);
+        $menu = $this->wechat->menu;
+
+        $menu->add($buttons);
+
     }
 
 }
