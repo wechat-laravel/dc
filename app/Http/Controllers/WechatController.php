@@ -85,18 +85,6 @@ class WechatController extends Controller
                             "type" => "click",
                             "name" => "测试2",
                             "key"  => "V1001_GOOD",
-                            "sub_button" => [
-                                [
-                                    "type" => "view",
-                                    "name" => "内菜单一",
-                                    "url"  => "http://dc.le71.cn/"
-                                ],
-                                [
-                                    "type" => "view",
-                                    "name" => "内菜单二",
-                                    "url"  => "http://dc.le71.cn/wechat/test"
-                                ]
-                            ]
                         ],
                     ],
                 ],
@@ -121,6 +109,9 @@ class WechatController extends Controller
 
     public function test(){
 
+        $appid = env('WECHAT_APPID');
+        $redirect_uri = 'http://dc.le71.cn/wechat/test';
+        $url = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=$appid&redirect_uri=$redirect_uri&response_type=code&scope=SCOPE&state=STATE#wechat_redirect";
         return redirect('http://baidu.com');
 
     }
