@@ -119,6 +119,12 @@ class WechatController extends Controller
 
     }
 
+    public function test(){
+
+        return redirect('http://baidu.com');
+
+    }
+
 
 
 }
