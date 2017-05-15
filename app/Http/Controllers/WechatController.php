@@ -5,19 +5,25 @@ namespace App\Http\Controllers;
 
 class WechatController extends Controller
 {
+    protected $wechat;
+
+
+    public function __construct()
+    {
+        $wechat = app('wechat');
+
+        $this->wechat = $wechat;
+    }
+
 
     /**
      * 处理微信的请求消息
      *
      * @return string
      */
-
     public function serve()
     {
-
-        $wechat = app('wechat');
-
-        $wechat->server->setMessageHandler(function($message){
+        $this->wechat->server->setMessageHandler(function($message){
 
             switch ($message->MsgType) {
                 case 'event':
@@ -49,7 +55,39 @@ class WechatController extends Controller
 
         });
 
-        return $wechat->server->serve();
+        return $this->wechat->server->serve();
+    }
+
+    public function addMenu()
+    {
+        $buttons = [
+            [
+                "type" => "click",
+                "name" => "今日歌曲",
+                "key"  => "V1001_TODAY_MUSIC"
+            ],
+            [
+                "name"       => "菜单",
+                "sub_button" => [
+                    [
+                        "type" => "view",
+                        "name" => "搜索",
+                        "url"  => "http://www.soso.com/"
+                    ],
+                    [
+                        "type" => "view",
+                        "name" => "视频",
+                        "url"  => "http://v.qq.com/"
+                    ],
+                    [
+                        "type" => "click",
+                        "name" => "赞一下我们",
+                        "key" => "V1001_GOOD"
+                    ],
+                ],
+            ],
+        ];
+//        $menu->add($buttons);
     }
 
 }
