@@ -65,26 +65,38 @@ class WechatController extends Controller
             $buttons = [
                 [
                     "type" => "click",
-                    "name" => "今日歌曲",
-                    "key"  => "V1001_TODAY_MUSIC"
+                    "name" => "乐其意",
+                    "key"  => "V1001_LE71"
                 ],
                 [
                     "name"       => "菜单",
                     "sub_button" => [
                         [
                             "type" => "view",
-                            "name" => "搜索",
-                            "url"  => "http://www.soso.com/"
+                            "name" => "首页",
+                            "url"  => "http://dc.le71.cn/"
                         ],
                         [
                             "type" => "view",
-                            "name" => "视频",
-                            "url"  => "http://v.qq.com/"
+                            "name" => "测试1",
+                            "url"  => "http://dc.le71.cn/wechat/test"
                         ],
                         [
                             "type" => "click",
-                            "name" => "赞一下我们",
-                            "key" => "V1001_GOOD"
+                            "name" => "测试2",
+                            "key"  => "V1001_GOOD",
+                            "sub_button" => [
+                                [
+                                    "type" => "view",
+                                    "name" => "内菜单一",
+                                    "url"  => "http://dc.le71.cn/"
+                                ],
+                                [
+                                    "type" => "view",
+                                    "name" => "内菜单二",
+                                    "url"  => "http://dc.le71.cn/wechat/test"
+                                ]
+                            ]
                         ],
                     ],
                 ],
@@ -92,9 +104,10 @@ class WechatController extends Controller
 
             $menu = $this->wechat->menu;
 
+            $menu->add($buttons);
+
             $menus = $menu->all();
 
-//            $menu->add($buttons);
 
         }catch (\Exception $e){
 
@@ -102,8 +115,7 @@ class WechatController extends Controller
 
         }
 
-          return response($menus);
-//        return response()->json(['success'=>true,'msg'=>'创建成功']);
+        return response($menus);
 
     }
 
