@@ -92,7 +92,9 @@ class WechatController extends Controller
 
             $menu = $this->wechat->menu;
 
-            $menu->add($buttons);
+            $menus = $menu->all();
+
+//            $menu->add($buttons);
 
         }catch (\Exception $e){
 
@@ -100,8 +102,11 @@ class WechatController extends Controller
 
         }
 
-        return response()->json(['success'=>true,'msg'=>'创建成功']);
+          return response($menus);
+//        return response()->json(['success'=>true,'msg'=>'创建成功']);
 
     }
+
+
 
 }
