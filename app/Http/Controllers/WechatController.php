@@ -110,12 +110,17 @@ class WechatController extends Controller
     public function test(){
 
         $appid = env('WECHAT_APPID');
-        $redirect_uri = 'http://dc.le71.cn/wechat/test';
-        $url = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=$appid&redirect_uri=$redirect_uri&response_type=code&scope=SCOPE&state=STATE#wechat_redirect";
+        $redirect_uri = 'http://dc.le71.cn/wechat/ceshi';
+        $url = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=$appid&redirect_uri=$redirect_uri&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect";
         return redirect('http://baidu.com');
 
     }
 
+    public  function ceshi(){
+
+        return 1;
+
+    }
 
 
 }
