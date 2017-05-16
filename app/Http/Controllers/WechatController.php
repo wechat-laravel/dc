@@ -111,28 +111,27 @@ class WechatController extends Controller
 
         $oauth = $this->wechat->oauth;
 
-        if (empty($_SESSION['wechat_user'])){
+        if (empty(session('wechat_user'))){
 
 
             return $oauth->redirect();
         }
 
-        $user = $_SESSION['wechat_user'];
+        $user = session('wechat_user');
 
         return response($user);
 
     }
 
-    public  function ceshi(){
+    public  function oauth(){
 
         $oauth = $this->wechat->oauth;
 
         $user  = $oauth->user();
 
-        $_SESSION['wechat_user'] = $user->toArray();
+        session(['wechat_user'=>$user]);
 
-
-        return 1;
+        return redirect('wechat/test');
 
     }
 
