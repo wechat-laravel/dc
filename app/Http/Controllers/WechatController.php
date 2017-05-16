@@ -129,7 +129,7 @@ class WechatController extends Controller
 
         $user  = $oauth->user();
 
-        session(['wechat_user'=>$user]);
+        session(['wechat_user'=>$user->toArray()]);
 
         return redirect('wechat/test');
 
