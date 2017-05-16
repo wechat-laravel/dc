@@ -132,7 +132,7 @@ class WechatController extends Controller
         $_SESSION['wechat_user'] = $user->toArray();
 
 
-        return response($_SESSION['wechat_user']);
+        return 1;
 
     }
 
