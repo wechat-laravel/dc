@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 
+use Illuminate\Http\Request;
+
 class WechatController extends Controller
 {
     protected $wechat;
@@ -107,29 +109,29 @@ class WechatController extends Controller
 
     }
 
-    public function test(){
+    public function test(Request $request){
 
         $oauth = $this->wechat->oauth;
 
-        if (empty(session('wechat_user'))){
-
+        if ($request->session()->has('w_user')){
 
             return $oauth->redirect();
+
         }
 
-        $user = session('wechat_user');
+        $user = session('w_user');
 
         return response($user);
 
     }
 
-    public  function oauth(){
+    public  function oauth(Request $request){
 
         $oauth = $this->wechat->oauth;
 
         $user  = $oauth->user();
 
-        session(['wechat_user'=>$user->toArray()]);
+        $request->session()->push('w_user',$user->toArray());
 
         return redirect('wechat/test');
 
