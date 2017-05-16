@@ -111,7 +111,7 @@ class WechatController extends Controller
 
         $appid = env('WECHAT_APPID');
         $redirect_uri = urlencode('http://dc.le71.cn/wechat/ceshi');
-        $url = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=$appid&redirect_uri=$redirect_uri&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect";
+        $url = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=$appid&redirect_uri=$redirect_uri&response_type=code&scope=snsapi_base&state=STATE#wechat_redirect";
         return redirect($url);
 
     }
