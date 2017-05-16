@@ -113,7 +113,6 @@ class WechatController extends Controller
 
         if (empty($_SESSION['wechat_user'])){
 
-            $_SESSION['target_url'] = 'wechat/ceshi';
 
             return $oauth->redirect();
         }
@@ -132,9 +131,8 @@ class WechatController extends Controller
 
         $_SESSION['wechat_user'] = $user->toArray();
 
-        $targetUrl = empty($_SESSION['target_url']) ? '/' : $_SESSION['target_url'];
 
-        return redirect($targetUrl);
+        return response($_SESSION['wechat_user']);
 
     }
 
