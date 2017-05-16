@@ -110,18 +110,22 @@ class WechatController extends Controller
     }
 
     public function test(Request $request){
+     
+//      $request->session()->flush();
+
+//	return 1;
 
         $oauth = $this->wechat->oauth;
 
-        if ($request->session()->has('w_user')){
+        if (!$request->session()->has('w_user')){
 
             return $oauth->redirect();
 
-        }
+	}
 
-        $user = session('w_user');
+        $user = $request->session()->get('w_user');
 
-        return response($user);
+        return $user;
 
     }
 
@@ -130,10 +134,13 @@ class WechatController extends Controller
         $oauth = $this->wechat->oauth;
 
         $user  = $oauth->user();
-
+	
+	return $user->toArray());
+	
         $request->session()->push('w_user',$user->toArray());
 
-        return redirect('wechat/test');
+	return response($user);
+//        return redirect('wechat/test');
 
     }
 
