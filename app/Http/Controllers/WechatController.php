@@ -109,16 +109,32 @@ class WechatController extends Controller
 
     public function test(){
 
-        $appid = env('WECHAT_APPID');
-        $redirect_uri = urlencode('http://dc.le71.cn/wechat/ceshi');
-        $url = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=$appid&redirect_uri=$redirect_uri&response_type=code&scope=snsapi_base&state=STATE#wechat_redirect";
-        return redirect($url);
+        $oauth = $this->wechat->oauth;
+
+        if (empty($_SESSION['wechat_user'])){
+
+            $_SESSION['target_url'] = 'wechat/ceshi';
+
+            return $oauth->redirect();
+        }
+
+        $user = $_SESSION['wechat_user'];
+
+        return response($user);
 
     }
 
     public  function ceshi(){
 
-        return 1;
+        $oauth = $this->wechat->oauth;
+
+        $user  = $oauth->user();
+
+        $_SESSION['wechat_user'] = $user->toArray();
+
+        $targetUrl = empty($_SESSION['target_url']) ? '/' : $_SESSION['target_url'];
+
+        return redirect($targetUrl);
 
     }
 
