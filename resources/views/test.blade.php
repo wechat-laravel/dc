@@ -56,9 +56,17 @@
     </div>
 </div>
 </body>
-{{--<script type="text/javascript" charset="UTF-8" src="{{ URL::asset('assets/js/test.js') }}"></script>--}}
 <script type="text/javascript" charset="UTF-8">
     wx.config(<?=$js->config(['onMenuShareQQ', 'onMenuShareWeibo'],true);?>);
+    wx.checkJsApi({
+        jsApiList: ['onMenuShareQQ','onMenuShareWeibo'], // 需要检测的JS接口列表，所有JS接口列表见附录2,
+        success: function(res) {
+            // 以键值对的形式返回，可用的api值true，不可用为false
+            // 如：{"checkResult":{"chooseImage":true},"errMsg":"checkJsApi:ok"}
+            alert({"草":{"噢噢":true},"errMsg":"checkJsApi:ok"});
+        }
+    });
+
 </script>
 
 </html>
