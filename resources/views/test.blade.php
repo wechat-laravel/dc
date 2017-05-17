@@ -1,7 +1,9 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Test</title>
+    <title>乐其意-DC</title>
+    <meta name="DC"content="测试的哦">
+    <meta name="description"content="dc的描述哦"> 
     <script src="http://res.wx.qq.com/open/js/jweixin-1.2.0.js" type="text/javascript" charset="utf-8"></script>
     <style>
         html, body {
@@ -57,15 +59,49 @@
 </div>
 </body>
 <script type="text/javascript" charset="UTF-8">
-    wx.config(<?=$js->config(['onMenuShareQQ', 'onMenuShareWeibo'],true);?>);
-    wx.checkJsApi({
-        jsApiList: ['onMenuShareQQ','onMenuShareWeibo'], // 需要检测的JS接口列表，所有JS接口列表见附录2,
-        success: function(res) {
-            // 以键值对的形式返回，可用的api值true，不可用为false
-            // 如：{"checkResult":{"chooseImage":true},"errMsg":"checkJsApi:ok"}
-            alert({"草":{"噢噢":true},"errMsg":"checkJsApi:ok"});
-        }
+    wx.config(<?=$js->config(['getLocation', 'onMenuShareTimeline','onMenuShareAppMessage'],false);?>);
+    wx.ready(function(){
+ 	wx.checkJsApi({
+            jsApiList: [
+                'getLocation',
+                'onMenuShareTimeline',
+                'onMenuShareAppMessage'
+            ],
+            success: function (res) {
+                if(res.checkResult.getLocation !== true){
+		    alert('当前设备不支持获取地理位置');
+		}
+                if(res.checkResult.onMenuShareTimeline !== true){
+		    alert('当前设备不支持分享到朋友圈');
+		}
+                if(res.checkResult.onMenuShareAppMessage !== true){
+		    alert('当前设备不支持分享给好友');
+		}
+            },
+        });
+	wx.onMenuShareAppMessage({
+            title   : '测试哦',
+            desc    : '描述是个什么鬼',
+            link    : 'http://dc.leqiyi.cn/wechat/test/aaa',
+            imgUrl  : 'http://dc.leqiyi.cn/assets/images/user.jpg',
+	    type    : '',
+	    dataUrl : '',
+            trigger : function (res) {
+              alert('用户点击发送给朋友');
+            },
+            success : function (res) {
+               alert('已分享');
+            },
+            cancel  : function (res) {
+               alert('已取消');
+            },
+            fail: function (res) {
+               alert(JSON.stringify(res));
+            }
+        });   
+
     });
+	
 
 </script>
 
