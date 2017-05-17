@@ -130,9 +130,11 @@ class WechatController extends Controller
 
     public function text(){
 
-        $js = $this->wechat->js;
+        //$js = $this->wechat->js;
 
-        return view('test',['js'=>$js]);
+        //return view('test',['js'=>$js]);
+
+        return view('text');
 
     }
 
