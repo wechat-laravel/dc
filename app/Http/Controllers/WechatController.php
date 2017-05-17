@@ -111,10 +111,10 @@ class WechatController extends Controller
     }
 
     public function test(){
-
+	
         $oauth = $this->wechat->oauth;
 
-        if (Session::has('w_user')){
+        if (!Session::has('w_user')){
 
             return $oauth->redirect();
 
@@ -122,7 +122,9 @@ class WechatController extends Controller
 
         $user = Session::get('w_user');
 
-        return $user;
+	echo '<pre/>';
+
+        var_dump($user);
 
     }
 
@@ -138,5 +140,6 @@ class WechatController extends Controller
 
     }
 
+    	
 
 }
