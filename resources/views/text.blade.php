@@ -53,7 +53,7 @@
 <body>
 <div class="container">
     <div class="content">
-        <div class="title">这是分享的页面哦！</div>
+        <div class="title">Fen Xiang</div>
     </div>
 </div>
 </body>
