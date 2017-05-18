@@ -59,7 +59,7 @@
 </div>
 </body>
 <script type="text/javascript" charset="UTF-8">
-    wx.config(<?=$js->config(['getLocation', 'onMenuShareTimeline','onMenuShareAppMessage'],false);?>);
+    wx.config(<?=$js->config(['onMenuShareTimeline','onMenuShareAppMessage','onMenuShareQQ','onMenuShareQZone'],false);?>);
     wx.ready(function(){
         wx.checkJsApi({
             jsApiList: [
@@ -68,14 +68,17 @@
                 'onMenuShareAppMessage'
             ],
             success: function (res) {
-                if(res.checkResult.getLocation !== true){
-                   alert('当前设备不支持获取地理位置');
+                if(res.checkResult.onMenuShareQQ !== true){
+                   alert('当前设备不支持分享到QQ');
                 }
                 if(res.checkResult.onMenuShareTimeline !== true){
                     alert('当前设备不支持分享到朋友圈');
                 }
                 if(res.checkResult.onMenuShareAppMessage !== true){
                     alert('当前设备不支持分享给好友');
+                }
+                if(res.checkResult.onMenuShareQZone !== true){
+                    alert('当前设备不支持分享到QQ空间');
                 }
             }
         });
@@ -100,7 +103,6 @@
         });
 
     });
-	
 
 </script>
 

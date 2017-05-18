@@ -124,6 +124,8 @@ class WechatController extends Controller
 
         $user = Session::get('w_user');
 
+        var_dump($user);
+
         return view('test',['user'=>$user,'js'=>$js]);
 
     }
