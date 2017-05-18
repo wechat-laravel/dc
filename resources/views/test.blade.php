@@ -65,7 +65,9 @@
             jsApiList: [
                 'getLocation',
                 'onMenuShareTimeline',
-                'onMenuShareAppMessage'
+                'onMenuShareAppMessage',
+		'onMenuShareQZone',
+		'onMenuShareQQ'
             ],
             success: function (res) {
                 if(res.checkResult.onMenuShareQQ !== true){
