@@ -119,6 +119,7 @@
         });
         wx.onMenuShareTimeline({
             title: '分享到朋友圈-测试',
+            desc: '记录该操作所有浏览和分享转发的操作记录',
             link: 'http://dc.le71.cn/wechat/test?openid=<?=$user[0]['id']?>',
             imgUrl: 'https://mmbiz.qlogo.cn/mmbiz_png/TleSlXOm2myMbs8uDovXxkgIOFKFIfD0kO4m7ZTDgibXoFxmdoeNgFEibCn8dVlyicqwylwTiasssRrdVOGFqYFmYg/0?wx_fmt=png',
             trigger: function (res) {
@@ -151,6 +152,7 @@
         });
         wx.onMenuShareQQ({
             title: '分享到QQ-测试',
+            desc: '记录该操作所有浏览和分享转发的操作记录',
             link: 'http://dc.le71.cn/wechat/test?openid=<?=$user[0]['id']?>',
             imgUrl: 'https://mmbiz.qlogo.cn/mmbiz_png/TleSlXOm2myMbs8uDovXxkgIOFKFIfD0kO4m7ZTDgibXoFxmdoeNgFEibCn8dVlyicqwylwTiasssRrdVOGFqYFmYg/0?wx_fmt=png',
             trigger: function (res) {
@@ -183,6 +185,7 @@
         });
         wx.onMenuShareQZone({
             title: '分享到QQ空间-测试',
+            desc: '记录该操作所有浏览和分享转发的操作记录',
             link: 'http://dc.le71.cn/wechat/test?openid=<?=$user[0]['id']?>',
             imgUrl: 'https://mmbiz.qlogo.cn/mmbiz_png/TleSlXOm2myMbs8uDovXxkgIOFKFIfD0kO4m7ZTDgibXoFxmdoeNgFEibCn8dVlyicqwylwTiasssRrdVOGFqYFmYg/0?wx_fmt=png',
             trigger: function (res) {
