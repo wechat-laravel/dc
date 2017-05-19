@@ -4,6 +4,7 @@
     <title>乐其意-DC</title>
     <meta name="DC"content="测试的哦">
     <meta name="description"content="dc的描述哦"> 
+    <script src="{{ URL::asset('assets/js/jquery.min.js') }}" type="text/javascript" charset="utf-8"></script>
     <script src="http://res.wx.qq.com/open/js/jweixin-1.2.0.js" type="text/javascript" charset="utf-8"></script>
     <style>
         html, body {
@@ -63,7 +64,6 @@
     wx.ready(function(){
         wx.checkJsApi({
             jsApiList: [
-                'getLocation',
                 'onMenuShareTimeline',
                 'onMenuShareAppMessage',
 		'onMenuShareQZone',
@@ -85,19 +85,33 @@
             }
         });
         wx.onMenuShareAppMessage({
-            title: '测试标题-乐其意',
-            desc: '我自己都不知道这网站是做啥的，什么鬼。',
+            title: '发送给朋友-测试',
+            desc: '记录该操作所有浏览和分享转发的操作记录',
             link: 'http://dc.le71.cn/wechat/test?openid=<?=$user[0]['id']?>',
             imgUrl: 'https://mmbiz.qlogo.cn/mmbiz_png/TleSlXOm2myMbs8uDovXxkgIOFKFIfD0kO4m7ZTDgibXoFxmdoeNgFEibCn8dVlyicqwylwTiasssRrdVOGFqYFmYg/0?wx_fmt=png',
             trigger: function (res) {
                 // 不要尝试在trigger中使用ajax异步请求修改本次分享的内容，因为客户端分享操作是一个同步操作，这时候使用ajax的回包会还没有返回
-                alert('用户点击发送给朋友');
+                //alert('用户点击发送给朋友');
             },
             success: function (res) {
-                alert('已分享');
+		$.ajax({
+		    url: 'http://dc.le71.cn/wechat/record?openid=<?=$user[0]['id']?>&action=wechat',
+		    success:fucntion(ret){
+			if(!ret.success){
+			    alert(ret.msg);
+			}			
+		    }
+		});
             },
             cancel: function (res) {
-                alert('已取消');
+		$.ajax({
+                    url: 'http://dc.le71.cn/wechat/record?openid=<?=$user[0]['id']?>&action=esc_wechat',
+                    success:fucntion(ret){
+                        if(!ret.success){
+                            alert(ret.msg);
+                        }                       
+                    }
+                });
             },
             fail: function (res) {
                 alert(JSON.stringify(res));
