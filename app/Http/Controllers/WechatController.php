@@ -150,30 +150,37 @@ class WechatController extends Controller
         $user  = $oauth->user();
 
         $info  = $user->toArray();
+	
+	$exis  =  GrantUserModel::where('openid',$info['id'])->exists();
 
-        $data = [
+	if(!$exis){
+	
+	    $data = [
 
-            'openid'   => $info[0]['id'],
-            'name'     => $info[0]['name'],
-            'avatar'   => $info[0]['avatar'],
-            'email'    => $info[0]['email'] ? $info[0]['email'] : '',
-            'sex'      => $info[0]['original']['sex'],
-            'language' => $info[0]['original']['language'],
-            'country'  => $info[0]['original']['country'],
-            'province' => $info[0]['original']['province'],
-            'city'     => $info[0]['original']['city'],
+            'openid'   => $info['id'],
+            'name'     => $info['name'],
+            'avatar'   => $info['avatar'],
+            'email'    => $info['email'] ? $info['email'] : '',
+            'sex'      => $info['original']['sex'],
+            'language' => $info['original']['language'],
+            'country'  => $info['original']['country'],
+            'province' => $info['original']['province'],
+            'city'     => $info['original']['city'],
 
-        ];
+            ];
 
-        try{
+            try{
+                
+                GrantUserModel::create($data);
 
-            GrantUserModel::create($data);
+            }catch (Exception $e){
 
-        }catch (Exception $e){
+                return response()->json(['success'=>false,'msg'=>'用户信息添加失败！']);
 
-            return response()->json(['success'=>false,'msg'=>$e->getMessage()]);
+            }
+	
 
-        }
+	}
 
         Session::push('w_user',$info);
 
