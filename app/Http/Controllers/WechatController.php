@@ -112,6 +112,9 @@ class WechatController extends Controller
 
     public function test(){
 	
+	//Session::flush();
+	//return 1;
+	
         $oauth = $this->wechat->oauth;
 
         $js    = $this->wechat->js;
@@ -124,9 +127,23 @@ class WechatController extends Controller
 
         $user = Session::get('w_user');
 
-	    echo '<pre>';
+	$data = [
+	
+	    'openid'   => $user[0]['id'],
+	    'name'     => $user[0]['name'],				
+	    'avatar'   => $user[0]['avatar'],				
+	    'email'    => $user[0]['email'] ? $user[0]['email'] : '',				
+	    'sex'      => $user[0]['original']['sex'],				
+	    'language' => $user[0]['original']['language'],				
+	    'country'  => $user[0]['original']['country'],				
+	    'province' => $user[0]['original']['province'],				
+	    'city'     => $user[0]['original']['city'],				
+	
+	];
+	
+	echo '<pre>';
 
-        var_dump($user);
+        var_dump($data);
 
         //return view('test',['user'=>$user,'js'=>$js]);
 
