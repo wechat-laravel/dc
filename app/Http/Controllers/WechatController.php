@@ -116,7 +116,10 @@ class WechatController extends Controller
 	
 	    //Session::flush();
 	    //return 1;
-	
+	$this->wechat->config->oauth['callback'] = 'ccc';
+	var_dump($this->wechat->config->oauth['callback']);
+	exit;	
+
         $oauth = $this->wechat->oauth;
 
         $js    = $this->wechat->js;
