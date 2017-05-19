@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 
+use App\Models\GrantUserModel;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
+use Mockery\CountValidator\Exception;
 
 class WechatController extends Controller
 {
@@ -110,10 +112,10 @@ class WechatController extends Controller
 
     }
 
-    public function test(){
+    public function test(Request $request){
 	
-	//Session::flush();
-	//return 1;
+	    //Session::flush();
+	    //return 1;
 	
         $oauth = $this->wechat->oauth;
 
@@ -127,25 +129,7 @@ class WechatController extends Controller
 
         $user = Session::get('w_user');
 
-	$data = [
-	
-	    'openid'   => $user[0]['id'],
-	    'name'     => $user[0]['name'],				
-	    'avatar'   => $user[0]['avatar'],				
-	    'email'    => $user[0]['email'] ? $user[0]['email'] : '',				
-	    'sex'      => $user[0]['original']['sex'],				
-	    'language' => $user[0]['original']['language'],				
-	    'country'  => $user[0]['original']['country'],				
-	    'province' => $user[0]['original']['province'],				
-	    'city'     => $user[0]['original']['city'],				
-	
-	];
-	
-	echo '<pre>';
-
-        var_dump($data);
-
-        //return view('test',['user'=>$user,'js'=>$js]);
+        return view('test',['user'=>$user,'js'=>$js]);
 
     }
 
@@ -164,8 +148,34 @@ class WechatController extends Controller
         $oauth = $this->wechat->oauth;
 
         $user  = $oauth->user();
-	
-        Session::push('w_user',$user->toArray());
+
+        $info  = $user->toArray();
+
+        $data = [
+
+            'openid'   => $info[0]['id'],
+            'name'     => $info[0]['name'],
+            'avatar'   => $info[0]['avatar'],
+            'email'    => $info[0]['email'] ? $info[0]['email'] : '',
+            'sex'      => $info[0]['original']['sex'],
+            'language' => $info[0]['original']['language'],
+            'country'  => $info[0]['original']['country'],
+            'province' => $info[0]['original']['province'],
+            'city'     => $info[0]['original']['city'],
+
+        ];
+
+        try{
+
+            GrantUserModel::create($data);
+
+        }catch (Exception $e){
+
+            return response()->json(['success'=>false,'msg'=>$e->getMessage()]);
+
+        }
+
+        Session::push('w_user',$info);
 
         return redirect('wechat/test');
 
