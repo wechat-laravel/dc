@@ -117,6 +117,102 @@
                 alert(JSON.stringify(res));
             }
         });
+        wx.onMenuShareTimeline({
+            title: '分享到朋友圈-测试',
+            link: 'http://dc.le71.cn/wechat/test?openid=<?=$user[0]['id']?>',
+            imgUrl: 'https://mmbiz.qlogo.cn/mmbiz_png/TleSlXOm2myMbs8uDovXxkgIOFKFIfD0kO4m7ZTDgibXoFxmdoeNgFEibCn8dVlyicqwylwTiasssRrdVOGFqYFmYg/0?wx_fmt=png',
+            trigger: function (res) {
+                // 不要尝试在trigger中使用ajax异步请求修改本次分享的内容，因为客户端分享操作是一个同步操作，这时候使用ajax的回包会还没有返回
+                //alert('用户点击发送给朋友');
+            },
+            success: function (res) {
+                $.ajax({
+                    url: 'http://dc.le71.cn/wechat/record?openid=<?=$user[0]['id']?>&action=timeline&path=<?=$path?>',
+                    success:function(ret){
+                        if(!ret.success){
+                            alert(ret.msg);
+                        }
+                    }
+                });
+            },
+            cancel: function (res) {
+                $.ajax({
+                    url: 'http://dc.le71.cn/wechat/record?openid=<?=$user[0]['id']?>&action=esc_timeline&path=<?=$path?>',
+                    success:function(ret){
+                        if(!ret.success){
+                            alert(ret.msg);
+                        }
+                    }
+                });
+            },
+            fail: function (res) {
+                alert(JSON.stringify(res));
+            }
+        });
+        wx.onMenuShareQQ({
+            title: '分享到QQ-测试',
+            link: 'http://dc.le71.cn/wechat/test?openid=<?=$user[0]['id']?>',
+            imgUrl: 'https://mmbiz.qlogo.cn/mmbiz_png/TleSlXOm2myMbs8uDovXxkgIOFKFIfD0kO4m7ZTDgibXoFxmdoeNgFEibCn8dVlyicqwylwTiasssRrdVOGFqYFmYg/0?wx_fmt=png',
+            trigger: function (res) {
+                // 不要尝试在trigger中使用ajax异步请求修改本次分享的内容，因为客户端分享操作是一个同步操作，这时候使用ajax的回包会还没有返回
+                //alert('用户点击发送给朋友');
+            },
+            success: function (res) {
+                $.ajax({
+                    url: 'http://dc.le71.cn/wechat/record?openid=<?=$user[0]['id']?>&action=qq&path=<?=$path?>',
+                    success:function(ret){
+                        if(!ret.success){
+                            alert(ret.msg);
+                        }
+                    }
+                });
+            },
+            cancel: function (res) {
+                $.ajax({
+                    url: 'http://dc.le71.cn/wechat/record?openid=<?=$user[0]['id']?>&action=esc_qq&path=<?=$path?>',
+                    success:function(ret){
+                        if(!ret.success){
+                            alert(ret.msg);
+                        }
+                    }
+                });
+            },
+            fail: function (res) {
+                alert(JSON.stringify(res));
+            }
+        });
+        wx.onMenuShareQZone({
+            title: '分享到QQ空间-测试',
+            link: 'http://dc.le71.cn/wechat/test?openid=<?=$user[0]['id']?>',
+            imgUrl: 'https://mmbiz.qlogo.cn/mmbiz_png/TleSlXOm2myMbs8uDovXxkgIOFKFIfD0kO4m7ZTDgibXoFxmdoeNgFEibCn8dVlyicqwylwTiasssRrdVOGFqYFmYg/0?wx_fmt=png',
+            trigger: function (res) {
+                // 不要尝试在trigger中使用ajax异步请求修改本次分享的内容，因为客户端分享操作是一个同步操作，这时候使用ajax的回包会还没有返回
+                //alert('用户点击发送给朋友');
+            },
+            success: function (res) {
+                $.ajax({
+                    url: 'http://dc.le71.cn/wechat/record?openid=<?=$user[0]['id']?>&action=qzone&path=<?=$path?>',
+                    success:function(ret){
+                        if(!ret.success){
+                            alert(ret.msg);
+                        }
+                    }
+                });
+            },
+            cancel: function (res) {
+                $.ajax({
+                    url: 'http://dc.le71.cn/wechat/record?openid=<?=$user[0]['id']?>&action=esc_qzone&path=<?=$path?>',
+                    success:function(ret){
+                        if(!ret.success){
+                            alert(ret.msg);
+                        }
+                    }
+                });
+            },
+            fail: function (res) {
+                alert(JSON.stringify(res));
+            }
+        });
 
     });
 
