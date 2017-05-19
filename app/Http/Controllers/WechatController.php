@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 
 use App\Models\GrantUserModel;
+use App\Models\SpreadRecordModel;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 use Mockery\CountValidator\Exception;
@@ -12,6 +13,7 @@ class WechatController extends Controller
 {
     protected $wechat;
 
+    protected $openid = '';
 
     public function __construct()
     {
@@ -116,9 +118,14 @@ class WechatController extends Controller
 	
 	    //Session::flush();
 	    //return 1;
-	$this->wechat->config->oauth['callback'] = 'ccc';
-	var_dump($this->wechat->config->oauth['callback']);
-	exit;	
+
+        //上来先检测是否有openid，有暂时保存下
+
+        if($request->has('openid')){
+
+            $this->openid = $request->input('openid');
+
+        }
 
         $oauth = $this->wechat->oauth;
 
@@ -131,6 +138,43 @@ class WechatController extends Controller
     	}
 
         $user = Session::get('w_user');
+
+        $record = [
+            'openid' => $user[0]['id'],
+            'url'    => $request->getRequestUri(),
+            'action' => 'browse',
+            'upper'  => $this->openid,
+        ];
+
+        //判断当前用户属于哪一级。
+        if ($this->openid){
+
+            $upper = SpreadRecordModel::where('openid',$this->openid)->first();
+
+            if ($upper){
+
+                $record['level'] = $upper->level +1;
+
+            }else{
+
+                $record['level'] = 1;
+            }
+
+        }else{
+
+            $record['level'] = 1;
+
+        }
+
+        try{
+
+            SpreadRecordModel::create($record);
+
+        }catch (Exception $e){
+
+            return response()->json(['success'=>false,'msg'=>$e->getMessage()]);
+
+        }
 
         return view('test',['user'=>$user,'js'=>$js]);
 
@@ -154,22 +198,20 @@ class WechatController extends Controller
 
         $info  = $user->toArray();
 	
-	$exis  =  GrantUserModel::where('openid',$info['id'])->exists();
+        $exist = GrantUserModel::where('openid',$info['id'])->exists();
 
-	if(!$exis){
-	
-	    $data = [
+        if(!$exist){
 
-            'openid'   => $info['id'],
-            'name'     => $info['name'],
-            'avatar'   => $info['avatar'],
-            'email'    => $info['email'] ? $info['email'] : '',
-            'sex'      => $info['original']['sex'],
-            'language' => $info['original']['language'],
-            'country'  => $info['original']['country'],
-            'province' => $info['original']['province'],
-            'city'     => $info['original']['city'],
-
+            $data = [
+                'openid'   => $info['id'],
+                'name'     => $info['name'],
+                'avatar'   => $info['avatar'],
+                'email'    => $info['email'] ? $info['email'] : '',
+                'sex'      => $info['original']['sex'],
+                'language' => $info['original']['language'],
+                'country'  => $info['original']['country'],
+                'province' => $info['original']['province'],
+                'city'     => $info['original']['city'],
             ];
 
             try{
@@ -181,9 +223,8 @@ class WechatController extends Controller
                 return response()->json(['success'=>false,'msg'=>'用户信息添加失败！']);
 
             }
-	
 
-	}
+	    }
 
         Session::push('w_user',$info);
 
