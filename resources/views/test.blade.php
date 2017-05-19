@@ -66,8 +66,8 @@
             jsApiList: [
                 'onMenuShareTimeline',
                 'onMenuShareAppMessage',
-		'onMenuShareQZone',
-		'onMenuShareQQ'
+		        'onMenuShareQZone',
+		        'onMenuShareQQ'
             ],
             success: function (res) {
                 if(res.checkResult.onMenuShareQQ !== true){
@@ -95,7 +95,7 @@
             },
             success: function (res) {
 		        $.ajax({
-		            url: 'http://dc.le71.cn/wechat/record?openid=<?=$user[0]['id']?>&action=wechat',
+		            url: 'http://dc.le71.cn/wechat/record?openid=<?=$user[0]['id']?>&action=wechat&path=<?=$path?>',
                     success:function(ret){
                         if(!ret.success){
 			                alert(ret.msg);
@@ -105,7 +105,7 @@
             },
             cancel: function (res) {
 		        $.ajax({
-                    url: 'http://dc.le71.cn/wechat/record?openid=<?=$user[0]['id']?>&action=esc_wechat',
+                    url: 'http://dc.le71.cn/wechat/record?openid=<?=$user[0]['id']?>&action=esc_wechat&path=<?=$path?>',
                     success:function(ret){
                         if(!ret.success){
                             alert(ret.msg);
