@@ -94,19 +94,19 @@
                 //alert('用户点击发送给朋友');
             },
             success: function (res) {
-		$.ajax({
-		    url: 'http://dc.le71.cn/wechat/record?openid=<?=$user[0]['id']?>&action=wechat',
-		    success:fucntion(ret){
-			if(!ret.success){
-			    alert(ret.msg);
-			}			
-		    }
-		});
+		        $.ajax({
+		            url: 'http://dc.le71.cn/wechat/record?openid=<?=$user[0]['id']?>&action=wechat',
+                    success:function(ret){
+                        if(!ret.success){
+			                alert(ret.msg);
+			            }
+		            }
+                });
             },
             cancel: function (res) {
-		$.ajax({
+		        $.ajax({
                     url: 'http://dc.le71.cn/wechat/record?openid=<?=$user[0]['id']?>&action=esc_wechat',
-                    success:fucntion(ret){
+                    success:function(ret){
                         if(!ret.success){
                             alert(ret.msg);
                         }                       

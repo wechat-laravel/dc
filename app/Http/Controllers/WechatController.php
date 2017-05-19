@@ -131,7 +131,7 @@ class WechatController extends Controller
 
         $record = [
             'openid' => $user[0]['id'],
-	    'path'   => $request->path(),
+	        'path'   => $request->path(),
             'url'    => $request->getRequestUri(),
             'action' => 'browse',
             'upper'  => $this->openid,
@@ -206,42 +206,42 @@ class WechatController extends Controller
     //操作记录		
     public function record(Request $request){
 
-	$input = $request->only(['openid','action']);	
+        $input = $request->only(['openid','action']);
 
-	$action = [
-	    'wechat',		//分享至微信好友	
-	    'esc_wechat', 	//取消分享给好友
-	    'timeline',		//分享至朋友圈	
-	    'esc_timeline',	//取消分享朋友圈
-	    'qq',		//分享到QQ
-	    'esc_qq',		//取消分享QQ
-	    'qzone',		//分享到QQ空间
-	    'esc_qzone'		//取消分享QQ空间		
-	];
+        $action = [
+            'wechat',		        //分享至微信好友
+            'esc_wechat', 	        //取消分享给好友
+            'timeline',		        //分享至朋友圈
+            'esc_timeline',	        //取消分享朋友圈
+            'qq',		            //分享到QQ
+            'esc_qq',		        //取消分享QQ
+            'qzone',		        //分享到QQ空间
+            'esc_qzone'		        //取消分享QQ空间
+        ];
 
-        $user = Session::get('w_user');
+            $user = Session::get('w_user');
 
-	if(e($input['openid']) !== $user[0]['id']){
+        if(e($input['openid']) !== $user[0]['id']){
 
-	    return response()->json(['success'=>false,'msg'=>'用户信息已过期，请刷新页面']);
+            return response()->json(['success'=>false,'msg'=>'用户信息已过期，请刷新页面']);
 
-	}
-	
-	if(!in_array($input['action'],$action)){
-	
-	    return response()->json(['success'=>false,'msg'=>'action值错误：'.$input['action']]);
+        }
 
-	}
-	
-	$record = [
-	    'openid' => $user[0]['id'],
-	    'path'   => $request->path(),
-	    'url'    => $request->getRequestUri(),
-	    'action' => $input['action'],
-	    'upper'  => $this->openid	
-	];
-	
-	try{
+        if(!in_array($input['action'],$action)){
+
+            return response()->json(['success'=>false,'msg'=>'action值错误：'.$input['action']]);
+
+        }
+
+        $record = [
+            'openid' => $user[0]['id'],
+            'path'   => $request->path(),
+            'url'    => $request->getRequestUri(),
+            'action' => $input['action'],
+            'upper'  => $this->openid
+        ];
+
+        try{
 
             SpreadRecordModel::create($record);
 
@@ -250,9 +250,9 @@ class WechatController extends Controller
             return response()->json(['success'=>false,'msg'=>$e->getMessage()]);
 
         }
-	
+
         return response()->json(['success'=>true,'msg'=>'记录成功！']);
 
-    }   
+    }
 
 }
