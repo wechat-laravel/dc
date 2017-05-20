@@ -116,17 +116,19 @@ class WechatController extends Controller
 
             $this->openid = $request->input('openid');
 
+            Session::push('openid',$request->input('openid'));
+
         }
+
 
         if ($request->has('mark')){
 
-            $record['mark'] = e($request->input('mark'));
+            $this->mark   = $request->input('mark');
 
-        }else{
-
-            $record['mark'] = '';
+            Session::push('mark',$request->input('mark'));
 
         }
+
 
         $oauth = $this->wechat->oauth;
 
@@ -211,6 +213,18 @@ class WechatController extends Controller
 
         Session::push('w_user',$info);
 
+        if (Session::has('openid')){
+
+            $this->openid = Session::get('openid');
+
+        }
+
+        if (Session::has('mark')){
+
+            $this->mark  = Session::get('mark');
+
+        }
+        
         return redirect('wechat/test?openid='.$this->openid.'&mark='.$this->mark);
 
     }
