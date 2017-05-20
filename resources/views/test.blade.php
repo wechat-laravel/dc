@@ -101,7 +101,7 @@
                         if(!ret.success){
 			                alert(ret.msg);
 			            }else{
-                            document.location.reload();
+                            mark = Math.random().toString(36).substr(2);
                         }
 		            }
                 });
@@ -135,6 +135,8 @@
                     success:function(ret){
                         if(!ret.success){
                             alert(ret.msg);
+                        }else{
+                            mark = Math.random().toString(36).substr(2);
                         }
                     }
                 });
@@ -168,6 +170,8 @@
                     success:function(ret){
                         if(!ret.success){
                             alert(ret.msg);
+                        }else{
+                            mark = Math.random().toString(36).substr(2);
                         }
                     }
                 });
@@ -201,6 +205,8 @@
                     success:function(ret){
                         if(!ret.success){
                             alert(ret.msg);
+                        }else{
+                            mark = Math.random().toString(36).substr(2);
                         }
                     }
                 });
