@@ -161,7 +161,7 @@ class WechatController extends Controller
 
         }
 
-        return view('test',['user'=>$user,'js'=>$js,'url'=>$request->getRequestUri(),'openid'=>$this->openid]);
+        return view('test',['user'=>$user,'js'=>$js,'url'=>$request->getRequestUri(),'upper'=>$this->openid]);
 
     }
 
@@ -236,7 +236,7 @@ class WechatController extends Controller
     //操作记录		
     public function record(Request $request){
 
-        $input = $request->only(['openid','action','url','mark']);
+        $input = $request->only(['openid','action','upper','mark']);
 
         $action = [
             'wechat',		        //分享至微信好友
@@ -264,11 +264,10 @@ class WechatController extends Controller
         }
 
         $record = [
-            'openid' => $input['openid'],
-            'url'    => e($input['url']),
+            'openid' => $user[0]['id'],
             'mark'   => e($input['mark']),
             'action' => $input['action'],
-            'upper'  => $this->openid
+            'upper'  => e($input['upper']),
         ];
 
         try{
