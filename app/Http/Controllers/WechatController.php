@@ -15,6 +15,8 @@ class WechatController extends Controller
 
     protected $openid = '';
 
+    protected $mark   = '';
+
     public function __construct()
     {
         $wechat = app('wechat');
@@ -116,6 +118,16 @@ class WechatController extends Controller
 
         }
 
+        if ($request->has('mark')){
+
+            $record['mark'] = e($request->input('mark'));
+
+        }else{
+
+            $record['mark'] = '';
+
+        }
+
         $oauth = $this->wechat->oauth;
 
         $js    = $this->wechat->js;
@@ -134,17 +146,8 @@ class WechatController extends Controller
             'ip'     => ip2long($request->ip()),
             'action' => 'browse',
             'url'    => $request->getRequestUri(),
+            'mark'   => $this->mark,
         ];
-
-        if ($request->has('mark')){
-
-            $record['mark'] = e($request->input('mark'));
-
-        }else{
-
-            $record['mark'] = '';
-
-        }
 
         try{
 
@@ -208,7 +211,7 @@ class WechatController extends Controller
 
         Session::push('w_user',$info);
 
-        return redirect('wechat/test');
+        return redirect('wechat/test?openid='.$this->openid.'&mark='.$this->mark);
 
     }
 
