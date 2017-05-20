@@ -166,7 +166,7 @@
             },
             success: function (res) {
                 $.ajax({
-                    url: 'http://dc.le71.cn/wechat/record?openid=<?=$user[0]['id']?>&action=qq&&mark='+mark,
+                    url: 'http://dc.le71.cn/wechat/record?openid=<?=$user[0]['id']?>&action=qq&mark='+mark,
                     success:function(ret){
                         if(!ret.success){
                             alert(ret.msg);

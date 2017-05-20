@@ -161,7 +161,7 @@ class WechatController extends Controller
 
         }
 
-        return view('test',['user'=>$user,'js'=>$js,'url'=>$request->getRequestUri()]);
+        return view('test',['user'=>$user,'js'=>$js,'url'=>$request->getRequestUri(),'openid'=>$this->openid]);
 
     }
 
@@ -264,7 +264,7 @@ class WechatController extends Controller
         }
 
         $record = [
-            'openid' => $user[0]['id'],
+            'openid' => $input['openid'],
             'url'    => e($input['url']),
             'mark'   => e($input['mark']),
             'action' => $input['action'],
