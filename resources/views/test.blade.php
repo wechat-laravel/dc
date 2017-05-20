@@ -60,6 +60,7 @@
 </div>
 </body>
 <script type="text/javascript" charset="UTF-8">
+    var mark = Math.random().toString(36).substr(2);
     wx.config(<?=$js->config(['onMenuShareTimeline','onMenuShareAppMessage','onMenuShareQQ','onMenuShareQZone'],false);?>);
     wx.ready(function(){
         wx.checkJsApi({
@@ -87,7 +88,7 @@
         wx.onMenuShareAppMessage({
             title: '发送给朋友-测试',
             desc: '记录该操作所有浏览和分享转发的操作记录',
-            link: 'http://dc.le71.cn/wechat/test?openid=<?=$user[0]['id']?>',
+            link: 'http://dc.le71.cn/wechat/test?openid=<?=$user[0]['id']?>&mark='+mark,
             imgUrl: 'https://mmbiz.qlogo.cn/mmbiz_png/TleSlXOm2myMbs8uDovXxkgIOFKFIfD0kO4m7ZTDgibXoFxmdoeNgFEibCn8dVlyicqwylwTiasssRrdVOGFqYFmYg/0?wx_fmt=png',
             trigger: function (res) {
                 // 不要尝试在trigger中使用ajax异步请求修改本次分享的内容，因为客户端分享操作是一个同步操作，这时候使用ajax的回包会还没有返回
@@ -95,17 +96,19 @@
             },
             success: function (res) {
 		        $.ajax({
-		            url: 'http://dc.le71.cn/wechat/record?openid=<?=$user[0]['id']?>&action=wechat&path=<?=$path?>',
+		            url: 'http://dc.le71.cn/wechat/record?openid=<?=$user[0]['id']?>&action=wechat&mark='+mark+'&url=<?=$url?>',
                     success:function(ret){
                         if(!ret.success){
 			                alert(ret.msg);
-			            }
+			            }else{
+                            document.location.reload();
+                        }
 		            }
                 });
             },
             cancel: function (res) {
 		        $.ajax({
-                    url: 'http://dc.le71.cn/wechat/record?openid=<?=$user[0]['id']?>&action=esc_wechat&path=<?=$path?>',
+                    url: 'http://dc.le71.cn/wechat/record?openid=<?=$user[0]['id']?>&action=esc_wechat&mark='+mark+'&url=<?=$url?>',
                     success:function(ret){
                         if(!ret.success){
                             alert(ret.msg);

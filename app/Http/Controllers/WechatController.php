@@ -93,7 +93,6 @@ class WechatController extends Controller
 
             $menus = $menu->all();
 
-
         }catch (\Exception $e){
 
             return response()->json(['success'=>false,'msg'=>$e->getMessage()]);
@@ -131,11 +130,21 @@ class WechatController extends Controller
 
         $record = [
             'openid' => $user[0]['id'],
-	        'path'   => $request->path(),
-            'url'    => $request->getRequestUri(),
-            'action' => 'browse',
             'upper'  => $this->openid,
+            'ip'     => ip2long($request->ip()),
+            'action' => 'browse',
+            'url'    => $request->getRequestUri(),
         ];
+
+        if ($request->has('mark')){
+
+            $record['mark'] = e($request->input('mark'));
+
+        }else{
+
+            $record['mark'] = '';
+
+        }
 
         try{
 
@@ -147,7 +156,7 @@ class WechatController extends Controller
 
         }
 
-        return view('test',['user'=>$user,'js'=>$js,'path'=>$request->path()]);
+        return view('test',['user'=>$user,'js'=>$js,'url'=>$request->getRequestUri()]);
 
     }
 
@@ -206,7 +215,7 @@ class WechatController extends Controller
     //操作记录		
     public function record(Request $request){
 
-        $input = $request->only(['openid','action','path']);
+        $input = $request->only(['openid','action','url','mark']);
 
         $action = [
             'wechat',		        //分享至微信好友
@@ -219,7 +228,7 @@ class WechatController extends Controller
             'esc_qzone'		        //取消分享QQ空间
         ];
 
-            $user = Session::get('w_user');
+        $user = Session::get('w_user');
 
         if(e($input['openid']) !== $user[0]['id']){
 
@@ -235,8 +244,8 @@ class WechatController extends Controller
 
         $record = [
             'openid' => $user[0]['id'],
-            'path'   => e($input['path']),
-            'url'    => $request->getRequestUri(),
+            'url'    => e($input['url']),
+            'mark'   => e($input['mark']),
             'action' => $input['action'],
             'upper'  => $this->openid
         ];
