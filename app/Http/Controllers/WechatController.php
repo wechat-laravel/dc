@@ -217,7 +217,7 @@ class WechatController extends Controller
 
             $openid = Session::get('openid');
 	 
-  	    $this->openid = $openid[0];
+  	        $this->openid = $openid[0];
 
         }
 
@@ -225,7 +225,7 @@ class WechatController extends Controller
 
             $mark  = Session::get('mark');
 
-	    $this->mark = $mark[0];
+	        $this->mark = $mark[0];
 
         }
         
@@ -249,8 +249,6 @@ class WechatController extends Controller
             'esc_qzone'		        //取消分享QQ空间
         ];
 	
-	//???		
-
         $user = Session::get('w_user');
 
         if(e($input['openid']) !== $user[0]['id']){
