@@ -215,13 +215,17 @@ class WechatController extends Controller
 
         if (Session::has('openid')){
 
-            $this->openid = Session::get('openid');
+            $openid = Session::get('openid');
+	 
+  	    $this->openid = $openid[0];
 
         }
 
         if (Session::has('mark')){
 
-            $this->mark  = Session::get('mark');
+            $mark  = Session::get('mark');
+
+	    $this->mark = $mark[0];
 
         }
         
