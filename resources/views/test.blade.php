@@ -131,7 +131,7 @@
             },
             success: function (res) {
                 $.ajax({
-                    url: 'http://dc.le71.cn/wechat/record?openid=<?=$user[0]['id']?>&action=timeline&path=<?=$path?>',
+                    url: 'http://dc.le71.cn/wechat/record?openid=<?=$user[0]['id']?>&action=timeline&mark='+mark+'&url=<?=$url?>',
                     success:function(ret){
                         if(!ret.success){
                             alert(ret.msg);
@@ -141,7 +141,7 @@
             },
             cancel: function (res) {
                 $.ajax({
-                    url: 'http://dc.le71.cn/wechat/record?openid=<?=$user[0]['id']?>&action=esc_timeline&path=<?=$path?>',
+                    url: 'http://dc.le71.cn/wechat/record?openid=<?=$user[0]['id']?>&action=esc_timeline&mark='+mark+'&url=<?=$url?>',
                     success:function(ret){
                         if(!ret.success){
                             alert(ret.msg);
@@ -164,7 +164,7 @@
             },
             success: function (res) {
                 $.ajax({
-                    url: 'http://dc.le71.cn/wechat/record?openid=<?=$user[0]['id']?>&action=qq&path=<?=$path?>',
+                    url: 'http://dc.le71.cn/wechat/record?openid=<?=$user[0]['id']?>&action=qq&&mark='+mark+'&url=<?=$url?>',
                     success:function(ret){
                         if(!ret.success){
                             alert(ret.msg);
@@ -174,7 +174,7 @@
             },
             cancel: function (res) {
                 $.ajax({
-                    url: 'http://dc.le71.cn/wechat/record?openid=<?=$user[0]['id']?>&action=esc_qq&path=<?=$path?>',
+                    url: 'http://dc.le71.cn/wechat/record?openid=<?=$user[0]['id']?>&action=esc_qq&mark='+mark+'&url=<?=$url?>',
                     success:function(ret){
                         if(!ret.success){
                             alert(ret.msg);
@@ -197,7 +197,7 @@
             },
             success: function (res) {
                 $.ajax({
-                    url: 'http://dc.le71.cn/wechat/record?openid=<?=$user[0]['id']?>&action=qzone&path=<?=$path?>',
+                    url: 'http://dc.le71.cn/wechat/record?openid=<?=$user[0]['id']?>&action=qzone&mark='+mark+'&url=<?=$url?>',
                     success:function(ret){
                         if(!ret.success){
                             alert(ret.msg);
@@ -207,7 +207,7 @@
             },
             cancel: function (res) {
                 $.ajax({
-                    url: 'http://dc.le71.cn/wechat/record?openid=<?=$user[0]['id']?>&action=esc_qzone&path=<?=$path?>',
+                    url: 'http://dc.le71.cn/wechat/record?openid=<?=$user[0]['id']?>&action=esc_qzone&mark='+mark+'&url=<?=$url?>',
                     success:function(ret){
                         if(!ret.success){
                             alert(ret.msg);
