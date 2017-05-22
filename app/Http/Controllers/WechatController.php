@@ -120,7 +120,6 @@ class WechatController extends Controller
 
         }
 
-
         if ($request->has('mark')){
 
             $this->mark   = $request->input('mark');
@@ -128,7 +127,6 @@ class WechatController extends Controller
             Session::push('mark',$request->input('mark'));
 
         }
-
 
         $oauth = $this->wechat->oauth;
 
@@ -141,6 +139,14 @@ class WechatController extends Controller
     	}
 
         $user = Session::get('w_user');
+
+        if ($this->mark){
+
+            $num = SpreadRecordModel::where('action','browse')->where('mark',$this->mark)->groupBy('openid')->count('id');
+
+            var_dump($num);
+            exit;
+        }
 
         $record = [
             'openid' => $user[0]['id'],
