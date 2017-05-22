@@ -225,7 +225,6 @@
                 alert(JSON.stringify(res));
             }
         });
-
     });
 
 </script>

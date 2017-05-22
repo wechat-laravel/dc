@@ -112,6 +112,9 @@ class WechatController extends Controller
 
         //上来先检测是否有openid，有暂时保存下
 
+	//用来判断是否多人点开同一个链接，说明发送到群内了
+	$nums = 1;
+
         if($request->has('openid')){
 
             $this->openid = $request->input('openid');
@@ -142,10 +145,10 @@ class WechatController extends Controller
 
         if ($this->mark){
 
-            $num = SpreadRecordModel::where('action','browse')->where('mark',$this->mark)->groupBy('openid')->count('id');
+            $num = SpreadRecordModel::select('id')->where('action','browse')->where('mark',$this->mark)->groupBy('openid')->get();
+			
+	    $nums = count($num->toArray());	    
 
-            var_dump($num);
-            exit;
         }
 
         $record = [
@@ -158,6 +161,15 @@ class WechatController extends Controller
         ];
 
         try{
+		
+ 	    if($nums > 2){
+		
+	        //只判断action为 wechat的，也就是发送给朋友的，判断是否发到群里了
+		$res = SpreadRecordModel::where('action','wechat')->where('mark',$this->mark)->first();		
+
+  		if($res) $res->update(['action'=>'wechat_group']);	
+	
+	    }	    
 
             SpreadRecordModel::create($record);
 
