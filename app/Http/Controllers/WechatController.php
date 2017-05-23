@@ -173,16 +173,18 @@ class WechatController extends Controller
                     $record['source'] = 'wechat_group';
 
                 }else{
-
+		    if($user[0]['id'] !== $upper->openid){
+			
+		    
                     $num = SpreadRecordModel::select('id')->where('action','browse')->where('source','wechat')
-                                              ->where('mark',$this->mark)->whereNotIn('openid',$upper->openid)->groupBy('openid')->get();
+                                              ->where('mark',$this->mark)->whereNotIn('openid',[$upper->openid,$user[0]['id']])->groupBy('openid')->get();
 
                     if ($num){
 
                         $nums = count($num->toArray());
 
                         //判断是否发到群里了
-                        if($nums > 1){
+                        if($nums >= 1){
 
                             try{
 
@@ -203,7 +205,7 @@ class WechatController extends Controller
 
                     }
                 }
-
+	        }
             }
 
         }
