@@ -112,6 +112,8 @@ class WechatController extends Controller
     public function test(Request $request){
 
 	    //Session::flush();
+	    //Session::forget('now_id');
+	    Session::forget('stay');
 	    //return 1;
         
         //上来先检测是否有openid，有暂时保存下
@@ -216,7 +218,7 @@ class WechatController extends Controller
 
             $last = SpreadRecordModel::create($record);
 
-            Session::push('now_id',$last->id);
+            Session::put('now_id',$last->id);
 
         }catch (Exception $e){
 
@@ -369,16 +371,16 @@ class WechatController extends Controller
             if (Session::has('stay')){
 
                 $stay = Session::get('stay');
+		
+                $stay = $stay+1;
 
-                $stay = $stay[0]+1;
-
-                Session::push('stay',$stay);
+                Session::put('stay',$stay);
 
             }else{
 
                 $stay = 1;
 
-                Session::push('stay',$stay);
+                Session::put('stay',$stay);
 
             }
 
@@ -387,7 +389,7 @@ class WechatController extends Controller
 
             try{
 
-                SpreadRecordModel::where('id',$now_id[0])->update(['stay'=>$stay]);
+                SpreadRecordModel::where('id',$now_id)->update(['stay'=>$stay]);
 
             }catch (Exception $e){
 
@@ -395,7 +397,7 @@ class WechatController extends Controller
 
             }
 
-            return response()->json(['success'=>true,'msg'=>'记录成功！']);
+            return response()->json(['success'=>true,'msg'=>['s'=>$stay,'id'=>$now_id]]);
 
         }else{
 
