@@ -112,9 +112,6 @@ class WechatController extends Controller
 	    //Session::flush();
 	    //return 1;
         
-        //用来判断是否多人点开同一个链接，说明发送到群内了
-        $nums = 1;
-
         //上来先检测是否有openid，有暂时保存下
         if($request->has('openid')){
 
@@ -177,14 +174,15 @@ class WechatController extends Controller
 
                 }else{
 
-                    $num = SpreadRecordModel::select('id')->where('action','browse')->where('source','wechat')->where('mark',$this->mark)->groupBy('openid')->get();
+                    $num = SpreadRecordModel::select('id')->where('action','browse')->where('source','wechat')
+                                              ->where('mark',$this->mark)->whereNotIn('openid',[$user[0]['id']])->groupBy('openid')->get();
 
                     if ($num){
 
                         $nums = count($num->toArray());
 
                         //判断是否发到群里了
-                        if($nums > 2){
+                        if($nums >= 2){
 
                             $res = SpreadRecordModel::where('action','wechat')->where('mark',$this->mark)->first();
 
