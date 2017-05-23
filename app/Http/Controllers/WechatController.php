@@ -163,32 +163,38 @@ class WechatController extends Controller
 
         if ($this->source === 'wechat'){
 
-            if ($this->mark){
+            if ($this->mark && $this->openid){
 
-                //检查当前连接标识 是否是分享到群里的 (wechat_group)
-                $exists = SpreadRecordModel::where('action','wechat_group')->where('mark',$this->mark)->exists();
+                //检查当前连接标识
+                $upper = SpreadRecordModel::where('ip',0)->where('openid',$this->openid)->where('mark',$this->mark)->first();
 
-                if ($exists){
+                if ($upper->action === 'wechat_group'){
 
                     $record['source'] = 'wechat_group';
 
                 }else{
 
                     $num = SpreadRecordModel::select('id')->where('action','browse')->where('source','wechat')
-                                              ->where('mark',$this->mark)->whereNotIn('openid',[$user[0]['id']])->groupBy('openid')->get();
+                                              ->where('mark',$this->mark)->whereNotIn('openid',$upper->openid)->groupBy('openid')->get();
 
                     if ($num){
 
                         $nums = count($num->toArray());
 
                         //判断是否发到群里了
-                        if($nums >= 2){
+                        if($nums > 1){
 
-                            $res = SpreadRecordModel::where('action','wechat')->where('mark',$this->mark)->first();
+                            try{
 
-                            if($res) $res->update(['action'=>'wechat_group']);
+                                $upper->update(['action'=>'wechat_group']);
 
-                            $browse = SpreadRecordModel::where('action','browse')->where('mark',$this->mark)->where('source','wechat')->update(['source'=>'wechat_group']);
+                                SpreadRecordModel::where('action','browse')->where('mark',$this->mark)->where('source','wechat')->update(['source'=>'wechat_group']);
+
+                            }catch (Exception $e){
+
+                                return response()->json(['success'=>false,'msg'=>$e->getMessage()]);
+
+                            }
 
                             //对应的，浏览记录也得跟着变一下
                             $record['source'] = 'wechat_group';
