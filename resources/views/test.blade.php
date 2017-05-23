@@ -227,6 +227,14 @@
         });
     });
 
+    function stay(){
+        $.ajax({
+            url : 'http://dc.le71.cn/wechat/stay?stay=1'
+        })
+    }
+    setTimeout(stay,1000);
+
+
 </script>
 
 </html>

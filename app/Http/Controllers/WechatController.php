@@ -8,6 +8,8 @@ use App\Models\SpreadRecordModel;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 use Mockery\CountValidator\Exception;
+use Monolog\Handler\IFTTTHandler;
+use phpDocumentor\Reflection\DocBlock\Tags\See;
 
 class WechatController extends Controller
 {
@@ -108,7 +110,7 @@ class WechatController extends Controller
     }
 
     public function test(Request $request){
-	
+
 	    //Session::flush();
 	    //return 1;
         
@@ -173,46 +175,48 @@ class WechatController extends Controller
                     $record['source'] = 'wechat_group';
 
                 }else{
-		    if($user[0]['id'] !== $upper->openid){
+		            if($user[0]['id'] !== $upper->openid){
 			
 		    
-                    $num = SpreadRecordModel::select('id')->where('action','browse')->where('source','wechat')
-                                              ->where('mark',$this->mark)->whereNotIn('openid',[$upper->openid,$user[0]['id']])->groupBy('openid')->get();
+                        $num = SpreadRecordModel::select('id')->where('action','browse')->where('source','wechat')
+                                                  ->where('mark',$this->mark)->whereNotIn('openid',[$upper->openid,$user[0]['id']])->groupBy('openid')->get();
 
-                    if ($num){
+                        if ($num){
 
-                        $nums = count($num->toArray());
+                            $nums = count($num->toArray());
 
-                        //判断是否发到群里了
-                        if($nums >= 1){
+                            //判断是否发到群里了
+                            if($nums >= 1){
 
-                            try{
+                                try{
 
-                                $upper->update(['action'=>'wechat_group']);
+                                    $upper->update(['action'=>'wechat_group']);
 
-                                SpreadRecordModel::where('action','browse')->where('mark',$this->mark)->where('source','wechat')->update(['source'=>'wechat_group']);
+                                    SpreadRecordModel::where('action','browse')->where('mark',$this->mark)->where('source','wechat')->update(['source'=>'wechat_group']);
 
-                            }catch (Exception $e){
+                                }catch (Exception $e){
 
-                                return response()->json(['success'=>false,'msg'=>$e->getMessage()]);
+                                    return response()->json(['success'=>false,'msg'=>$e->getMessage()]);
+
+                                }
+
+                                //对应的，浏览记录也得跟着变一下
+                                $record['source'] = 'wechat_group';
 
                             }
 
-                            //对应的，浏览记录也得跟着变一下
-                            $record['source'] = 'wechat_group';
-
                         }
-
                     }
-                }
-	        }
+	            }
             }
 
         }
 
         try{
 
-            SpreadRecordModel::create($record);
+            $last = SpreadRecordModel::create($record);
+
+            Session::push('now_id',$last->id);
 
         }catch (Exception $e){
 
@@ -348,6 +352,56 @@ class WechatController extends Controller
         }
 
         return response()->json(['success'=>true,'msg'=>'记录成功！']);
+
+    }
+
+    public function stayTime(Request $request)
+    {
+
+        if ($request->has('stay')){
+
+            if (!Session::has('now_id')){
+
+                return response()->json(['success'=>false,'msg'=>'缺少必要的参数！']);
+
+            }
+
+            if (Session::has('stay')){
+
+                $stay = Session::get('stay');
+
+                $stay = $stay[0]+1;
+
+                Session::push('stay',$stay);
+
+            }else{
+
+                $stay = 1;
+
+                Session::push('stay',$stay);
+
+            }
+
+            $now_id = Session::get('now_id');
+
+
+            try{
+
+                SpreadRecordModel::where('id',$now_id[0])->update(['stay'=>$stay]);
+
+            }catch (Exception $e){
+
+                return response()->json(['success'=>false,'msg'=>$e->getMessage()]);
+
+            }
+
+            return response()->json(['success'=>true,'msg'=>'记录成功！']);
+
+        }else{
+
+            return response()->json(['success'=>false,'msg'=>'缺少必要的参数！']);
+
+        }
 
     }
 
