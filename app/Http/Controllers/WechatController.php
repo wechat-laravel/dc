@@ -17,6 +17,8 @@ class WechatController extends Controller
 
     protected $mark   = '';
 
+    protected $source = 'wechat';
+
     public function __construct()
     {
         $wechat = app('wechat');
@@ -109,12 +111,11 @@ class WechatController extends Controller
 	
 	    //Session::flush();
 	    //return 1;
+        
+        //用来判断是否多人点开同一个链接，说明发送到群内了
+        $nums = 1;
 
         //上来先检测是否有openid，有暂时保存下
-
-	//用来判断是否多人点开同一个链接，说明发送到群内了
-	$nums = 1;
-
         if($request->has('openid')){
 
             $this->openid = $request->input('openid');
@@ -131,10 +132,20 @@ class WechatController extends Controller
 
         }
 
+        if ($request->has('source')){
+
+            $this->source = $request->input('source');
+
+            Session::push('source',$request->input('source'));
+
+        }
+
+
         $oauth = $this->wechat->oauth;
 
         $js    = $this->wechat->js;
 
+        //授权验证
         if (!Session::has('w_user')){
 
             return $oauth->redirect();
@@ -143,14 +154,6 @@ class WechatController extends Controller
 
         $user = Session::get('w_user');
 
-        if ($this->mark){
-
-            $num = SpreadRecordModel::select('id')->where('action','browse')->where('mark',$this->mark)->groupBy('openid')->get();
-			
-	    $nums = count($num->toArray());	    
-
-        }
-
         $record = [
             'openid' => $user[0]['id'],
             'upper'  => $this->openid,
@@ -158,18 +161,50 @@ class WechatController extends Controller
             'action' => 'browse',
             'url'    => $request->getRequestUri(),
             'mark'   => $this->mark,
+            'source' => $this->source,
         ];
 
-        try{
-		
- 	    if($nums > 2){
-		
-	        //只判断action为 wechat的，也就是发送给朋友的，判断是否发到群里了
-		$res = SpreadRecordModel::where('action','wechat')->where('mark',$this->mark)->first();		
+        if ($this->source === 'wechat'){
 
-  		if($res) $res->update(['action'=>'wechat_group']);	
-	
-	    }	    
+            if ($this->mark){
+
+                //检查当前连接标识 是否是分享到群里的 (wechat_group)
+                $exists = SpreadRecordModel::where('action','wechat_group')->where('mark',$this->mark)->exists();
+
+                if ($exists){
+
+                    $record['source'] = 'wechat_group';
+
+                }else{
+
+                    $num = SpreadRecordModel::select('id')->where('action','browse')->where('source','wechat')->where('mark',$this->mark)->groupBy('openid')->get();
+
+                    if ($num){
+
+                        $nums = count($num->toArray());
+
+                        //判断是否发到群里了
+                        if($nums > 2){
+
+                            $res = SpreadRecordModel::where('action','wechat')->where('mark',$this->mark)->first();
+
+                            if($res) $res->update(['action'=>'wechat_group']);
+
+                            $browse = SpreadRecordModel::where('action','browse')->where('mark',$this->mark)->where('source','wechat')->update(['source'=>'wechat_group']);
+
+                            //对应的，浏览记录也得跟着变一下
+                            $record['source'] = 'wechat_group';
+
+                        }
+
+                    }
+                }
+
+            }
+
+        }
+
+        try{
 
             SpreadRecordModel::create($record);
 
@@ -246,8 +281,16 @@ class WechatController extends Controller
 	        $this->mark = $mark[0];
 
         }
+
+        if (Session::has('source')){
+
+            $source = Session::get('source');
+
+            $this->source = $source[0];
+
+        }
         
-        return redirect('wechat/test?openid='.$this->openid.'&mark='.$this->mark);
+        return redirect('wechat/test?openid='.$this->openid.'&mark='.$this->mark.'&source='.$this->source);
 
     }
 
