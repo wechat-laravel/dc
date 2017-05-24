@@ -32,10 +32,10 @@ var hour = {
         }
     },
     dataZoom: [
-        {   // 这个dataZoom组件，默认控制x轴。
-            type: 'slider', // 这个 dataZoom 组件是 slider 型 dataZoom 组件
-            start: 0,      // 左边在 10% 的位置。
-            end: 50         // 右边在 60% 的位置。
+        {
+            type: 'slider',
+            start: 0,
+            end: 100
         }
     ],
     series: [
@@ -166,6 +166,13 @@ var day = {
             saveAsImage: {}
         }
     },
+    dataZoom: [
+        {
+            type: 'slider',
+            start: 0,
+            end: 100
+        }
+    ],
     calculable : true,
     xAxis:  {
         type: 'category',
@@ -173,7 +180,6 @@ var day = {
         data: ['5.18','5.19','5.20','5.21','5.22','5.23','5.24']
     },
     yAxis: {
-        bottom:'50%',
         type: 'value',
         axisLabel: {
             formatter: '{value}'
