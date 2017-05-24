@@ -10,9 +10,13 @@
     <link rel="stylesheet" href="{{ URL::asset('assets/css/adminlte/AdminLTE.min.css') }}">
     <link rel="stylesheet" href="{{ URL::asset('assets/css/adminlte/_all-skins.min.css') }}">
 </head>
-<body class="hold-transition skin-blue sidebar-mini">
+<style>
+    .ms-controller{
+        visibility: hidden
+    }
+</style>
+<body class="hold-transition skin-blue sidebar-mini" class="ms-controller" ms-controller="admin">
 <div class="wrapper">
-
     <header class="main-header">
         <!-- Logo -->
         <a href="#" class="logo">
@@ -480,12 +484,12 @@
         <!-- Content Header (Page header) -->
         <section class="content-header">
             <h1>
-                Dashboard
-                <small>Control panel</small>
+                控制台
+                <small>传播数据图</small>
             </h1>
             <ol class="breadcrumb">
                 <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-                <li class="active">Dashboard</li>
+                <li class="active">控制台</li>
             </ol>
         </section>
         {{--内容块        开始--}}
@@ -633,6 +637,8 @@
 <script src="{{ URL::asset('assets/js/bootstrap.min.js') }}"></script>
 <script src="{{ URL::asset('assets/js/adminlte/app.min.js') }}"></script>
 <script src="{{ URL::asset('assets/js/adminlte/demo.js') }}"></script>
+<script src="{{ URL::asset('assets/js/avalon.min.js') }}"></script>
+<script src="{{ URL::asset('assets/js/_layout/admin.js') }}"></script>
 </body>
 </html>
 @section('afterScript')
