@@ -106,16 +106,6 @@
 		            }
                 });
             },
-            cancel: function (res) {
-		        $.ajax({
-                    url: 'http://dc.le71.cn/wechat/record?openid=<?=$user[0]['id']?>&action=esc_wechat&mark='+mark+'&upper=<?=$upper?>',
-                    success:function(ret){
-                        if(!ret.success){
-                            alert(ret.msg);
-                        }                       
-                    }
-                });
-            },
             fail: function (res) {
                 alert(JSON.stringify(res));
             }
@@ -137,16 +127,6 @@
                             alert(ret.msg);
                         }else{
                             mark = Math.random().toString(36).substr(2);
-                        }
-                    }
-                });
-            },
-            cancel: function (res) {
-                $.ajax({
-                    url: 'http://dc.le71.cn/wechat/record?openid=<?=$user[0]['id']?>&action=esc_timeline&mark='+mark+'&upper=<?=$upper?>',
-                    success:function(ret){
-                        if(!ret.success){
-                            alert(ret.msg);
                         }
                     }
                 });
@@ -176,16 +156,6 @@
                     }
                 });
             },
-            cancel: function (res) {
-                $.ajax({
-                    url: 'http://dc.le71.cn/wechat/record?openid=<?=$user[0]['id']?>&action=esc_qq&mark='+mark+'&upper=<?=$upper?>',
-                    success:function(ret){
-                        if(!ret.success){
-                            alert(ret.msg);
-                        }
-                    }
-                });
-            },
             fail: function (res) {
                 alert(JSON.stringify(res));
             }
@@ -207,16 +177,6 @@
                             alert(ret.msg);
                         }else{
                             mark = Math.random().toString(36).substr(2);
-                        }
-                    }
-                });
-            },
-            cancel: function (res) {
-                $.ajax({
-                    url: 'http://dc.le71.cn/wechat/record?openid=<?=$user[0]['id']?>&action=esc_qzone&mark='+mark+'&upper=<?=$upper?>',
-                    success:function(ret){
-                        if(!ret.success){
-                            alert(ret.msg);
                         }
                     }
                 });

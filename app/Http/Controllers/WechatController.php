@@ -339,13 +339,9 @@ class WechatController extends Controller
 
         $action = [
             'wechat',		        //分享至微信好友
-            'esc_wechat', 	        //取消分享给好友
             'timeline',		        //分享至朋友圈
-            'esc_timeline',	        //取消分享朋友圈
             'qq',		            //分享到QQ
-            'esc_qq',		        //取消分享QQ
             'qzone',		        //分享到QQ空间
-            'esc_qzone'		        //取消分享QQ空间
         ];
 	
         $user = Session::get('w_user');

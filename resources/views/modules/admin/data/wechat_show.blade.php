@@ -56,7 +56,7 @@
             </div>
         </div>
         <div class="row">
-            <section class="connectedSortable ui-sortable">
+            <section class="col-md-12 col-sm-12 col-xs-12 connectedSortable ui-sortable">
                 <div class="nav-tabs-custom" style="cursor: move;">
                     <ul class="nav nav-tabs pull-right ui-sortable-handle">
                         <li class="pull-left header"><i class="fa fa-question-circle"></i>PV、UV、分享走势</li>
@@ -64,7 +64,57 @@
                         <li class="pull-left"><a href="#sales-chart" data-toggle="tab" :click="@onPUF('hour')" aria-expanded="false">每小时走势</a></li>
                     </ul>
                     <div class="tab-content">
-                        <div id="main" style="width: 100%;height: 400px;"></div>
+                        <div id="puf" style="width: 100%;height: 400px;"></div>
+                    </div>
+                </div>
+            </section>
+            <section class="col-md-12 col-sm-12 col-xs-12 connectedSortable ui-sortable">
+                <div class="nav-tabs-custom" style="cursor: move;">
+                    <ul class="nav nav-tabs pull-right ui-sortable-handle">
+                        <li class="pull-left header"><i class="fa fa-question-circle"></i>传播层级</li>
+                    </ul>
+                    <div class="tab-content">
+                        <div id="cbcj" style="width: 100%;height: 400px;"></div>
+                    </div>
+                </div>
+            </section>
+            <section class="col-md-6 col-sm-12 col-xs-12 connectedSortable ui-sortable">
+                <div class="nav-tabs-custom" style="cursor: move;">
+                    <ul class="nav nav-tabs pull-right ui-sortable-handle">
+                        <li class="pull-left header"><i class="fa fa-question-circle"></i>停留时长分布</li>
+                    </ul>
+                    <div class="tab-content">
+                        <div id="tlsc" style="width: 100%;height: 400px;"></div>
+                    </div>
+                </div>
+            </section>
+            <section class="col-md-6 col-sm-12 col-xs-12 connectedSortable ui-sortable">
+                <div class="nav-tabs-custom" style="cursor: move;">
+                    <ul class="nav nav-tabs pull-right ui-sortable-handle">
+                        <li class="pull-left header"><i class="fa fa-question-circle"></i>访问时间分布</li>
+                    </ul>
+                    <div class="tab-content">
+                        <div id="fwsj" style="width: 100%;height: 400px;"></div>
+                    </div>
+                </div>
+            </section>
+            <section class="col-md-6 col-sm-12 col-xs-12 connectedSortable ui-sortable">
+                <div class="nav-tabs-custom" style="cursor: move;">
+                    <ul class="nav nav-tabs pull-right ui-sortable-handle">
+                        <li class="pull-left header"><i class="fa fa-question-circle"></i>PV-微信内来源</li>
+                    </ul>
+                    <div class="tab-content">
+                        <div id="wxly" style="width: 100%;height: 400px;"></div>
+                    </div>
+                </div>
+            </section>
+            <section class="col-md-6 col-sm-12 col-xs-12 connectedSortable ui-sortable">
+                <div class="nav-tabs-custom" style="cursor: move;">
+                    <ul class="nav nav-tabs pull-right ui-sortable-handle">
+                        <li class="pull-left header"><i class="fa fa-question-circle"></i>分享去向</li>
+                    </ul>
+                    <div class="tab-content">
+                        <div id="fxqx" style="width: 100%;height: 400px;"></div>
                     </div>
                 </div>
             </section>
