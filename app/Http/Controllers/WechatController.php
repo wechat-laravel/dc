@@ -362,11 +362,14 @@ class WechatController extends Controller
 
         }
 
+        $level = SpreadRecordModel::where('openid',$user[0]['id'])->orderBy('created_at','desc')->first();
+
         $record = [
             'openid' => $user[0]['id'],
             'mark'   => e($input['mark']),
             'action' => $input['action'],
             'upper'  => e($input['upper']),
+            'level'  => $level->level
         ];
 
         try{
