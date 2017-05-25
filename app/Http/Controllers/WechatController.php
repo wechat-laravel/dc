@@ -162,7 +162,7 @@ class WechatController extends Controller
             'source' => $this->source,
         ];
 
-        $level = SpreadRecordModel::where('openid',$user[0]['id'])->where('action','browse')->orderyBy('created_at','desc')->first();
+        $level = SpreadRecordModel::where('openid',$user[0]['id'])->where('action','browse')->orderBy('created_at','desc')->first();
 
         //记录层级
         if ($this->openid){
@@ -173,7 +173,7 @@ class WechatController extends Controller
 
             }else{
 
-                $upper = SpreadRecordModel::where('openid',$this->openid)->where('action','browse')->orderyBy('created_at','desc')->first();
+                $upper = SpreadRecordModel::where('openid',$this->openid)->where('action','browse')->orderBy('created_at','desc')->first();
 
                 //只统计10层，再往下面去，都是按10层
                 if ($upper->level === 10){
