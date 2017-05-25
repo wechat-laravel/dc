@@ -111,17 +111,14 @@ class WechatController extends Controller
 
     public function test(Request $request){
 
-	    //Session::flush();
-	    //Session::forget('now_id');
 	    Session::forget('stay');
-	    //return 1;
-        
+
         //上来先检测是否有openid，有暂时保存下
         if($request->has('openid')){
 
             $this->openid = $request->input('openid');
 
-            Session::push('openid',$request->input('openid'));
+            Session::put('openid',$request->input('openid'));
 
         }
 
@@ -129,7 +126,7 @@ class WechatController extends Controller
 
             $this->mark   = $request->input('mark');
 
-            Session::push('mark',$request->input('mark'));
+            Session::put('mark',$request->input('mark'));
 
         }
 
@@ -137,7 +134,7 @@ class WechatController extends Controller
 
             $this->source = $request->input('source');
 
-            Session::push('source',$request->input('source'));
+            Session::put('source',$request->input('source'));
 
         }
 
@@ -164,6 +161,45 @@ class WechatController extends Controller
             'mark'   => $this->mark,
             'source' => $this->source,
         ];
+
+        $level = SpreadRecordModel::where('openid',$user[0]['id'])->where('action','browse')->orderyBy('created_at','desc')->first();
+
+        //记录层级
+        if ($this->openid){
+
+            if ($level->level !== 0){
+
+                $record['level'] = $level->level;
+
+            }else{
+
+                $upper = SpreadRecordModel::where('openid',$this->openid)->where('action','browse')->orderyBy('created_at','desc')->first();
+
+                //只统计10层，再往下面去，都是按10层
+                if ($upper->level === 10){
+
+                    $record['level'] = 10;
+
+                }else{
+
+                    $record['level'] = $upper->level + 1;
+                }
+
+            }
+
+        }else{
+
+            if ($level->level === 0){
+
+                $record['level'] = 1;
+
+            }else{
+
+                $record['level'] = $level->level;
+
+            }
+
+        }
 
         if ($this->source === 'wechat'){
 
@@ -230,16 +266,6 @@ class WechatController extends Controller
 
     }
 
-    public function text(){
-
-        //$js = $this->wechat->js;
-
-        //return view('test',['js'=>$js]);
-
-        return view('text');
-
-    }
-
     public  function oauth(){
 
         $oauth = $this->wechat->oauth;
@@ -282,7 +308,7 @@ class WechatController extends Controller
 
             $openid = Session::get('openid');
 	 
-  	        $this->openid = $openid[0];
+  	        $this->openid = $openid;
 
         }
 
@@ -290,7 +316,7 @@ class WechatController extends Controller
 
             $mark  = Session::get('mark');
 
-	        $this->mark = $mark[0];
+	        $this->mark = $mark;
 
         }
 
@@ -298,7 +324,7 @@ class WechatController extends Controller
 
             $source = Session::get('source');
 
-            $this->source = $source[0];
+            $this->source = $source;
 
         }
         
