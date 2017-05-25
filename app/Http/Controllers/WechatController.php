@@ -165,13 +165,21 @@ class WechatController extends Controller
         $level = SpreadRecordModel::where('openid',$user[0]['id'])->where('action','browse')->orderBy('created_at','desc')->first();
 
         //记录层级
-        if ($this->openid){
+        if ($level){
 
-            if ($level->level !== 0){
+            if ($level->level === 0){
+
+                $record['level'] = 1;
+
+            }else{
 
                 $record['level'] = $level->level;
 
-            }else{
+            }
+
+        }else{
+
+            if ($this->openid){
 
                 $upper = SpreadRecordModel::where('openid',$this->openid)->where('action','browse')->orderBy('created_at','desc')->first();
 
@@ -185,17 +193,9 @@ class WechatController extends Controller
                     $record['level'] = $upper->level + 1;
                 }
 
-            }
-
-        }else{
-
-            if ($level->level === 0){
-
-                $record['level'] = 1;
-
             }else{
 
-                $record['level'] = $level->level;
+                $record['level'] = 1;
 
             }
 
@@ -363,6 +363,8 @@ class WechatController extends Controller
         }
 
         $level = SpreadRecordModel::where('openid',$user[0]['id'])->orderBy('created_at','desc')->first();
+
+        if (!$level) return response()->json(['success'=>false,'msg'=>'非法的操作！']);
 
         $record = [
             'openid' => $user[0]['id'],
