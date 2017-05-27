@@ -372,7 +372,7 @@ var fwsj_data = {
     tooltip: {
         trigger: 'axis'
     },
-    color:['#0073B7','#00A65A','#F39C12'],
+    color:['#282828','#D66360'],
     legend: {
         left:'15%',
         data:['本H5','Top100 H5']
@@ -497,8 +497,6 @@ var fxqx_data = {
     ]
 };
 
-
-puf.setOption(puf_day);
 cbcj.setOption(cbcj_data);
 tlsc.setOption(tlsc_data);
 fwsj.setOption(fwsj_data);
@@ -506,7 +504,8 @@ wxly.setOption(wxly_data);
 fxqx.setOption(fxqx_data);
 
 var show = avalon.define({
-    $id   :"show",
+    $id   : "show",
+    top   : [],
     onPUF : function(res){
         // 使用刚指定的配置项和数据显示图表。
         if (res === 'hour'){
@@ -514,5 +513,20 @@ var show = avalon.define({
         }else{
             puf.setOption(puf_day);
         }
+    },
+    onData : function(){
+        $.ajax({
+            url:'/admin/data/wechat',
+            success:function (res) {
+                show.top = res.top;
+                puf_day.series[0].data = res.top.pv_everyday;
+                puf_day.series[1].data = res.top.uv_everyday;
+                puf_day.series[2].data = res.top.share_everyday;
+                puf_day.xAxis.data     = res.top.days;
+                puf.setOption(puf_day);
+            }
+        });
     }
 });
+
+show.onData();
