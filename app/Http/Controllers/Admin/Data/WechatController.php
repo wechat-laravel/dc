@@ -48,6 +48,13 @@ class WechatController extends Controller
                             ['value'=>0,'name'=>'公众号文章'],
                             ['value'=>0,'name'=>'其他'],                 //来源统计
                 ],
+                'action'=>[
+                    ['value'=>0,'name'=>'微信好友'],
+                    ['value'=>0,'name'=>'QQ好友'],
+                    ['value'=>0,'name'=>'朋友圈'],
+                    ['value'=>0,'name'=>'微信群'],
+                    ['value'=>0,'name'=>'QQ空间'],                         //分享统计
+                ],
             ];
 
             //最多统计7天
@@ -63,7 +70,7 @@ class WechatController extends Controller
             $uv = [[], [], [], [], [], [], [], []];
 
             //总浏览量
-            $res = SpreadRecordModel::select('openid','','action', 'stay', 'level', 'created_at')->orderBy('created_at', 'asc')->get();
+            $res = SpreadRecordModel::select('openid','source','action', 'stay', 'level', 'created_at')->orderBy('created_at', 'asc')->get();
 
             foreach ($res as $re) {
 
@@ -227,8 +234,42 @@ class WechatController extends Controller
                     }
 
                     //统计来源数据
+                    switch ($re->source){
 
+                        //单人对话
+                        case 'wechat':
 
+                            $top['browse'][0]['value'] += 1 ;
+
+                            break;
+
+                        //朋友圈
+                        case 'timeline':
+
+                            $top['browse'][1]['value'] += 1 ;
+
+                            break;
+
+                        //微信群
+                        case 'wechat_group':
+
+                            $top['browse'][2]['value'] += 1 ;
+
+                            break;
+
+                        case 'article':
+
+                            $top['browse'][3]['value'] += 1 ;
+
+                            break;
+
+                        //其他
+                        default :
+
+                            $top['browse'][4]['value'] += 1 ;
+
+                            break;
+                    }
 
 
                 } else {
@@ -272,6 +313,46 @@ class WechatController extends Controller
 
                     $top['level']['share'][$re->level] += 1;
 
+                    //统计分享去向
+                    switch ($re->action){
+
+                        //QQ好友
+                        case 'qq':
+
+                            $top['action'][1]['value'] += 1 ;
+
+                            break;
+
+                        //朋友圈
+                        case 'timeline':
+
+                            $top['action'][2]['value'] += 1 ;
+
+                            break;
+
+                        //微信群
+                        case 'wechat_group':
+
+                            $top['action'][3]['value'] += 1 ;
+
+                            break;
+
+
+
+                        case 'qzone':
+
+                            $top['action'][4]['value'] += 1 ;
+
+                            break;
+
+                        //默认分享给微信好友
+                        default :
+
+                            $top['action'][0]['value'] += 1 ;
+
+                            break;
+                    }
+
                 }
 
             }
@@ -290,9 +371,7 @@ class WechatController extends Controller
                 $top['stay']['this'][$i] = round(($top['stay']['this'][$i] * 100) / $top['pv_num']);
 
             }
-
-//            var_dump($top['stay']['this']);exit;
-
+            
             return response()->json(['success'=>true,'top'=>$top]);
 
         }

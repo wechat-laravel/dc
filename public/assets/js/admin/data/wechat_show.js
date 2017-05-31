@@ -498,8 +498,6 @@ var fxqx_data = {
 };
 
 fwsj.setOption(fwsj_data);
-wxly.setOption(wxly_data);
-fxqx.setOption(fxqx_data);
 
 var show = avalon.define({
     $id   : "show",
@@ -526,9 +524,13 @@ var show = avalon.define({
                 cbcj_data.series[2].data = res.top.level.share;
                 tlsc_data.series[0].data = res.top.stay.this;
                 tlsc_data.series[1].data = res.top.stay.this;
+                wxly_data.series[0].data = res.top.browse;
+                fxqx_data.series[0].data = res.top.action;
                 puf.setOption(puf_day);
                 cbcj.setOption(cbcj_data);
                 tlsc.setOption(tlsc_data);
+                wxly.setOption(wxly_data);
+                fxqx.setOption(fxqx_data);
             }
         });
     }
