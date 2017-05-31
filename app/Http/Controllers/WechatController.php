@@ -171,6 +171,8 @@ class WechatController extends Controller
 
                 $record['level'] = 1;
 
+                SpreadRecordModel::where('openid',$record['openid'])->update(['level'=>1]);
+
             }else{
 
                 $record['level'] = $level->level;

@@ -44,7 +44,7 @@
             <div class="col-md-3 col-sm-6 col-xs-12">
                 <div class="small-box bg-red text-center">
                     <div class="inner">
-                        <h4><i class="fa fa-clock-o"></i>&nbsp;&nbsp;@{{ top.stay_avg }}</h4>
+                        <h4><i class="fa fa-clock-o" style="margin-right:10px;"></i>@{{ top.stay_avg }}s</h4>
                         <span class="info-box-text">平均停留时长</span>
                     </div>
                     <ul class="list-inline">

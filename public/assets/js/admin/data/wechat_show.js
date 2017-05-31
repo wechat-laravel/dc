@@ -250,7 +250,7 @@ var cbcj_data = {
     calculable : true,
     xAxis:  {
         type: 'category',
-        data: ['第一层','第二层','第三层','第四层','第五层','第六层','第七层']
+        data: ['第一层','第二层','第三层','第四层','第五层','第六层','第七层','第八层','第九层','第十层']
     },
     yAxis: {
         type: 'value'
@@ -323,7 +323,7 @@ var tlsc_data = {
     calculable : true,
     xAxis:  {
         type: 'category',
-        data: ['0-5s','6-10s','11-20s','21-40s','41-80s','80-160s','160s以上']
+        data: ['0-5s','6-10s','11-20s','21-40s','41-80s','80-160s','161-320s','321-640s','641-1280s','1280s以上']
     },
     yAxis: {
         type: 'value'
@@ -497,8 +497,6 @@ var fxqx_data = {
     ]
 };
 
-cbcj.setOption(cbcj_data);
-tlsc.setOption(tlsc_data);
 fwsj.setOption(fwsj_data);
 wxly.setOption(wxly_data);
 fxqx.setOption(fxqx_data);
@@ -523,7 +521,14 @@ var show = avalon.define({
                 puf_day.series[1].data = res.top.uv_everyday;
                 puf_day.series[2].data = res.top.share_everyday;
                 puf_day.xAxis.data     = res.top.days;
+                cbcj_data.series[0].data = res.top.level.pv;
+                cbcj_data.series[1].data = res.top.level.uv;
+                cbcj_data.series[2].data = res.top.level.share;
+                tlsc_data.series[0].data = res.top.stay.this;
+                tlsc_data.series[1].data = res.top.stay.this;
                 puf.setOption(puf_day);
+                cbcj.setOption(cbcj_data);
+                tlsc.setOption(tlsc_data);
             }
         });
     }

@@ -22,20 +22,32 @@ class WechatController extends Controller
 
             //数据统计
             $top = [
-                'pv_num' => 0,  //PV总数
-                'pv_today' => 0,  //PV今天总数
-                'pv_yesterday' => 0,  //PV昨天总数
-                'pv_everyday' => [0, 0, 0, 0, 0, 0, 0], //pv
-                'uv_num' => 0,  //UV总数
-                'uv_today' => 0,  //UV今天总数
-                'uv_yesterday' => 0,  //UV昨天总数
+                'pv_num' => 0,                                          //PV总数
+                'pv_today' => 0,                                        //PV今天总数
+                'pv_yesterday' => 0,                                    //PV昨天总数
+                'pv_everyday' => [0, 0, 0, 0, 0, 0, 0],                 //pv
+                'uv_num' => 0,                                          //UV总数
+                'uv_today' => 0,                                        //UV今天总数
+                'uv_yesterday' => 0,                                    //UV昨天总数
                 'uv_everyday' => [0, 0, 0, 0, 0, 0, 0],
-                'share_num' => 0,  //分享总数
-                'share_today' => 0,  //分享今天总数
-                'share_yesterday' => 0,  //分享昨天总数
+                'share_num' => 0,                                       //分享总数
+                'share_today' => 0,                                     //分享今天总数
+                'share_yesterday' => 0,                                 //分享昨天总数
                 'share_everyday' => [0, 0, 0, 0, 0, 0, 0],
-                'stay_avg' => 0,  //平均停留时长
+                'stay_avg' => 0,                                        //平均停留时长
                 'days' => [],
+                'level' => ['pv'=>[0,0,0,0,0,0,0,0,0,0,0],
+                            'uv'=>[0,0,0,0,0,0,0,0,0,0,0],
+                            'share'=>[0,0,0,0,0,0,0,0,0,0,0]],          //传播层级统计(放了11个单元，方便每一层直接对应，最后去掉头一个单元)
+                'stay' => ['this'=>[0,0,0,0,0,0,0,0,0,0],
+                            'all'=>[0,0,0,0,0,0,0,0,0,0]],              //停留时长统计
+                'browse'=>[
+                            ['value'=>0,'name'=>'单人对话'],
+                            ['value'=>0,'name'=>'朋友圈'],
+                            ['value'=>0,'name'=>'微信群'],
+                            ['value'=>0,'name'=>'公众号文章'],
+                            ['value'=>0,'name'=>'其他'],                 //来源统计
+                ],
             ];
 
             //最多统计7天
@@ -51,7 +63,7 @@ class WechatController extends Controller
             $uv = [[], [], [], [], [], [], [], []];
 
             //总浏览量
-            $res = SpreadRecordModel::select('openid', 'action', 'stay', 'level', 'created_at')->orderBy('created_at', 'asc')->get();
+            $res = SpreadRecordModel::select('openid','','action', 'stay', 'level', 'created_at')->orderBy('created_at', 'asc')->get();
 
             foreach ($res as $re) {
 
@@ -161,11 +173,63 @@ class WechatController extends Controller
 
                         $top['uv_num'] += 1;
 
+                        $top['level']['uv'][$re->level] += 1;
+
                     }
 
                     $top['pv_num'] += 1;
 
+                    $top['level']['pv'][$re->level] += 1;
+
                     $top['stay_avg'] += $re->stay;
+
+                    //时间段统计
+                    if ($re->stay <= 5){
+
+                        $top['stay']['this'][0] += 1;
+
+                    }elseif ($re->stay > 5 && $re->stay <= 10 ){
+
+                        $top['stay']['this'][1] += 1;
+
+                    }elseif ($re->stay > 10 && $re->stay <= 20 ){
+
+                        $top['stay']['this'][2] += 1;
+
+                    }elseif ($re->stay > 20 && $re->stay <= 40 ){
+
+                        $top['stay']['this'][3] += 1;
+
+                    }elseif ($re->stay > 40 && $re->stay <= 80 ){
+
+                        $top['stay']['this'][4] += 1;
+
+                    }elseif ($re->stay > 80 && $re->stay <= 160 ){
+
+                        $top['stay']['this'][5] += 1;
+
+                    }elseif ($re->stay > 160 && $re->stay <= 320 ){
+
+                        $top['stay']['this'][6] += 1;
+
+                    }elseif ($re->stay > 320 && $re->stay <= 640 ){
+
+                        $top['stay']['this'][7] += 1;
+
+                    }elseif ($re->stay > 640 && $re->stay <= 1280 ){
+
+                        $top['stay']['this'][8] += 1;
+
+                    }elseif ($re->stay > 1280 ){
+
+                        $top['stay']['this'][9] += 1;
+
+                    }
+
+                    //统计来源数据
+
+
+
 
                 } else {
 
@@ -206,11 +270,28 @@ class WechatController extends Controller
 
                     $top['share_num'] += 1;
 
+                    $top['level']['share'][$re->level] += 1;
+
                 }
 
             }
 
             $top['stay_avg'] = intval($top['stay_avg'] / $top['pv_num']);
+
+            array_shift($top['level']['pv']);
+
+            array_shift($top['level']['uv']);
+
+            array_shift($top['level']['share']);
+
+            //计算各个时间段的占比
+            for ($i =0 ;$i <10; $i++){
+
+                $top['stay']['this'][$i] = round(($top['stay']['this'][$i] * 100) / $top['pv_num']);
+
+            }
+
+//            var_dump($top['stay']['this']);exit;
 
             return response()->json(['success'=>true,'top'=>$top]);
 
