@@ -17,7 +17,6 @@ class WechatController extends Controller
      */
     public function index(Request $request)
     {
-
         if ($request->ajax()) {
 
             //数据统计
@@ -53,9 +52,37 @@ class WechatController extends Controller
                     ['value'=>0,'name'=>'QQ好友'],
                     ['value'=>0,'name'=>'朋友圈'],
                     ['value'=>0,'name'=>'微信群'],
-                    ['value'=>0,'name'=>'QQ空间'],                         //分享统计
+                    ['value'=>0,'name'=>'QQ空间'],                       //分享统计
                 ],
+                'current'=>[                                             //当日的每小时走势
+                    'day'   => [],
+                    'pv'    => [
+                        0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+                    ],
+                    'uv'    => [
+                        0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+                    ],
+                    'share' => [
+                        0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+                    ],
+                ],
+                'visit'=>[                                               //访问时间分布
+                    'this'=>[
+                        0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+                    ],
+                    'all'=>[
+                        0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+                    ],
+                ]
             ];
+
+            $day = date('m-d',time());
+
+            for($i=0;$i<24;$i++){
+
+                $top['current']['day'][] = $day.' '.$i.':00';
+
+            }
 
             //最多统计7天
 
@@ -74,6 +101,8 @@ class WechatController extends Controller
 
             foreach ($res as $re) {
 
+                //var_dump();exit;
+
                 //PV,UV,分享统计与走势
                 if ($re->action === 'browse') {
 
@@ -81,6 +110,8 @@ class WechatController extends Controller
                     if (strtotime($re->created_at) >= $days[0]) {
 
                         $top['pv_today'] += 1;
+
+                        $top['current']['pv'][intval(substr($re->created_at,11,2))] += 1;
 
                         $uv[0] = [];
 
@@ -91,6 +122,8 @@ class WechatController extends Controller
                             $top['uv_today'] += 1;
 
                             $top['uv_everyday'][6] += 1;
+
+                            $top['current']['uv'][intval(substr($re->created_at,11,2))] += 1;
 
                         }
 
@@ -271,6 +304,7 @@ class WechatController extends Controller
                             break;
                     }
 
+                    $top['visit']['this'][intval(substr($re->created_at,11,2))] += 1;
 
                 } else {
 
@@ -280,6 +314,8 @@ class WechatController extends Controller
                         $top['share_today'] += 1;
 
                         $top['share_everyday'][6] += 1;
+
+                        $top['current']['share'][intval(substr($re->created_at,11,2))] += 1;
 
                     } elseif (strtotime($re->created_at) >= $days[1] && strtotime($re->created_at) < $days[0]) {
 
@@ -337,8 +373,6 @@ class WechatController extends Controller
 
                             break;
 
-
-
                         case 'qzone':
 
                             $top['action'][4]['value'] += 1 ;
@@ -371,7 +405,15 @@ class WechatController extends Controller
                 $top['stay']['this'][$i] = round(($top['stay']['this'][$i] * 100) / $top['pv_num']);
 
             }
-            
+
+            //计算访问时间的各时间段的占比
+
+            for ($i =0 ;$i <24; $i++){
+
+                $top['visit']['this'][$i] = round(($top['visit']['this'][$i] * 100) / $top['pv_num']);
+
+            }
+
             return response()->json(['success'=>true,'top'=>$top]);
 
         }

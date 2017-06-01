@@ -22,16 +22,6 @@ var puf_hour = {
             saveAsImage: {}
         }
     },
-    calculable : true,
-    xAxis:  {
-        type: 'time',
-        splitLine: {
-            show: false
-        }
-    },
-    yAxis: {
-        type: 'value'
-    },
     dataZoom: [
         {
             type: 'slider',
@@ -39,36 +29,23 @@ var puf_hour = {
             end: 100
         }
     ],
+    calculable : true,
+    xAxis:  {
+        type: 'category',
+        boundaryGap: false,
+        data: ['5.18','5.19','5.20','5.21','5.22','5.23','5.24']
+    },
+    yAxis: {
+        type: 'value',
+        axisLabel: {
+            formatter: '{value}'
+        }
+    },
     series: [
         {
             name:'PV',
             type:'line',
-            data:[
-                {name:'2016/12/18 00:00', value:['2016/12/18 00:00', 11]},
-                {name:'2016/12/18 01:00', value:['2016/12/18 01:00', 22]},
-                {name:'2016/12/18 02:00', value:['2016/12/18 02:00', 35]},
-                {name:'2016/12/18 03:00', value:['2016/12/18 03:00', 41]},
-                {name:'2016/12/18 04:00', value:['2016/12/18 04:00', 60]},
-                {name:'2016/12/18 05:00', value:['2016/12/18 05:00', 75]},
-                {name:'2016/12/18 06:00', value:['2016/12/18 06:00', 80]},
-                {name:'2016/12/18 07:00', value:['2016/12/18 07:00', 60]},
-                {name:'2016/12/18 08:00', value:['2016/12/18 08:00', 50]},
-                {name:'2016/12/18 09:00', value:['2016/12/18 09:00', 35]},
-                {name:'2016/12/18 10:00', value:['2016/12/18 10:00', 30]},
-                {name:'2016/12/18 11:00', value:['2016/12/18 11:00', 25]},
-                {name:'2016/12/18 12:00', value:['2016/12/18 12:00', 51]},
-                {name:'2016/12/18 13:00', value:['2016/12/18 13:00', 66]},
-                {name:'2016/12/18 14:00', value:['2016/12/18 14:00', 77]},
-                {name:'2016/12/18 15:00', value:['2016/12/18 15:00', 81]},
-                {name:'2016/12/18 16:00', value:['2016/12/18 16:00', 73]},
-                {name:'2016/12/18 17:00', value:['2016/12/18 17:00', 66]},
-                {name:'2016/12/18 18:00', value:['2016/12/18 18:00', 52]},
-                {name:'2016/12/18 19:00', value:['2016/12/18 19:00', 37]},
-                {name:'2016/12/18 20:00', value:['2016/12/18 20:00', 31]},
-                {name:'2016/12/18 21:00', value:['2016/12/18 21:00', 30]},
-                {name:'2016/12/18 22:00', value:['2016/12/18 22:00', 20]},
-                {name:'2016/12/18 23:00', value:['2016/12/18 23:00', 11]}
-            ],
+            data:[10, 39, 50, 30, 21,20,8],
             smooth:true,
             markPoint: {
                 data: [
@@ -80,32 +57,7 @@ var puf_hour = {
             name:'UV',
             type:'line',
             smooth:true,
-            data:[
-                {name:'2016/12/18 00:00', value:['2016/12/18 00:00', 2]},
-                {name:'2016/12/18 01:00', value:['2016/12/18 01:00', 8]},
-                {name:'2016/12/18 02:00', value:['2016/12/18 02:00', 16]},
-                {name:'2016/12/18 03:00', value:['2016/12/18 03:00', 20]},
-                {name:'2016/12/18 04:00', value:['2016/12/18 04:00', 25]},
-                {name:'2016/12/18 05:00', value:['2016/12/18 05:00', 28]},
-                {name:'2016/12/18 06:00', value:['2016/12/18 06:00', 29]},
-                {name:'2016/12/18 07:00', value:['2016/12/18 07:00', 30]},
-                {name:'2016/12/18 08:00', value:['2016/12/18 08:00', 38]},
-                {name:'2016/12/18 09:00', value:['2016/12/18 09:00', 40]},
-                {name:'2016/12/18 10:00', value:['2016/12/18 10:00', 42]},
-                {name:'2016/12/18 11:00', value:['2016/12/18 11:00', 46]},
-                {name:'2016/12/18 12:00', value:['2016/12/18 12:00', 57]},
-                {name:'2016/12/18 13:00', value:['2016/12/18 13:00', 60]},
-                {name:'2016/12/18 14:00', value:['2016/12/18 14:00', 62]},
-                {name:'2016/12/18 15:00', value:['2016/12/18 15:00', 67]},
-                {name:'2016/12/18 16:00', value:['2016/12/18 16:00', 75]},
-                {name:'2016/12/18 17:00', value:['2016/12/18 17:00', 78]},
-                {name:'2016/12/18 18:00', value:['2016/12/18 18:00', 81]},
-                {name:'2016/12/18 19:00', value:['2016/12/18 19:00', 88]},
-                {name:'2016/12/18 20:00', value:['2016/12/18 20:00', 90]},
-                {name:'2016/12/18 21:00', value:['2016/12/18 21:00', 95]},
-                {name:'2016/12/18 22:00', value:['2016/12/18 22:00', 90]},
-                {name:'2016/12/18 23:00', value:['2016/12/18 23:00', 92]}
-            ],
+            data:[15, 27, 24, 31, 18, 12, 66],
             markPoint: {
                 data: [
                     {type: 'max', name: '最大值'}
@@ -116,32 +68,7 @@ var puf_hour = {
             name:'分享',
             type:'line',
             smooth:true,
-            data:[
-                {name:'2016/12/18 00:00', value:['2016/12/18 00:00', 0]},
-                {name:'2016/12/18 01:00', value:['2016/12/18 01:00', 2]},
-                {name:'2016/12/18 02:00', value:['2016/12/18 02:00', 9]},
-                {name:'2016/12/18 03:00', value:['2016/12/18 03:00', 11]},
-                {name:'2016/12/18 04:00', value:['2016/12/18 04:00', 16]},
-                {name:'2016/12/18 05:00', value:['2016/12/18 05:00', 21]},
-                {name:'2016/12/18 06:00', value:['2016/12/18 06:00', 22]},
-                {name:'2016/12/18 07:00', value:['2016/12/18 07:00', 24]},
-                {name:'2016/12/18 08:00', value:['2016/12/18 08:00', 27]},
-                {name:'2016/12/18 09:00', value:['2016/12/18 09:00', 29]},
-                {name:'2016/12/18 10:00', value:['2016/12/18 10:00', 33]},
-                {name:'2016/12/18 11:00', value:['2016/12/18 11:00', 35]},
-                {name:'2016/12/18 12:00', value:['2016/12/18 12:00', 36]},
-                {name:'2016/12/18 13:00', value:['2016/12/18 13:00', 39]},
-                {name:'2016/12/18 14:00', value:['2016/12/18 14:00', 45]},
-                {name:'2016/12/18 15:00', value:['2016/12/18 15:00', 49]},
-                {name:'2016/12/18 16:00', value:['2016/12/18 16:00', 51]},
-                {name:'2016/12/18 17:00', value:['2016/12/18 17:00', 56]},
-                {name:'2016/12/18 18:00', value:['2016/12/18 18:00', 61]},
-                {name:'2016/12/18 19:00', value:['2016/12/18 19:00', 62]},
-                {name:'2016/12/18 20:00', value:['2016/12/18 20:00', 67]},
-                {name:'2016/12/18 21:00', value:['2016/12/18 21:00', 70]},
-                {name:'2016/12/18 22:00', value:['2016/12/18 22:00', 73]},
-                {name:'2016/12/18 23:00', value:['2016/12/18 23:00', 79]}
-            ],
+            data:[31, 45, 40, 28, 11, 8, 13],
             markPoint: {
                 data: [
                     {type: 'max', name: '最大值'}
@@ -497,8 +424,6 @@ var fxqx_data = {
     ]
 };
 
-fwsj.setOption(fwsj_data);
-
 var show = avalon.define({
     $id   : "show",
     top   : [],
@@ -515,19 +440,25 @@ var show = avalon.define({
             url:'/admin/data/wechat',
             success:function (res) {
                 show.top = res.top;
-                puf_day.series[0].data = res.top.pv_everyday;
-                puf_day.series[1].data = res.top.uv_everyday;
-                puf_day.series[2].data = res.top.share_everyday;
-                puf_day.xAxis.data     = res.top.days;
+                puf_hour.xAxis.data      = res.top.current.day;
+                puf_hour.series[0].data  = res.top.current.pv;
+                puf_hour.series[1].data  = res.top.current.uv;
+                puf_hour.series[2].data  = res.top.current.share;
+                puf_day.series[0].data   = res.top.pv_everyday;
+                puf_day.series[1].data   = res.top.uv_everyday;
+                puf_day.series[2].data   = res.top.share_everyday;
+                puf_day.xAxis.data       = res.top.days;
                 cbcj_data.series[0].data = res.top.level.pv;
                 cbcj_data.series[1].data = res.top.level.uv;
                 cbcj_data.series[2].data = res.top.level.share;
+                fwsj_data.series[0].data = res.top.visit.this;
                 tlsc_data.series[0].data = res.top.stay.this;
-                tlsc_data.series[1].data = res.top.stay.this;
                 wxly_data.series[0].data = res.top.browse;
                 fxqx_data.series[0].data = res.top.action;
+                puf.setOption(puf_hour);
                 puf.setOption(puf_day);
                 cbcj.setOption(cbcj_data);
+                fwsj.setOption(fwsj_data);
                 tlsc.setOption(tlsc_data);
                 wxly.setOption(wxly_data);
                 fxqx.setOption(fxqx_data);
