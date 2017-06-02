@@ -316,6 +316,7 @@
                     <ul class="treeview-menu">
                         <li class="active"><a href="#"><i class="fa fa-circle-o"></i>微信传播</a></li>
                         <li><a href="/admin/data/wechat"><i class="fa fa-circle-o"></i>传播数据图</a></li>
+                        <li><a href="/admin/data/wechat_people"><i class="fa fa-circle-o"></i>传播关系图</a></li>
                     </ul>
                 </li>
                 <li class="treeview">
