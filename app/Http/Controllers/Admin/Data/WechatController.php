@@ -421,11 +421,4 @@ class WechatController extends Controller
         return view('modules.admin.data.wechat_show');
     }
 
-    public function people()
-    {
-
-        return view('modules.admin.data.wechat_people');
-
-    }
-
 }

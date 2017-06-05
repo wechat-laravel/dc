@@ -30,7 +30,6 @@ var wgt_data = {
     animationDuration: 3000,
     animationEasingUpdate: 'quinticInOut',
     series: [{
-        name: '原点',
         type: 'graph',
         layout: 'force',
 
@@ -42,8 +41,8 @@ var wgt_data = {
             "symbolSize": 30,
             "value": 27
         }, {
-            "name": "a",
-            "value": 15,
+            "name": "小明",
+            "value":1,
             "category": "第一级"
         }, {
             "name": "b",
@@ -77,7 +76,7 @@ var wgt_data = {
         links: [
         {
             "source": "原点",
-            "target": "a"
+            "target": "小明"
         }, {
             "source": "原点",
             "target": "b"
@@ -85,10 +84,10 @@ var wgt_data = {
             "source": "原点",
             "target": "c"
         }, {
-            "source": "a",
+            "source": "小明",
             "target": "aa"
         }, {
-            "source": "a",
+            "source": "小明",
             "target": "bb"
         }, {
             "source": "c",
@@ -141,4 +140,30 @@ var wgt_data = {
     }]
 };
 
-wgt.setOption(wgt_data);
+
+var show = avalon.define({
+    $id   : "show",
+    top   : [],
+    onPUF : function(res){
+        // 使用刚指定的配置项和数据显示图表。
+        if (res === 'hour'){
+            puf.setOption(puf_hour);
+        }else{
+            puf.setOption(puf_day);
+        }
+    },
+    onData : function(){
+        $.ajax({
+            url:'/admin/data/wechat_people',
+            success:function (res) {
+                if(res.success){
+                    wgt_data.series[0].data = res.data.data;
+                    wgt_data.series[0].links = res.data.links;
+                    wgt.setOption(wgt_data);
+                }
+            }
+        });
+    }
+});
+
+show.onData();
