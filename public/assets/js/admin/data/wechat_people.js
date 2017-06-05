@@ -1,7 +1,6 @@
 var wgt  = echarts.init(document.getElementById('wgt'));
 
 var wgt_data = {
-    height : 500,
     backgroundColor: new echarts.graphic.RadialGradient(0.3, 0.3, 0.8, [{
         offset: 0,
         color: '#f7f8fa'
@@ -144,12 +143,14 @@ var wgt_data = {
 var show = avalon.define({
     $id   : "show",
     top   : [],
+    shows : 'wang',
     onPUF : function(res){
         // 使用刚指定的配置项和数据显示图表。
-        if (res === 'hour'){
-            puf.setOption(puf_hour);
+        if (res === 'wang'){
+            show.shows = 'wang';
+            wgt.setOption(wgt_data);
         }else{
-            puf.setOption(puf_day);
+            show.shows = 'tab';
         }
     },
     onData : function(){
