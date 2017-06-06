@@ -20,9 +20,11 @@ class WechatPeopleController extends Controller
         if ($request->ajax()){
 
             $data = [
-                    'user'  => [],                                                     //存储openid对应的用户名
-                    'data'  => [['name'=>'起点','symbolSize'=>30,'value'=>0]],         //网状图数据
-                    'links' => [],                                                     //阶层链接
+                    'levels' => [],                                                     //记录当前文章有几个层级
+                    'cate'   => [],                                                     //层级格式
+                    'user'   => [],                                                     //存储openid对应的用户名
+                    'data'   => [['name'=>'起点','symbolSize'=>30,'value'=>0]],         //网状图数据
+                    'links'  => [],                                                     //阶层链接
             ];
 
             $res = SpreadRecordModel::select('openid','upper','source','level')
@@ -36,6 +38,14 @@ class WechatPeopleController extends Controller
                                 ])->get();
 
             foreach ($res as $re){
+
+                if (!in_array($re->level_name,$data['levels'])){
+
+                    $data['levels'][] = $re->level_name;
+
+                    $data['cate'][] = ['name'=>$re->level_name];
+
+                }
 
                 $data['user'][$re->openid] = $re->user->name;
 

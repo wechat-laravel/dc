@@ -143,7 +143,7 @@ var wgt_data = {
 var show = avalon.define({
     $id   : "show",
     top   : [],
-    shows : 'wang',
+    shows : 'tab',
     onPUF : function(res){
         // 使用刚指定的配置项和数据显示图表。
         if (res === 'wang'){
@@ -158,8 +158,10 @@ var show = avalon.define({
             url:'/admin/data/wechat_people',
             success:function (res) {
                 if(res.success){
+                    wgt_data.legend[0].data = res.data.levels;
                     wgt_data.series[0].data = res.data.data;
                     wgt_data.series[0].links = res.data.links;
+                    wgt_data.series[0].categories = res.data.cate;
                     wgt.setOption(wgt_data);
                 }
             }
