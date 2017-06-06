@@ -63,28 +63,28 @@
     var mark = Math.random().toString(36).substr(2);
     wx.config(<?=$js->config(['onMenuShareTimeline','onMenuShareAppMessage','onMenuShareQQ','onMenuShareQZone'],false);?>);
     wx.ready(function(){
-        wx.checkJsApi({
-            jsApiList: [
-                'onMenuShareTimeline',
-                'onMenuShareAppMessage',
-		        'onMenuShareQZone',
-		        'onMenuShareQQ'
-            ],
-            success: function (res) {
-                if(res.checkResult.onMenuShareQQ !== true){
-                   alert('当前设备不支持分享到QQ');
-                }
-                if(res.checkResult.onMenuShareTimeline !== true){
-                    alert('当前设备不支持分享到朋友圈');
-                }
-                if(res.checkResult.onMenuShareAppMessage !== true){
-                    alert('当前设备不支持分享给好友');
-                }
-                if(res.checkResult.onMenuShareQZone !== true){
-                    alert('当前设备不支持分享到QQ空间');
-                }
-            }
-        });
+//        wx.checkJsApi({
+//            jsApiList: [
+//                'onMenuShareTimeline',
+//                'onMenuShareAppMessage',
+//		        'onMenuShareQZone',
+//		        'onMenuShareQQ'
+//            ],
+//            success: function (res) {
+//                if(res.checkResult.onMenuShareQQ !== true){
+//                   alert('当前设备不支持分享到QQ');
+//                }
+//                if(res.checkResult.onMenuShareTimeline !== true){
+//                    alert('当前设备不支持分享到朋友圈');
+//                }
+//                if(res.checkResult.onMenuShareAppMessage !== true){
+//                    alert('当前设备不支持分享给好友');
+//                }
+//                if(res.checkResult.onMenuShareQZone !== true){
+//                    alert('当前设备不支持分享到QQ空间');
+//                }
+//            }
+//        });
         wx.onMenuShareAppMessage({
             title: '发送给朋友-测试',
             desc: '记录该操作所有浏览和分享转发的操作记录',
