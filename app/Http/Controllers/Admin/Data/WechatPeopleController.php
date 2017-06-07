@@ -17,6 +17,7 @@ class WechatPeopleController extends Controller
      */
     public function index(Request $request)
     {
+
         if ($request->ajax()){
 
             $data = [
@@ -33,7 +34,7 @@ class WechatPeopleController extends Controller
                                 ->groupBy('openid')
                                 ->with([
                                     'user'=>function($query){
-                                        $query->select('openid','name','city');
+                                        $query->select('openid','name');
                                     }
                                 ])->get();
 

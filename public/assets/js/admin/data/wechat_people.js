@@ -140,6 +140,7 @@ var wgt_data = {
 };
 
 
+
 var show = avalon.define({
     $id   : "show",
     top   : [],
@@ -166,7 +167,18 @@ var show = avalon.define({
                 }
             }
         });
-    }
+    },
+    onDown: function (e) {
+        console.log($(this));
+    } 
 });
 
 show.onData();
+
+$(document).on('click','#people i',function () {
+    if($(this).attr('class') === 'glyphicon glyphicon-triangle-right'){
+        $(this).attr('class','glyphicon glyphicon-triangle-bottom');
+    }else{
+        $(this).attr('class','glyphicon glyphicon-triangle-right');
+    }
+});

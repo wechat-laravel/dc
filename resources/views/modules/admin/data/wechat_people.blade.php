@@ -13,7 +13,7 @@
                     <div class="tab-content">
                         <div id="wgt" ms-visible="@shows==='wang'" style="width: 100%;height: 800px;"></div>
                         <div ms-visible="@shows==='tab'" style="width: 100%;">
-                            <table class="table table-bordered">
+                            <table class="table table-bordered" id="people">
                                 <thead>
                                 <tr>
                                     <th width="350px;">昵称</th>
@@ -56,6 +56,15 @@
                                 <tr>
                                     <td><span style="margin-left: 16px;">小红红</span></td>
                                     <td>3</td>
+                                    <td>Otto</td>
+                                    <td>11</td>
+                                    <td>11</td>
+                                    <td>11</td>
+                                    <td>11</td>
+                                </tr>
+                                <tr>
+                                    <td><span style="margin-left: 8px;">小红红</span></td>
+                                    <td>2</td>
                                     <td>Otto</td>
                                     <td>11</td>
                                     <td>11</td>
