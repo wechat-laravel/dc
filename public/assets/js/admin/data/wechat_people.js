@@ -176,9 +176,31 @@ var show = avalon.define({
 show.onData();
 
 $(document).on('click','#people i',function () {
+
     if($(this).attr('class') === 'glyphicon glyphicon-triangle-right'){
+
         $(this).attr('class','glyphicon glyphicon-triangle-bottom');
-    }else{
-        $(this).attr('class','glyphicon glyphicon-triangle-right');
+
+        var id = $(this).parent().attr('id');
+
+        var ci = $(this).parent().parent();
+
+        $.ajax({
+
+            url:'/admin/data/wechat_down?id='+id,
+
+            success : function (ret) {
+
+                if(ret.success){
+
+                    ci.after(ret.html);
+
+                }else{
+
+                    console.log(0);
+
+                }
+            }
+        });
     }
 });
