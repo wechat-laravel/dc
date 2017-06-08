@@ -145,6 +145,7 @@ var show = avalon.define({
     $id   : "show",
     top   : [],
     shows : 'tab',
+    peoples : [],
     onPUF : function(res){
         // 使用刚指定的配置项和数据显示图表。
         if (res === 'wang'){
@@ -168,12 +169,21 @@ var show = avalon.define({
             }
         });
     },
+    onPeople: function(){
+        $.ajax({
+            url:'/admin/data/wechat_peoples',
+            success:function (ret) {
+                show.peoples = ret.data;
+            }
+        })
+    },
     onDown: function (e) {
         console.log($(this));
     } 
 });
 
 show.onData();
+show.onPeople();
 
 $(document).on('click','#people i',function () {
 

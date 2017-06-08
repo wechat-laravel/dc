@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin\Data;
 
+use App\Models\SpreadPeopleModel;
 use App\Models\SpreadRecordModel;
 use Illuminate\Http\Request;
 
@@ -21,11 +22,11 @@ class WechatPeopleController extends Controller
         if ($request->ajax()){
 
             $data = [
-                    'levels' => [],                                                     //记录当前文章有几个层级
-                    'cate'   => [],                                                     //层级格式
-                    'user'   => [],                                                     //存储openid对应的用户名
-                    'data'   => [['name'=>'起点','symbolSize'=>30,'value'=>0]],         //网状图数据
-                    'links'  => [],                                                     //阶层链接
+                    'levels'  => [],                                                     //记录当前文章有几个层级
+                    'cate'    => [],                                                     //层级格式
+                    'user'    => [],                                                     //存储openid对应的用户名
+                    'data'    => [['name'=>'起点','symbolSize'=>30,'value'=>0]],         //网状图数据
+                    'links'   => [],                                                     //阶层链接
             ];
 
             $res = SpreadRecordModel::select('openid','upper','source','level')
@@ -93,12 +94,32 @@ class WechatPeopleController extends Controller
 
     }
 
+    public function peoples(Request $request)
+    {
+
+        $people = SpreadPeopleModel::where('level',1)->paginate(10);
+
+        return response($people);
+
+    }
 
     public function onDown(Request $request)
     {
         $id = $request->input('id');
 
         $id = intval(ltrim($id,'s'));
+
+        $current = SpreadPeopleModel::find($id);
+
+        if ($current){
+
+            //找自己的下级，该表缺少一个upper的字段
+//            SpreadPeopleModel::where('level',$current->level+1)->where('')
+
+        }else{
+
+            return response()->json(['success'=>false,'msg'=>'非法的请求！']);
+        }
 
         $str ="<tr><td id=".$id."><i style='margin-left:8px;' class='glyphicon glyphicon-triangle-right'></i>asdkjkjashd</td><td>2</td><td>Otto</td><td>11</td><td>11</td><td>11</td><td>11</td></tr>";
 

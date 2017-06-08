@@ -17,78 +17,24 @@
                                 <thead>
                                 <tr>
                                     <th width="350px;">昵称</th>
-                                    <th>所在层级</th>
-                                    <th width="150px;">下级层数 / 下级人数</th>
-                                    <th width="80px;">阅读次数</th>
+                                    <th width="100px;">所在层级</th>
+                                    <th>下级层数 / 下级人数</th>
+                                    <th>阅读次数</th>
                                     <th>阅读时间</th>
-                                    <th width="70px;">性别</th>
+                                    <th>性别</th>
                                     <th>地址</th>
                                 </tr>
                                 </thead>
                                 <tbody>
-                                <tr>
-                                    <td id="s1"><i class="glyphicon glyphicon-triangle-right"></i>Yang</td>
-                                    <td>1</td>
-                                    <td>Otto</td>
-                                    <td>11</td>
-                                    <td>11</td>
-                                    <td>11</td>
-                                    <td>11</td>
-                                </tr>
-                                {{--<tr>--}}
-                                    {{--<td><i style="margin-left: 8px;" class="glyphicon glyphicon-triangle-right"></i>asdkjkjashd</td>--}}
-                                    {{--<td>2</td>--}}
-                                    {{--<td>Otto</td>--}}
-                                    {{--<td>11</td>--}}
-                                    {{--<td>11</td>--}}
-                                    {{--<td>11</td>--}}
-                                    {{--<td>11</td>--}}
-                                {{--</tr>--}}
-                                {{--<tr>--}}
-                                    {{--<td><i style="margin-left: 16px;" class="glyphicon glyphicon-triangle-right"></i>小明</td>--}}
-                                    {{--<td>3</td>--}}
-                                    {{--<td>Otto</td>--}}
-                                    {{--<td>11</td>--}}
-                                    {{--<td>11</td>--}}
-                                    {{--<td>11</td>--}}
-                                    {{--<td>11</td>--}}
-                                {{--</tr>--}}
-                                {{--<tr>--}}
-                                    {{--<td><span style="margin-left: 16px;">小红红</span></td>--}}
-                                    {{--<td>3</td>--}}
-                                    {{--<td>Otto</td>--}}
-                                    {{--<td>11</td>--}}
-                                    {{--<td>11</td>--}}
-                                    {{--<td>11</td>--}}
-                                    {{--<td>11</td>--}}
-                                {{--</tr>--}}
-                                {{--<tr>--}}
-                                    {{--<td><span style="margin-left: 8px;">小红红</span></td>--}}
-                                    {{--<td>2</td>--}}
-                                    {{--<td>Otto</td>--}}
-                                    {{--<td>11</td>--}}
-                                    {{--<td>11</td>--}}
-                                    {{--<td>11</td>--}}
-                                    {{--<td>11</td>--}}
-                                {{--</tr>--}}
-                                <tr>
-                                    <td id="s2"><i class="glyphicon glyphicon-triangle-right"></i>阳癫疯丶</td>
-                                    <td>1</td>
-                                    <td>Otto</td>
-                                    <td>11</td>
-                                    <td>11</td>
-                                    <td>11</td>
-                                    <td>11</td>
-                                </tr>
-                                {{--<tr>--}}
-                                    {{--<td><i style="margin-left: 80px;" class="glyphicon glyphicon-triangle-right"></i>AI.静静 15515363087askdlasldkjasl</td>--}}
-                                    {{--<td>3</td>--}}
-                                    {{--<td>Otto</td>--}}
-                                    {{--<td>11</td>--}}
-                                    {{--<td>11</td>--}}
-                                    {{--<td>11</td>--}}
-                                    {{--<td>11</td>--}}
-                                {{--</tr>--}}
+                                    <tr ms-for="el in @peoples">
+                                        <td ms-attr="{id:'s'+@el.id}"><i class="glyphicon glyphicon-triangle-right"></i>@{{ el.name }}</td>
+                                        <td>@{{ el.level }}</td>
+                                        <td>@{{ el.level_num }} / @{{ el.people_num }}</td>
+                                        <td>@{{ el.read_num }}</td>
+                                        <td>@{{ el.read_at }}</td>
+                                        <td>@{{ el.sex_name }}</td>
+                                        <td>@{{ el.province }} - @{{ el.city }}</td>
+                                    </tr>
                                 </tbody>
                             </table>
                         </div>
