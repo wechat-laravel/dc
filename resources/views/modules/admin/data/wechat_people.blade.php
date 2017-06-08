@@ -27,7 +27,10 @@
                                 </thead>
                                 <tbody>
                                     <tr ms-for="el in @peoples">
-                                        <td ms-attr="{id:'s'+@el.id}"><i class="glyphicon glyphicon-triangle-right"></i>@{{ el.name }}</td>
+                                        <td :attr="{id:'s'+@el.id}">
+                                            <i :if="@el.level_num>0" class="glyphicon glyphicon-triangle-right"></i>
+                                            @{{ el.name }}
+                                        </td>
                                         <td>@{{ el.level }}</td>
                                         <td>@{{ el.level_num }} / @{{ el.people_num }}</td>
                                         <td>@{{ el.read_num }}</td>

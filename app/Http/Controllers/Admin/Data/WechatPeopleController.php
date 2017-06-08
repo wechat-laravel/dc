@@ -113,6 +113,27 @@ class WechatPeopleController extends Controller
 
         if ($current){
 
+            $openids = SpreadRecordModel::select('openid')->where('level',$current->level+1)->where('upper',$current->openid)->groupBy('openid')->get();
+
+            $ops = [];
+
+            foreach ($openids as $op){
+
+                $ops[] = $op->openid;
+
+            }
+
+            $res = SpreadPeopleModel::whereIn('openid',$ops)->get();
+
+            $str = "";
+
+            foreach ($res as $re){
+
+                $str .= "<tr><td id=s".$re->id."><i style='margin-left:8px;' class='glyphicon glyphicon-triangle-right'></i>$re->name</td><td>$re->level</td><td>".$re->level_num." / ".$re->people_num."</td><td>$re->read_num</td><td>$re->read_at</td><td>$re->sex_name</td><td>".$re->province.'-'.$re->city."</td></tr>";
+
+            }
+
+            return response()->json(['success'=>true,'html'=>$str]);
             //找自己的下级，该表缺少一个upper的字段
 //            SpreadPeopleModel::where('level',$current->level+1)->where('')
 
@@ -121,9 +142,5 @@ class WechatPeopleController extends Controller
             return response()->json(['success'=>false,'msg'=>'非法的请求！']);
         }
 
-        $str ="<tr><td id=".$id."><i style='margin-left:8px;' class='glyphicon glyphicon-triangle-right'></i>asdkjkjashd</td><td>2</td><td>Otto</td><td>11</td><td>11</td><td>11</td><td>11</td></tr>";
-
-
-        return response()->json(['success'=>true,'html'=>$str]);
     }
 }
