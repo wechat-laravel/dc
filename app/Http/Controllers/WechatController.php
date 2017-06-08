@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 
 use App\Models\GrantUserModel;
+use App\Models\SpreadPeopleModel;
 use App\Models\SpreadRecordModel;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
@@ -150,7 +151,7 @@ class WechatController extends Controller
 
     	}
 
-        $user = Session::get('w_user');
+        $user   = Session::get('w_user');
 
         $record = [
             'openid' => $user[0]['id'],
@@ -200,6 +201,39 @@ class WechatController extends Controller
                 $record['level'] = 1;
 
             }
+
+        }
+
+        //记录在用户关系表里
+        $people = SpreadPeopleModel::where('openid',$user[0]['id'])->first();
+
+        if ($people){
+
+            $people->read_at = time();
+
+            $people->read_num += 1;
+
+            $people->update();
+
+        }else{
+
+            SpreadPeopleModel::create([
+
+                'name'      => $user[0]['name'],
+
+                'level'     => $record['level'],
+
+                'read_at'   => time(),
+
+                'openid'    => $record['openid'],
+
+                'sex'       => $user[0]['original']['sex'],
+
+                'province'  => $user[0]['original']['province'],
+
+                'city'      => $user[0]['original']['city']
+
+            ]);
 
         }
 
