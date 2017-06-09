@@ -308,7 +308,7 @@ class WechatController extends Controller
 
                     }
 
-                    var_dump($up->people_ids);exit;
+//                    var_dump($up->people_ids);exit;
 
 
                 }
