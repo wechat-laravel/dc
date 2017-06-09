@@ -299,7 +299,7 @@ class WechatController extends Controller
 
                 if ($upr->upper){
 
-                    $up = SpreadPeopleModel::where('opeind',$upr->upper)->first();
+                    $up = SpreadPeopleModel::where('openid',$upr->upper)->first();
 
                     //下级层数记录
                     if ($up->level_num < $upr->level-1){
