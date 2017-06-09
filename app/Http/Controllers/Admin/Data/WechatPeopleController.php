@@ -129,7 +129,17 @@ class WechatPeopleController extends Controller
 
             foreach ($res as $re){
 
-                $str .= "<tr><td id=s".$re->id."><i style='margin-left:8px;' class='glyphicon glyphicon-triangle-right'></i>$re->name</td><td>$re->level</td><td>".$re->level_num." / ".$re->people_num."</td><td>$re->read_num</td><td>$re->read_at</td><td>$re->sex_name</td><td>".$re->province.'-'.$re->city."</td></tr>";
+                $margin = ($re->level-1)*10;
+
+                if ($re->level_num){
+
+                    $str .= "<tr><td id=s".$re->id."><i style='margin-left:".$margin."px;' class='glyphicon glyphicon-triangle-right'></i>$re->name</td><td>$re->level</td><td>".$re->level_num." / ".$re->people_num."</td><td>$re->read_num</td><td>$re->read_at</td><td>$re->sex_name</td><td>".$re->province.'-'.$re->city."</td></tr>";
+                    
+                }else{
+
+                    $str .= "<tr><td id=s".$re->id."><i style='margin-left:".$margin."px;'></i>$re->name</td><td>$re->level</td><td>".$re->level_num." / ".$re->people_num."</td><td>$re->read_num</td><td>$re->read_at</td><td>$re->sex_name</td><td>".$re->province.'-'.$re->city."</td></tr>";
+                    
+                }
 
             }
 

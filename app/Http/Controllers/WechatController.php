@@ -204,39 +204,6 @@ class WechatController extends Controller
 
         }
 
-        //记录在用户关系表里
-        $people = SpreadPeopleModel::where('openid',$user[0]['id'])->first();
-
-        if ($people){
-
-            $people->read_at = time();
-
-            $people->read_num += 1;
-
-            $people->update();
-
-        }else{
-
-            SpreadPeopleModel::create([
-
-                'name'      => $user[0]['name'],
-
-                'level'     => $record['level'],
-
-                'read_at'   => time(),
-
-                'openid'    => $record['openid'],
-
-                'sex'       => $user[0]['original']['sex'],
-
-                'province'  => $user[0]['original']['province'],
-
-                'city'      => $user[0]['original']['city']
-
-            ]);
-
-        }
-
         if ($this->source === 'wechat'){
 
             if ($this->mark && $this->openid){
@@ -249,8 +216,8 @@ class WechatController extends Controller
                     $record['source'] = 'wechat_group';
 
                 }else{
+
 		            if($user[0]['id'] !== $upper->openid){
-			
 		    
                         $num = SpreadRecordModel::select('id')->where('action','browse')->where('source','wechat')
                                                   ->where('mark',$this->mark)->whereNotIn('openid',[$upper->openid,$user[0]['id']])->groupBy('openid')->get();
@@ -289,6 +256,64 @@ class WechatController extends Controller
         try{
 
             $last = SpreadRecordModel::create($record);
+
+            //记录在用户关系表里
+            $people = SpreadPeopleModel::where('openid',$user[0]['id'])->first();
+
+            if ($people){
+
+                $people->read_at = time();
+
+                $people->read_num += 1;
+
+                $people->update();
+
+            }else{
+
+                SpreadPeopleModel::create([
+
+                    'name'      => $user[0]['name'],
+
+                    'level'     => $record['level'],
+
+                    'read_at'   => time(),
+
+                    'openid'    => $record['openid'],
+
+                    'sex'       => $user[0]['original']['sex'],
+
+                    'province'  => $user[0]['original']['province'],
+
+                    'city'      => $user[0]['original']['city']
+
+                ]);
+
+            }
+
+
+            if ($record['upper']){
+
+                //找到传播记录表 该openid的第一条信息，找到自己的上一级，（以第一次为准）
+
+                $upr = SpreadRecordModel::where('openid',$record['openid'])->orderBy('created_at','asc')->first();
+
+                if ($upr->upper){
+
+                    $up = SpreadPeopleModel::where('opeind',$upr->upper)->first();
+
+                    //下级层数记录
+                    if ($up->level_num < $upr->level-1){
+
+                        $up->level_num = $upr->level-1;
+
+                    }
+
+                    var_dump($up->people_ids);exit;
+
+
+                }
+
+            }
 
             Session::put('now_id',$last->id);
 
