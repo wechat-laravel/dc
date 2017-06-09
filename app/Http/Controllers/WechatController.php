@@ -301,6 +301,8 @@ class WechatController extends Controller
 
                     $up = SpreadPeopleModel::where('openid',$upr->upper)->first();
 
+		    $st = SpreadPeopleModel::where('openid',$upr->openid)->first(); 
+
                     //下级层数记录
                     if ($up->level_num < $upr->level-1){
 
@@ -310,7 +312,16 @@ class WechatController extends Controller
 
                     $ids = explode(',',$up->people_ids);
 
-                    var_dump($ids);exit;
+		    if(array_search($st->id,$ids) === false){
+
+			
+			$up->people_ids .= ','.$st->id;	
+
+			$up->people_num += 1;	  
+
+		    }
+			
+		    $up->update();
                     
                 }
 
