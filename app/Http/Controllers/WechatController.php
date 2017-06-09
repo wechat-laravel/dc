@@ -290,43 +290,33 @@ class WechatController extends Controller
 
             }
 
+            //从传播记录表中中找到
+            $upr = SpreadRecordModel::where('openid',$record['openid'])->orderBy('created_at','asc')->first();
 
-            if ($record['upper']){
+            if ($upr->upper){
 
-                //找到传播记录表 该openid的第一条信息，找到自己的上一级，（以第一次为准）
+                //上级
+                $up = SpreadPeopleModel::where('openid',$upr->upper)->first();
 
-                $upr = SpreadRecordModel::where('openid',$record['openid'])->orderBy('created_at','asc')->first();
+                $st = SpreadPeopleModel::where('openid',$upr->openid)->first();
 
-                if ($upr->upper){
+                $ids = explode(',',$up->people_ids);
 
-                    $up = SpreadPeopleModel::where('openid',$upr->upper)->first();
+                //如果上级没有，就一直循环下去，直到顶级
+                if(array_search($st->id,$ids) === false){
 
-		    $st = SpreadPeopleModel::where('openid',$upr->openid)->first(); 
+                    $result = $this->upper($upr->upper,$st->id,$st->level);
 
-                    //下级层数记录
-                    if ($up->level_num < $upr->level-1){
+                    if (!$result){
 
-                        $up->level_num = $upr->level-1;
+                        return $result;
 
                     }
 
-                    $ids = explode(',',$up->people_ids);
-
-		    if(array_search($st->id,$ids) === false){
-
-			
-			$up->people_ids .= ','.$st->id;	
-
-			$up->people_num += 1;	  
-
-
-		    }
-			
-		    $up->update();
-                    
                 }
 
             }
+
 
             Session::put('now_id',$last->id);
 
@@ -503,6 +493,47 @@ class WechatController extends Controller
         }else{
 
             return response()->json(['success'=>false,'msg'=>'缺少必要的参数！']);
+
+        }
+
+    }
+
+    public function upper($openid,$id,$level)
+    {
+        try{
+
+            //上级
+            $up = SpreadPeopleModel::where('openid',$openid)->first();
+
+            //下级层数记录
+            if ($up->level_num < $level-1){
+
+                $up->level_num = $level-1;
+
+            }
+
+            $up->people_ids .= ','.$id;
+
+            $up->people_num += 1;
+
+            $up->update();
+
+            //查找上级，如果找不到了就结束
+            $upper =  SpreadRecordModel::where('openid',$openid)->orderBy('created_at','asc')->first();
+
+            if ($upper->upper){
+
+                $this->upper($upper->upper,$id,$level);
+
+            }else{
+
+                return true;
+
+            }
+
+        }catch (Exception $e){
+
+            return response()->json(['success'=>false,'msg'=>$e->getMessage()]);
 
         }
 
