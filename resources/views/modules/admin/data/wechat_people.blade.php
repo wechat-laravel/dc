@@ -28,7 +28,7 @@
                                 <tbody>
                                     <tr ms-for="el in @peoples">
                                         <td :attr="{id:'s'+@el.id}">
-                                            <i :if="@el.level_num>0" class="glyphicon glyphicon-triangle-right"></i>
+                                            <i ms-class="[@el.level_num>0 ? 'glyphicon glyphicon-triangle-right' : '']"></i>
                                             @{{ el.name }}
                                         </td>
                                         <td>@{{ el.level }}</td>
