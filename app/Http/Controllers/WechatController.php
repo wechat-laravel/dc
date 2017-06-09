@@ -319,6 +319,7 @@ class WechatController extends Controller
 
 			$up->people_num += 1;	  
 
+
 		    }
 			
 		    $up->update();
