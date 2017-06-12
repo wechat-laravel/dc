@@ -306,10 +306,7 @@ class WechatController extends Controller
                 //如果上级没有，就一直循环下去，直到顶级
                 if(array_search($st->id,$ids) === false){
 
-                    $result = $this->upper($level->upper,$st->id,$st->level);
-
-//                    if (!$result)  return $result;
-                    var_dump($result);exit;
+                    $this->upper($level->upper,$st->id,$st->level);
 
                 }
 
