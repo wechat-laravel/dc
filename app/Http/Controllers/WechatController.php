@@ -296,7 +296,7 @@ class WechatController extends Controller
 
             if ($level->upper){
                 
-		//上级
+		        //上级
                 $up = SpreadPeopleModel::where('openid',$level->upper)->first();
 
                 $st = SpreadPeopleModel::where('openid',$level->openid)->first();
@@ -308,12 +308,12 @@ class WechatController extends Controller
 
                     $result = $this->upper($level->upper,$st->id,$st->level);
 
-                    if (!$result)  return $result;
+//                    if (!$result)  return $result;
+                    var_dump($result);exit;
 
                 }
 
             }
-
 
             Session::put('now_id',$last->id);
 
