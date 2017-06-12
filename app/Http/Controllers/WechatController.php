@@ -163,7 +163,7 @@ class WechatController extends Controller
             'source' => $this->source,
         ];
 
-        $level = SpreadRecordModel::where('openid',$user[0]['id'])->where('action','browse')->orderBy('created_at','desc')->first();
+        $level = SpreadRecordModel::where('openid',$user[0]['id'])->where('action','browse')->orderBy('created_at','asc')->first();
 
         //记录层级
         if ($level){
@@ -295,8 +295,8 @@ class WechatController extends Controller
             }
 
             if ($level->upper){
-
-                //上级
+                
+		//上级
                 $up = SpreadPeopleModel::where('openid',$level->upper)->first();
 
                 $st = SpreadPeopleModel::where('openid',$level->openid)->first();
@@ -498,7 +498,7 @@ class WechatController extends Controller
     public function upper($openid,$id,$level)
     {
         try{
-
+		
             //上级
             $up = SpreadPeopleModel::where('openid',$openid)->first();
 
@@ -518,9 +518,7 @@ class WechatController extends Controller
             //查找上级，如果找不到了就结束
             if ($up->upper){
 
-                $upper = SpreadPeopleModel::where('openid',$up->upper)->first();
-
-                $this->upper($upper->upper,$id,$level);
+                $this->upper($up->upper,$id,$level);
 
             }else{
 
