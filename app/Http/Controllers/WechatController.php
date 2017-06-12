@@ -282,6 +282,8 @@ class WechatController extends Controller
 
                     'upper'     => $level->upper,
 
+                    'source'    => $level->source,
+
                     'sex'       => $user[0]['original']['sex'],
 
                     'province'  => $user[0]['original']['province'],
@@ -292,28 +294,21 @@ class WechatController extends Controller
 
             }
 
-            //从传播记录表中中找到
-            $upr = SpreadRecordModel::where('openid',$record['openid'])->orderBy('created_at','asc')->first();
-
-            if ($upr->upper){
+            if ($level->upper){
 
                 //上级
-                $up = SpreadPeopleModel::where('openid',$upr->upper)->first();
+                $up = SpreadPeopleModel::where('openid',$level->upper)->first();
 
-                $st = SpreadPeopleModel::where('openid',$upr->openid)->first();
+                $st = SpreadPeopleModel::where('openid',$level->openid)->first();
 
                 $ids = explode(',',$up->people_ids);
 
                 //如果上级没有，就一直循环下去，直到顶级
                 if(array_search($st->id,$ids) === false){
 
-                    $result = $this->upper($upr->upper,$st->id,$st->level);
+                    $result = $this->upper($level->upper,$st->id,$st->level);
 
-                    if (!$result){
-
-                        return $result;
-
-                    }
+                    if (!$result)  return $result;
 
                 }
 
@@ -521,9 +516,9 @@ class WechatController extends Controller
             $up->update();
 
             //查找上级，如果找不到了就结束
-            $upper =  SpreadRecordModel::where('openid',$openid)->orderBy('created_at','asc')->first();
+            if ($up->upper){
 
-            if ($upper->upper){
+                $upper = SpreadPeopleModel::where('openid',$up->upper)->first();
 
                 $this->upper($upper->upper,$id,$level);
 
