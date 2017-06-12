@@ -114,7 +114,7 @@ class WechatController extends Controller
 
 	    Session::forget('stay');
 
-        //上来先检测是否有openid，有暂时保存下
+        //先检测是否有openid，有暂时保存下
         if($request->has('openid')){
 
             $this->openid = $request->input('openid');
@@ -279,6 +279,8 @@ class WechatController extends Controller
                     'read_at'   => time(),
 
                     'openid'    => $record['openid'],
+
+                    'upper'     => $level->upper,
 
                     'sex'       => $user[0]['original']['sex'],
 
