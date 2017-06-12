@@ -31,9 +31,8 @@ var wgt_data = {
     series: [{
         type: 'graph',
         layout: 'force',
-
         force: {
-            repulsion: 300
+            repulsion: 60
         },
         data: [{
             "name": "原点",
@@ -144,15 +143,17 @@ var wgt_data = {
 var show = avalon.define({
     $id   : "show",
     top   : [],
-    shows : 'tab',
+    shows : 'wang',
     peoples : [],
     onPUF : function(res){
         // 使用刚指定的配置项和数据显示图表。
         if (res === 'wang'){
             show.shows = 'wang';
             wgt.setOption(wgt_data);
-        }else{
+        }else if(res === 'tab'){
             show.shows = 'tab';
+        }else{
+            show.shows = 'zhuan';
         }
     },
     onData : function(){

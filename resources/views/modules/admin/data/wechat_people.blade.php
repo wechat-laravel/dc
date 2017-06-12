@@ -6,38 +6,59 @@
                 <div class="nav-tabs-custom" style="cursor: move;">
                     <ul class="nav nav-tabs pull-right ui-sortable-handle">
                         <li class="pull-left header"><i class="fa fa-question-circle"></i>传播关系分析</li>
-                        {{--<li class="pull-right"><a href="#revenue-chart" data-toggle="tab" :click="@onPUF('tree')" aria-expanded="true">树状图</a></li>--}}
-                        <li class="pull-right"><a href="#revenue-chart" data-toggle="tab" :click="@onPUF('wang')" aria-expanded="true">脉络图</a></li>
-                        <li class="pull-right active"><a href="#revenue-chart" data-toggle="tab" :click="@onPUF('tab')" aria-expanded="true">表格数据</a></li>
+                        <li class="pull-right"><a href="#revenue-chart" data-toggle="tab" :click="@onPUF('zhuan')" aria-expanded="true">转发客户</a></li>
+                        <li class="pull-right"><a href="#revenue-chart" data-toggle="tab" :click="@onPUF('tab')" aria-expanded="true">表格数据</a></li>
+                        <li class="pull-right  active"><a href="#revenue-chart" data-toggle="tab" :click="@onPUF('wang')" aria-expanded="true">脉络图</a></li>
                     </ul>
                     <div class="tab-content">
                         <div id="wgt" ms-visible="@shows==='wang'" style="width: 100%;height: 800px;"></div>
                         <div ms-visible="@shows==='tab'" style="width: 100%;">
-                            <table class="table table-bordered" id="people">
+                            <table class="table table-bordered text-center" id="people">
                                 <thead>
                                 <tr>
-                                    <th width="350px;">昵称</th>
+                                    <th width="350px;" style="text-align: left">昵称</th>
                                     <th width="100px;">所在层级</th>
                                     <th>下级层数 / 下级人数</th>
                                     <th>阅读次数</th>
-                                    <th>阅读时间</th>
+                                    <th>最后阅读时间</th>
                                     <th>性别</th>
                                     <th>地址</th>
                                 </tr>
                                 </thead>
                                 <tbody>
                                     <tr ms-for="el in @peoples">
-                                        <td :attr="{id:'s'+@el.id}">
+                                        <td style="text-align: left" :attr="{id:'s'+@el.id}">
                                             <i ms-class="[@el.level_num>0 ? 'glyphicon glyphicon-triangle-right' : '']"></i>
                                             @{{ el.name }}
                                         </td>
-                                        <td>@{{ el.level }}</td>
+                                        <td>@{{ el.level_name }}</td>
                                         <td>@{{ el.level_num }} / @{{ el.people_num }}</td>
                                         <td>@{{ el.read_num }}</td>
                                         <td>@{{ el.read_at }}</td>
                                         <td>@{{ el.sex_name }}</td>
                                         <td>@{{ el.province }} - @{{ el.city }}</td>
                                     </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div ms-visible="@shows==='zhuan'" style="width: 100%;">
+                            <table class="table table-bordered text-center" id="people">
+                                <thead>
+                                <tr>
+                                    <th width="100px;" style="text-align: left">头像</th>
+                                    <th width="200px;">昵称</th>
+                                    <th width="100px;">所属好友</th>
+                                    <th>性别</th>
+                                    <th>地区</th>
+                                    <th>层级</th>
+                                    <th>分享方式(微信/微信群/朋友圈/QQ/QQ空间)</th>
+                                    <th>阅读人数</th>
+                                    <th>阅读次数</th>
+                                    <th>路径</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+
                                 </tbody>
                             </table>
                         </div>

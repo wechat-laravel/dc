@@ -29,10 +29,8 @@ class WechatPeopleController extends Controller
                     'links'   => [],                                                     //阶层链接
             ];
 
-            $res = SpreadRecordModel::select('openid','upper','source','level')
-                                ->where('action','browse')
+            $res = SpreadPeopleModel::select('openid','upper','level')
                                 ->orderBy('created_at','asc')
-                                ->groupBy('openid')
                                 ->with([
                                     'user'=>function($query){
                                         $query->select('openid','name');
@@ -113,17 +111,7 @@ class WechatPeopleController extends Controller
 
         if ($current){
 
-            $openids = SpreadRecordModel::select('openid')->where('level',$current->level+1)->where('upper',$current->openid)->groupBy('openid')->get();
-
-            $ops = [];
-
-            foreach ($openids as $op){
-
-                $ops[] = $op->openid;
-
-            }
-
-            $res = SpreadPeopleModel::whereIn('openid',$ops)->get();
+            $res = SpreadPeopleModel::where('upper',$current->openid)->orderBy('created_at','asc')->get();
 
             $str = "";
 
@@ -133,11 +121,11 @@ class WechatPeopleController extends Controller
 
                 if ($re->level_num){
 
-                    $str .= "<tr><td id=s".$re->id."><i style='margin-left:".$margin."px;' class='glyphicon glyphicon-triangle-right'></i>$re->name</td><td>$re->level</td><td>".$re->level_num." / ".$re->people_num."</td><td>$re->read_num</td><td>$re->read_at</td><td>$re->sex_name</td><td>".$re->province.'-'.$re->city."</td></tr>";
+                    $str .= "<tr><td style='text-align:left' id=s".$re->id."><i style='margin-left:".$margin."px;' class='glyphicon glyphicon-triangle-right'></i>$re->name</td><td>$re->level_name</td><td>".$re->level_num." / ".$re->people_num."</td><td>$re->read_num</td><td>$re->read_at</td><td>$re->sex_name</td><td>".$re->province.'-'.$re->city."</td></tr>";
                     
                 }else{
 
-                    $str .= "<tr><td id=s".$re->id."><i style='margin-left:".$margin."px;'></i>$re->name</td><td>$re->level</td><td>".$re->level_num." / ".$re->people_num."</td><td>$re->read_num</td><td>$re->read_at</td><td>$re->sex_name</td><td>".$re->province.'-'.$re->city."</td></tr>";
+                    $str .= "<tr><td style='text-align:left' id=s".$re->id."><i style='margin-left:".$margin."px;'></i>$re->name</td><td>$re->level_name</td><td>".$re->level_num." / ".$re->people_num."</td><td>$re->read_num</td><td>$re->read_at</td><td>$re->sex_name</td><td>".$re->province.'-'.$re->city."</td></tr>";
                     
                 }
 
