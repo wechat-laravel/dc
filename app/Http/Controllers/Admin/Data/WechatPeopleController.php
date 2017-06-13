@@ -132,12 +132,38 @@ class WechatPeopleController extends Controller
             }
 
             return response()->json(['success'=>true,'html'=>$str]);
-            //找自己的下级，该表缺少一个upper的字段
-//            SpreadPeopleModel::where('level',$current->level+1)->where('')
 
         }else{
 
             return response()->json(['success'=>false,'msg'=>'非法的请求！']);
+        }
+
+    }
+
+
+    public function onForward(Request $request)
+    {
+
+        if ($request->ajax()){
+
+            $res = SpreadPeopleModel::orderBy('created_at','asc')
+                ->with([
+
+                    'user'=>function($query){
+                        $query->select('openid','name','avatar');
+                    },
+                    'upp' =>function($query){
+                        $query->select('openid','name');
+                    }
+
+                ])->paginate(10);
+
+            return response($res);
+            
+        }else{
+
+            return response()->json(['success'=>false,'msg'=>'非法的请求！']);
+
         }
 
     }

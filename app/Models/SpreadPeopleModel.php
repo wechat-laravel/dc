@@ -25,6 +25,13 @@ class SpreadPeopleModel extends Model
 
     }
 
+    public function upp()
+    {
+
+        return $this->hasOne('App\Models\GrantUserModel','openid','upper');
+
+    }
+
     public function getReadAtAttribute()
     {
         if (isset($this->attributes['read_at'])) {

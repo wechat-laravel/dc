@@ -141,10 +141,11 @@ var wgt_data = {
 
 
 var show = avalon.define({
-    $id   : "show",
-    top   : [],
-    shows : 'wang',
-    peoples : [],
+    $id      : "show",
+    top      : [],
+    shows    : 'wang',
+    peoples  : [],
+    forwards : [],
     onPUF : function(res){
         // 使用刚指定的配置项和数据显示图表。
         if (res === 'wang'){
@@ -152,8 +153,10 @@ var show = avalon.define({
             wgt.setOption(wgt_data);
         }else if(res === 'tab'){
             show.shows = 'tab';
+            show.onPeople();
         }else{
             show.shows = 'zhuan';
+            show.onForward();
         }
     },
     onData : function(){
@@ -178,13 +181,20 @@ var show = avalon.define({
             }
         })
     },
+    onForward : function () {
+        $.ajax({
+            url:'/admin/data/wechat_forward',
+            success:function (ret) {
+                show.forwards = ret.data;
+            }
+        })
+    },
     onDown: function (e) {
         console.log($(this));
     } 
 });
 
 show.onData();
-show.onPeople();
 
 $(document).on('click','#people i',function () {
 

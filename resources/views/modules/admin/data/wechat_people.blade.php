@@ -58,7 +58,20 @@
                                 </tr>
                                 </thead>
                                 <tbody>
-
+                                    <tr ms-for="el in @forwards">
+                                        <td>
+                                            <img ms-attr="{src: @el.user.avatar}" class="img-circle" width="30px;" height="30px;"/>
+                                        </td>
+                                        <td>@{{ el.name }}</td>
+                                        <td>@{{ el.upp ? el.upp.name : '' }}</td>
+                                        <td>@{{ el.sex_name }}</td>
+                                        <td>@{{ el.province }} - @{{ el.city }}</td>
+                                        <td>@{{ el.level_name }}</td>
+                                        <td>1/1/1/1</td>
+                                        <td>0</td>
+                                        <td>0</td>
+                                        <td><button>路径</button></td>
+                                    </tr>
                                 </tbody>
                             </table>
                         </div>
