@@ -189,9 +189,9 @@ var show = avalon.define({
             }
         })
     },
-    onDown: function (e) {
-        console.log($(this));
-    } 
+    onInfo:function (e) {
+        console.log(e);
+    }
 });
 
 show.onData();

@@ -38,11 +38,39 @@ class SpreadPeopleModel extends Model
         return $this->hasMany('App\Models\SpreadRecordModel','upper','openid');
 
     }
-    
+
     public function records()
     {
 
         return $this->hasMany('App\Models\SpreadRecordModel','upper','openid');
+
+    }
+
+    public function single()
+    {
+
+        return $this->hasMany('App\Models\SpreadRecordModel','openid','openid');
+
+    }
+
+    public function double()
+    {
+
+        return $this->hasMany('App\Models\SpreadRecordModel','openid','openid');
+
+    }
+
+    public function qqs()
+    {
+
+        return $this->hasMany('App\Models\SpreadRecordModel','openid','openid');
+
+    }
+
+    public function qqzone()
+    {
+
+        return $this->hasMany('App\Models\SpreadRecordModel','openid','openid');
 
     }
 

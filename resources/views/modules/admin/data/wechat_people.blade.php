@@ -67,10 +67,10 @@
                                         <td>@{{ el.sex_name }}</td>
                                         <td>@{{ el.province }} - @{{ el.city }}</td>
                                         <td>@{{ el.level_name }}</td>
-                                        <td>1/1/1/1</td>
+                                        <td>@{{ el.single.length }} / @{{ el.double.length }} / @{{ el.qqs.length }} / @{{ el.qqzone.length }}</td>
                                         <td>@{{ el.record.length }}</td>
                                         <td>@{{ el.records.length }}</td>
-                                        <td><button>路径</button></td>
+                                        <td><button class="btn btn-default" :click="@onInfo(el.id)">详情</button></td>
                                     </tr>
                                 </tbody>
                             </table>

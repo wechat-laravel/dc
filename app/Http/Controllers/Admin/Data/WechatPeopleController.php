@@ -160,8 +160,19 @@ class WechatPeopleController extends Controller
                     },
                     'records' => function($query){
                         $query->select('openid','upper')->where('action','browse');
-                    }
-
+                    },
+                    'single' => function($query){
+                        $query->select('openid')->where('action','wechat');
+                    },
+                    'double' => function($query){
+                        $query->select('openid')->where('action','wechat_group');
+                    },
+                    'qqs' => function($query){
+                        $query->select('openid')->where('action','qq');
+                    },
+                    'qqzone' => function($query){
+                        $query->select('openid')->where('action','qzone');
+                    },
                 ])->paginate(10);
 
             return response($res);
