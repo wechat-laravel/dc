@@ -146,6 +146,8 @@ var show = avalon.define({
     shows    : 'wang',
     peoples  : [],
     forwards : [],
+    layer    : 1,
+    layers   : [],
     onPUF : function(res){
         // 使用刚指定的配置项和数据显示图表。
         if (res === 'wang'){
@@ -154,6 +156,9 @@ var show = avalon.define({
         }else if(res === 'tab'){
             show.shows = 'tab';
             show.onPeople();
+        }else if(res === 'ceng'){
+            show.shows = 'ceng';
+            show.onLayer(show.layer);
         }else{
             show.shows = 'zhuan';
             show.onForward();
@@ -189,8 +194,17 @@ var show = avalon.define({
             }
         })
     },
-    onInfo:function (e) {
+    onInfo  : function (e) {
         console.log(e);
+    },
+    onLayer : function (e) {
+        show.layer = e;
+        $.ajax({
+            url:'/admin/data/wechat_layer?layer='+e,
+            success:function (ret) {
+                show.layers = ret.data;
+            }
+        })
     }
 });
 

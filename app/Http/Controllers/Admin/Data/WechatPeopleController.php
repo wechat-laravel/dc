@@ -184,4 +184,33 @@ class WechatPeopleController extends Controller
         }
 
     }
+
+    public function onLayer(Request $request)
+    {
+
+        if ($request->ajax()){
+
+            $layer = intval($request->input('layer'));
+
+            $res   = SpreadPeopleModel::where('level',$layer)
+                    ->with([
+                        'user'=>function($query){
+                            $query->select('openid','avatar');
+                        },
+                        'single'=>function($query){
+                            //TODO 这里first取得时候有问题
+                            $query->select('id','openid','stay')->where('action','browse')->orderBy('created_at','desc');
+                        }
+                    ])->paginate(10);
+
+            return response($res);
+
+        }else{
+
+            return response()->json(['success'=>false,'msg'=>'非法的请求！']);
+
+        }
+
+    }
+
 }
