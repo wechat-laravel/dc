@@ -32,6 +32,20 @@ class SpreadPeopleModel extends Model
 
     }
 
+    public function record()
+    {
+
+        return $this->hasMany('App\Models\SpreadRecordModel','upper','openid');
+
+    }
+    
+    public function records()
+    {
+
+        return $this->hasMany('App\Models\SpreadRecordModel','upper','openid');
+
+    }
+
     public function getReadAtAttribute()
     {
         if (isset($this->attributes['read_at'])) {

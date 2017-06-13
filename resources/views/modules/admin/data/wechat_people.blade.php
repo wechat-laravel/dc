@@ -45,13 +45,13 @@
                             <table class="table table-bordered text-center" id="people">
                                 <thead>
                                 <tr>
-                                    <th width="100px;" style="text-align: left">头像</th>
+                                    <th width="60px;">头像</th>
                                     <th width="200px;">昵称</th>
-                                    <th width="100px;">所属好友</th>
+                                    <th width="200px;">所属好友</th>
                                     <th>性别</th>
                                     <th>地区</th>
                                     <th>层级</th>
-                                    <th>分享方式(微信/微信群/朋友圈/QQ/QQ空间)</th>
+                                    <th>分享(微信/微信群/朋友圈/QQ/QQ空间)</th>
                                     <th>阅读人数</th>
                                     <th>阅读次数</th>
                                     <th>路径</th>
@@ -68,8 +68,8 @@
                                         <td>@{{ el.province }} - @{{ el.city }}</td>
                                         <td>@{{ el.level_name }}</td>
                                         <td>1/1/1/1</td>
-                                        <td>0</td>
-                                        <td>0</td>
+                                        <td>@{{ el.record.length }}</td>
+                                        <td>@{{ el.records.length }}</td>
                                         <td><button>路径</button></td>
                                     </tr>
                                 </tbody>

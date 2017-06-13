@@ -154,12 +154,18 @@ class WechatPeopleController extends Controller
                     },
                     'upp' =>function($query){
                         $query->select('openid','name');
+                    },
+                    'record' => function($query){
+                        $query->select('openid','upper')->where('action','browse')->groupBy('openid');
+                    },
+                    'records' => function($query){
+                        $query->select('openid','upper')->where('action','browse');
                     }
 
                 ])->paginate(10);
 
             return response($res);
-            
+
         }else{
 
             return response()->json(['success'=>false,'msg'=>'非法的请求！']);
