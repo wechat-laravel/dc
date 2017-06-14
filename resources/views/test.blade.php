@@ -56,6 +56,7 @@
 <div class="container">
     <div class="content">
         <div class="title">Test</div>
+        <iframe src="http://1782176218.scene.eqh5.cn/s/kBXGDzWQ?eqrcode=1" frameborder="0" style="width: 100%;height: 100%"></iframe>
     </div>
 </div>
 </body>
