@@ -3,7 +3,8 @@
 <head>
     <title>乐其意-DC</title>
     <meta name="DC"content="测试的哦">
-    <meta name="description"content="dc的描述哦"> 
+    <meta name="description"content="dc的描述哦">
+    <meta name="viewport" id="viewport" content="width=320, initial-scale=1, maximum-scale=1, user-scalable=no">
     <script src="{{ URL::asset('assets/js/jquery.min.js') }}" type="text/javascript" charset="utf-8"></script>
     <script src="http://res.wx.qq.com/open/js/jweixin-1.2.0.js" type="text/javascript" charset="utf-8"></script>
     <style>
