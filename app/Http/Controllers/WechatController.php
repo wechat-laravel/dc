@@ -324,7 +324,7 @@ class WechatController extends Controller
 
     }
 
-    public  function oauth(){
+    public  function oauthCallback(){
 
         $oauth = $this->wechat->oauth;
 
