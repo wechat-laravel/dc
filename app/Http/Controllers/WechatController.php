@@ -282,7 +282,7 @@ class WechatController extends Controller
 
                     'upper'     => $record['upper'],
 
-                    'source'    => $record['wechat'],
+                    'source'    => $record['source'],
 
                     'sex'       => $user[0]['original']['sex'],
 
