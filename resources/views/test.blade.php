@@ -88,7 +88,7 @@
         wx.onMenuShareAppMessage({
             title: '发送给朋友-测试',
             desc: '记录该操作所有浏览和分享转发的操作记录',
-            link: 'http://dc.le71.cn/wechat/test?openid=<?=$user[0]['id']?>&source=wechat&mark='+mark,
+            link: 'http://www.maoliduo.cn/wechat/test?openid=<?=$user[0]['id']?>&source=wechat&mark='+mark,
             imgUrl: 'https://mmbiz.qlogo.cn/mmbiz_png/TleSlXOm2myMbs8uDovXxkgIOFKFIfD0kO4m7ZTDgibXoFxmdoeNgFEibCn8dVlyicqwylwTiasssRrdVOGFqYFmYg/0?wx_fmt=png',
             trigger: function (res) {
                 // 不要尝试在trigger中使用ajax异步请求修改本次分享的内容，因为客户端分享操作是一个同步操作，这时候使用ajax的回包会还没有返回
@@ -96,7 +96,7 @@
             },
             success: function (res) {
 		        $.ajax({
-		            url: 'http://dc.le71.cn/wechat/record?openid=<?=$user[0]['id']?>&action=wechat&mark='+mark+'&upper=<?=$upper?>',
+		            url: 'http://www.maoliduo.cn/wechat/record?openid=<?=$user[0]['id']?>&action=wechat&mark='+mark+'&upper=<?=$upper?>',
                     success:function(ret){
                         if(!ret.success){
 			                alert(ret.msg);
@@ -113,7 +113,7 @@
         wx.onMenuShareTimeline({
             title: '分享到朋友圈-测试',
             desc: '记录该操作所有浏览和分享转发的操作记录',
-            link: 'http://dc.le71.cn/wechat/test?openid=<?=$user[0]['id']?>&source=timeline',
+            link: 'http://www.maoliduo.cn/wechat/test?openid=<?=$user[0]['id']?>&source=timeline',
             imgUrl: 'https://mmbiz.qlogo.cn/mmbiz_png/TleSlXOm2myMbs8uDovXxkgIOFKFIfD0kO4m7ZTDgibXoFxmdoeNgFEibCn8dVlyicqwylwTiasssRrdVOGFqYFmYg/0?wx_fmt=png',
             trigger: function (res) {
                 // 不要尝试在trigger中使用ajax异步请求修改本次分享的内容，因为客户端分享操作是一个同步操作，这时候使用ajax的回包会还没有返回
@@ -121,7 +121,7 @@
             },
             success: function (res) {
                 $.ajax({
-                    url: 'http://dc.le71.cn/wechat/record?openid=<?=$user[0]['id']?>&action=timeline&mark='+mark+'&upper=<?=$upper?>',
+                    url: 'http://www.maoliduo.cn/wechat/record?openid=<?=$user[0]['id']?>&action=timeline&mark='+mark+'&upper=<?=$upper?>',
                     success:function(ret){
                         if(!ret.success){
                             alert(ret.msg);
@@ -138,7 +138,7 @@
         wx.onMenuShareQQ({
             title: '分享到QQ-测试',
             desc: '记录该操作所有浏览和分享转发的操作记录',
-            link: 'http://dc.le71.cn/wechat/test?openid=<?=$user[0]['id']?>&source=qq',
+            link: 'http://www.maoliduo.cn/wechat/test?openid=<?=$user[0]['id']?>&source=qq',
             imgUrl: 'https://mmbiz.qlogo.cn/mmbiz_png/TleSlXOm2myMbs8uDovXxkgIOFKFIfD0kO4m7ZTDgibXoFxmdoeNgFEibCn8dVlyicqwylwTiasssRrdVOGFqYFmYg/0?wx_fmt=png',
             trigger: function (res) {
                 // 不要尝试在trigger中使用ajax异步请求修改本次分享的内容，因为客户端分享操作是一个同步操作，这时候使用ajax的回包会还没有返回
@@ -146,7 +146,7 @@
             },
             success: function (res) {
                 $.ajax({
-                    url: 'http://dc.le71.cn/wechat/record?openid=<?=$user[0]['id']?>&action=qq&mark='+mark+'&upper=<?=$upper?>',
+                    url: 'http://www.maoliduo.cn/wechat/record?openid=<?=$user[0]['id']?>&action=qq&mark='+mark+'&upper=<?=$upper?>',
                     success:function(ret){
                         if(!ret.success){
                             alert(ret.msg);
@@ -163,7 +163,7 @@
         wx.onMenuShareQZone({
             title: '分享到QQ空间-测试',
             desc: '记录该操作所有浏览和分享转发的操作记录',
-            link: 'http://dc.le71.cn/wechat/test?openid=<?=$user[0]['id']?>&source=qzone',
+            link: 'http://www.maoliduo.cn/wechat/test?openid=<?=$user[0]['id']?>&source=qzone',
             imgUrl: 'https://mmbiz.qlogo.cn/mmbiz_png/TleSlXOm2myMbs8uDovXxkgIOFKFIfD0kO4m7ZTDgibXoFxmdoeNgFEibCn8dVlyicqwylwTiasssRrdVOGFqYFmYg/0?wx_fmt=png',
             trigger: function (res) {
                 // 不要尝试在trigger中使用ajax异步请求修改本次分享的内容，因为客户端分享操作是一个同步操作，这时候使用ajax的回包会还没有返回
@@ -171,7 +171,7 @@
             },
             success: function (res) {
                 $.ajax({
-                    url: 'http://dc.le71.cn/wechat/record?openid=<?=$user[0]['id']?>&action=qzone&mark='+mark+'&upper=<?=$upper?>',
+                    url: 'http://www.maoliduo.cn/wechat/record?openid=<?=$user[0]['id']?>&action=qzone&mark='+mark+'&upper=<?=$upper?>',
                     success:function(ret){
                         if(!ret.success){
                             alert(ret.msg);
@@ -189,7 +189,7 @@
 
     function stay(){
         $.ajax({
-            url : 'http://dc.le71.cn/wechat/stay?stay=1'
+            url : 'http://www.maoliduo.cn/wechat/stay?stay=1'
         })
     }
     setInterval(stay,1000);
