@@ -280,9 +280,9 @@ class WechatController extends Controller
 
                     'openid'    => $record['openid'],
 
-                    'upper'     => $level ? $level->upper : '',
+                    'upper'     => $record['upper'],
 
-                    'source'    => $level ? $level->source : 'wechat',
+                    'source'    => $record['wechat'],
 
                     'sex'       => $user[0]['original']['sex'],
 
@@ -313,7 +313,6 @@ class WechatController extends Controller
                     }
 
                 }
-
 
             }
 
