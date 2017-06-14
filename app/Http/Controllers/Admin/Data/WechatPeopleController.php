@@ -11,11 +11,9 @@ use App\Http\Controllers\Controller;
 
 class WechatPeopleController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+
+    protected  $info_data = [];
+
     public function index(Request $request)
     {
 
@@ -25,7 +23,7 @@ class WechatPeopleController extends Controller
                     'levels'  => [],                                                     //记录当前文章有几个层级
                     'cate'    => [],                                                     //层级格式
                     'user'    => [],                                                     //存储openid对应的用户名
-                    'data'    => [['name'=>'起点','symbolSize'=>30,'value'=>0]],         //网状图数据
+                    'data'    => [['name'=>'起点','symbolSize'=>20,'value'=>0]],         //网状图数据
                     'links'   => [],                                                     //阶层链接
             ];
 
@@ -208,6 +206,63 @@ class WechatPeopleController extends Controller
         }else{
 
             return response()->json(['success'=>false,'msg'=>'非法的请求！']);
+
+        }
+
+    }
+
+    public function onInfo(Request $request)
+    {
+
+        if ($request->ajax()){
+
+            $id = intval($request->input('id'));
+
+            $this->info_data = [];
+
+            $res = SpreadPeopleModel::where('id',$id)
+                            ->with([
+                                'user'=>function($query){
+                                    $query->select('openid','avatar');
+                            }])->first();
+
+            $this->info_data[] = ['name'=>$res->name,'avatar'=>$res->user->avatar,'created_at'=>$res->created_at];
+
+            if ($res->upper){
+
+                $this->infos($res->upper);
+
+            }
+
+            $new = array_reverse($this->info_data);
+
+            return response()->json(['success'=>true,'data'=>$new]);
+
+        }else{
+
+            return response()->json(['success'=>false,'msg'=>'非法的请求！']);
+
+        }
+
+    }
+
+    public function infos($openid){
+
+        $res = SpreadPeopleModel::where('openid',$openid)
+                    ->with([
+                        'user'=>function($query){
+                            $query->select('openid','avatar');
+                    }])->first();
+
+        $this->info_data[] = ['name'=>$res->name,'avatar'=>$res->user->avatar,'created_at'=>$res->created_at];
+
+        if ($res->upper){
+
+            $this->infos($res->upper);
+
+        }else{
+
+            return true;
 
         }
 

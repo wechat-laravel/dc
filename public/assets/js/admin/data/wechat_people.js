@@ -26,17 +26,17 @@ var wgt_data = {
             }
         }
     },
-    animationDuration: 3000,
+    animationDuration: 300,
     animationEasingUpdate: 'quinticInOut',
     series: [{
         type: 'graph',
         layout: 'force',
         force: {
-            repulsion: 60
+            repulsion: 100
         },
         data: [{
             "name": "原点",
-            "symbolSize": 30,
+            "symbolSize": 10,
             "value": 27
         }, {
             "name": "小明",
@@ -148,6 +148,7 @@ var show = avalon.define({
     forwards : [],
     layer    : 1,
     layers   : [],
+    infos    : [],
     onPUF : function(res){
         // 使用刚指定的配置项和数据显示图表。
         if (res === 'wang'){
@@ -195,7 +196,13 @@ var show = avalon.define({
         })
     },
     onInfo  : function (e) {
-        console.log(e);
+        show.shows = 'info';
+        $.ajax({
+            url:'/admin/data/wechat_info?id='+e,
+            success:function (ret) {
+                show.infos = ret.data;
+            }
+        })
     },
     onLayer : function (e) {
         show.layer = e;
