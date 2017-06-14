@@ -280,9 +280,9 @@ class WechatController extends Controller
 
                     'openid'    => $record['openid'],
 
-                    'upper'     => $level->upper,
+                    'upper'     => $level ? $level->upper : '',
 
-                    'source'    => $level->source,
+                    'source'    => $level ? $level->source : 'wechat',
 
                     'sex'       => $user[0]['original']['sex'],
 
@@ -294,21 +294,26 @@ class WechatController extends Controller
 
             }
 
-            if ($level->upper){
-                
-		        //上级
-                $up = SpreadPeopleModel::where('openid',$level->upper)->first();
+            if ($level){
 
-                $st = SpreadPeopleModel::where('openid',$level->openid)->first();
+                if ($level->upper){
 
-                $ids = explode(',',$up->people_ids);
+                    //上级
+                    $up = SpreadPeopleModel::where('openid',$level->upper)->first();
 
-                //如果上级没有，就一直循环下去，直到顶级
-                if(array_search($st->id,$ids) === false){
+                    $st = SpreadPeopleModel::where('openid',$level->openid)->first();
 
-                    $this->upper($level->upper,$st->id,$st->level);
+                    $ids = explode(',',$up->people_ids);
+
+                    //如果上级没有，就一直循环下去，直到顶级
+                    if(array_search($st->id,$ids) === false){
+
+                        $this->upper($level->upper,$st->id,$st->level);
+
+                    }
 
                 }
+
 
             }
 
