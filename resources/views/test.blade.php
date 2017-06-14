@@ -6,6 +6,17 @@
     <meta name="description"content="dc的描述哦"> 
     <script src="{{ URL::asset('assets/js/jquery.min.js') }}" type="text/javascript" charset="utf-8"></script>
     <script src="http://res.wx.qq.com/open/js/jweixin-1.2.0.js" type="text/javascript" charset="utf-8"></script>
+    <style>
+        body{
+            height: 100%;
+            width: 100%;
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            left: 0;
+            top: 0;
+        }
+    </style>
 </head>
 <body>
 <iframe src="http://1782176218.scene.eqh5.cn/s/kBXGDzWQ?eqrcode=1" frameborder="0" width="100%" height="100%"></iframe>
