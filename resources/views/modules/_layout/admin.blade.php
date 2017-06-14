@@ -11,7 +11,7 @@
     <link rel="stylesheet" href="{{ URL::asset('assets/css/adminlte/_all-skins.min.css') }}">
 </head>
 <style>
-    .ms-controller{
+    .ms-controller {
         visibility: hidden
     }
 </style>
@@ -48,7 +48,8 @@
                                     <li><!-- start message -->
                                         <a href="#">
                                             <div class="pull-left">
-                                                <img src="{{ URL::asset('assets/images/user.jpg') }}" class="img-circle" alt="User Image">
+                                                <img src="{{ URL::asset('assets/images/user.jpg') }}" class="img-circle"
+                                                     alt="User Image">
                                             </div>
                                             <h4>
                                                 甄子丹
@@ -61,7 +62,8 @@
                                     <li>
                                         <a href="#">
                                             <div class="pull-left">
-                                                <img src="{{ URL::asset('assets/images/user.jpg') }}" class="img-circle" alt="User Image">
+                                                <img src="{{ URL::asset('assets/images/user.jpg') }}" class="img-circle"
+                                                     alt="User Image">
                                             </div>
                                             <h4>
                                                 杰森斯坦森
@@ -73,7 +75,8 @@
                                     <li>
                                         <a href="#">
                                             <div class="pull-left">
-                                                <img src="{{ URL::asset('assets/images/user.jpg') }}" class="img-circle" alt="User Image">
+                                                <img src="{{ URL::asset('assets/images/user.jpg') }}" class="img-circle"
+                                                     alt="User Image">
                                             </div>
                                             <h4>
                                                 范迪塞尔
@@ -85,7 +88,8 @@
                                     <li>
                                         <a href="#">
                                             <div class="pull-left">
-                                                <img src="{{ URL::asset('assets/images/user.jpg') }}" class="img-circle" alt="User Image">
+                                                <img src="{{ URL::asset('assets/images/user.jpg') }}" class="img-circle"
+                                                     alt="User Image">
                                             </div>
                                             <h4>
                                                 史泰龙
@@ -97,7 +101,8 @@
                                     <li>
                                         <a href="#">
                                             <div class="pull-left">
-                                                <img src="{{ URL::asset('assets/images/user.jpg') }}" class="img-circle" alt="User Image">
+                                                <img src="{{ URL::asset('assets/images/user.jpg') }}" class="img-circle"
+                                                     alt="User Image">
                                             </div>
                                             <h4>
                                                 扎克伯格
@@ -129,7 +134,8 @@
                                     </li>
                                     <li>
                                         <a href="#">
-                                            <i class="fa fa-warning text-yellow"></i> Very long description here that may not fit into the
+                                            <i class="fa fa-warning text-yellow"></i> Very long description here that
+                                            may not fit into the
                                             page and may cause design problems
                                         </a>
                                     </li>
@@ -171,7 +177,9 @@
                                                 <small class="pull-right">20%</small>
                                             </h3>
                                             <div class="progress xs">
-                                                <div class="progress-bar progress-bar-aqua" style="width: 20%" role="progressbar" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100">
+                                                <div class="progress-bar progress-bar-aqua" style="width: 20%"
+                                                     role="progressbar" aria-valuenow="20" aria-valuemin="0"
+                                                     aria-valuemax="100">
                                                     <span class="sr-only">20% Complete</span>
                                                 </div>
                                             </div>
@@ -185,7 +193,9 @@
                                                 <small class="pull-right">40%</small>
                                             </h3>
                                             <div class="progress xs">
-                                                <div class="progress-bar progress-bar-green" style="width: 40%" role="progressbar" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100">
+                                                <div class="progress-bar progress-bar-green" style="width: 40%"
+                                                     role="progressbar" aria-valuenow="20" aria-valuemin="0"
+                                                     aria-valuemax="100">
                                                     <span class="sr-only">40% Complete</span>
                                                 </div>
                                             </div>
@@ -199,7 +209,9 @@
                                                 <small class="pull-right">60%</small>
                                             </h3>
                                             <div class="progress xs">
-                                                <div class="progress-bar progress-bar-red" style="width: 60%" role="progressbar" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100">
+                                                <div class="progress-bar progress-bar-red" style="width: 60%"
+                                                     role="progressbar" aria-valuenow="20" aria-valuemin="0"
+                                                     aria-valuemax="100">
                                                     <span class="sr-only">60% Complete</span>
                                                 </div>
                                             </div>
@@ -213,7 +225,9 @@
                                                 <small class="pull-right">80%</small>
                                             </h3>
                                             <div class="progress xs">
-                                                <div class="progress-bar progress-bar-yellow" style="width: 80%" role="progressbar" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100">
+                                                <div class="progress-bar progress-bar-yellow" style="width: 80%"
+                                                     role="progressbar" aria-valuenow="20" aria-valuemin="0"
+                                                     aria-valuemax="100">
                                                     <span class="sr-only">80% Complete</span>
                                                 </div>
                                             </div>
@@ -236,7 +250,8 @@
                         <ul class="dropdown-menu">
                             <!-- User image -->
                             <li class="user-header">
-                                <img src="{{ URL::asset('assets/images/user.jpg') }}" class="img-circle" alt="User Image">
+                                <img src="{{ URL::asset('assets/images/user.jpg') }}" class="img-circle"
+                                     alt="User Image">
 
                                 <p>
                                     系统管理员
@@ -319,156 +334,148 @@
                         <li><a href="/admin/data/wechat_people"><i class="fa fa-circle-o"></i>传播关系</a></li>
                     </ul>
                 </li>
+                <li class="{{ \Request::getPathInfo() === '/admin/service/red_bag' ? 'active' : ''}} treeview">
+                    <a href="#">
+                        <i class="fa fa-folder"></i> <span>服务</span>
+                        <span class="pull-right-container">
+                            <i class="fa fa-angle-left pull-right"></i>
+                        </span>
+                    </a>
+                    <ul class="treeview-menu">
+                        <li><a href="/admin/service/red_bag"><i class="fa fa-circle-o"></i>红包工具</a></li>
+                    </ul>
+                </li>
                 {{--<li class="treeview">--}}
-                    {{--<a href="#">--}}
-                        {{--<i class="fa fa-files-o"></i>--}}
-                        {{--<span>Layout Options</span>--}}
-                        {{--<span class="pull-right-container">--}}
-                          {{--<span class="label label-primary pull-right">4</span>--}}
-                        {{--</span>--}}
-                    {{--</a>--}}
-                    {{--<ul class="treeview-menu">--}}
-                        {{--<li><a href="#"><i class="fa fa-circle-o"></i> Top Navigation</a></li>--}}
-                        {{--<li><a href="#"><i class="fa fa-circle-o"></i> Boxed</a></li>--}}
-                        {{--<li><a href="#"><i class="fa fa-circle-o"></i> Fixed</a></li>--}}
-                        {{--<li><a href="#"><i class="fa fa-circle-o"></i> Collapsed Sidebar</a></li>--}}
-                    {{--</ul>--}}
-                {{--</li>--}}
-                {{--<li>--}}
-                    {{--<a href="#">--}}
-                        {{--<i class="fa fa-th"></i> <span>Widgets</span>--}}
-            {{--<span class="pull-right-container">--}}
-              {{--<small class="label pull-right bg-green">new</small>--}}
-            {{--</span>--}}
-                    {{--</a>--}}
-                {{--</li>--}}
-                {{--<li class="treeview">--}}
-                    {{--<a href="#">--}}
-                        {{--<i class="fa fa-pie-chart"></i>--}}
-                        {{--<span>Charts</span>--}}
-            {{--<span class="pull-right-container">--}}
-              {{--<i class="fa fa-angle-left pull-right"></i>--}}
-            {{--</span>--}}
-                    {{--</a>--}}
-                    {{--<ul class="treeview-menu">--}}
-                        {{--<li><a href="#"><i class="fa fa-circle-o"></i> ChartJS</a></li>--}}
-                        {{--<li><a href="#"><i class="fa fa-circle-o"></i> Morris</a></li>--}}
-                        {{--<li><a href="#"><i class="fa fa-circle-o"></i> Flot</a></li>--}}
-                        {{--<li><a href="#"><i class="fa fa-circle-o"></i> Inline charts</a></li>--}}
-                    {{--</ul>--}}
-                {{--</li>--}}
-                {{--<li class="treeview">--}}
-                    {{--<a href="#">--}}
-                        {{--<i class="fa fa-laptop"></i>--}}
-                        {{--<span>UI Elements</span>--}}
-            {{--<span class="pull-right-container">--}}
-              {{--<i class="fa fa-angle-left pull-right"></i>--}}
-            {{--</span>--}}
-                    {{--</a>--}}
-                    {{--<ul class="treeview-menu">--}}
-                        {{--<li><a href="#"><i class="fa fa-circle-o"></i> General</a></li>--}}
-                        {{--<li><a href="#"><i class="fa fa-circle-o"></i> Icons</a></li>--}}
-                        {{--<li><a href="#"><i class="fa fa-circle-o"></i> Buttons</a></li>--}}
-                        {{--<li><a href="#"><i class="fa fa-circle-o"></i> Sliders</a></li>--}}
-                        {{--<li><a href="#"><i class="fa fa-circle-o"></i> Timeline</a></li>--}}
-                        {{--<li><a href="#"><i class="fa fa-circle-o"></i> Modals</a></li>--}}
-                    {{--</ul>--}}
-                {{--</li>--}}
-                {{--<li class="treeview">--}}
-                    {{--<a href="#">--}}
-                        {{--<i class="fa fa-edit"></i> <span>Forms</span>--}}
-            {{--<span class="pull-right-container">--}}
-              {{--<i class="fa fa-angle-left pull-right"></i>--}}
-            {{--</span>--}}
-                    {{--</a>--}}
-                    {{--<ul class="treeview-menu">--}}
-                        {{--<li><a href="#"><i class="fa fa-circle-o"></i> General Elements</a></li>--}}
-                        {{--<li><a href="#"><i class="fa fa-circle-o"></i> Advanced Elements</a></li>--}}
-                        {{--<li><a href="#"><i class="fa fa-circle-o"></i> Editors</a></li>--}}
-                    {{--</ul>--}}
-                {{--</li>--}}
-                {{--<li class="treeview">--}}
-                    {{--<a href="#">--}}
-                        {{--<i class="fa fa-table"></i> <span>Tables</span>--}}
-            {{--<span class="pull-right-container">--}}
-              {{--<i class="fa fa-angle-left pull-right"></i>--}}
-            {{--</span>--}}
-                    {{--</a>--}}
-                    {{--<ul class="treeview-menu">--}}
-                        {{--<li><a href="#"><i class="fa fa-circle-o"></i> Simple tables</a></li>--}}
-                        {{--<li><a href="#"><i class="fa fa-circle-o"></i> Data tables</a></li>--}}
-                    {{--</ul>--}}
-                {{--</li>--}}
-                {{--<li>--}}
-                    {{--<a href="#">--}}
-                        {{--<i class="fa fa-calendar"></i> <span>Calendar</span>--}}
-            {{--<span class="pull-right-container">--}}
-              {{--<small class="label pull-right bg-red">3</small>--}}
-              {{--<small class="label pull-right bg-blue">17</small>--}}
-            {{--</span>--}}
-                    {{--</a>--}}
-                {{--</li>--}}
-                {{--<li>--}}
-                    {{--<a href="#">--}}
-                        {{--<i class="fa fa-envelope"></i> <span>Mailbox</span>--}}
-            {{--<span class="pull-right-container">--}}
-              {{--<small class="label pull-right bg-yellow">12</small>--}}
-              {{--<small class="label pull-right bg-green">16</small>--}}
-              {{--<small class="label pull-right bg-red">5</small>--}}
-            {{--</span>--}}
-                    {{--</a>--}}
-                {{--</li>--}}
-                {{--<li class="treeview">--}}
-                    {{--<a href="#">--}}
-                        {{--<i class="fa fa-folder"></i> <span>Examples</span>--}}
-            {{--<span class="pull-right-container">--}}
-              {{--<i class="fa fa-angle-left pull-right"></i>--}}
-            {{--</span>--}}
-                    {{--</a>--}}
-                    {{--<ul class="treeview-menu">--}}
-                        {{--<li><a href="#"><i class="fa fa-circle-o"></i> Invoice</a></li>--}}
-                        {{--<li><a href="#"><i class="fa fa-circle-o"></i> Profile</a></li>--}}
-                        {{--<li><a href="#"><i class="fa fa-circle-o"></i> Login</a></li>--}}
-                        {{--<li><a href="#"><i class="fa fa-circle-o"></i> Register</a></li>--}}
-                        {{--<li><a href="#"><i class="fa fa-circle-o"></i> Lockscreen</a></li>--}}
-                        {{--<li><a href="#"><i class="fa fa-circle-o"></i> 404 Error</a></li>--}}
-                        {{--<li><a href="#"><i class="fa fa-circle-o"></i> 500 Error</a></li>--}}
-                        {{--<li><a href="#"><i class="fa fa-circle-o"></i> Blank Page</a></li>--}}
-                        {{--<li><a href="#"><i class="fa fa-circle-o"></i> Pace Page</a></li>--}}
-                    {{--</ul>--}}
-                {{--</li>--}}
-                {{--<li class="treeview">--}}
-                    {{--<a href="#">--}}
-                        {{--<i class="fa fa-share"></i> <span>Multilevel</span>--}}
-            {{--<span class="pull-right-container">--}}
-              {{--<i class="fa fa-angle-left pull-right"></i>--}}
-            {{--</span>--}}
-                    {{--</a>--}}
-                    {{--<ul class="treeview-menu">--}}
-                        {{--<li><a href="#"><i class="fa fa-circle-o"></i> Level One</a></li>--}}
-                        {{--<li>--}}
-                            {{--<a href="#"><i class="fa fa-circle-o"></i> Level One--}}
+                {{--<a href="#">--}}
+                {{--<i class="fa fa-files-o"></i>--}}
+                {{--<span>Layout Options</span>--}}
                 {{--<span class="pull-right-container">--}}
-                  {{--<i class="fa fa-angle-left pull-right"></i>--}}
+                {{--<span class="label label-primary pull-right">4</span>--}}
                 {{--</span>--}}
-                            {{--</a>--}}
-                            {{--<ul class="treeview-menu">--}}
-                                {{--<li><a href="#"><i class="fa fa-circle-o"></i> Level Two</a></li>--}}
-                                {{--<li>--}}
-                                    {{--<a href="#"><i class="fa fa-circle-o"></i> Level Two--}}
-                    {{--<span class="pull-right-container">--}}
-                      {{--<i class="fa fa-angle-left pull-right"></i>--}}
-                    {{--</span>--}}
-                                    {{--</a>--}}
-                                    {{--<ul class="treeview-menu">--}}
-                                        {{--<li><a href="#"><i class="fa fa-circle-o"></i> Level Three</a></li>--}}
-                                        {{--<li><a href="#"><i class="fa fa-circle-o"></i> Level Three</a></li>--}}
-                                    {{--</ul>--}}
-                                {{--</li>--}}
-                            {{--</ul>--}}
-                        {{--</li>--}}
-                        {{--<li><a href="#"><i class="fa fa-circle-o"></i> Level One</a></li>--}}
-                    {{--</ul>--}}
+                {{--</a>--}}
+                {{--<ul class="treeview-menu">--}}
+                {{--<li><a href="#"><i class="fa fa-circle-o"></i> Top Navigation</a></li>--}}
+                {{--<li><a href="#"><i class="fa fa-circle-o"></i> Boxed</a></li>--}}
+                {{--<li><a href="#"><i class="fa fa-circle-o"></i> Fixed</a></li>--}}
+                {{--<li><a href="#"><i class="fa fa-circle-o"></i> Collapsed Sidebar</a></li>--}}
+                {{--</ul>--}}
+                {{--</li>--}}
+                {{--<li>--}}
+                {{--<a href="#">--}}
+                {{--<i class="fa fa-th"></i> <span>Widgets</span>--}}
+                {{--<span class="pull-right-container">--}}
+                {{--<small class="label pull-right bg-green">new</small>--}}
+                {{--</span>--}}
+                {{--</a>--}}
+                {{--</li>--}}
+                {{--<li class="treeview">--}}
+                {{--<a href="#">--}}
+                {{--<i class="fa fa-pie-chart"></i>--}}
+                {{--<span>Charts</span>--}}
+                {{--<span class="pull-right-container">--}}
+                {{--<i class="fa fa-angle-left pull-right"></i>--}}
+                {{--</span>--}}
+                {{--</a>--}}
+                {{--<ul class="treeview-menu">--}}
+                {{--<li><a href="#"><i class="fa fa-circle-o"></i> ChartJS</a></li>--}}
+                {{--<li><a href="#"><i class="fa fa-circle-o"></i> Morris</a></li>--}}
+                {{--<li><a href="#"><i class="fa fa-circle-o"></i> Flot</a></li>--}}
+                {{--<li><a href="#"><i class="fa fa-circle-o"></i> Inline charts</a></li>--}}
+                {{--</ul>--}}
+                {{--</li>--}}
+                {{--<li class="treeview">--}}
+                {{--<a href="#">--}}
+                {{--<i class="fa fa-laptop"></i>--}}
+                {{--<span>UI Elements</span>--}}
+                {{--<span class="pull-right-container">--}}
+                {{--<i class="fa fa-angle-left pull-right"></i>--}}
+                {{--</span>--}}
+                {{--</a>--}}
+                {{--<ul class="treeview-menu">--}}
+                {{--<li><a href="#"><i class="fa fa-circle-o"></i> General</a></li>--}}
+                {{--<li><a href="#"><i class="fa fa-circle-o"></i> Icons</a></li>--}}
+                {{--<li><a href="#"><i class="fa fa-circle-o"></i> Buttons</a></li>--}}
+                {{--<li><a href="#"><i class="fa fa-circle-o"></i> Sliders</a></li>--}}
+                {{--<li><a href="#"><i class="fa fa-circle-o"></i> Timeline</a></li>--}}
+                {{--<li><a href="#"><i class="fa fa-circle-o"></i> Modals</a></li>--}}
+                {{--</ul>--}}
+                {{--</li>--}}
+                {{--<li class="treeview">--}}
+                {{--<a href="#">--}}
+                {{--<i class="fa fa-edit"></i> <span>Forms</span>--}}
+                {{--<span class="pull-right-container">--}}
+                {{--<i class="fa fa-angle-left pull-right"></i>--}}
+                {{--</span>--}}
+                {{--</a>--}}
+                {{--<ul class="treeview-menu">--}}
+                {{--<li><a href="#"><i class="fa fa-circle-o"></i> General Elements</a></li>--}}
+                {{--<li><a href="#"><i class="fa fa-circle-o"></i> Advanced Elements</a></li>--}}
+                {{--<li><a href="#"><i class="fa fa-circle-o"></i> Editors</a></li>--}}
+                {{--</ul>--}}
+                {{--</li>--}}
+                {{--<li class="treeview">--}}
+                {{--<a href="#">--}}
+                {{--<i class="fa fa-table"></i> <span>Tables</span>--}}
+                {{--<span class="pull-right-container">--}}
+                {{--<i class="fa fa-angle-left pull-right"></i>--}}
+                {{--</span>--}}
+                {{--</a>--}}
+                {{--<ul class="treeview-menu">--}}
+                {{--<li><a href="#"><i class="fa fa-circle-o"></i> Simple tables</a></li>--}}
+                {{--<li><a href="#"><i class="fa fa-circle-o"></i> Data tables</a></li>--}}
+                {{--</ul>--}}
+                {{--</li>--}}
+                {{--<li>--}}
+                {{--<a href="#">--}}
+                {{--<i class="fa fa-calendar"></i> <span>Calendar</span>--}}
+                {{--<span class="pull-right-container">--}}
+                {{--<small class="label pull-right bg-red">3</small>--}}
+                {{--<small class="label pull-right bg-blue">17</small>--}}
+                {{--</span>--}}
+                {{--</a>--}}
+                {{--</li>--}}
+                {{--<li>--}}
+                {{--<a href="#">--}}
+                {{--<i class="fa fa-envelope"></i> <span>Mailbox</span>--}}
+                {{--<span class="pull-right-container">--}}
+                {{--<small class="label pull-right bg-yellow">12</small>--}}
+                {{--<small class="label pull-right bg-green">16</small>--}}
+                {{--<small class="label pull-right bg-red">5</small>--}}
+                {{--</span>--}}
+                {{--</a>--}}
+                {{--</li>--}}
+                {{--<li class="treeview">--}}
+                {{--<a href="#">--}}
+                {{--<i class="fa fa-share"></i> <span>Multilevel</span>--}}
+                {{--<span class="pull-right-container">--}}
+                {{--<i class="fa fa-angle-left pull-right"></i>--}}
+                {{--</span>--}}
+                {{--</a>--}}
+                {{--<ul class="treeview-menu">--}}
+                {{--<li><a href="#"><i class="fa fa-circle-o"></i> Level One</a></li>--}}
+                {{--<li>--}}
+                {{--<a href="#"><i class="fa fa-circle-o"></i> Level One--}}
+                {{--<span class="pull-right-container">--}}
+                {{--<i class="fa fa-angle-left pull-right"></i>--}}
+                {{--</span>--}}
+                {{--</a>--}}
+                {{--<ul class="treeview-menu">--}}
+                {{--<li><a href="#"><i class="fa fa-circle-o"></i> Level Two</a></li>--}}
+                {{--<li>--}}
+                {{--<a href="#"><i class="fa fa-circle-o"></i> Level Two--}}
+                {{--<span class="pull-right-container">--}}
+                {{--<i class="fa fa-angle-left pull-right"></i>--}}
+                {{--</span>--}}
+                {{--</a>--}}
+                {{--<ul class="treeview-menu">--}}
+                {{--<li><a href="#"><i class="fa fa-circle-o"></i> Level Three</a></li>--}}
+                {{--<li><a href="#"><i class="fa fa-circle-o"></i> Level Three</a></li>--}}
+                {{--</ul>--}}
+                {{--</li>--}}
+                {{--</ul>--}}
+                {{--</li>--}}
+                {{--<li><a href="#"><i class="fa fa-circle-o"></i> Level One</a></li>--}}
+                {{--</ul>--}}
                 {{--</li>--}}
                 {{--<li><a href="documentation/index.html"><i class="fa fa-book"></i> <span>Documentation</span></a></li>--}}
                 {{--<li class="header">LABELS</li>--}}
@@ -498,7 +505,6 @@
             @yield('content')
         </section>
         {{--内容块        结束--}}
-
 
 
     </div>

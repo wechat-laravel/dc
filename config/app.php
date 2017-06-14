@@ -147,6 +147,7 @@ return [
 
         Overtrue\LaravelWechat\ServiceProvider::class,
         Mews\Captcha\CaptchaServiceProvider::class,
+        Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider::class,
 
     ],
 
