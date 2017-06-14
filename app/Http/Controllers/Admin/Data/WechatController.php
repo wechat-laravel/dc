@@ -410,7 +410,15 @@ class WechatController extends Controller
             //计算各个时间段的占比
             for ($i =0 ;$i <10; $i++){
 
-                $top['stay']['this'][$i] = round(($top['stay']['this'][$i] * 100) / $top['pv_num']);
+                if ($top['pv_num'] === 0 ) {
+
+                    $top['stay']['this'][$i] = 0;
+
+                }else{
+
+                    $top['stay']['this'][$i] = round(($top['stay']['this'][$i] * 100) / $top['pv_num']);
+
+                }
 
             }
 
@@ -418,7 +426,15 @@ class WechatController extends Controller
 
             for ($i =0 ;$i <24; $i++){
 
-                $top['visit']['this'][$i] = round(($top['visit']['this'][$i] * 100) / $top['pv_num']);
+                if ($top['pv_num'] === 0){
+
+                    $top['visit']['this'][$i] = 0;
+
+                }else{
+
+                    $top['visit']['this'][$i] = round(($top['visit']['this'][$i] * 100) / $top['pv_num']);
+
+                }
 
             }
 
