@@ -391,7 +391,15 @@ class WechatController extends Controller
 
             }
 
-            $top['stay_avg'] = intval($top['stay_avg'] / $top['pv_num']);
+            if ($top['pv_num'] === 0){
+
+                $top['stay_avg'] = 0;
+
+            }else{
+
+                $top['stay_avg'] = intval($top['stay_avg'] / $top['pv_num']);
+
+            }
 
             array_shift($top['level']['pv']);
 
