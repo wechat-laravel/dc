@@ -329,7 +329,8 @@
                         </span>
                     </a>
                     <ul class="treeview-menu">
-                        <li class="active"><a href="/admin/task/create"><i class="fa fa-circle-o"></i>任务创建</a></li>
+                        <li class="active"><a href="/admin/task/create"><i class="fa fa-circle-o"></i>H5任务创建</a></li>
+                        {{--<li><a href="#"><i class="fa fa-circle-o"></i>自定义任务创建</a></li>--}}
                         <li><a href="/admin/task"><i class="fa fa-circle-o"></i>任务列表</a></li>
                     </ul>
                 </li>

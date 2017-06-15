@@ -3,7 +3,7 @@
     <div ms-controller="show">
         <div class="row">
             <section class="col-md-12 col-sm-12 col-xs-12 connectedSortable ui-sortable">
-                <div class="nav-tabs-custom" style="cursor: move;">
+                <div class="nav-tabs-custom">
                     <ul class="nav nav-tabs pull-right ui-sortable-handle">
                         <li class="pull-left header"><i class="fa fa-question-circle"></i>传播关系分析</li>
                         <li class="pull-right"><a href="#revenue-chart" data-toggle="tab" :click="@onPUF('zhuan')" aria-expanded="true">转发客户</a></li>

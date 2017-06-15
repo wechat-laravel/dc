@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Models\TasksModel;
 use Illuminate\Http\Request;
-
+use Validator;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+use Illuminate\Pagination\Paginator;
 
 class TaskController extends Controller
 {
@@ -19,14 +21,12 @@ class TaskController extends Controller
         return view('modules.admin.task.index');
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    //H5创建任务
     public function create()
     {
+
         return view('modules.admin.task.create');
+
     }
 
     /**
@@ -37,7 +37,33 @@ class TaskController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $input = $request->only(['title','desc','img_url','page_url']);
+
+        $validator = Validator::make($input,[
+            'title'     => 'required|max:50',
+            'desc'      => 'required|max:100',
+            'img_url'   => 'required|max:200',
+            'page_url'  => 'required|max:200'
+        ]);
+
+        if ($validator->fails()){
+
+            return response()->json(['success'=>false,'msg'=>'表单数据有误,请检查后重新提交']);
+
+        }
+
+        try{
+
+            TasksModel::create($input);
+
+        }catch (\Exception $e){
+
+            return response()->json(['success'=>false,'msg'=>'操作失败！']);
+
+        }
+
+
+        return response()->json(['success'=>true,'msg'=>'操作成功！']);
     }
 
     /**

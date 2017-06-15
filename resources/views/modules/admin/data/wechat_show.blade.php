@@ -57,7 +57,7 @@
         </div>
         <div class="row">
             <section class="col-md-12 col-sm-12 col-xs-12 connectedSortable ui-sortable">
-                <div class="nav-tabs-custom" style="cursor: move;">
+                <div class="nav-tabs-custom">
                     <ul class="nav nav-tabs pull-right ui-sortable-handle">
                         <li class="pull-left header"><i class="fa fa-question-circle"></i>PV、UV、分享走势</li>
                         <li class="pull-left active"><a href="#revenue-chart" data-toggle="tab" :click="@onPUF('day')" aria-expanded="true">每日走势</a></li>
