@@ -27,7 +27,9 @@ class RedBagController extends Controller
             'remark'=>'增粉活动'
         ]);*/
         if(\Input::ajax()){
-            return response()->json(['data'=>'123']);
+            $data = RedBagModel::where('user_id',\Auth::id())->paginate(10);
+
+            return response()->json(['success'=>true,'data'=>$data]);
         }
         return view('modules.admin.service.red_bag');
     }
@@ -50,7 +52,7 @@ class RedBagController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        return response()->json($request->all());
     }
 
     /**
