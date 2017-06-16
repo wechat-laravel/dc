@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Admin;
 
 use App\Models\TasksModel;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use SimpleSoftwareIO\QrCode\Facades\QrCode;
 use Validator;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
@@ -16,8 +18,18 @@ class TaskController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
+        if ($request->ajax()){
+
+            $res  = TasksModel::select();
+
+            $data = $res->orderBy('created_at','desc')->paginate(10);
+
+            return response($data);
+
+        }
+
         return view('modules.admin.task.index');
     }
 
@@ -37,6 +49,8 @@ class TaskController extends Controller
      */
     public function store(Request $request)
     {
+        $str = str_random(32);
+
         $input = $request->only(['title','desc','img_url','page_url']);
 
         $validator = Validator::make($input,[
@@ -54,7 +68,14 @@ class TaskController extends Controller
 
         try{
 
-            TasksModel::create($input);
+            $input['user_id'] = Auth::id();
+
+            $input['qrcode_url'] = '/assets/images/qrcode/'.$str.'.png';
+
+            $ret = TasksModel::create($input);
+
+            QrCode::format('png')->size(100)->generate('http://www.maoliduo.cn/wechat/task/'.$ret->id,public_path('assets/images/qrcode/'.$str.'.png'));
+
 
         }catch (\Exception $e){
 
