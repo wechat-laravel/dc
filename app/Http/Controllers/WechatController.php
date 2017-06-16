@@ -6,6 +6,7 @@ namespace App\Http\Controllers;
 use App\Models\GrantUserModel;
 use App\Models\SpreadPeopleModel;
 use App\Models\SpreadRecordModel;
+use App\Models\TasksModel;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 use Mockery\CountValidator\Exception;
@@ -72,47 +73,56 @@ class WechatController extends Controller
         return $this->wechat->server->serve();
     }
 
-    public function addMenu()
-    {
-        try{
+//    public function addMenu()
+//    {
+//        try{
+//
+//            $buttons = [
+//                [
+//                    "type" => "click",
+//                    "name" => "乐其意",
+//                    "key"  => "V1001_LE71"
+//                ],
+//                [
+//                    "name"       => "菜单",
+//                    "sub_button" => [
+//                        [
+//                            "type" => "view",
+//                            "name" => "首页",
+//                            "url"  => "http://dc.le71.cn/"
+//                        ],
+//                    ],
+//                ],
+//            ];
+//
+//            $menu = $this->wechat->menu;
+//
+//            $menu->add($buttons);
+//
+//            $menus = $menu->all();
+//
+//        }catch (\Exception $e){
+//
+//            return response()->json(['success'=>false,'msg'=>$e->getMessage()]);
+//
+//        }
+//
+//        return response($menus);
 
-            $buttons = [
-                [
-                    "type" => "click",
-                    "name" => "乐其意",
-                    "key"  => "V1001_LE71"
-                ],
-                [
-                    "name"       => "菜单",
-                    "sub_button" => [
-                        [
-                            "type" => "view",
-                            "name" => "首页",
-                            "url"  => "http://dc.le71.cn/"
-                        ],
-                    ],
-                ],
-            ];
+//    }
 
-            $menu = $this->wechat->menu;
 
-            $menu->add($buttons);
+    //每个任务的首页
+    public function task(Request $request,$id){
 
-            $menus = $menu->all();
+        $task = TasksModel::find(intval($id));
 
-        }catch (\Exception $e){
+        if (!$task) return response()->json(['success'=>false,'msg'=>'非法的请求！']);
 
-            return response()->json(['success'=>false,'msg'=>$e->getMessage()]);
-
-        }
-
-        return response($menus);
-
-    }
-
-    public function test(Request $request){
 
 	    Session::forget('stay');
+
+        Session::put('tasks_id',$task->id);
 
         //先检测是否有openid，有暂时保存下
         if($request->has('openid')){
@@ -154,37 +164,30 @@ class WechatController extends Controller
         $user   = Session::get('w_user');
 
         $record = [
-            'openid' => $user[0]['id'],
-            'upper'  => $this->openid,
-            'ip'     => ip2long($request->ip()),
-            'action' => 'browse',
-            'url'    => $request->getRequestUri(),
-            'mark'   => $this->mark,
-            'source' => $this->source,
+            'openid'   => $user[0]['id'],
+            'tasks_id' => $task->id,
+            'upper'    => $this->openid,
+            'ip'       => ip2long($request->ip()),
+            'action'   => 'browse',
+            'url'      => $request->getRequestUri(),
+            'mark'     => $this->mark,
+            'source'   => $this->source,
         ];
 
-        $level = SpreadRecordModel::where('openid',$user[0]['id'])->where('action','browse')->orderBy('created_at','asc')->first();
+        $level = SpreadRecordModel::where('openid',$user[0]['id'])->where('action','browse')->where('tasks_id',$task->id)->orderBy('created_at','asc')->first();
 
         //记录层级
         if ($level){
 
-            if ($level->level === 0){
-
-                $record['level'] = 1;
-
-                SpreadRecordModel::where('openid',$record['openid'])->update(['level'=>1]);
-
-            }else{
-
                 $record['level'] = $level->level;
-
-            }
 
         }else{
 
             if ($this->openid){
 
-                $upper = SpreadRecordModel::where('openid',$this->openid)->where('action','browse')->orderBy('created_at','desc')->first();
+                $upper = SpreadRecordModel::where('openid',$this->openid)->where('action','browse')->where('tasks_id',$task->id)->orderBy('created_at','desc')->first();
+
+                if (!$upper)  return response()->json(['success'=>false,'msg'=>'非法请求！']);
 
                 //只统计10层，再往下面去，都是按10层
                 if ($upper->level === 10){
@@ -204,12 +207,15 @@ class WechatController extends Controller
 
         }
 
+        //来源判断（微信好友或是微信群）
         if ($this->source === 'wechat'){
 
             if ($this->mark && $this->openid){
 
                 //检查当前连接标识
-                $upper = SpreadRecordModel::where('ip',0)->where('openid',$this->openid)->where('mark',$this->mark)->first();
+                $upper = SpreadRecordModel::where('ip',0)->where('openid',$this->openid)->where('tasks_id',$task->id)->where('mark',$this->mark)->first();
+
+                if (!$upper)  return response()->json(['success'=>false,'msg'=>'非法请求！']);
 
                 if ($upper->action === 'wechat_group'){
 
@@ -219,7 +225,7 @@ class WechatController extends Controller
 
 		            if($user[0]['id'] !== $upper->openid){
 		    
-                        $num = SpreadRecordModel::select('id')->where('action','browse')->where('source','wechat')
+                        $num = SpreadRecordModel::select('id')->where('action','browse')->where('source','wechat')->where('tasks_id',$task->id)
                                                   ->where('mark',$this->mark)->whereNotIn('openid',[$upper->openid,$user[0]['id']])->groupBy('openid')->get();
 
                         if ($num){
@@ -233,7 +239,7 @@ class WechatController extends Controller
 
                                     $upper->update(['action'=>'wechat_group']);
 
-                                    SpreadRecordModel::where('action','browse')->where('mark',$this->mark)->where('source','wechat')->update(['source'=>'wechat_group']);
+                                    SpreadRecordModel::where('action','browse')->where('mark',$this->mark)->where('tasks_id',$task->id)->where('source','wechat')->update(['source'=>'wechat_group']);
 
                                 }catch (Exception $e){
 
@@ -258,7 +264,7 @@ class WechatController extends Controller
             $last = SpreadRecordModel::create($record);
 
             //记录在用户关系表里
-            $people = SpreadPeopleModel::where('openid',$user[0]['id'])->first();
+            $people = SpreadPeopleModel::where('openid',$user[0]['id'])->where('tasks_id',$task->id)->first();
 
             if ($people){
 
@@ -275,6 +281,8 @@ class WechatController extends Controller
                     'name'      => $user[0]['name'],
 
                     'level'     => $record['level'],
+
+                    'tasks_id'  => $task->id,
 
                     'read_at'   => time(),
 
@@ -299,16 +307,16 @@ class WechatController extends Controller
                 if ($level->upper){
 
                     //上级
-                    $up = SpreadPeopleModel::where('openid',$level->upper)->first();
+                    $up = SpreadPeopleModel::where('openid',$level->upper)->where('tasks_id',$task->id)->first();
 
-                    $st = SpreadPeopleModel::where('openid',$level->openid)->first();
+                    $st = SpreadPeopleModel::where('openid',$level->openid)->where('tasks_id',$task->id)->first();
 
                     $ids = explode(',',$up->people_ids);
 
                     //如果上级没有，就一直循环下去，直到顶级
                     if(array_search($st->id,$ids) === false){
 
-                        $this->upper($level->upper,$st->id,$st->level);
+                        $this->upper($task->id,$level->upper,$st->id,$st->level);
 
                     }
 
@@ -324,7 +332,7 @@ class WechatController extends Controller
 
         }
 
-        return view('test',['user'=>$user,'js'=>$js,'url'=>$request->getRequestUri(),'upper'=>$this->openid]);
+        return view('task',['user'=>$user,'js'=>$js,'url'=>$request->getRequestUri(),'upper'=>$this->openid,'task'=>$task]);
 
     }
 
@@ -389,15 +397,17 @@ class WechatController extends Controller
             $this->source = $source;
 
         }
+
+        $tasks_id = Session::get('tasks_id');
         
-        return redirect('wechat/test?openid='.$this->openid.'&mark='.$this->mark.'&source='.$this->source);
+        return redirect('wechat/task/'.$tasks_id.'?openid='.$this->openid.'&mark='.$this->mark.'&source='.$this->source);
 
     }
 
     //操作记录		
     public function record(Request $request){
 
-        $input = $request->only(['openid','action','upper','mark']);
+        $input = $request->only(['openid','action','upper','mark','task_id']);
 
         $action = [
             'wechat',		        //分享至微信好友
@@ -420,16 +430,17 @@ class WechatController extends Controller
 
         }
 
-        $level = SpreadRecordModel::where('openid',$user[0]['id'])->orderBy('created_at','desc')->first();
+        $level = SpreadRecordModel::where('openid',$user[0]['id'])->where('tasks_id',$input['task_id'])->orderBy('created_at','desc')->first();
 
         if (!$level) return response()->json(['success'=>false,'msg'=>'非法的操作！']);
 
         $record = [
-            'openid' => $user[0]['id'],
-            'mark'   => e($input['mark']),
-            'action' => $input['action'],
-            'upper'  => e($input['upper']),
-            'level'  => $level->level
+            'openid'   => $user[0]['id'],
+            'mark'     => e($input['mark']),
+            'action'   => $input['action'],
+            'upper'    => e($input['upper']),
+            'level'    => $level->level,
+            'tasks_id' => $input['tasks_id'],
         ];
 
         try{
@@ -496,12 +507,12 @@ class WechatController extends Controller
 
     }
 
-    public function upper($openid,$id,$level)
+    public function upper($task_id,$openid,$id,$level)
     {
         try{
 		
             //上级
-            $up = SpreadPeopleModel::where('openid',$openid)->first();
+            $up = SpreadPeopleModel::where('openid',$openid)->where('tasks_id',$task_id)->first();
 
             //下级层数记录
             if ($up->level_num < ($level - $up->level)){
@@ -519,7 +530,7 @@ class WechatController extends Controller
             //查找上级，如果找不到了就结束
             if ($up->upper){
 
-                $this->upper($up->upper,$id,$level);
+                $this->upper($task_id,$up->upper,$id,$level);
 
             }else{
 
@@ -535,7 +546,7 @@ class WechatController extends Controller
 
     }
 
-    public function task(Request $request,$id)
+    public function tasks(Request $request,$id)
     {
         return $id;
     }
