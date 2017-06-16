@@ -54,7 +54,6 @@ $(function () {
                     }
                 }
             }
-
         }
     }).on('success.form.bv', function(e) {
         e.preventDefault();
