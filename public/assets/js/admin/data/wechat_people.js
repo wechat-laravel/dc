@@ -149,6 +149,7 @@ var show = avalon.define({
     layer    : 1,
     layers   : [],
     infos    : [],
+    task_id  : $('input[name=task_id]').val(),
     onPUF : function(res){
         // 使用刚指定的配置项和数据显示图表。
         if (res === 'wang'){
@@ -167,7 +168,7 @@ var show = avalon.define({
     },
     onData : function(){
         $.ajax({
-            url:'/admin/data/wechat_people',
+            url:'/admin/data/wechat_people/'+show.task_id,
             success:function (res) {
                 if(res.success){
                     wgt_data.legend[0].data = res.data.levels;
@@ -181,7 +182,7 @@ var show = avalon.define({
     },
     onPeople: function(){
         $.ajax({
-            url:'/admin/data/wechat_peoples',
+            url:'/admin/data/wechat_peoples/'+show.task_id,
             success:function (ret) {
                 show.peoples = ret.data;
             }
@@ -189,7 +190,7 @@ var show = avalon.define({
     },
     onForward : function () {
         $.ajax({
-            url:'/admin/data/wechat_forward',
+            url:'/admin/data/wechat_forward/'+show.task_id,
             success:function (ret) {
                 show.forwards = ret.data;
             }
@@ -198,7 +199,7 @@ var show = avalon.define({
     onInfo  : function (e) {
         show.shows = 'info';
         $.ajax({
-            url:'/admin/data/wechat_info?id='+e,
+            url:'/admin/data/wechat_info/'+show.task_id+'?id='+e,
             success:function (ret) {
                 show.infos = ret.data;
             }
@@ -207,7 +208,7 @@ var show = avalon.define({
     onLayer : function (e) {
         show.layer = e;
         $.ajax({
-            url:'/admin/data/wechat_layer?layer='+e,
+            url:'/admin/data/wechat_layer/'+show.task_id+'?layer='+e,
             success:function (ret) {
                 show.layers = ret.data;
             }
@@ -229,7 +230,7 @@ $(document).on('click','#people i',function () {
 
         $.ajax({
 
-            url:'/admin/data/wechat_down?id='+id,
+            url:'/admin/data/wechat_down/'+show.task_id+'?id='+id,
 
             success : function (ret) {
 

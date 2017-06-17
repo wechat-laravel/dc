@@ -436,8 +436,9 @@ var show = avalon.define({
         }
     },
     onData : function(){
+        var task_id = $('input[name=task_id]').val();
         $.ajax({
-            url:'/admin/data/wechat',
+            url:'/admin/data/wechat/'+task_id,
             success:function (res) {
                 show.top = res.top;
                 puf_hour.xAxis.data      = res.top.current.day;

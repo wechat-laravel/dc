@@ -1,6 +1,7 @@
 @extends('modules._layout.admin')
 @section('content')
     <div ms-controller="show">
+        <input type="hidden" name="task_id" value="{{ $task_id }}">
         <div class="row">
             <section class="col-md-12 col-sm-12 col-xs-12 connectedSortable ui-sortable">
                 <div class="nav-tabs-custom">

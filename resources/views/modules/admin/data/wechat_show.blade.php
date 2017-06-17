@@ -1,6 +1,7 @@
 @extends('modules._layout.admin')
 @section('content')
     <div ms-controller="show">
+        <input type="hidden" name="task_id" value="{{ $task_id }}">
         <div class="row">
             <div class="col-md-3 col-sm-6 col-xs-12">
                 <div class="small-box bg-blue text-center">

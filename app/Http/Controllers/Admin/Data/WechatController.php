@@ -3,10 +3,12 @@
 namespace App\Http\Controllers\Admin\Data;
 
 use App\Models\SpreadRecordModel;
+use App\Models\TasksModel;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 
 class WechatController extends Controller
 {
@@ -15,8 +17,20 @@ class WechatController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $request)
+    public function index(Request $request,$id)
     {
+        if (Auth::user()->identity !== 'admin'){
+
+            $task = TasksModel::where('user_id',Auth::id())->where('id',intval($id))->first();
+
+        }else{
+
+            $task = TasksModel::find(intval($id));
+
+        }
+
+        if (!$task) return response()->json(['success'=>false,'msg'=>'非法的请求！']);
+
         if ($request->ajax()) {
 
             //数据统计
@@ -97,7 +111,7 @@ class WechatController extends Controller
             $uv = [[], [], [], [], [], [], [], []];
 
             //总浏览量
-            $res = SpreadRecordModel::select('openid','source','action', 'stay', 'level', 'created_at')->orderBy('created_at', 'asc')->get();
+            $res = SpreadRecordModel::select('openid','source','action', 'stay', 'level', 'created_at')->where('tasks_id',intval($id))->orderBy('created_at', 'asc')->get();
 
             foreach ($res as $re) {
 
@@ -442,7 +456,8 @@ class WechatController extends Controller
 
         }
 
-        return view('modules.admin.data.wechat_show');
+        return view('modules.admin.data.wechat_show',['task_id'=>$task->id]);
+
     }
 
 }

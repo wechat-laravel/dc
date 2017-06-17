@@ -4,18 +4,31 @@ namespace App\Http\Controllers\Admin\Data;
 
 use App\Models\SpreadPeopleModel;
 use App\Models\SpreadRecordModel;
+use App\Models\TasksModel;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 
 class WechatPeopleController extends Controller
 {
 
     protected  $info_data = [];
 
-    public function index(Request $request)
+    public function index(Request $request,$id)
     {
+        if (Auth::user()->identity !== 'admin'){
+
+            $task = TasksModel::where('user_id',Auth::id())->where('id',intval($id))->first();
+
+        }else{
+
+            $task = TasksModel::find(intval($id));
+
+        }
+
+        if (!$task) return response()->json(['success'=>false,'msg'=>'非法的请求！']);
 
         if ($request->ajax()){
 
@@ -27,13 +40,10 @@ class WechatPeopleController extends Controller
                     'links'   => [],                                                     //阶层链接
             ];
 
-            $res = SpreadPeopleModel::select('openid','upper','level')
+            $res = SpreadPeopleModel::select('openid','upper','level','name')
+                                ->where('tasks_id',intval($id))
                                 ->orderBy('created_at','asc')
-                                ->with([
-                                    'user'=>function($query){
-                                        $query->select('openid','name');
-                                    }
-                                ])->get();
+                                ->get();
 
             foreach ($res as $re){
 
@@ -45,12 +55,12 @@ class WechatPeopleController extends Controller
 
                 }
 
-                $data['user'][$re->openid] = $re->user->name;
+                $data['user'][$re->openid] = $re->name;
 
 
                 $data['data'][] = [
 
-                    'name'     => $re->user->name,
+                    'name'     => $re->name,
 
                     'category' => $re->level_name,
 
@@ -64,7 +74,7 @@ class WechatPeopleController extends Controller
 
                         'source' => $data['user'][$re->upper],
 
-                        'target' => $re->user->name,
+                        'target' => $re->name,
 
                     ];
 
@@ -74,7 +84,7 @@ class WechatPeopleController extends Controller
 
                         'source' => '起点',
 
-                        'target' => $re->user->name,
+                        'target' => $re->name,
 
                     ];
 
@@ -86,21 +96,44 @@ class WechatPeopleController extends Controller
 
         }
 
-        return view('modules.admin.data.wechat_people');
+        return view('modules.admin.data.wechat_people',['task_id'=>$task->id]);
 
     }
 
-    public function peoples(Request $request)
+    public function peoples($id)
     {
+        if (Auth::user()->identity !== 'admin'){
 
-        $people = SpreadPeopleModel::where('level',1)->paginate(10);
+            $task = TasksModel::where('user_id',Auth::id())->where('id',intval($id))->first();
+
+        }else{
+
+            $task = TasksModel::find(intval($id));
+
+        }
+
+        if (!$task) return response()->json(['success'=>false,'msg'=>'非法的请求！']);
+
+        $people = SpreadPeopleModel::where('level',1)->where('tasks_id',intval($id))->paginate(10);
 
         return response($people);
 
     }
 
-    public function onDown(Request $request)
+    public function onDown(Request $request,$task_id)
     {
+        if (Auth::user()->identity !== 'admin'){
+
+            $task = TasksModel::where('user_id',Auth::id())->where('id',intval($task_id))->first();
+
+        }else{
+
+            $task = TasksModel::find(intval($task_id));
+
+        }
+
+        if (!$task) return response()->json(['success'=>false,'msg'=>'非法的请求！']);
+
         $id = $request->input('id');
 
         $id = intval(ltrim($id,'s'));
@@ -109,7 +142,7 @@ class WechatPeopleController extends Controller
 
         if ($current){
 
-            $res = SpreadPeopleModel::where('upper',$current->openid)->orderBy('created_at','asc')->get();
+            $res = SpreadPeopleModel::where('upper',$current->openid)->where('tasks_id',intval($task_id))->orderBy('created_at','asc')->get();
 
             $str = "";
 
@@ -139,12 +172,23 @@ class WechatPeopleController extends Controller
     }
 
 
-    public function onForward(Request $request)
+    public function onForward(Request $request,$id)
     {
+        if (Auth::user()->identity !== 'admin'){
+
+            $task = TasksModel::where('user_id',Auth::id())->where('id',intval($id))->first();
+
+        }else{
+
+            $task = TasksModel::find(intval($id));
+
+        }
+
+        if (!$task) return response()->json(['success'=>false,'msg'=>'非法的请求！']);
 
         if ($request->ajax()){
 
-            $res = SpreadPeopleModel::orderBy('created_at','asc')
+            $res = SpreadPeopleModel::where('tasks_id',intval($id))->orderBy('created_at','asc')
                 ->with([
 
                     'user'=>function($query){
@@ -183,14 +227,26 @@ class WechatPeopleController extends Controller
 
     }
 
-    public function onLayer(Request $request)
+    public function onLayer(Request $request,$id)
     {
+        if (Auth::user()->identity !== 'admin'){
+
+            $task = TasksModel::where('user_id',Auth::id())->where('id',intval($id))->first();
+
+        }else{
+
+            $task = TasksModel::find(intval($id));
+
+        }
+
+        if (!$task) return response()->json(['success'=>false,'msg'=>'非法的请求！']);
 
         if ($request->ajax()){
 
             $layer = intval($request->input('layer'));
 
             $res   = SpreadPeopleModel::where('level',$layer)
+                    ->where('tasks_id',intval($id))
                     ->with([
                         'user'=>function($query){
                             $query->select('openid','avatar');
@@ -211,8 +267,19 @@ class WechatPeopleController extends Controller
 
     }
 
-    public function onInfo(Request $request)
+    public function onInfo(Request $request,$id)
     {
+        if (Auth::user()->identity !== 'admin'){
+
+            $task = TasksModel::where('user_id',Auth::id())->where('id',intval($id))->first();
+
+        }else{
+
+            $task = TasksModel::find(intval($id));
+
+        }
+
+        if (!$task) return response()->json(['success'=>false,'msg'=>'非法的请求！']);
 
         if ($request->ajax()){
 
@@ -230,7 +297,7 @@ class WechatPeopleController extends Controller
 
             if ($res->upper){
 
-                $this->infos($res->upper);
+                $this->infos($res->upper,$task->id);
 
             }
 
@@ -246,9 +313,10 @@ class WechatPeopleController extends Controller
 
     }
 
-    public function infos($openid){
+    public function infos($openid,$id){
 
         $res = SpreadPeopleModel::where('openid',$openid)
+                    ->where('tasks_id',$id)
                     ->with([
                         'user'=>function($query){
                             $query->select('openid','avatar');
@@ -258,7 +326,7 @@ class WechatPeopleController extends Controller
 
         if ($res->upper){
 
-            $this->infos($res->upper);
+            $this->infos($res->upper,$id);
 
         }else{
 

@@ -13,7 +13,7 @@
                                 <table class="table table-bordered text-center">
                                     <thead>
                                         <tr>
-                                            <th style="text-align: left;width: 80px;">编号</th>
+                                            <th width="60px;">编号</th>
                                             <th>标题</th>
                                             <th>描述</th>
                                             <th>预览</th>
@@ -31,13 +31,11 @@
                                                 <a ms-attr="{href:@el.qrcode_url}" target="_blank"><img :attr="{src: @el.qrcode_url}" class="img-rounded" style="width: 40px;height: 40px;" title="点击查看大图" /></a>
                                             </td>
                                             <td>
-                                                <a class="btn btn-primary btn-sm" ms-attr="{href:'/admin/task/'+@el.id+'/edit'}" role="button">编辑</a>
+                                                <a class="btn btn-primary btn-sm" ms-attr="{href:'/admin/task/'+@el.id+'/edit'}" role="button">任务编辑</a>
                                             </td>
                                             <td>
-                                                <p>
-                                                    <button class="btn btn-danger btn-sm" href="#" type="button">数据图</button>
-                                                    <button class="btn btn-success btn-sm" href="#" type="button">关系图</button>
-                                                </p>
+                                                <a class="btn btn-danger btn-sm"  ms-attr="{href:'/admin/data/wechat/'+@el.id}" target="_blank" type="button">数据图</a>
+                                                <a class="btn btn-success btn-sm" ms-attr="{href:'/admin/data/wechat_people/'+@el.id}" target="_blank" type="button">关系图</a>
                                             </td>
                                         </tr>
                                     </tbody>
