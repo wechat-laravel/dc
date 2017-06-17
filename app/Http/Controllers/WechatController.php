@@ -440,7 +440,7 @@ class WechatController extends Controller
             'action'   => $input['action'],
             'upper'    => e($input['upper']),
             'level'    => $level->level,
-            'tasks_id' => $input['tasks_id'],
+            'tasks_id' => $input['task_id'],
         ];
 
         try{
