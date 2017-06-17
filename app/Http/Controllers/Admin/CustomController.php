@@ -69,4 +69,74 @@ class CustomController extends Controller
 
     }
 
+    public function edit($id)
+    {
+        $id = intval($id);
+
+        if (Auth::user()->identity !== 'admin'){
+
+            $task = TasksModel::where('id',$id)->where('user_id',Auth::id())->first();
+
+        }else{
+
+            $task = TasksModel::find($id);
+
+        }
+
+        if ($task){
+
+            return view('modules.admin.task.custom_edit',['task'=>$task]);
+
+        }else{
+
+            return response()->json(['success'=>false,'msg'=>'非法请求！']);
+
+        }
+
+
+    }
+
+
+    public function update(Request $request,$id)
+    {
+
+        $task = TasksModel::find(intval($id));
+
+        if (!$task)  return response()->json(['success'=>false,'msg'=>'非法请求！']);
+
+        if (Auth::user()->identity !== 'admin'){
+
+            if (Auth::id() !== $task->user_id)  return response()->json(['success'=>false,'msg'=>'非法请求！']);
+
+        }
+
+        $input = $request->only(['title','desc','img_url','editorValue']);
+
+        $validator = Validator::make($input,[
+            'title'         => 'required|max:50',
+            'desc'          => 'required|max:100',
+            'img_url'       => 'required|max:200',
+            'editorValue'   => 'required'
+        ]);
+
+        if ($validator->fails()){
+
+            return response()->json(['success'=>false,'msg'=>'表单数据有误,请检查后重新提交']);
+
+        }
+
+        try{
+
+            $task->update($input);
+
+        }catch (\Exception $e){
+
+            return response()->json(['success'=>false,'msg'=>'操作失败！']);
+
+        }
+
+        return response()->json(['success'=>true,'msg'=>'操作成功！']);
+
+    }
+
 }
