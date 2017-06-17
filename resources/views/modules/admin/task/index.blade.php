@@ -31,7 +31,8 @@
                                                 <a ms-attr="{href:@el.qrcode_url}" target="_blank"><img :attr="{src: @el.qrcode_url}" class="img-rounded" style="width: 40px;height: 40px;" title="点击查看大图" /></a>
                                             </td>
                                             <td>
-                                                <a class="btn btn-primary btn-sm" ms-attr="{href:'/admin/task/'+@el.id+'/edit'}" role="button">任务编辑</a>
+                                                <a class="btn btn-primary btn-sm" ms-if="@el.mark==='h5'" ms-attr="{href:'/admin/task/'+@el.id+'/edit'}" role="button">任务编辑</a>
+                                                <a class="btn btn-primary btn-sm" ms-if="@el.mark==='custom'" ms-attr="{href:'/admin/custom/'+@el.id+'/edit'}" role="button">任务编辑</a>
                                             </td>
                                             <td>
                                                 <a class="btn btn-danger btn-sm"  ms-attr="{href:'/admin/data/wechat/'+@el.id}" target="_blank" type="button">数据图</a>
