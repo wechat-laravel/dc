@@ -336,20 +336,20 @@
                         <li><a href="/admin/task"><i class="fa fa-circle-o"></i>任务列表</a></li>
                     </ul>
                 </li>
-                <li class="active treeview">
-                    <a href="#">
-                        <i class="fa fa-dashboard"></i>
-                        <span>控制台</span>
-                        <span class="pull-right-container">
-                          <i class="fa fa-angle-left pull-right"></i>
-                        </span>
-                    </a>
-                    <ul class="treeview-menu">
-                        <li class="active"><a href="#"><i class="fa fa-circle-o"></i>微信传播</a></li>
-                        <li><a href="/admin/data/wechat"><i class="fa fa-circle-o"></i>传播数据</a></li>
-                        <li><a href="/admin/data/wechat_people"><i class="fa fa-circle-o"></i>传播关系</a></li>
-                    </ul>
-                </li>
+                {{--<li class="active treeview">--}}
+                    {{--<a href="#">--}}
+                        {{--<i class="fa fa-dashboard"></i>--}}
+                        {{--<span>控制台</span>--}}
+                        {{--<span class="pull-right-container">--}}
+                          {{--<i class="fa fa-angle-left pull-right"></i>--}}
+                        {{--</span>--}}
+                    {{--</a>--}}
+                    {{--<ul class="treeview-menu">--}}
+                        {{--<li class="active"><a href="#"><i class="fa fa-circle-o"></i>微信传播</a></li>--}}
+                        {{--<li><a href="/admin/data/wechat"><i class="fa fa-circle-o"></i>传播数据</a></li>--}}
+                        {{--<li><a href="/admin/data/wechat_people"><i class="fa fa-circle-o"></i>传播关系</a></li>--}}
+                    {{--</ul>--}}
+                {{--</li>--}}
                 <li class="{{ \Request::getPathInfo() === '/admin/service/red_bag' ? 'active' : ''}} treeview">
                     <a href="#">
                         <i class="fa fa-folder"></i> <span>服务</span>
