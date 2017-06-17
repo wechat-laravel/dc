@@ -22,7 +22,7 @@
     </style>
 </head>
 <body>
-    <iframe src="http://1782176218.scene.eqh5.cn/s/kBXGDzWQ?eqrcode=1" frameborder="0" width="100%" height="100%"></iframe>
+    <iframe src="{{ $task->page_url }}" frameborder="0" width="100%" height="100%"></iframe>
 </body>
 <script type="text/javascript" charset="UTF-8">
     var mark = Math.random().toString(36).substr(3);
