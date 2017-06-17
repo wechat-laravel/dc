@@ -25,7 +25,7 @@
     <iframe src="http://1782176218.scene.eqh5.cn/s/kBXGDzWQ?eqrcode=1" frameborder="0" width="100%" height="100%"></iframe>
 </body>
 <script type="text/javascript" charset="UTF-8">
-    var mark = Math.random().toString(36).substr(2);
+    var mark = Math.random().toString(36).substring(3,8);
     wx.config(<?=$js->config(['onMenuShareTimeline','onMenuShareAppMessage','onMenuShareQQ','onMenuShareQZone'],false);?>);
     wx.ready(function(){
         wx.onMenuShareAppMessage({
