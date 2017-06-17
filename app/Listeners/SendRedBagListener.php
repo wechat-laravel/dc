@@ -31,6 +31,13 @@ class SendRedBagListener implements ShouldQueue
      */
     public function handle(SendRedBagEvent $event)
     {
+        /*
+        $action = 1;//1，转发给好友/群。2，分享到朋友圈
+        $open_id = 'ome0zxMDVimw_OjyYS2rXikLQIKo';
+        $tasks_id = 1;
+        event(new SendRedBagEvent($action,$open_id,$tasks_id));
+        */
+
         $tasks_id = $event->tasks_id;
         $data = RedBagModel::where('id',$tasks_id)
             ->select('status','amount', 'taxonomy', 'money','begin_at','end_at')
@@ -70,6 +77,7 @@ class SendRedBagListener implements ShouldQueue
             //随机金额
             $money_base = explode('-',$data->money);
             $money = mt_rand($money_base[0],$money_base[1])/5;
+
         }
     }
 }

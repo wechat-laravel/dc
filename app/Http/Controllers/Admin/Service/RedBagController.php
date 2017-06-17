@@ -23,12 +23,6 @@ class RedBagController extends Controller
      */
     public function index()
     {
-        $action = 1;//1，转发给好友/群。2，分享到朋友圈
-        $open_id = 'ome0zxMDVimw_OjyYS2rXikLQIKo';
-        $tasks_id = 1;
-        event(new SendRedBagEvent($action,$open_id,$tasks_id));
-        return 'chenggn';
-
         if (\Input::ajax()) {
             $getType = \Input::get('getType');
 
