@@ -546,9 +546,4 @@ class WechatController extends Controller
 
     }
 
-    public function tasks(Request $request,$id)
-    {
-        return $id;
-    }
-
 }
