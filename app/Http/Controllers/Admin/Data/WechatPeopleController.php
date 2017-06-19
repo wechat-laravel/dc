@@ -174,13 +174,14 @@ class WechatPeopleController extends Controller
 
     public function onForward(Request $request,$id)
     {
+        $id = intval($id);
         if (Auth::user()->identity !== 'admin'){
 
-            $task = TasksModel::where('user_id',Auth::id())->where('id',intval($id))->first();
+            $task = TasksModel::where('user_id',Auth::id())->where('id',$id)->first();
 
         }else{
 
-            $task = TasksModel::find(intval($id));
+            $task = TasksModel::find($id);
 
         }
 
@@ -188,7 +189,7 @@ class WechatPeopleController extends Controller
 
         if ($request->ajax()){
 
-            $res = SpreadPeopleModel::where('tasks_id',intval($id))->orderBy('created_at','asc')
+            $res = SpreadPeopleModel::where('tasks_id',$id)->orderBy('created_at','asc')
                 ->with([
 
                     'user'=>function($query){
@@ -197,23 +198,23 @@ class WechatPeopleController extends Controller
                     'upp' =>function($query){
                         $query->select('openid','name');
                     },
-                    'record' => function($query){
-                        $query->select('openid','upper')->where('action','browse')->groupBy('openid');
+                    'record' => function($query) use($id){
+                        $query->select('openid','upper')->where('action','browse')->where('tasks_id',$id)->groupBy('openid');
                     },
-                    'records' => function($query){
-                        $query->select('openid','upper')->where('action','browse');
+                    'records' => function($query) use($id){
+                        $query->select('openid','upper')->where('action','browse')->where('tasks_id',$id);
                     },
-                    'single' => function($query){
-                        $query->select('openid')->where('action','wechat');
+                    'single' => function($query) use($id){
+                        $query->select('openid')->where('action','wechat')->where('tasks_id',$id);
                     },
-                    'double' => function($query){
-                        $query->select('openid')->where('action','wechat_group');
+                    'double' => function($query) use($id){
+                        $query->select('openid')->where('action','wechat_group')->where('tasks_id',$id);
                     },
-                    'qqs' => function($query){
-                        $query->select('openid')->where('action','qq');
+                    'qqs' => function($query) use($id){
+                        $query->select('openid')->where('action','qq')->where('tasks_id',$id);
                     },
-                    'qqzone' => function($query){
-                        $query->select('openid')->where('action','qzone');
+                    'qqzone' => function($query) use($id){
+                        $query->select('openid')->where('action','qzone')->where('tasks_id',$id);
                     },
                 ])->paginate(10);
 
