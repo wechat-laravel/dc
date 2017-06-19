@@ -18,6 +18,7 @@ class RedBagModel extends Model
         'remark',
         'taxonomy',
         'tasks_id',
+        'get_limit',
         'amount',
         'money',
         'action',
@@ -57,11 +58,11 @@ class RedBagModel extends Model
         $action = strstr($value,',');
 
         if($action){
-            return '转发给好友/群,分享到朋友圈';
+            return "分享给好友或朋友圈";
         }
 
         if($value == 1){
-            return '转发给好友/群';
+            return '分享给好友';
         }
 
         if($value == 2){

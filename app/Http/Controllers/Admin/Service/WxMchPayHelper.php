@@ -85,7 +85,7 @@ class WxMchPayHelper
      */
     protected function get_sign()
     {
-        if (!WxPayConfig::KEY) {
+        if (!env('WECHAT_SECRET')) {
             die('密钥不能为空');
         }
 //        if (!$this->check_sign_parameters()) {
@@ -93,7 +93,7 @@ class WxMchPayHelper
 //        }
         ksort($this->parameters);
         $unSignParaString = $this->formatQueryParaMap($this->parameters, false);
-        return $this->sign($unSignParaString, WxPayConfig::KEY);
+        return $this->sign($unSignParaString, env('WECHAT_SECRET'));
     }
     function curl_post_ssl($url, $vars, $second = 30, $aHeader = array())
     {

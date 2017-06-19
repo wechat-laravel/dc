@@ -167,8 +167,16 @@
                                 </div>
                                 <div class="form-group">
                                     <label>奖励行为</label>
-                                    <input type="checkbox" name="action_form" value="1">转发给好友/群
+                                    <input type="checkbox" name="action_form" value="1">分享给好友
                                     <input type="checkbox" name="action_form" value="2">分享到朋友圈
+                                </div>
+                                <div class="form-group">
+                                    <label>单个用户日领取红包上限</label>
+                                    <select class="form-control" name="get_limit">
+                                        <option value="1">一个</option>
+                                        <option value="2">两个</option>
+                                        <option value="5">五个</option>
+                                    </select>
                                 </div>
                                 <div class="form-group">
                                     <label>红包发送名称</label>

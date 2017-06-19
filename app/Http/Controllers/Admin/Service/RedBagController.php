@@ -23,6 +23,11 @@ class RedBagController extends Controller
      */
     public function index()
     {
+        /*$action = 1;//1，转发给好友/群。2，分享到朋友圈
+        $open_id = 'ome0zxMDVimw_OjyYS2rXikLQIKo';
+        $tasks_id = 1;
+        event(new SendRedBagEvent($action,$open_id,$tasks_id));*/
+
         if (\Input::ajax()) {
             $getType = \Input::get('getType');
 
@@ -75,6 +80,7 @@ class RedBagController extends Controller
             'send_name' => 'required',
             'wishing' => 'required',
             'act_name' => 'required',
+            'get_limit' => 'required',
         ], [
             'required' => ':attribute 不能为空'
         ]);
@@ -115,6 +121,7 @@ class RedBagController extends Controller
             'action'=>$request->get('action'),
             'taxonomy'=>$request->get('taxonomy'),
             'money'=>$money,
+            'get_limit'=>intval($request->get('get_limit')),
             'begin_at'=>strtotime($time[0]),
             'end_at'=>strtotime($time[1]),
             'send_name'=>e($request->get('send_name')),
