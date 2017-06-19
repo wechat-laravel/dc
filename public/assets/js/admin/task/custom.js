@@ -60,7 +60,7 @@ $(function () {
                 $('#error-show').html(tml);
                 $('#errinfo').text(ret.msg);
             }else{
-                window.location.reload();
+                location.href = '/admin/task';
             }
         });
 
