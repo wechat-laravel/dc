@@ -38,6 +38,8 @@ class SendRedBagListener implements ShouldQueue
         $open_id = 'ome0zxMDVimw_OjyYS2rXikLQIKo';
         $tasks_id = 1;
         event(new SendRedBagEvent($action,$open_id,$tasks_id));
+        1，判断文章是够有红包功能 $data 不存在报错  dc_red_bag
+        2，每次发红包，对dc_red_bag表中的amount--
         */
 
         $tasks_id = $event->tasks_id;

@@ -8,7 +8,7 @@ Route::group([
     'prefix'=>'admin/service',
 
 ],function(){
-    \Auth::loginUsingId(1);
+    //\Auth::loginUsingId(1);
     //红包模块
     Route::resource('red_bag','RedBagController');
 
