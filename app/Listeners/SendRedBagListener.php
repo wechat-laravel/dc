@@ -107,6 +107,7 @@ class SendRedBagListener implements ShouldQueue
             //判断用户有没有达到领取上限 没有达到才可以继续领取
             $get_limit = RedLogModel::where('open_id', $event->open_id)
                 ->where('tasks_id', $event->tasks_id)
+                ->where('status', 1)
                 ->count();
 
             if ($get_limit >= $data->get_limit) {

@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use App\Models\GrantUserModel;
 
 class RedLogModel extends Model
 {
@@ -23,4 +24,24 @@ class RedLogModel extends Model
     ];
 
     protected $dateFormat = 'U';
+
+    protected $appends = [
+        'status_name'
+    ];
+
+    public function getStatusNameAttribute()
+    {
+        $value = $this->getAttribute('status');
+        $status = '成功';
+        if($value == 2){
+            $status = '失败';
+        }
+        return $status;
+    }
+
+    public function info()
+    {
+        return $this->hasOne('App\Models\GrantUserModel', 'openid', 'open_id');
+    }
+
 }

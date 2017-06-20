@@ -12,4 +12,7 @@ Route::group([
     //红包模块
     Route::resource('red_bag','RedBagController');
 
+    //红包领取记录
+    Route::resource('red_log','RedLogController');
+
 });

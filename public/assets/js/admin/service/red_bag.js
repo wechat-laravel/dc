@@ -78,6 +78,40 @@ var red_bag = avalon.define({
                 }
             }
         })
+    },
+    tasks:function(id){
+        red_log.tasks_id = id;
+        red_log.getData();
+    }
+});
+
+var red_log = avalon.define({
+    $id:'red_log',
+    url:'/admin/service/red_log?',
+    data:[],
+    pageBase:[],
+    current_page:1,
+    tasks_id:'1',
+    //获取红包领取日志
+    getData:function(){
+        $.ajax({
+            url:red_log.url+'&tasks_id='+red_log.tasks_id,
+            success:function(data){
+                red_log.data = data.data;
+                red_log.current_page = data.current_page;
+                red_log.pageBase = [];
+                for(var i =1; i <= data.last_page; i++){
+                    red_log.pageBase.push(i);
+                }
+            }
+        })
+    },
+    //跳转到某一页
+    toPage:function(page){
+        if(page <= red_log.pageBase.length && page >0){
+            red_log.url = red_log.url+'&page='+page;
+            red_log.getData();
+        }
     }
 });
 

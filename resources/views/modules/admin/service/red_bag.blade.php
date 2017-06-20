@@ -50,7 +50,13 @@
                             <td>@{{ data.get_limit }}</td>
                             <td>@{{ data.begin_at }}<br>@{{ data.end_at }}</td>
                             <td>
-                                <button type="button" class="btn btn-block btn-info">领取详情</button>
+                                <button type="button"
+                                        data-toggle="modal"
+                                        ms-click="tasks(data.title.id)"
+                                        data-target="#detailModal"
+                                        class="btn btn-block btn-info">
+                                    领取详情
+                                </button>
                             </td>
                             <td ms-if="data.status == 1">
                                 <button class="btn btn-default">运行</button>
@@ -201,6 +207,65 @@
                                 <button type="submit" id="submit" class="btn btn-primary">提交</button>
                             </div>
                         </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal fade" id="detailModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" ms-controller="red_log">
+            <div class="modal-dialog modal-lg" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title" id="myModalLabel">红包领取详情</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="box box-info">
+                            <div class="box-body">
+                                <div class="table-responsive">
+                                    <table class="table no-margin">
+                                        <thead>
+                                        <tr>
+                                            <th>ID</th>
+                                            <th>头像</th>
+                                            <th>昵称</th>
+                                            <th>金额</th>
+                                            <th>状态</th>
+                                            <th>说明</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <tr ms-for="($index, data) in @data">
+                                            <td>@{{ data.id }}</td>
+                                            <td>
+                                                <img style="width: 50px;height: 50px;"
+                                                        ms-attr="{ src: @data.info.avatar}">
+                                            </td>
+                                            <td>@{{ data.info.name }}</td>
+                                            <td>@{{ data.total_amount }}</td>
+                                            <td>@{{ data.status_name }}</td>
+                                            <td>@{{ data.return_msg }}</td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            <div class="box-footer clearfix">
+                                <a href="javascript:void(0)"
+                                   class="btn btn-sm btn-default btn-flat"
+                                   ms-click="toPage(current_page-1)"><<
+                                </a>
+                                <a  ms-for="page in pageBase" class="btn"
+                                    :class="[current_page == page && 'btn-info active']"
+                                    ms-click="toPage(page)"
+                                    ms-attr="{title:@page}">
+                                    @{{ page }}
+                                </a>
+                                <a href="javascript:void(0)"
+                                   class="btn btn-sm btn-default btn-flat"
+                                   ms-click="toPage(current_page+1)">>>
+                                </a>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
