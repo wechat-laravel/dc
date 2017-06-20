@@ -231,6 +231,7 @@
                                             <th>金额</th>
                                             <th>状态</th>
                                             <th>说明</th>
+                                            <th>时间</th>
                                         </tr>
                                         </thead>
                                         <tbody>
@@ -244,6 +245,7 @@
                                             <td>@{{ data.total_amount }}</td>
                                             <td>@{{ data.status_name }}</td>
                                             <td>@{{ data.return_msg }}</td>
+                                            <td>@{{ data.created_at }}</td>
                                         </tr>
                                         </tbody>
                                     </table>
