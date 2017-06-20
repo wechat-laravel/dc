@@ -44,9 +44,9 @@
                             <td>@{{ data.event }}</td>
                             <td>@{{ data.title.title }}</td>
                             <td>@{{ data.amount }}</td>
-                            <td>@{{ data.taxonomy }}</td>
+                            <td>@{{ data.taxonomy_name }}</td>
                             <td>@{{ data.money }}</td>
-                            <td>@{{ data.action }}</td>
+                            <td>@{{ data.action_name }}</td>
                             <td>@{{ data.get_limit }}</td>
                             <td>@{{ data.begin_at }}<br>@{{ data.end_at }}</td>
                             <td>
@@ -62,12 +62,10 @@
                                 <button type="button"
                                         ms-if="data.status == 0"
                                         ms-click="start(data.id)"
-                                        style="float:left;width: 50%;margin:0"
                                         class="btn btn-block btn-info">开启</button>
                                 <button type="button"
                                         ms-if="data.status == 1"
                                         ms-click="stop(data.id)"
-                                        style="float:left;width: 50%;margin:0;"
                                         class="btn btn-block btn-danger">停止</button>
                             </td>
                         </tr>

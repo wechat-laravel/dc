@@ -211,7 +211,12 @@ $('form').bootstrapValidator({
         if($('[name="money_suiji_end"]').val() <= $('[name="money_suiji_begin"]').val()){
             alert('随机红包金额输入有误！');
             return false;
+        }else if($('[name="money_suiji_end"]').val() > $('[name="amount"]').val()){
+            alert('随机红包不能大于总金额！');
+            return false;
         }
+
+
     }
 
     //把奖励行为放在一个数据中 1，转发给好友/群 2，转发给朋友圈

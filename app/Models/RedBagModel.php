@@ -29,6 +29,11 @@ class RedBagModel extends Model
 
     protected $dateFormat = 'U';
 
+    protected $appends = [
+        'action_name',
+        'taxonomy_name'
+    ];
+
     public function getBeginAtAttribute($value)
     {
         return date('Y-m-d H:i:s',$value);
@@ -44,8 +49,9 @@ class RedBagModel extends Model
         return $this->hasOne('App\Models\TasksModel','id','tasks_id');
     }
 
-    public function getTaxonomyAttribute($value)
+    public function getTaxonomyNameAttribute()
     {
+        $value = $this->getAttribute('taxonomy');
         $taxonomy = '固定红包';
         if($value == 2){
             $taxonomy = '随机红包';
@@ -53,8 +59,10 @@ class RedBagModel extends Model
         return $taxonomy;
     }
 
-    public function getActionAttribute($value)
+    public function getActionNameAttribute()
     {
+        $value = $this->getAttribute('action');
+
         $action = strstr($value,',');
 
         if($action){
