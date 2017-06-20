@@ -27,6 +27,7 @@
                             <th>ID</th>
                             <th>活动名称</th>
                             <th>文章标题</th>
+                            <th>文章编号</th>
                             <th>总金额</th>
                             <th>类型</th>
                             <th>红包金额</th>
@@ -43,6 +44,7 @@
                             <td>@{{ data.id }}</td>
                             <td>@{{ data.event }}</td>
                             <td>@{{ data.title.title }}</td>
+                            <td>@{{ data.title.id }}</td>
                             <td>@{{ data.amount }}</td>
                             <td>@{{ data.taxonomy_name }}</td>
                             <td>@{{ data.money }}</td>
@@ -143,23 +145,23 @@
                                     </div>
                                 </div>
                                 <div class="form-group" id="guding">
-                                    <label>红包金额</label>
-                                    <input type="text" class="form-control"
+                                    <label>红包金额(红包金额不能小于1)</label>
+                                    <input type="number" class="form-control"
                                            name="money"
                                            placeholder="请输入红包金额，红包金额最大不超过200">
                                 </div>
                                 <div class="form-group" id="suiji" style="display: none">
-                                    <label>红包金额</label>
+                                    <label>红包金额(红包金额不能小于1)</label>
                                     <div class="box-body">
                                         <div class="row">
                                             <div class="col-xs-3">
-                                                <input type="text" class="form-control" name="money_suiji_begin" placeholder="开始">
+                                                <input type="number" class="form-control" name="money_suiji_begin" placeholder="开始">
                                             </div>
                                             <div class="col-xs-1">
                                                 --
                                             </div>
                                             <div class="col-xs-3">
-                                                <input type="text" class="form-control" name="money_suiji_end" placeholder="结束">
+                                                <input type="number" class="form-control" name="money_suiji_end" placeholder="结束">
                                             </div>
                                         </div>
                                     </div>
