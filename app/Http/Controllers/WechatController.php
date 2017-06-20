@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Session;
 use Mockery\CountValidator\Exception;
 use Monolog\Handler\IFTTTHandler;
 use phpDocumentor\Reflection\DocBlock\Tags\See;
+use SimpleSoftwareIO\QrCode\Facades\QrCode;
 
 class WechatController extends Controller
 {
@@ -545,5 +546,11 @@ class WechatController extends Controller
         }
 
     }
+
+//    public function ceshi(){
+//
+//        QrCode::format('png')->size(120)->generate('http://www.maoliduo.cn/wechat/task/16',public_path('assets/images/qrcode/GhZOsgxfFmdXS9sLP3i2DU7HOCoCsjZH.png'));
+//
+//    }
 
 }

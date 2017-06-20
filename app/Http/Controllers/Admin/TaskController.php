@@ -74,7 +74,7 @@ class TaskController extends Controller
 
             $ret = TasksModel::create($input);
 
-            QrCode::format('png')->size(100)->generate('http://www.maoliduo.cn/wechat/task/'.$ret->id,public_path('assets/images/qrcode/'.$str.'.png'));
+            QrCode::format('png')->size(120)->generate('http://www.maoliduo.cn/wechat/task/'.$ret->id,public_path('assets/images/qrcode/'.$str.'.png'));
 
 
         }catch (\Exception $e){
