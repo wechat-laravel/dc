@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Models\TasksModel;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Mockery\CountValidator\Exception;
 use SimpleSoftwareIO\QrCode\Facades\QrCode;
 use Validator;
 use App\Http\Requests;
@@ -20,17 +21,32 @@ class TaskController extends Controller
      */
     public function index(Request $request)
     {
-        if ($request->ajax()){
+        try{
 
-            $res  = TasksModel::select();
+            if ($request->ajax()){
 
-            $data = $res->orderBy('created_at','desc')->paginate(10);
+                $res = TasksModel::select();
 
-            return response($data);
+                if (Auth::user()->identity !== 'admin'){
+
+                    $res->where('user_id',Auth::id());
+
+                }
+
+                $data  = $res->paginate(10);
+
+                return response($data);
+
+            }
+
+        }catch (Exception $e){
+
+            return response()->json(['success'=>false,'msg'=>$e->getMessage()]);
 
         }
 
         return view('modules.admin.task.index');
+
     }
 
     //H5创建任务
