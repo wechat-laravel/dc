@@ -44,4 +44,9 @@ class RedLogModel extends Model
         return $this->hasOne('App\Models\GrantUserModel', 'openid', 'open_id');
     }
 
+    public function getCreatedAtAttribute($value)
+    {
+        return date('Y-m-d H:i:s', $value);
+    }
+
 }
