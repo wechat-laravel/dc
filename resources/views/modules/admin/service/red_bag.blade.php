@@ -31,6 +31,7 @@
                             <th>类型</th>
                             <th>红包金额</th>
                             <th>奖励行为</th>
+                            <th>上限/个/人/天</th>
                             <th>发放时间</th>
                             <th>领取详情</th>
                             <th>状态</th>
@@ -38,7 +39,7 @@
                         </tr>
                         </thead>
                         <tbody>
-                        <tr ms-for="data in @red_bag_data">
+                        <tr ms-for="($index, data) in @red_bag_data">
                             <td>@{{ data.id }}</td>
                             <td>@{{ data.event }}</td>
                             <td>@{{ data.title.title }}</td>
@@ -46,6 +47,7 @@
                             <td>@{{ data.taxonomy }}</td>
                             <td>@{{ data.money }}</td>
                             <td>@{{ data.action }}</td>
+                            <td>@{{ data.get_limit }}</td>
                             <td>@{{ data.begin_at }}<br>@{{ data.end_at }}</td>
                             <td>
                                 <button type="button" class="btn btn-block btn-info">领取详情</button>
@@ -60,10 +62,12 @@
                                 <button type="button"
                                         ms-if="data.status == 0"
                                         ms-click="start(data.id)"
-                                        class="btn btn-block btn-success">开启</button>
+                                        style="float:left;width: 50%;margin:0"
+                                        class="btn btn-block btn-info">开启</button>
                                 <button type="button"
                                         ms-if="data.status == 1"
                                         ms-click="stop(data.id)"
+                                        style="float:left;width: 50%;margin:0;"
                                         class="btn btn-block btn-danger">停止</button>
                             </td>
                         </tr>

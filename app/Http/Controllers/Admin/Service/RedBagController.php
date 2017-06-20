@@ -28,6 +28,28 @@ class RedBagController extends Controller
         $tasks_id = 1;
         event(new SendRedBagEvent($action,$open_id,$tasks_id));*/
 
+        $param = [
+            "nonce_str" => str_random(32),//随机字符串 不长于32位
+            "mch_billno" => env('MCH_ID') . date('YmdHis') . rand(1000, 9999),//订单号
+            "mch_id" => env('MCH_ID'),//商户号
+            "wxappid" => env('WECHAT_APPID'),
+            "send_name" => 'asdfasffsa',//红包发送者名称 微问数据
+            "re_openid" => 'ome0zxCc1qvM_bLzYIOTzy2BVzlg',
+            "total_amount" => 100,//付款金额，单位分
+            "min_value" => 100,//最小红包金额，单位分
+            "max_value" => 100,//最大红包金额，单位分
+            "total_num" => 1,//红包发放总人数
+            "wishing" => 'asfdasf',//红包祝福语 恭喜发财
+            "client_ip" => env('CLIENT_IP'),//调用接口的机器 Ip 地址
+            "act_name" => 'asfasafsf',//活动名称 红包活动
+            "remark" => 'zhangyuanbeizhu',//备注信息 快来抢
+        ];
+        $wxMchPayHelper = new WxMchPayHelper($param);
+        $r = $wxMchPayHelper->send_redpack();
+        echo "<pre>";
+        print_r($r);
+
+        exit;
         if (\Input::ajax()) {
             $getType = \Input::get('getType');
 
