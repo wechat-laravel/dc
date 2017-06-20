@@ -175,9 +175,9 @@ class WechatController extends Controller
             'source'   => $this->source,
         ];
 
+        //记录层级
         $level = SpreadRecordModel::where('openid',$user[0]['id'])->where('action','browse')->where('tasks_id',$task->id)->orderBy('created_at','asc')->first();
 
-        //记录层级
         if ($level){
 
                 $record['level'] = $level->level;
@@ -277,7 +277,7 @@ class WechatController extends Controller
 
             }else{
 
-                SpreadPeopleModel::create([
+                $people = SpreadPeopleModel::create([
 
                     'name'      => $user[0]['name'],
 
@@ -303,27 +303,23 @@ class WechatController extends Controller
 
             }
 
-            if ($level){
 
-                if ($level->upper){
+            if ($people->upper){
 
-                    //上级
-                    $up = SpreadPeopleModel::where('openid',$level->upper)->where('tasks_id',$task->id)->first();
+                //上级
+                $up = SpreadPeopleModel::where('openid',$people->upper)->where('tasks_id',$task->id)->first();
 
-                    $st = SpreadPeopleModel::where('openid',$level->openid)->where('tasks_id',$task->id)->first();
+                $ids = explode(',',$up->people_ids);
 
-                    $ids = explode(',',$up->people_ids);
+                //如果上级没有，就一直循环下去，直到顶级
+                if(array_search($people->id,$ids) === false){
 
-                    //如果上级没有，就一直循环下去，直到顶级
-                    if(array_search($st->id,$ids) === false){
-
-                        $this->upper($task->id,$level->upper,$st->id,$st->level);
-
-                    }
+                    $this->upper($task->id,$level->upper,$people->id,$people->level);
 
                 }
 
             }
+
 
             Session::put('now_id',$last->id);
 
@@ -547,10 +543,10 @@ class WechatController extends Controller
 
     }
 
-//    public function ceshi(){
-//
-//        QrCode::format('png')->size(120)->generate('http://www.maoliduo.cn/wechat/task/16',public_path('assets/images/qrcode/GhZOsgxfFmdXS9sLP3i2DU7HOCoCsjZH.png'));
-//
-//    }
+    public function ceshi(){
+
+        QrCode::format('png')->size(120)->generate('http://www.maoliduo.cn/wechat/task/16',public_path('assets/images/qrcode/GhZOsgxfFmdXS9sLP3i2DU7HOCoCsjZH.png'));
+
+    }
 
 }
