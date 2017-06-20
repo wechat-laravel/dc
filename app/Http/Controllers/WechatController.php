@@ -314,7 +314,7 @@ class WechatController extends Controller
                 //如果上级没有，就一直循环下去，直到顶级
                 if(array_search($people->id,$ids) === false){
 
-                    $this->upper($task->id,$level->upper,$people->id,$people->level);
+                    $this->upper($task->id,$people->upper,$people->id,$people->level);
 
                 }
 
