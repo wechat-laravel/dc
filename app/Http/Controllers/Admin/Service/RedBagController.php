@@ -28,7 +28,7 @@ class RedBagController extends Controller
         $tasks_id = 1;
         event(new SendRedBagEvent($action,$open_id,$tasks_id));*/
 
-        $param = [
+        /*$param = [
             "nonce_str" => str_random(32),//随机字符串 不长于32位
             "mch_billno" => env('MCH_ID') . date('YmdHis') . rand(1000, 9999),//订单号
             "mch_id" => env('MCH_ID'),//商户号
@@ -49,7 +49,7 @@ class RedBagController extends Controller
         echo "<pre>";
         print_r($r);
 
-        exit;
+        exit;*/
         if (\Input::ajax()) {
             $getType = \Input::get('getType');
 
