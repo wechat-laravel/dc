@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 
+use App\Events\SendRedBagEvent;
 use App\Models\GrantUserModel;
 use App\Models\SpreadPeopleModel;
 use App\Models\SpreadRecordModel;
@@ -444,9 +445,21 @@ class WechatController extends Controller
 
             SpreadRecordModel::create($record);
 
+            if ($record['action'] === 'wechat' && $record['action'] === 'qq'){
+
+                $action = 1;
+
+            }else{
+
+                $action = 2;
+
+            }
+
+            event(new SendRedBagEvent($action,$record['openid'],$record['tasks_id']));
+
         }catch (Exception $e){
 
-            return response()->json(['success'=>false,'msg'=>$e->getMessage()]);
+            return response()->json(['success'=>false,'msg'=>'分享等操作失败！']);
 
         }
 
