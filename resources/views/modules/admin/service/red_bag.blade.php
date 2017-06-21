@@ -32,7 +32,7 @@
                             <th>类型</th>
                             <th>红包金额</th>
                             <th>奖励行为</th>
-                            <th>上限/个/人/天</th>
+                            <th>上限/个/人</th>
                             <th>发放时间</th>
                             <th>领取详情</th>
                             <th>状态</th>
@@ -201,7 +201,7 @@
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label>单个用户日领取红包上限</label>
+                                    <label>单个用户领取红包上限</label>
                                     <select class="form-control" name="get_limit">
                                         <option value="1">一个</option>
                                         <option value="2">两个</option>
