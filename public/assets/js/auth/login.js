@@ -58,7 +58,7 @@ $(function () {
                             $('#error-show').html(tml);
                             $('#errinfo').text(ret.msg);
                         }else{
-                            location.href = '/admin';
+                            location.href = '/admin/task';
                         }
                     });
                 }else{

@@ -322,7 +322,7 @@
             <!-- sidebar menu: : style can be found in sidebar.less -->
             <ul class="sidebar-menu">
                 <li class="header">菜单列表</li>
-                <li class="active treeview">
+                <li class="treeview" :class="{active: @two==='task'|| @two==='custom' }">
                     <a href="#">
                         <i class="fa fa-dashboard"></i>
                         <span>任务管理</span>
@@ -331,9 +331,15 @@
                         </span>
                     </a>
                     <ul class="treeview-menu">
-                        <li class="active"><a href="/admin/task/create"><i class="fa fa-circle-o"></i>H5任务创建</a></li>
-                        <li><a href="/admin/custom"><i class="fa fa-circle-o"></i>自定义创建</a></li>
-                        <li><a href="/admin/task"><i class="fa fa-circle-o"></i>任务列表</a></li>
+                        <li :class="{active: @two==='task'&& @three==='' }">
+                            <a href="/admin/task"><i class="fa fa-circle-o"></i>任务列表</a>
+                        </li>
+                        <li :class="{active: @three==='task_create' }">
+                            <a href="/admin/task/create"><i class="fa fa-circle-o"></i>H5任务创建</a>
+                        </li>
+                        <li :class="{active: @two==='custom' && @three==='' }">
+                            <a href="/admin/custom"><i class="fa fa-circle-o"></i>自定义创建</a>
+                        </li>
                     </ul>
                 </li>
                 {{--<li class="active treeview">--}}
@@ -350,7 +356,7 @@
                         {{--<li><a href="/admin/data/wechat_people"><i class="fa fa-circle-o"></i>传播关系</a></li>--}}
                     {{--</ul>--}}
                 {{--</li>--}}
-                <li class="{{ \Request::getPathInfo() === '/admin/service/red_bag' ? 'active' : ''}} treeview">
+                <li class="treeview" :class="{active: @two==='service'}">
                     <a href="#">
                         <i class="fa fa-folder"></i> <span>服务</span>
                         <span class="pull-right-container">
@@ -358,7 +364,7 @@
                         </span>
                     </a>
                     <ul class="treeview-menu">
-                        <li><a href="/admin/service/red_bag"><i class="fa fa-circle-o"></i>红包工具</a></li>
+                        <li :class="{active: @three==='service_red_bag'}"><a href="/admin/service/red_bag"><i class="fa fa-circle-o"></i>红包工具</a></li>
                     </ul>
                 </li>
             </ul>

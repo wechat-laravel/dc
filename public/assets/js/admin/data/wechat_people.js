@@ -260,7 +260,8 @@ var show = avalon.define({
     },
     //最短路径
     onInfo  : function (e) {
-        show.shows = 'info';
+        show.mailuo = false;
+        show.shows  = 'info';
         $.ajax({
             url:'/admin/data/wechat_info/'+show.task_id+'?id='+e,
             success:function (ret) {
