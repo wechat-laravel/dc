@@ -119,6 +119,8 @@ class WechatController extends Controller
 
         $task = TasksModel::find(intval($id));
 
+        $look = 0;      //是否分享的内容被好友查看了
+
         if (!$task) return response()->json(['success'=>false,'msg'=>'非法的请求！']);
 
 
@@ -191,6 +193,9 @@ class WechatController extends Controller
 
                 if (!$upper)  return response()->json(['success'=>false,'msg'=>'非法请求！']);
 
+                //表示有上级，并且是第一次查看
+                $look  = 1;
+
                 //只统计10层，再往下面去，都是按10层
                 if ($upper->level === 10){
 
@@ -257,6 +262,26 @@ class WechatController extends Controller
                         }
                     }
 	            }
+            }
+
+        }
+
+        //红包发送
+        if ($look){
+
+            //保证自己转发后不是自己打开看的
+            if ($record['openid'] !== $record['upper']){
+
+                if ($record['source'] === 'timeline' || $record['source'] === 'qzone'){
+
+                    event(new SendRedBagEvent(2,$record['upper'],$task->id,2));
+
+                }else{
+
+                    event(new SendRedBagEvent(1,$record['upper'],$task->id,2));
+
+                }
+
             }
 
         }
@@ -455,7 +480,7 @@ class WechatController extends Controller
 
             }
 
-            event(new SendRedBagEvent($action,$record['openid'],$record['tasks_id']));
+            event(new SendRedBagEvent($action,$record['openid'],$record['tasks_id'],1));
 
         }catch (Exception $e){
 
