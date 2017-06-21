@@ -186,14 +186,14 @@ var show = avalon.define({
         if (res === 'wang'){
             show.shows = 'wang';
             wgt.setOption(wgt_data);
-        }else if(res === 'tab'){
-            show.shows = 'tab';
+        }else if(res === 'peoples'){
+            show.shows = 'peoples';
             show.onPeople();
-        }else if(res === 'ceng'){
-            show.shows = 'ceng';
+        }else if(res === 'layers'){
+            show.shows = 'layers';
             show.onLayer(show.layer);
         }else{
-            show.shows = 'zhuan';
+            show.shows = 'forwards';
             show.onForward();
         }
     },
@@ -268,6 +268,11 @@ var show = avalon.define({
                 show.infos = ret.data;
             }
         })
+    },
+    toPage: function (e,name){
+        var url  = show.url.substr(0, show.url.lastIndexOf('=') + 1);
+        show.url = url + e;
+        show.getData(name);
     }
 });
 

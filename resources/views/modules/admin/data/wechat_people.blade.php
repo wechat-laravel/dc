@@ -7,14 +7,14 @@
                 <div class="nav-tabs-custom">
                     <ul class="nav nav-tabs pull-right ui-sortable-handle">
                         <li class="pull-left header"><i class="fa fa-question-circle"></i>传播关系分析</li>
-                        <li class="pull-right"><a href="#revenue-chart" data-toggle="tab" :click="@onPUF('zhuan')" aria-expanded="true">转发客户</a></li>
-                        <li class="pull-right"><a href="#revenue-chart" data-toggle="tab" :click="@onPUF('ceng')" aria-expanded="true">层级影响力</a></li>
-                        <li class="pull-right"><a href="#revenue-chart" data-toggle="tab" :click="@onPUF('tab')" aria-expanded="true">表格数据</a></li>
+                        <li class="pull-right"><a href="#revenue-chart" data-toggle="tab" :click="@onPUF('forwards')" aria-expanded="true">转发客户</a></li>
+                        <li class="pull-right"><a href="#revenue-chart" data-toggle="tab" :click="@onPUF('layers')" aria-expanded="true">层级影响力</a></li>
+                        <li class="pull-right"><a href="#revenue-chart" data-toggle="tab" :click="@onPUF('peoples')" aria-expanded="true">表格数据</a></li>
                         <li class="pull-right  active"><a href="#revenue-chart" data-toggle="tab" :click="@onPUF('wang')" aria-expanded="true">脉络图</a></li>
                     </ul>
                     <div class="tab-content">
                         <div id="wgt" ms-visible="@shows==='wang'" style="width: 100%;height: 800px;"></div>
-                        <div ms-visible="@shows==='tab'" style="width: 100%;">
+                        <div ms-visible="@shows==='peoples'" style="width: 100%;">
                             <table class="table table-bordered text-center" id="people">
                                 <thead>
                                 <tr>
@@ -43,7 +43,7 @@
                                 </tbody>
                             </table>
                         </div>
-                        <div ms-visible="@shows==='ceng'" style="width: 100%;">
+                        <div ms-visible="@shows==='layers'" style="width: 100%;">
                             <ul class="nav nav-tabs">
                                 <li role="presentation" :click="@onLayer(1)" :class="[@layer === 1 ? 'active' : '']"><a href="#">第一级</a></li>
                                 <li role="presentation" :click="@onLayer(2)" :class="[@layer === 2 ? 'active' : '']"><a href="#">第二级</a></li>
@@ -85,7 +85,7 @@
                                 </tbody>
                             </table>
                         </div>
-                        <div ms-visible="@shows==='zhuan'" style="width: 100%;">
+                        <div ms-visible="@shows==='forwards'" style="width: 100%;">
                             <table class="table table-bordered text-center">
                                 <thead>
                                 <tr>
@@ -145,15 +145,15 @@
                             <nav aria-label="Page navigation" style="text-align: center">
                                 <ul class="pagination">
                                     <li :visible="@curr > 1">
-                                        <a :click="@toPage(curr-1)" href="#" aria-label="Previous">
+                                        <a :click="@toPage(curr-1,shows)" href="#" aria-label="Previous">
                                             <span aria-hidden="true">&laquo;</span>
                                         </a>
                                     </li>
                                     <li :for="el in @pages" :class="{active : @el===@curr}">
-                                        <a :click="@toPage(el)" href="#">@{{ el }}</a>
+                                        <a :click="@toPage(el,shows)" href="#">@{{ el }}</a>
                                     </li>
                                     <li :visible="@curr < @last">
-                                        <a :click="@toPage(curr+1)" href="#" aria-label="Next">
+                                        <a :click="@toPage(curr+1,shows)" href="#" aria-label="Next">
                                             <span aria-hidden="true">&raquo;</span>
                                         </a>
                                     </li>
