@@ -181,6 +181,26 @@
                                     <input type="checkbox" name="action_form" value="2">分享到朋友圈
                                 </div>
                                 <div class="form-group">
+                                    <label>发放条件</label>
+                                    <div class="radio">
+                                        <label>
+                                            <input type="radio"
+                                                   name="offer"
+                                                   checked="checked"
+                                                   value="1">
+                                            分享后立即发放
+                                        </label>
+                                    </div>
+                                    <div class="radio">
+                                        <label>
+                                            <input type="radio"
+                                                   name="offer"
+                                                   value="2">
+                                            分享内容被好友查看再发放
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="form-group">
                                     <label>单个用户日领取红包上限</label>
                                     <select class="form-control" name="get_limit">
                                         <option value="1">一个</option>

@@ -128,7 +128,8 @@ class RedBagController extends Controller
             'send_name'=>e($request->get('send_name')),
             'wishing'=>e($request->get('wishing')),
             'act_name'=>e($request->get('act_name')),
-            'remark'=>e($request->get('remark'))
+            'remark'=>e($request->get('remark')),
+            'offer'=>intval($request->get('offer'))
         ]);
         return response()->json(['success'=>true, 'msg'=>'执行成功']);
     }

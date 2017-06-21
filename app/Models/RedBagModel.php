@@ -24,7 +24,8 @@ class RedBagModel extends Model
         'action',
         'begin_at',
         'end_at',
-        'event'
+        'event',
+        'offer'
     ];
 
     protected $dateFormat = 'U';

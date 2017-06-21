@@ -44,7 +44,8 @@ class SendRedBagListener implements ShouldQueue
         $action = 1;//1，转发给好友/群。2，分享到朋友圈
         $open_id = 'ome0zxMDVimw_OjyYS2rXikLQIKo';
         $tasks_id = 1;
-        event(new SendRedBagEvent($action,$open_id,$tasks_id));
+        $offer = 1;//1分享后立即发放 2分享的内容被好友查看后再看
+        event(new SendRedBagEvent($action,$open_id,$tasks_id,$offer));
         1，每次发红包，对dc_red_bag表中的amount--
         2,单个用户24小时内领取一次 领取两次 领取五次
         */
@@ -68,7 +69,9 @@ class SendRedBagListener implements ShouldQueue
                 });
                 return '已经发送邮件';
             });
-        } //判断这个活动停止了没有
+        }
+
+        //判断这个活动停止了没有
         else if ($data->status == 0) {
             $mail['email'] = '810281839@qq.com';
             $mail['notice'] = '该帐号的红包功能已经关闭，文章仍在传播！文章id为' . $this->tasks_id;
@@ -79,7 +82,9 @@ class SendRedBagListener implements ShouldQueue
                 });
                 return '已经发送邮件';
             });
-        } //判断账户余额是否充足
+        }
+
+        //判断账户余额是否充足
         else if ($data->amount <= 0) {
             $mail['email'] = '810281839@qq.com';
             $mail['notice'] = '该帐号的红包功能余额不足！文章id为' . $this->tasks_id;
@@ -90,7 +95,9 @@ class SendRedBagListener implements ShouldQueue
                 });
                 return '已经发送邮件';
             });
-        } //判断调用接口的时候是否还在进行
+        }
+
+        //判断调用接口的时候是否还在进行
         else if (time() < strtotime($data->begin_at) || time() > strtotime($data->end_at)) {
 
             $mail['email'] = '810281839@qq.com';
@@ -102,7 +109,9 @@ class SendRedBagListener implements ShouldQueue
                 });
                 return '已经发送邮件';
             });
-        } //判断红包动作，分享朋友圈/分享朋友  如果满足设置的条件开始发红包
+        }
+
+        //判断红包动作，分享朋友圈/分享朋友  如果满足设置的条件开始发红包
         else if (preg_match("/$event->action/", $data->action)) {
             //判断用户有没有达到领取上限 没有达到才可以继续领取
             $get_limit = RedLogModel::where('open_id', $event->open_id)
@@ -120,24 +129,29 @@ class SendRedBagListener implements ShouldQueue
                     });
                     return '已经发送邮件';
                 });
-            } //没有达到上限再给他发
+            }
+
+            //没有达到上限再给他发
             else {
-                $this->send_name = $data->send_name;
-                $this->wishing = $data->wishing;
-                $this->act_name = $data->act_name;
-                $this->remark = $data->remark;
-                //随机金额
-                if ($data->taxonomy == 2) {
-                    $money_base = explode('-', $data->money);
-                    $total_amount = mt_rand($money_base[0], $money_base[1]);
-                    while($total_amount > $data->amount){
+                //判断传入的offer是否和规则一致。一致再发
+                if($data->offer == $event->offer){
+                    $this->send_name = $data->send_name;
+                    $this->wishing = $data->wishing;
+                    $this->act_name = $data->act_name;
+                    $this->remark = $data->remark;
+                    //随机金额
+                    if ($data->taxonomy == 2) {
+                        $money_base = explode('-', $data->money);
                         $total_amount = mt_rand($money_base[0], $money_base[1]);
+                        while($total_amount > $data->amount){
+                            $total_amount = mt_rand($money_base[0], $money_base[1]);
+                        }
+                        $this->total_amount = $total_amount;
+                        $this->send($event->open_id);
+                    } else {
+                        $this->total_amount = $data->money;
+                        $this->send($event->open_id);
                     }
-                    $this->total_amount = $total_amount;
-                    $this->send($event->open_id);
-                } else {
-                    $this->total_amount = $data->money;
-                    $this->send($event->open_id);
                 }
             }
         }
