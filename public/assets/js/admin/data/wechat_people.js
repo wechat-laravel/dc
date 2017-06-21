@@ -1,3 +1,26 @@
+//分页
+function Pages(current,last){
+    //times 循环的次数
+    var times = last;
+    //起始的页码数
+    var star  = 1;
+    var pages = [];
+    if(times > 10){
+        times = 10;
+        if(current - 5 > 0){
+            star = current - 4;
+            if((star + times) >last){
+                star = last-9;
+            }
+        }
+    }
+    for (var i =1;i<=times;i++){
+        pages.push(star);
+        star+=1;
+    }
+    return pages;
+}
+
 var wgt  = echarts.init(document.getElementById('wgt'));
 
 var wgt_data = {
@@ -149,7 +172,15 @@ var show = avalon.define({
     layer    : 1,
     layers   : [],
     infos    : [],
+    url      : "",
+    pages    : [],              //储存要展示的页数
+    last     : 0,               //最后一页的页码
+    total    : 0,               //所有的条数
+    visible  : false,           //默认不显示（没有数据的提示）
+    curr     : 0,               //当前的页码
     task_id  : $('input[name=task_id]').val(),
+    mailuo   : false,
+
     onPUF : function(res){
         // 使用刚指定的配置项和数据显示图表。
         if (res === 'wang'){
@@ -167,6 +198,7 @@ var show = avalon.define({
         }
     },
     onData : function(){
+        show.mailuo = false;
         $.ajax({
             url:'/admin/data/wechat_people/'+show.task_id,
             success:function (res) {
@@ -180,37 +212,59 @@ var show = avalon.define({
             }
         });
     },
+    //统一的数据请求
+    getData : function(e){
+        show.mailuo = true;
+        $.ajax({
+            url: show.url,
+            method: 'GET',
+            contentType: "application/json",
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        }).done(function(data){
+            show.pages   = Pages(data.current_page, data.last_page);
+            show.curr    = data.current_page;
+            show.last    = data.last_page;
+            show.total   = data.total;
+            if (e ==='peoples'){
+                show.peoples  = data.data;
+            }else  if( e === 'forwards'){
+                show.forwards = data.data;
+            }else{
+                show.layers   = data.data;
+            }
+
+            if (data.data.length === 0) {
+                show.visible = true;
+            } else {
+                show.visible = false;
+            }
+        });
+    },
+    //表格数据
     onPeople: function(){
-        $.ajax({
-            url:'/admin/data/wechat_peoples/'+show.task_id,
-            success:function (ret) {
-                show.peoples = ret.data;
-            }
-        })
+        show.url = '/admin/data/wechat_peoples/'+show.task_id+'?screen=1&page=1';
+        show.getData('peoples');
     },
+    //转发客户
     onForward : function () {
-        $.ajax({
-            url:'/admin/data/wechat_forward/'+show.task_id,
-            success:function (ret) {
-                show.forwards = ret.data;
-            }
-        })
+        show.url = '/admin/data/wechat_forward/'+show.task_id+'?screen=1&page=1';
+        show.getData('forwards');
     },
+    //层级影响力
+    onLayer : function (e) {
+        show.layer = e;
+        show.url   = '/admin/data/wechat_layer/'+show.task_id+'?layer='+e+'&page=1';
+        show.getData('layers');
+    },
+    //最短路径
     onInfo  : function (e) {
         show.shows = 'info';
         $.ajax({
             url:'/admin/data/wechat_info/'+show.task_id+'?id='+e,
             success:function (ret) {
                 show.infos = ret.data;
-            }
-        })
-    },
-    onLayer : function (e) {
-        show.layer = e;
-        $.ajax({
-            url:'/admin/data/wechat_layer/'+show.task_id+'?layer='+e,
-            success:function (ret) {
-                show.layers = ret.data;
             }
         })
     }

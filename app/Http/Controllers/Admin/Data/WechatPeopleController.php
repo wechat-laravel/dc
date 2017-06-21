@@ -116,7 +116,7 @@ class WechatPeopleController extends Controller
 
         $people = SpreadPeopleModel::where('level',1)->where('tasks_id',intval($id))->paginate(10);
 
-        return response($people);
+        return response()->json($people);
 
     }
 
@@ -218,7 +218,7 @@ class WechatPeopleController extends Controller
                     },
                 ])->paginate(10);
 
-            return response($res);
+            return response()->json($res);
 
         }else{
 
@@ -258,7 +258,7 @@ class WechatPeopleController extends Controller
                         }
                     ])->paginate(10);
 
-            return response($res);
+            return response()->json($res);
 
         }else{
 
