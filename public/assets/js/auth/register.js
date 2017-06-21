@@ -43,7 +43,7 @@ $(function () {
                 $('#error-show').html(vm.tml);
                 $('#errinfo').text(ret.msg);
             }else{
-                window.location = '/admin';
+                window.location = '/admin/task';
             }
             $('form').bootstrapValidator('disableSubmitButtons', false);
         });
