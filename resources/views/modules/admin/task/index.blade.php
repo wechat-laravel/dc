@@ -47,7 +47,7 @@
                         <div class="jumbotron text-center" :visible="visible" >
                             <h4><i class="glyphicon glyphicon-exclamation-sign" style="margin-right: 20px;"></i>抱歉，暂没有数据</h4>
                         </div>
-                        <nav aria-label="Page navigation">
+                        <nav aria-label="Page navigation" style="text-align: center">
                             <ul class="pagination">
                                 <li :visible="@curr > 1">
                                     <a :click="@toPage(curr-1)" href="#" aria-label="Previous">
@@ -63,7 +63,7 @@
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="#">共@{{ total }}条</a>
+                                    <a href="#">共@{{ total }}条数据</a>
                                 </li>
                             </ul>
                         </nav>

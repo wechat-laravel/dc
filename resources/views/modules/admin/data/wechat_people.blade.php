@@ -138,6 +138,31 @@
                                 </div>
                             </div>
                         </div>
+                        <div class="tab-content" :visible="mailuo">
+                            <div class="jumbotron text-center" :visible="visible" >
+                                <h4><i class="glyphicon glyphicon-exclamation-sign" style="margin-right: 20px;"></i>抱歉，暂没有数据</h4>
+                            </div>
+                            <nav aria-label="Page navigation" style="text-align: center">
+                                <ul class="pagination">
+                                    <li :visible="@curr > 1">
+                                        <a :click="@toPage(curr-1)" href="#" aria-label="Previous">
+                                            <span aria-hidden="true">&laquo;</span>
+                                        </a>
+                                    </li>
+                                    <li :for="el in @pages" :class="{active : @el===@curr}">
+                                        <a :click="@toPage(el)" href="#">@{{ el }}</a>
+                                    </li>
+                                    <li :visible="@curr < @last">
+                                        <a :click="@toPage(curr+1)" href="#" aria-label="Next">
+                                            <span aria-hidden="true">&raquo;</span>
+                                        </a>
+                                    </li>
+                                    <li :visible="!visible">
+                                        <a href="#">共@{{ total }}条数据</a>
+                                    </li>
+                                </ul>
+                            </nav>
+                        </div>
                     </div>
                 </div>
             </section>
