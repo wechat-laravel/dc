@@ -35,7 +35,11 @@ class RedBagController extends Controller
 
             //获取用户的监控的文章
             if($getType == 'article'){
-                $article_base = TasksModel::where('user_id', \Auth::id())->select(['id', 'title'])->get();
+                if(\Auth::user()->identity == 'admin'){
+                    $article_base = TasksModel::select(['id', 'title'])->get();
+                }else{
+                    $article_base = TasksModel::where('user_id', \Auth::id())->select(['id', 'title'])->get();
+                }
 
                 $article        = [];
                 foreach($article_base as $value){
@@ -48,7 +52,10 @@ class RedBagController extends Controller
 
             //获取用户设置的红包规则
             if($getType == 'redBag'){
-                return RedBagModel::where('user_id', \Auth::id())->with('title')->paginate(2);
+                if(\Auth::user()->identity == 'admin'){
+                    return RedBagModel::with('title')->paginate(10);
+                }
+                return RedBagModel::where('user_id', \Auth::id())->with('title')->paginate(10);
             }
         }
 

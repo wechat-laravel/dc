@@ -200,6 +200,34 @@
                                         </label>
                                     </div>
                                 </div>
+                                {{--<div class="form-group">
+                                    <label>性别</label>
+                                    <div class="radio">
+                                        <label>
+                                            <input type="radio"
+                                                   name="sex"
+                                                   checked="checked"
+                                                   value="1">
+                                            男
+                                        </label>
+                                    </div>
+                                    <div class="radio">
+                                        <label>
+                                            <input type="radio"
+                                                   name="sex"
+                                                   value="2">
+                                            女
+                                        </label>
+                                    </div>
+                                    <div class="radio">
+                                        <label>
+                                            <input type="radio"
+                                                   name="sex"
+                                                   value="3">
+                                            不限
+                                        </label>
+                                    </div>
+                                </div>--}}
                                 <div class="form-group">
                                     <label>单个用户领取红包上限</label>
                                     <select class="form-control" name="get_limit">
