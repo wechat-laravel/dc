@@ -18,7 +18,7 @@
                                     <input type="text" name="desc" class="form-control" placeholder="请输入封面描述，长度在100字以内">
                                 </div>
                                 <div class="form-group">
-                                    <label>封面图片地址<small>（ 必须是微信素材库的图片 ）</small></label>
+                                    <label>封面图片地址></label>
                                     <input type="text" name="img_url" class="form-control"  placeholder="请输入封面图片地址">
                                 </div>
                                 <div class="form-group">
