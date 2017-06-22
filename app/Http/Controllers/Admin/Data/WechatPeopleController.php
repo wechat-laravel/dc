@@ -40,7 +40,7 @@ class WechatPeopleController extends Controller
                     'links'   => [],                                                     //阶层链接
             ];
 
-            $res = SpreadPeopleModel::select('openid','upper','level','name')
+            $res = SpreadPeopleModel::select('id','openid','upper','level','name')
                                 ->where('tasks_id',intval($id))
                                 ->orderBy('created_at','asc')
                                 ->get();
@@ -55,12 +55,12 @@ class WechatPeopleController extends Controller
 
                 }
 
-                $data['user'][$re->openid] = $re->name;
+                $data['user'][$re->openid] = $re->name.'-'.$re->id;
 
 
                 $data['data'][] = [
 
-                    'name'     => $re->name,
+                    'name'     => $re->name.'-'.$re->id,
 
                     'category' => $re->level_name,
 
@@ -74,7 +74,7 @@ class WechatPeopleController extends Controller
 
                         'source' => $data['user'][$re->upper],
 
-                        'target' => $re->name,
+                        'target' => $re->name.'-'.$re->id,
 
                     ];
 
@@ -84,7 +84,7 @@ class WechatPeopleController extends Controller
 
                         'source' => '起点',
 
-                        'target' => $re->name,
+                        'target' => $re->name.'-'.$re->id,
 
                     ];
 

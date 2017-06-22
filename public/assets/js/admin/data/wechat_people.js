@@ -31,7 +31,6 @@ var wgt_data = {
         offset: 1,
         color: '#cdd0d5'
     }]),
-    tooltip: {},
     legend: [{
         tooltip: {
             show: true
@@ -46,10 +45,12 @@ var wgt_data = {
         feature: {
             saveAsImage: {
                 show: true
-            }
+            },
+            dataView : {show: true, readOnly: true},
+            restore : {show: true}
         }
     },
-    animationDuration: 300,
+    animationDuration: 3000,
     animationEasingUpdate: 'quinticInOut',
     series: [{
         type: 'graph',
