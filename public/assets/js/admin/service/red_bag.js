@@ -218,6 +218,11 @@ $('form').bootstrapValidator({
             validators: {
                 notEmpty: {
                     message: '红包发送者名称不能为空'
+                },
+                stringLength: {
+                    min: 1,
+                    max: 30,
+                    message: '红包发送者名称最大为30个字符'
                 }
             }
         },
@@ -225,6 +230,11 @@ $('form').bootstrapValidator({
             validators: {
                 notEmpty: {
                     message: '祝福语不能为空'
+                },
+                stringLength: {
+                    min: 1,
+                    max: 128,
+                    message: '红包祝福语最大为128个字符'
                 }
             }
         },
@@ -232,6 +242,11 @@ $('form').bootstrapValidator({
             validators: {
                 notEmpty: {
                     message: '活动名称不能为空'
+                },
+                stringLength: {
+                    min: 1,
+                    max: 30,
+                    message: '活动名称为1-30个字符'
                 }
             }
         }
@@ -281,8 +296,9 @@ $('form').bootstrapValidator({
 });
 
 var myDate = new Date();
+var endend = new Date().getDate()+7;
 var startDate =  new Date().getMonth()+1 +'/' + myDate.getDate()  + '/' + myDate.getFullYear();
-var endDate =  new Date().getMonth()+1 +'/' + new Date().getDate()  + '/' + myDate.getFullYear();
+var endDate =  new Date().getMonth()+1 +'/' + endend  + '/' + myDate.getFullYear();
 
 $('[name="begin_at"]').daterangepicker({
     "timePicker": true,
