@@ -16,28 +16,8 @@
     .ms-controller {
         visibility: hidden
     }
-    .skin-blue .main-header .navbar {
-        background-color: #00a65a;
-    }
-    .skin-blue .main-header .logo:hover{
-        background-color: #00a65a;
-    }
-    .main-header li.user-header {
-        background-color: #00a65a;
-    }
-    .skin-blue .main-header .logo {
-        background-color: #00a65a;
-        color: #fff;
-        border-bottom: 0 solid transparent;
-    }
-    .skin-blue .main-header li.user-header {
-        background-color: #00a65a;
-    }
-    .skin-blue .main-header .navbar .sidebar-toggle:hover {
-        background-color: #008d4c;
-    }
 </style>
-<body class="hold-transition skin-blue sidebar-mini" class="ms-controller" ms-controller="admin">
+<body class="hold-transition skin-green-light sidebar-mini" class="ms-controller" ms-controller="admin">
 <div class="wrapper">
     <header class="main-header">
         <a href="#" class="logo">
