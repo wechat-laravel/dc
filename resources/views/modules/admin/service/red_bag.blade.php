@@ -29,6 +29,8 @@
                             <th>文章标题</th>
                             <th>文章编号</th>
                             <th>总金额</th>
+                            <th>余额</th>
+                            <th>充值</th>
                             <th>类型</th>
                             <th>红包金额</th>
                             <th>奖励行为</th>
@@ -45,7 +47,16 @@
                             <td>@{{ data.event }}</td>
                             <td>@{{ data.title.title }}</td>
                             <td>@{{ data.title.id }}</td>
-                            <td>@{{ data.amount }}</td>
+                            <td>@{{ data.total }}</td>
+                            <td>
+                                @{{ data.amount }}
+                            </td>
+                            <td>
+                                <button class="btn btn-block btn-info"
+                                        ms-click="@chongzhi($index, data.id)"
+                                        data-toggle="modal"
+                                        data-target="#chongzhiModal">充值</button>
+                            </td>
                             <td>@{{ data.taxonomy_name }}</td>
                             <td>@{{ data.money }}</td>
                             <td>@{{ data.action_name }}</td>
@@ -200,13 +211,21 @@
                                         </label>
                                     </div>
                                 </div>
-                                {{--<div class="form-group">
+                                <div class="form-group">
                                     <label>性别</label>
                                     <div class="radio">
                                         <label>
                                             <input type="radio"
                                                    name="sex"
                                                    checked="checked"
+                                                   value="3">
+                                            不限
+                                        </label>
+                                    </div>
+                                    <div class="radio">
+                                        <label>
+                                            <input type="radio"
+                                                   name="sex"
                                                    value="1">
                                             男
                                         </label>
@@ -219,15 +238,48 @@
                                             女
                                         </label>
                                     </div>
+                                </div>
+                                <div class="form-group" id="suiji">
+                                    <label>区域</label>
                                     <div class="radio">
                                         <label>
                                             <input type="radio"
-                                                   name="sex"
-                                                   value="3">
+                                                   name="area"
+                                                   checked="checked"
+                                                   ms-click="@area(0)"
+                                                   value="0">
                                             不限
                                         </label>
                                     </div>
-                                </div>--}}
+                                    <div class="radio">
+                                        <label>
+                                            <input type="radio"
+                                                   name="area"
+                                                   ms-click="@area(1)"
+                                                   value="1">
+                                            指定区域
+                                        </label>
+                                    </div>
+                                    <div class="box-body" id="area" style="display:none">
+                                        <div class="row">
+                                            <div class="col-xs-3">
+                                                <select class="form-control" name="province" id="province" placeholder="省份">
+                                                    <option ms-for="province_data in @province"
+                                                            ms-attr="{value: province_data.prov_id}">
+                                                        @{{ province_data.prov_name }}
+                                                    </option>
+                                                </select>
+                                            </div>
+                                            <div class="col-xs-3">
+                                                <select class="form-control" name="city" placeholder="城市">
+                                                    <option ms-for="($index, city) in @city">
+                                                        @{{ city.city_name }}
+                                                    </option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                                 <div class="form-group">
                                     <label>单个用户领取红包上限</label>
                                     <select class="form-control" name="get_limit">
@@ -316,6 +368,43 @@
                                    class="btn btn-sm btn-default btn-flat"
                                    ms-click="toPage(current_page+1)">>>
                                 </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal fade" id="chongzhiModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" ms-controller="red_bag">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title" id="myModalLabel">充值</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="box box-info">
+                            <div class="box-body">
+                                <div class="table-responsive">
+                                    <div role="form" id="chongzhiForm">
+                                        <div class="box-body">
+                                            <div class="form-group">
+                                                <label>活动名称</label>
+                                                <input type="text"
+                                                       class="form-control"
+                                                       name="event"
+                                                       readonly
+                                                       ms-attr="{value:red_bag_data[article_id].event}">
+                                            </div>
+                                            <div class="form-group">
+                                                <label>充值金额</label>
+                                                <input type="number" class="form-control" name="total" placeholder="输入充值金额">
+                                            </div>
+                                        </div>
+                                        <div class="box-footer">
+                                            <button type="submit" id="submit" ms-click="@chongzhiCommit" class="btn btn-primary">提交</button>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>

@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Admin\Service;
 
 use App\Events\SendRedBagEvent;
+use App\Models\CityModel;
+use App\Models\ProvinceModel;
 use App\Models\RedBagModel;
 use App\Models\RedLogModel;
 use App\Models\TasksModel;
@@ -56,6 +58,30 @@ class RedBagController extends Controller
                     return RedBagModel::with('title')->paginate(10);
                 }
                 return RedBagModel::where('user_id', \Auth::id())->with('title')->paginate(10);
+            }
+
+            //获取省份列表
+            if($getType == 'province'){
+                return ProvinceModel::orderBy('id','desc')->paginate(35);
+            }
+
+            //通过省份获取城市
+            if($getType == 'city'){
+                return CityModel::where('prov_id', \Input::get('prov_id'))
+                    ->orderBy('id','asc')
+                    ->paginate(100);
+            }
+
+            //充值金额
+            if($getType == 'chongzhiCommit'){
+                $modal = RedBagModel::where('id',\Input::get('id'))->select('user_id')->first();
+                $balance = UserModel::where('id', $modal->user_id)->pluck('balance');
+                if($balance < \Input::get('total')){
+                    return response()->json(['success'=>false, 'msg'=>'账户余额不足，联系客户充值！qq：2905582908']);
+                }else{
+                    RedBagModel::where('id',\Input::get('id'))->increment('total',\Input::get('total'));
+                    return response()->json(['success'=>true, 'msg'=>'充值成功']);
+                }
             }
         }
 
@@ -121,11 +147,11 @@ class RedBagController extends Controller
         //处理开始结束时间
         $time = explode('-',$request->get('begin_at'));
 
-
         RedBagModel::create([
             'user_id'=>\Auth::id(),
             'event'=>e($request->get('event')),
             'tasks_id'=>intval($request->get('article_id')),
+            'total'=>intval($request->get('amount')),
             'amount'=>intval($request->get('amount')),
             'action'=>$request->get('action'),
             'taxonomy'=>$request->get('taxonomy'),
@@ -137,7 +163,10 @@ class RedBagController extends Controller
             'wishing'=>e($request->get('wishing')),
             'act_name'=>e($request->get('act_name')),
             'remark'=>e($request->get('remark')),
-            'offer'=>intval($request->get('offer'))
+            'sex'=>intval($request->get('sex')),
+            'area'=>intval($request->get('area')),
+            'province'=>intval($request->get('area')),
+            'city'=>intval($request->get('area')),
         ]);
         return response()->json(['success'=>true, 'msg'=>'执行成功']);
     }

@@ -53,10 +53,8 @@ class SendRedBagListener implements ShouldQueue
         $this->tasks_id = $event->tasks_id;
 
         $data = RedBagModel::where('tasks_id', $this->tasks_id)
-            ->select('status', 'amount', 'taxonomy',
-                'money', 'begin_at', 'end_at', 'send_name','offer',
-                'wishing', 'act_name', 'remark', 'get_limit', 'action')
-            ->first();
+            ->select('status', 'amount', 'taxonomy','money', 'begin_at', 'end_at', 'send_name','offer','wishing',
+                'act_name', 'remark', 'get_limit', 'action','sex','area','province','city','total')->first();
 
         //判断这个文章是否有红包功能
         if (!$data) {
@@ -122,15 +120,15 @@ class SendRedBagListener implements ShouldQueue
                 ->count();
 
             if ($get_limit >= $data->get_limit) {
-                $mail['email'] = '810281839@qq.com';
-                $mail['notice'] = '该用户已经到了领取上限，仍在调用接口！文章id为' . $this->tasks_id . '用户id为' . $event->open_id;
+                /*$mail['email'] = '810281839@qq.com';
+                $mail['notice'] = '该用户已经到了领取上限，仍在调用接口！文章id为' . $this->tasks_id . '用户id为' . $event->open_id;*/
 
-                Cache::remember('open_id-' . $event->open_id . '-open_id', 60 * 24, function () use ($mail) {
+                /*Cache::remember('open_id-' . $event->open_id . '-open_id', 60 * 24, function () use ($mail) {
                     Mail::send('noticeMail', $mail, function ($message) use ($mail) {
                         $message->to($mail['email'])->subject("微问数据--通知消息");
                     });
                     return '已经发送邮件';
-                });
+                });*/
             }
 
             //没有达到上限再给他发

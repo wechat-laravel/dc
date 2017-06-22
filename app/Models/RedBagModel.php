@@ -25,7 +25,12 @@ class RedBagModel extends Model
         'begin_at',
         'end_at',
         'event',
-        'offer'
+        'offer',
+        'sex',
+        'area',
+        'province',
+        'city',
+        'total'
     ];
 
     protected $dateFormat = 'U';

@@ -11,6 +11,10 @@ var red_bag = avalon.define({
     pageBase:[],
     article:[],
     current_page:1,
+    province:[],
+    city:[],
+    article_id:0,
+    redId:0,
     //获取我的监控的文章
     getData:function(){
         $.ajax({
@@ -82,6 +86,55 @@ var red_bag = avalon.define({
     tasks:function(id){
         red_log.tasks_id = id;
         red_log.getData();
+    },
+    //获取省份列表
+    area:function(id){
+        if(id == 1){
+            $("#area").attr('style','display:block');
+            $.ajax({
+                type:'get',
+                url:'/admin/service/red_bag?&getType=province',
+                success:function(data){
+                    red_bag.province = data.data;
+                }
+            });
+            $.ajax({
+                type:'get',
+                url:'/admin/service/red_bag?&getType=city&prov_id=1',
+                success:function(data){
+                    red_bag.city = data.data;
+                }
+            });
+        }
+        else{
+            $("#area").attr('style','display:none');
+        }
+    },
+    //充值
+    chongzhi:function(data_id,id){
+        red_bag.article_id = data_id;
+        red_bag.redId = id;
+    },
+    //提交充值
+    chongzhiCommit:function(){
+        if($('[name="total"]').val() <= 0){
+            alert('充值金额不能小于0');
+            return false;
+        }else{
+            $.ajax({
+                url:'/admin/service/red_bag?&getType=chongzhiCommit&id='+red_bag.redId+'&total='+$('[name="total"]').val(),
+                success:function(data){
+                    if(data.success){
+                        alert(data.msg);
+                        red_bag.getRedBag();
+                        $("#chongzhiModal").modal('hide');
+                        $('[name="total"]').val('');
+                    }else{
+                        alert(data.msg);
+                    }
+                }
+            });
+        }
     }
 });
 
@@ -326,4 +379,16 @@ $('[name="begin_at"]').daterangepicker({
     "endDate": endDate
 }, function(start, end, label) {
     console.log("New date range selected: ' + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD') + ' (predefined range: ' + label + ')");
+});
+
+
+//通过省份获取城市
+$("#province").on("change",function(){
+    $.ajax({
+     type:'get',
+     url:'/admin/service/red_bag?&getType=city&prov_id='+$("option:selected",this).val(),
+     success:function(data){
+        red_bag.city = data.data;
+     }
+     });
 });
