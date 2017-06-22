@@ -41,8 +41,8 @@
 <div class="wrapper">
     <header class="main-header">
         <a href="#" class="logo">
-            <span class="logo-mini"><b>D</b>c</span>
-            <span class="logo-lg"><b>Dc</b></span>
+            <span class="logo-mini"><b>一</b>问</span>
+            <span class="logo-lg"><b>一问科技</b></span>
         </a>
         <nav class="navbar navbar-static-top">
             <a href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button">
@@ -53,13 +53,13 @@
                     <li class="dropdown user user-menu">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                             <img src="{{ URL::asset('assets/images/user.jpg') }}" class="user-image" alt="User Image">
-                            <span class="hidden-xs">管理员</span>
+                            <span class="hidden-xs">{{ Auth::user()->name ? Auth::user()->name : Auth::user()->identity_name  }}</span>
                         </a>
                         <ul class="dropdown-menu">
                             <li class="user-header">
                                 <img src="{{ URL::asset('assets/images/user.jpg') }}" class="img-circle" alt="User Image">
                                 <p>
-                                    系统管理员
+                                    {{ Auth::user()->name ? Auth::user()->name : Auth::user()->identity_name  }}
                                     <small>创建时间：2017/5/12</small>
                                 </p>
                             </li>
@@ -84,7 +84,7 @@
                     <img src="{{ URL::asset('assets/images/user.jpg') }}" class="img-circle" alt="User Image">
                 </div>
                 <div class="pull-left info">
-                    <p>管理员</p>
+                    <p>{{ Auth::user()->name ? Auth::user()->name : Auth::user()->identity_name  }}</p>
                     <a href="#"><i class="fa fa-circle text-success"></i> 在线</a>
                 </div>
             </div>
@@ -150,12 +150,12 @@
     <div class="content-wrapper">
         <section class="content-header">
             <h1>
-                控制台
-                <small>传播数据图</small>
+                管理中心
+                <small>@yield('title')</small>
             </h1>
             <ol class="breadcrumb">
-                <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-                <li class="active">控制台</li>
+                <li><a href="#"><i class="fa fa-home"></i>后台管理</a></li>
+                <li class="active">@yield('menu')</li>
             </ol>
         </section>
         <section class="content">

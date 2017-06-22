@@ -1,10 +1,16 @@
 @extends('modules._layout.admin')
+@section('title')
+    封装链接任务编辑
+@endsection
+@section('menu')
+    任务管理
+@endsection
 @section('content')
     <div ms-controller="show">
         <div class="row">
             <div class="nav-tabs-custom">
                 <div class="panel panel-default">
-                    <div class="panel-heading"><strong>任务编辑</strong></div>
+                    <div class="panel-heading"><strong>封装链接任务编辑</strong></div>
                     <div class="panel-body">
                         <div class="bs-example bs-example-images">
                             <form class="edit form">

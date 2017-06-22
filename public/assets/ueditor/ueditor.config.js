@@ -46,6 +46,7 @@
 			'justifyjustify', //两端对齐
 			'forecolor', //字体颜色
 			'backcolor', //背景色
+			'link', //超链接
 			'insertorderedlist', //有序列表
 			'insertunorderedlist', //无序列表
 			'lineheight', //行间距

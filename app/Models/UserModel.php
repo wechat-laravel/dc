@@ -36,4 +36,39 @@ class UserModel extends Model implements AuthenticatableContract,
      * @var array
      */
     protected $hidden = ['password', 'remember_token'];
+
+    protected $appends = [
+
+        'identity_name',
+
+    ];
+
+    public function getIdentityNameAttribute()
+    {
+        if (isset($this->attributes['identity'])) {
+
+            $name = $this->attributes['identity'];
+
+            if ($name === 'admin'){
+
+                return '管理员';
+
+            }elseif($name === 'vip'){
+
+                return '会员';
+
+            }else{
+
+                return '游客';
+
+            }
+
+        }else{
+
+            return '';
+
+        }
+
+    }
+
 }

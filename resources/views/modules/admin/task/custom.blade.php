@@ -1,4 +1,10 @@
 @extends('modules._layout.admin')
+@section('title')
+    图文原创
+@endsection
+@section('menu')
+    任务管理
+@endsection
 @section('content')
     <div ms-controller="show">
         <div class="row">
