@@ -114,7 +114,7 @@ class WechatPeopleController extends Controller
 
         if (!$task) return response()->json(['success'=>false,'msg'=>'非法的请求！']);
 
-        $people = SpreadPeopleModel::where('level',1)->where('tasks_id',intval($id))->paginate(10);
+        $people = SpreadPeopleModel::where('level',1)->where('tasks_id',intval($id))->orderBy('people_num','desc')->paginate(10);
 
         return response()->json($people);
 

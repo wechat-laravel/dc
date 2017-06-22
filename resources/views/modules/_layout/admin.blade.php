@@ -20,15 +20,21 @@
         background-color: #00a65a;
     }
     .skin-blue .main-header .logo:hover{
-        background-color: #008749;
+        background-color: #00a65a;
     }
     .main-header li.user-header {
         background-color: #00a65a;
     }
     .skin-blue .main-header .logo {
-        background-color: #008d4c;
+        background-color: #00a65a;
         color: #fff;
         border-bottom: 0 solid transparent;
+    }
+    .skin-blue .main-header li.user-header {
+        background-color: #00a65a;
+    }
+    .skin-blue .main-header .navbar .sidebar-toggle:hover {
+        background-color: #008d4c;
     }
 </style>
 <body class="hold-transition skin-blue sidebar-mini" class="ms-controller" ms-controller="admin">
