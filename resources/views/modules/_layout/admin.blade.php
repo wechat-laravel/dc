@@ -42,7 +42,7 @@
     <header class="main-header">
         <a href="#" class="logo">
             <span class="logo-mini"><b>一</b>问</span>
-            <span class="logo-lg"><b>一问科技</b></span>
+            <span class="logo-lg"><b>一问信息科技</b></span>
         </a>
         <nav class="navbar navbar-static-top">
             <a href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button">
@@ -65,7 +65,7 @@
                             </li>
                             <li class="user-footer">
                                 <div class="pull-left">
-                                    <a href="#" class="btn btn-default btn-flat">账号设置</a>
+                                    <a href="#" class="btn btn-default btn-flat">资料修改</a>
                                 </div>
                                 <div class="pull-right">
                                     <a href="/auth/logout" class="btn btn-default btn-flat">退出</a>
@@ -99,6 +99,20 @@
             </form>
             <ul class="sidebar-menu">
                 <li class="header">菜单列表</li>
+                <li class="treeview">
+                    <a href="#">
+                        <i class="fa fa-user"></i>
+                        <span>个人中心</span>
+                        <span class="pull-right-container">
+                          <i class="fa fa-angle-left pull-right"></i>
+                        </span>
+                    </a>
+                    <ul class="treeview-menu">
+                        <li><a href="#"><i class="fa fa-black-tie"></i>个人资料</a></li>
+                        <li><a href="#"><i class="fa fa-database"></i>账户资产</a></li>
+                        <li><a href="#"><i class="fa fa-lock"></i>安全设置</a></li>
+                    </ul>
+                </li>
                 <li class="treeview" :class="{active: @two==='task'|| @two==='custom' }">
                     <a href="#">
                         <i class="fa fa-dashboard"></i>
@@ -109,30 +123,16 @@
                     </a>
                     <ul class="treeview-menu">
                         <li :class="{active: @two==='task'&& @three==='' }">
-                            <a href="/admin/task"><i class="fa fa-circle-o"></i>任务列表</a>
+                            <a href="/admin/task"><i class="fa fa-calendar"></i>任务列表</a>
                         </li>
                         <li :class="{active: @three==='task_create' }">
-                            <a href="/admin/task/create"><i class="fa fa-circle-o"></i>封装链接</a>
+                            <a href="/admin/task/create"><i class="fa fa-tags"></i>封装链接</a>
                         </li>
                         <li :class="{active: @two==='custom' && @three==='' }">
-                            <a href="/admin/custom"><i class="fa fa-circle-o"></i>图文原创</a>
+                            <a href="/admin/custom"><i class="fa fa-edit"></i>图文原创</a>
                         </li>
                     </ul>
                 </li>
-                {{--<li class="active treeview">--}}
-                    {{--<a href="#">--}}
-                        {{--<i class="fa fa-dashboard"></i>--}}
-                        {{--<span>控制台</span>--}}
-                        {{--<span class="pull-right-container">--}}
-                          {{--<i class="fa fa-angle-left pull-right"></i>--}}
-                        {{--</span>--}}
-                    {{--</a>--}}
-                    {{--<ul class="treeview-menu">--}}
-                        {{--<li class="active"><a href="#"><i class="fa fa-circle-o"></i>微信传播</a></li>--}}
-                        {{--<li><a href="/admin/data/wechat"><i class="fa fa-circle-o"></i>传播数据</a></li>--}}
-                        {{--<li><a href="/admin/data/wechat_people"><i class="fa fa-circle-o"></i>传播关系</a></li>--}}
-                    {{--</ul>--}}
-                {{--</li>--}}
                 <li class="treeview" :class="{active: @two==='service'}">
                     <a href="#">
                         <i class="fa fa-folder"></i> <span>服务</span>
@@ -168,115 +168,6 @@
         </div>
         <strong>Copyright &copy; 2017/5/11 <a href="http://hackqy.com">Hackqy</a>.</strong> 版权所有保留
     </footer>
-    <aside class="control-sidebar control-sidebar-dark">
-        <ul class="nav nav-tabs nav-justified control-sidebar-tabs">
-            <li><a href="#control-sidebar-home-tab" data-toggle="tab"><i class="fa fa-home"></i></a></li>
-        </ul>
-        <div class="tab-content">
-            <div class="tab-pane" id="control-sidebar-home-tab">
-                <h3 class="control-sidebar-heading">最新动态</h3>
-                <ul class="control-sidebar-menu">
-                    <li>
-                        <a href="javascript:void(0)">
-                            <i class="menu-icon fa fa-birthday-cake bg-red"></i>
-
-                            <div class="menu-info">
-                                <h4 class="control-sidebar-subheading">Langdon's Birthday</h4>
-
-                                <p>Will be 23 on April 24th</p>
-                            </div>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="javascript:void(0)">
-                            <i class="menu-icon fa fa-user bg-yellow"></i>
-
-                            <div class="menu-info">
-                                <h4 class="control-sidebar-subheading">Frodo Updated His Profile</h4>
-
-                                <p>New phone +1(800)555-1234</p>
-                            </div>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="javascript:void(0)">
-                            <i class="menu-icon fa fa-envelope-o bg-light-blue"></i>
-
-                            <div class="menu-info">
-                                <h4 class="control-sidebar-subheading">Nora Joined Mailing List</h4>
-
-                                <p>nora@example.com</p>
-                            </div>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="javascript:void(0)">
-                            <i class="menu-icon fa fa-file-code-o bg-green"></i>
-
-                            <div class="menu-info">
-                                <h4 class="control-sidebar-subheading">Cron Job 254 Executed</h4>
-
-                                <p>Execution time 5 seconds</p>
-                            </div>
-                        </a>
-                    </li>
-                </ul>
-                <h3 class="control-sidebar-heading">任务进展</h3>
-                <ul class="control-sidebar-menu">
-                    <li>
-                        <a href="javascript:void(0)">
-                            <h4 class="control-sidebar-subheading">
-                                Custom Template Design
-                                <span class="label label-danger pull-right">70%</span>
-                            </h4>
-
-                            <div class="progress progress-xxs">
-                                <div class="progress-bar progress-bar-danger" style="width: 70%"></div>
-                            </div>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="javascript:void(0)">
-                            <h4 class="control-sidebar-subheading">
-                                Update Resume
-                                <span class="label label-success pull-right">95%</span>
-                            </h4>
-
-                            <div class="progress progress-xxs">
-                                <div class="progress-bar progress-bar-success" style="width: 95%"></div>
-                            </div>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="javascript:void(0)">
-                            <h4 class="control-sidebar-subheading">
-                                Laravel Integration
-                                <span class="label label-warning pull-right">50%</span>
-                            </h4>
-
-                            <div class="progress progress-xxs">
-                                <div class="progress-bar progress-bar-warning" style="width: 50%"></div>
-                            </div>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="javascript:void(0)">
-                            <h4 class="control-sidebar-subheading">
-                                Back End Framework
-                                <span class="label label-primary pull-right">68%</span>
-                            </h4>
-
-                            <div class="progress progress-xxs">
-                                <div class="progress-bar progress-bar-primary" style="width: 68%"></div>
-                            </div>
-                        </a>
-                    </li>
-                </ul>
-            </div>
-            <div class="tab-pane" id="control-sidebar-stats-tab">Stats Tab Content</div>
-        </div>
-    </aside>
-    <div class="control-sidebar-bg"></div>
 </div>
 
 <script src="{{ URL::asset('assets/js/jquery.min.js') }}"></script>

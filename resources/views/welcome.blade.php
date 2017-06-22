@@ -52,7 +52,7 @@
     <body>
         <div class="container">
             <div class="content">
-                <div class="title" onclick="goUrl()">www.maoliduo.cn</div>
+                <div class="title" onclick="goUrl()">一问信息科技</div>
             </div>
         </div>
     </body>

@@ -19,7 +19,7 @@
                 <div class="col-xs-10 col-xs-offset-1 col-sm-8 col-sm-offset-2 col-md-6 col-md-offset-3 col-lg-4 col-lg-offset-4" id="logindev">
                     <h3 class="text-center" style="margin-bottom: 30px;">
                         <img class="logo-img" width="45px" height="45px;" src="{{ URL::asset('assets/images/z_logo.png') }}">
-                        <span>乐其意</span>
+                        <span>一问信息科技</span>
                     </h3>
                         <form class="login form">
                             {!! csrf_field() !!}
