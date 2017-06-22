@@ -138,7 +138,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="tab-content" :visible="mailuo">
+                        <div class="tab-content" :visible="maoliduo">
                             <div class="jumbotron text-center" :visible="visible" >
                                 <h4><i class="glyphicon glyphicon-exclamation-sign" style="margin-right: 20px;"></i>抱歉，暂没有数据</h4>
                             </div>

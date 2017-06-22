@@ -106,10 +106,10 @@
                             <a href="/admin/task"><i class="fa fa-circle-o"></i>任务列表</a>
                         </li>
                         <li :class="{active: @three==='task_create' }">
-                            <a href="/admin/task/create"><i class="fa fa-circle-o"></i>H5任务创建</a>
+                            <a href="/admin/task/create"><i class="fa fa-circle-o"></i>封装链接</a>
                         </li>
                         <li :class="{active: @two==='custom' && @three==='' }">
-                            <a href="/admin/custom"><i class="fa fa-circle-o"></i>自定义创建</a>
+                            <a href="/admin/custom"><i class="fa fa-circle-o"></i>图文原创</a>
                         </li>
                     </ul>
                 </li>

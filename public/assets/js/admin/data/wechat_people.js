@@ -56,7 +56,7 @@ var wgt_data = {
         type: 'graph',
         layout: 'force',
         force: {
-            repulsion: 100
+            repulsion: 50
         },
         data: [{
             "name": "原点",
@@ -180,7 +180,7 @@ var show = avalon.define({
     visible  : false,           //默认不显示（没有数据的提示）
     curr     : 0,               //当前的页码
     task_id  : $('input[name=task_id]').val(),
-    mailuo   : false,
+    maoliduo : false,
 
     onPUF : function(res){
         // 使用刚指定的配置项和数据显示图表。
@@ -199,7 +199,7 @@ var show = avalon.define({
         }
     },
     onData : function(){
-        show.mailuo = false;
+        show.maoliduo = false;
         $.ajax({
             url:'/admin/data/wechat_people/'+show.task_id,
             success:function (res) {
@@ -215,7 +215,7 @@ var show = avalon.define({
     },
     //统一的数据请求
     getData : function(e){
-        show.mailuo = true;
+        show.maoliduo = true;
         $.ajax({
             url: show.url,
             method: 'GET',
