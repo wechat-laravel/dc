@@ -10,7 +10,7 @@
                                 <h4>传播任务列表</h4>
                             </div>
                             <div class="panel panel-default">
-                                <table class="table table-bordered text-center">
+                                <table class="table table-bordered text-center table-hover">
                                     <thead>
                                         <tr>
                                             <th width="60px;">编号</th>

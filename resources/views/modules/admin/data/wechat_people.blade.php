@@ -15,7 +15,7 @@
                     <div class="tab-content">
                         <div id="wgt" ms-visible="@shows==='wang'" style="width: 100%;height: 800px;"></div>
                         <div ms-visible="@shows==='peoples'" style="width: 100%;">
-                            <table class="table table-bordered text-center" id="people">
+                            <table class="table table-bordered text-center table-hover" id="people">
                                 <thead>
                                 <tr>
                                     <th width="350px;" style="text-align: left">昵称</th>
@@ -56,7 +56,7 @@
                                 <li role="presentation" :click="@onLayer(9)" :class="[@layer === 9 ? 'active' : '']"><a href="#">第九级</a></li>
                                 <li role="presentation" :click="@onLayer(10)" :class="[@layer === 10 ? 'active' : '']"><a href="#">第十级</a></li>
                             </ul>
-                            <table class="table table-bordered text-center" style="margin-top: 10px;">
+                            <table class="table table-bordered text-center table-hover" style="margin-top: 10px;">
                                 <thead>
                                     <tr>
                                         <th width="60px;">头像</th>
@@ -86,7 +86,7 @@
                             </table>
                         </div>
                         <div ms-visible="@shows==='forwards'" style="width: 100%;">
-                            <table class="table table-bordered text-center">
+                            <table class="table table-bordered text-center table-hover">
                                 <thead>
                                 <tr>
                                     <th width="60px;">头像</th>
