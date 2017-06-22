@@ -32,12 +32,12 @@
                 <ul class="nav navbar-nav">
                     <li class="dropdown user user-menu">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                            <img src="{{ URL::asset('assets/images/user.jpg') }}" class="user-image" alt="User Image">
+                            <img src="{{ Auth::user()->avatar ? Auth::user()->avatar : URL::asset('assets/images/user.jpg') }}" class="user-image" alt="User Image">
                             <span class="hidden-xs">{{ Auth::user()->name ? Auth::user()->name : Auth::user()->identity_name  }}</span>
                         </a>
                         <ul class="dropdown-menu">
                             <li class="user-header">
-                                <img src="{{ URL::asset('assets/images/user.jpg') }}" class="img-circle" alt="User Image">
+                                <img src="{{ Auth::user()->avatar ? Auth::user()->avatar : URL::asset('assets/images/user.jpg') }}" class="img-circle" alt="User Image">
                                 <p>
                                     {{ Auth::user()->name ? Auth::user()->name : Auth::user()->identity_name  }}
                                     <small>创建时间：2017/5/12</small>
@@ -61,7 +61,7 @@
         <section class="sidebar">
             <div class="user-panel">
                 <div class="pull-left image">
-                    <img src="{{ URL::asset('assets/images/user.jpg') }}" class="img-circle" alt="User Image">
+                    <img src="{{ Auth::user()->avatar ? Auth::user()->avatar : URL::asset('assets/images/user.jpg') }}" class="img-circle" alt="User Image">
                 </div>
                 <div class="pull-left info">
                     <p>{{ Auth::user()->name ? Auth::user()->name : Auth::user()->identity_name  }}</p>
@@ -79,7 +79,7 @@
             </form>
             <ul class="sidebar-menu">
                 <li class="header">菜单列表</li>
-                <li class="treeview">
+                <li class="treeview" :class="{active: @two==='user'}">
                     <a href="#">
                         <i class="fa fa-user"></i>
                         <span>个人中心</span>
@@ -88,7 +88,9 @@
                         </span>
                     </a>
                     <ul class="treeview-menu">
-                        <li><a href="#"><i class="fa fa-black-tie"></i>个人资料</a></li>
+                        <li :class="{active: @three==='user_profile' }">
+                            <a href="/admin/user/profile"><i class="fa fa-black-tie"></i>个人资料</a>
+                        </li>
                         <li><a href="#"><i class="fa fa-database"></i>账户资产</a></li>
                         <li><a href="#"><i class="fa fa-lock"></i>安全设置</a></li>
                     </ul>
