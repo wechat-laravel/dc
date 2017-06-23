@@ -36,6 +36,7 @@
     @endif
 </body>
 <script type="text/javascript" charset="UTF-8">
+    $("img").each(function(){$(this).attr("src").indexOf("mmbiz.qpic.cn")>-1&&$(this).attr("src","http://wewen.io/image?src="+$(this).attr("src"))});
     var mark = Math.random().toString(36).substr(3);
     wx.config(<?=$js->config(['onMenuShareTimeline','onMenuShareAppMessage','onMenuShareQQ','onMenuShareQZone'],false);?>);
     wx.ready(function(){

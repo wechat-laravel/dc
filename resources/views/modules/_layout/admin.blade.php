@@ -45,7 +45,7 @@
                             </li>
                             <li class="user-footer">
                                 <div class="pull-left">
-                                    <a href="#" class="btn btn-default btn-flat">资料修改</a>
+                                    <a href="/admin/user/profile" class="btn btn-default btn-flat">资料修改</a>
                                 </div>
                                 <div class="pull-right">
                                     <a href="/auth/logout" class="btn btn-default btn-flat">退出</a>

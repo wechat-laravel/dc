@@ -9,6 +9,7 @@ use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Validator;
 
 class IndexController extends Controller
 {
@@ -52,7 +53,55 @@ class IndexController extends Controller
 
             }
 
+        }else{
+
+            $user = UserModel::find(Auth::id());
+
+            $input = $request->only(['name','qq','wechat_id','mobile']);
+
+            $validator = Validator::make($input,[
+                'name'      => 'max:20',
+                'qq'        => 'max:11',
+                'wechat_id' => 'max:30',
+            ]);
+
+            if ($validator->fails()){
+
+                return response()->json(['success'=>false,'msg'=>'表单数据有误,请检查后重新提交']);
+
+            }
+
+            if ($input['mobile']){
+
+                 $preg = preg_match('/^1[3|4|5|7|8]\d{9}$/', $input['mobile']);
+
+                 if (empty($preg))    return response()->json(['success'=>false,'msg'=>'手机格式有误！']);
+
+                 $user->mobile = $input['mobile'];
+
+            }
+
+            if ($input['name']) $user->name = $input['name'];
+
+            if ($input['qq']) $user->qq = $input['qq'];
+
+            if ($input['wechat_id']) $user->wechat_id = $input['wechat_id'];
+
+            try{
+
+                $user->update();
+
+            }catch (\Exception $e){
+
+                return response()->json(['success'=>false,'msg'=>'修改失败！']);
+
+            }
+
+            return response()->json(['success'=>true,'msg'=>'修改成功！']);
+
         }
+
+
 
     }
 
