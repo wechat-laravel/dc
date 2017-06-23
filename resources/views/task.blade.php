@@ -4,6 +4,7 @@
     <title>{{ $task->title }}</title>
     <meta name="DC"content="{{ $task->desc }}">
     <meta name="description"content="{{ $task->desc }}">
+    <link rel="stylesheet" href="{{ URL::asset('assets/css/bootstrap.min.css') }}">
     <meta name="viewport" id="viewport" content="width=320, initial-scale=1, maximum-scale=1, user-scalable=no">
     <script src="{{ URL::asset('assets/js/jquery.min.js') }}" type="text/javascript" charset="utf-8"></script>
     <script src="http://res.wx.qq.com/open/js/jweixin-1.2.0.js" type="text/javascript" charset="utf-8"></script>
@@ -35,7 +36,7 @@
         </div>
     @endif
     <blockquote>
-        <p><a href="http://wewen.io/">一问科技技术支持</a></p>
+        <p ><a href="http://wewen.io/">一问科技技术支持</a></p>
     </blockquote>
 </body>
 <script type="text/javascript" charset="UTF-8">
