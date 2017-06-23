@@ -45,7 +45,9 @@ class SendRedBagListener implements ShouldQueue
         $open_id = 'ome0zxMDVimw_OjyYS2rXikLQIKo';
         $tasks_id = 1;
         $offer = 1;//1分享后立即发放 2分享的内容被好友查看后再看
-        event(new SendRedBagEvent($action,$open_id,$tasks_id,$offer));
+        $city = '上海';//城市
+        $sex = 1;//性别 0未知 1男 2女
+        event(new SendRedBagEvent($action,$open_id,$tasks_id,$offer,$city, $sex));
         1，每次发红包，对dc_red_bag表中的amount--
         2,单个用户24小时内领取一次 领取两次 领取五次
         */
@@ -111,6 +113,15 @@ class SendRedBagListener implements ShouldQueue
             });
         }
 
+        //判断是否指定性别
+       /* else if(!($data->sex == 3 || $data->sex == $event->sex)){
+            //停止
+        }*/
+
+        //判断是否指定城市
+        /*else if(!($data->area == 0 || $data->city == $event->city)){
+            //停止
+        }*/
         //判断红包动作，分享朋友圈/分享朋友  如果满足设置的条件开始发红包
         else if (preg_match("/$event->action/", $data->action)) {
             //判断用户有没有达到领取上限 没有达到才可以继续领取

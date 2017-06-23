@@ -202,6 +202,55 @@ class RedBagController extends Controller
      */
     public function update(Request $request, $id)
     {
+        //修改配置
+        if($id == 'editConfig'){
+            $validate = \Validator::make($request->all(), [
+                'event' => 'required',
+                'action' => 'required',
+                'begin_at' => 'required',
+                'send_name' => 'required',
+                'wishing' => 'required',
+                'act_name' => 'required',
+                'get_limit' => 'required',
+            ], [
+                'required' => ':attribute 不能为空'
+            ]);
+
+            if ($validate->fails()) {
+                return response()->json(['success'=>false, 'msg'=>$validate->errors()->first()]);
+            }
+
+
+            $money = $request->get('money');
+            //判断红包类型 taxonomy 1固定金额 2随机金额
+            if($request->get('edit_taxonomy') == 2){
+                $money = $request->get('edit_money_suiji_begin') . '-' .$request->get('edit_money_suiji_end');
+            }
+
+            //处理开始结束时间
+            $time = explode('-',$request->get('begin_at'));
+
+            RedBagModel::where('id',$request->get('id'))->update([
+                'event'=>e($request->get('event')),
+                'action'=>$request->get('action'),
+                'taxonomy'=>$request->get('edit_taxonomy'),
+                'money'=>$money,
+                'get_limit'=>intval($request->get('get_limit')),
+                'begin_at'=>strtotime($time[0]),
+                'end_at'=>strtotime($time[1]),
+                'send_name'=>e($request->get('send_name')),
+                'wishing'=>e($request->get('wishing')),
+                'act_name'=>e($request->get('act_name')),
+                'remark'=>e($request->get('remark')),
+                'sex'=>intval($request->get('sex')),
+                'area'=>intval($request->get('area')),
+                'province'=>$request->get('province') ? $request->get('province') : '',
+                'city'=>$request->get('city') ? $request->get('city') : '',
+            ]);
+            return response()->json(['success'=>true, 'msg'=>'执行成功']);
+        }
+
+
         RedBagModel::where('id',$id)->update(['status'=>1]);
         return response()->json(['success'=>true, 'msg'=>'操作成功']);
     }
