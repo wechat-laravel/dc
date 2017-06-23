@@ -40,7 +40,7 @@
                                 <img src="{{ Auth::user()->avatar ? Auth::user()->avatar : URL::asset('assets/images/user.jpg') }}" class="img-circle" alt="User Image">
                                 <p>
                                     {{ Auth::user()->name ? Auth::user()->name : Auth::user()->identity_name  }}
-                                    <small>创建时间：2017/5/12</small>
+                                    <small>注册时间：{{ Auth::user()->created_at }}</small>
                                 </p>
                             </li>
                             <li class="user-footer">
@@ -91,8 +91,12 @@
                         <li :class="{active: @three==='user_profile' }">
                             <a href="/admin/user/profile"><i class="fa fa-black-tie"></i>个人资料</a>
                         </li>
-                        <li><a href="#"><i class="fa fa-database"></i>账户资产</a></li>
-                        <li><a href="#"><i class="fa fa-lock"></i>安全设置</a></li>
+                        <li :class="{active: @three==='user_assets' }">
+                            <a href="/admin/user/assets"><i class="fa fa-database"></i>账户资产</a>
+                        </li>
+                        <li :class="{active: @three==='user_account' }">
+                            <a href="/admin/user/account"><i class="fa fa-lock"></i>安全设置</a>
+                        </li>
                     </ul>
                 </li>
                 <li class="treeview" :class="{active: @two==='task'|| @two==='custom' }">

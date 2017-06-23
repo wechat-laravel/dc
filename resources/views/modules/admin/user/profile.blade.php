@@ -42,7 +42,7 @@
                             <button type="submit" class="btn btn-success btn-block">提交修改</button>
                         </form>
                     </div>
-                    <div class="col-md-6 col-sm-12 col-xs-12">
+                    <div class="col-md-6 col-sm-12 col-xs-12" style="margin-top: 20px;">
                         <div :visible="ava_err"  class="alert alert-danger ava_err" role="alert">操作步骤：点击上传图像，选取图片,预览后，再点击上传!</div>
                         <div class="caijian">
                             <div class="imageBox">
