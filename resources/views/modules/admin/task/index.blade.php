@@ -31,8 +31,8 @@
                                     <tbody>
                                         <tr ms-for="el in @data" data-for-rendered='@onLoads'>
                                             <td>@{{ el.id }}</td>
-                                            <td>@{{ el.title }}</td>
-                                            <td>@{{ el.desc }}</td>
+                                            <td>@{{ el.title | truncate(15) }}</td>
+                                            <td>@{{ el.desc | truncate(20) }}</td>
                                             <td style="width: 70px;padding: 0;margin:0;">
                                                 <button class="btn btn-default qrcode" data-trigger="focus" data-html="true" title="请打开微信扫一扫" data-placement="bottom" ms-attr="{'data-content':'<img src='+@el.qrcode_url+'>'}">点击查看</button>
                                             </td>
