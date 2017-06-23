@@ -114,14 +114,14 @@ class SendRedBagListener implements ShouldQueue
         }
 
         //判断是否指定性别
-       /* else if(!($data->sex == 3 || $data->sex == $event->sex)){
+        else if(!($data->sex == 3 || $data->sex == $event->sex)){
             //停止
-        }*/
+        }
 
         //判断是否指定城市
-        /*else if(!($data->area == 0 || $data->city == $event->city)){
+        else if(!($data->area == 0 || $data->city == $event->city)){
             //停止
-        }*/
+        }
         //判断红包动作，分享朋友圈/分享朋友  如果满足设置的条件开始发红包
         else if (preg_match("/$event->action/", $data->action)) {
             //判断用户有没有达到领取上限 没有达到才可以继续领取
