@@ -15,4 +15,7 @@ Route::group([
     //红包领取记录
     Route::resource('red_log','RedLogController');
 
+    //帮助中心
+    Route::resource('help','HelpController');
+
 });

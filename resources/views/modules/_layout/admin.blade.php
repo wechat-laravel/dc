@@ -152,6 +152,11 @@
                         <li :class="{active: @three==='service_red_bag'}"><a href="/admin/service/red_bag"><i class="fa fa-circle-o"></i>红包工具</a></li>
                     </ul>
                 </li>
+                <li class="treeview">
+                    <a href="/admin/service/help">
+                        <i class="fa fa-align-justify"></i> <span>使用指南</span>
+                    </a>
+                </li>
             </ul>
         </section>
     </aside>
