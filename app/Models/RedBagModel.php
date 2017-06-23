@@ -42,12 +42,12 @@ class RedBagModel extends Model
 
     public function getBeginAtAttribute($value)
     {
-        return date('Y-m-d H:i:s',$value);
+        return date('m/d/Y H:i',$value);
     }
 
     public function getEndAtAttribute($value)
     {
-        return date('Y-m-d H:i:s',$value);
+        return date('m/d/Y H:i',$value);
     }
 
     public function title()

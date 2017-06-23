@@ -119,7 +119,7 @@ class SendRedBagListener implements ShouldQueue
         }
 
         //判断是否指定城市
-        else if(!($data->area == 0 || $data->city == $event->city)){
+        else if(!($data->area == 0 || strstr($data->city,$event->city))){
             //停止
         }
         //判断红包动作，分享朋友圈/分享朋友  如果满足设置的条件开始发红包

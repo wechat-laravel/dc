@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers\Admin\Service;
 
+use App\Models\GrantUserModel;
+use App\Models\RedBagModel;
 use App\Models\RedLogModel;
 use Illuminate\Http\Request;
 
@@ -18,6 +20,41 @@ class RedLogController extends Controller
     public function index()
     {
         if(\Input::ajax()){
+            if(\Input::get('status')!= '' && \Input::get('name')!= ''){
+                $open_id = GrantUserModel::where('name','like','%'.\Input::get('name').'%')->select('openid')
+                    ->first();
+                if(\Input::get('status') == 0){
+                    return RedLogModel::where('tasks_id', \Input::get('tasks_id'))
+                        ->where('open_id',$open_id->openid)
+                        ->with('info')
+                        ->paginate(10);
+                }else{
+                    return RedLogModel::where('tasks_id', \Input::get('tasks_id'))
+                        ->where('open_id',$open_id->openid)
+                        ->where('status',intval(\Input::get('status')))
+                        ->with('info')
+                        ->paginate(10);
+                }
+
+            }else if(\Input::has('status') != ''){
+                if(\Input::get('status') == 0){
+                    return RedLogModel::where('tasks_id', \Input::get('tasks_id'))
+                        ->with('info')
+                        ->paginate(10);
+                }else{
+                    return RedLogModel::where('tasks_id', \Input::get('tasks_id'))
+                        ->where('status',intval(\Input::get('status')))
+                        ->with('info')
+                        ->paginate(10);
+                }
+            }else if(\Input::get('name')!= ''){
+                $open_id = GrantUserModel::where('name','like','%'.\Input::get('name').'%')->select('openid')
+                    ->first();
+                return RedLogModel::where('tasks_id', \Input::get('tasks_id'))
+                    ->where('open_id',$open_id->openid)
+                    ->with('info')
+                    ->paginate(10);
+            }
             return RedLogModel::where('tasks_id', \Input::get('tasks_id'))
                 ->with('info')
                 ->paginate(10);

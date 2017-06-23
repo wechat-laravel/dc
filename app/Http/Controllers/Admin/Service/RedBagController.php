@@ -245,7 +245,7 @@ class RedBagController extends Controller
                 'sex'=>intval($request->get('sex')),
                 'area'=>intval($request->get('area')),
                 'province'=>$request->get('province') ? $request->get('province') : '',
-                'city'=>$request->get('city') ? $request->get('city') : '',
+                'city'=>$request->get('city') ? implode(" ", $request->get('city')) : '',
             ]);
             return response()->json(['success'=>true, 'msg'=>'执行成功']);
         }
