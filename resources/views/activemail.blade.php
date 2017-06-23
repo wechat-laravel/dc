@@ -4,10 +4,10 @@
     {{--</div>--}}
     <div style="width: 100%;height: 426px;background-color: #ffffff;padding-left: 35px;padding-right: 35px;">
         <div style="color: #22a2a1;font-family: Lato;font-weight: 600;font-size: 20px;letter-spacing: 1px;padding-top: 39px;">
-            乐其意-DC网站
+            乐奇艺
         </div>
         <div style="font-size: 17px;color: #13243f;font-family: Lato;font-weight: 400;margin-top:9px; margin-bottom: 2px;">
-            一个我也不知道干啥好的网站！
+            无新奇不成活，乐享奇中。
         </div>
         <div style="font-size: 17px;color: #13243f;font-family: Lato;font-weight: 400;
         line-height: 23px;margin-top: 9px;max-width: 538px;">
