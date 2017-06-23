@@ -40,7 +40,7 @@
                                 <img src="{{ Auth::user()->avatar ? Auth::user()->avatar : URL::asset('assets/images/user.jpg') }}" class="img-circle" alt="User Image">
                                 <p>
                                     {{ Auth::user()->name ? Auth::user()->name : Auth::user()->identity_name  }}
-                                    <small>注册时间：{{ Auth::user()->created_at }}</small>
+                                    <small>身份：{{ Auth::user()->identity_name }}</small>
                                 </p>
                             </li>
                             <li class="user-footer">

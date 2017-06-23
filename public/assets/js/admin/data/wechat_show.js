@@ -274,7 +274,7 @@ var tlsc_data = {
         {
             name:'Top100 H5',
             type:'bar',
-            data:[15, 27, 24, 31, 18, 12, 71],
+            data:[8, 15, 27,19,11, 9,8,2,1,1],
             markPoint: {
                 data: [
                     {type: 'max', name: '最大值'}
@@ -345,7 +345,7 @@ var fwsj_data = {
             name:'Top100 H5',
             type:'line',
             smooth:true,
-            data:[15, 27, 24, 31, 18, 12, 66, 15, 27, 24, 31, 18, 12, 66,15, 27, 24, 31, 18, 12, 66, 15, 27, 30 ],
+            data:[6,3,2,1,0,1,4,7,6,10,12,14,11,13,8,11,6,20,15,13,10,18,16,11,9],
             markPoint: {
                 data: [
                     {type: 'max', name: '最大值'}
