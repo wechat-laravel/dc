@@ -35,9 +35,9 @@
             </div>
         </div>
     @endif
-    <blockquote>
+    <footer class="main-footer">
         <p ><a href="http://wewen.io/">一问科技技术支持</a></p>
-    </blockquote>
+    </footer>
 </body>
 <script type="text/javascript" charset="UTF-8">
     $("img").each(function(){$(this).attr("src").indexOf("mmbiz.qpic.cn")>-1&&$(this).attr("src","http://wewen.io/image?src="+$(this).attr("src"))});
