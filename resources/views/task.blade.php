@@ -29,15 +29,9 @@
     @if($task->mark === 'h5')
         <iframe src="{{ $task->page_url }}" frameborder="0" width="100%" height="100%"></iframe>
     @else
-        <div class="row">
-            <div class="col-xs-10 col-xs-offset-1 col-sm-8 col-sm-offset-2 col-md-6 col-md-offset-3 col-lg-4 col-lg-offset-4">
-                {!! $task->editorValue !!}
-            </div>
-        </div>
+        <div class="row">{!! $task->editorValue !!}</div>
     @endif
-    <footer class="main-footer">
-        <p ><a href="http://wewen.io/">一问科技技术支持</a></p>
-    </footer>
+    <p class="text-center"><a href="http://wewen.io/">一问科技技术支持</a></p>
 </body>
 <script type="text/javascript" charset="UTF-8">
     $("img").each(function(){$(this).attr("src").indexOf("mmbiz.qpic.cn")>-1&&$(this).attr("src","http://wewen.io/image?src="+$(this).attr("src"))});
