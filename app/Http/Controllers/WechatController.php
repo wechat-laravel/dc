@@ -274,11 +274,11 @@ class WechatController extends Controller
 
                 if ($record['source'] === 'timeline' || $record['source'] === 'qzone'){
 
-                    event(new SendRedBagEvent(2,$record['upper'],$task->id,2));
+                    event(new SendRedBagEvent(2,$record['upper'],$task->id,2,$user[0]['original']['city'],$user[0]['original']['sex']));
 
                 }else{
 
-                    event(new SendRedBagEvent(1,$record['upper'],$task->id,2));
+                    event(new SendRedBagEvent(1,$record['upper'],$task->id,2,$user[0]['original']['city'],$user[0]['original']['sex']));
 
                 }
 
@@ -480,7 +480,7 @@ class WechatController extends Controller
 
             }
 
-            event(new SendRedBagEvent($action,$record['openid'],$record['tasks_id'],1));
+            event(new SendRedBagEvent($action,$record['openid'],$record['tasks_id'],1,$user[0]['original']['city'],$user[0]['original']['sex']));
 
         }catch (Exception $e){
 
