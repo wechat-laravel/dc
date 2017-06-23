@@ -276,7 +276,7 @@
                                                 </select>
                                             </div>
                                             <div class="col-xs-3">
-                                                <select class="form-control" name="city">
+                                                <select class="form-control" multiple name="city[]">
                                                     <option ms-for="($index, city) in @city">
                                                         @{{ city.city_name }}
                                                     </option>
@@ -329,6 +329,22 @@
                         <div class="box box-info">
                             <div class="box-body">
                                 <div class="table-responsive">
+                                    <div class="form-inline">
+                                        <div class="form-group">
+                                            <label>昵称</label>
+                                            <input name="name" class="form-control" type="text">
+                                        </div>&nbsp&nbsp
+
+                                        <div class="form-group">
+                                            <label for="exampleInputEmail2">领取状态</label>
+                                            <select class="form-control" name="status">
+                                                <option value="0">不限</option>
+                                                <option value="1">成功</option>
+                                                <option value="2">失败</option>
+                                            </select>
+                                        </div>
+                                        <button ms-click="@search" class="btn btn-info">搜索</button>
+                                    </div>
                                     <table class="table no-margin">
                                         <thead>
                                         <tr>
@@ -444,7 +460,7 @@
                                         <label>
                                             <input type="radio"
                                                    name="edit_taxonomy"
-                                                   checked
+                                                   ms-duplex="red_bag_data[article_id].taxonomy"
                                                    ms-click="@guding"
                                                    value="1">
                                             固定金额
@@ -454,6 +470,7 @@
                                         <label>
                                             <input type="radio"
                                                    name="edit_taxonomy"
+                                                   ms-duplex="red_bag_data[article_id].taxonomy"
                                                    value="2"
                                                    ms-click="@suiji">
                                             随机金额
@@ -464,7 +481,7 @@
                                     <label>红包金额(红包金额不能小于1)</label>
                                     <input type="number" class="form-control"
                                            name="money"
-                                           placeholder="请输入红包金额，红包金额最大不超过200">
+                                           ms-attr="{value:red_bag_data[article_id].money}">
                                 </div>
                                 <div class="form-group suiji" id="suiji" style="display: none">
                                     <label>红包金额(红包金额不能小于1)</label>
@@ -488,16 +505,18 @@
                                         <div class="input-group-addon">
                                             <i class="fa fa-clock-o"></i>
                                         </div>
-                                        <input type="text" class="form-control pull-right" name="begin_at">
+                                        <input type="text" class="form-control pull-right"
+                                               ms-attr="{value:red_bag_data[article_id].begin_at +' - '+ red_bag_data[article_id].end_at}"
+                                               name="begin_at">
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label>奖励行为</label>
                                     <input type="checkbox"
-                                           ms-duplex="red_bag_data[article_id].action"
+                                           ms-duplex-checked="red_bag_data[article_id].action != 2"
                                            name="edit_action_form" value="1">分享给好友
                                     <input type="checkbox"
-                                           ms-duplex="red_bag_data[article_id].action"
+                                           ms-duplex-checked="red_bag_data[article_id].action != 1"
                                            name="edit_action_form" value="2">分享到朋友圈
                                 </div>
                                 <div class="form-group">
@@ -554,12 +573,13 @@
                                     </div>
                                 </div>
                                 <div class="form-group" id="suiji">
-                                    <label>区域</label>
+                                    <label ms-if="red_bag_data[article_id].area == 0">区域</label>
+                                    <label ms-if="red_bag_data[article_id].area == 1">区域（已选择：@{{ red_bag_data[article_id].city }}）</label>
                                     <div class="radio">
                                         <label>
                                             <input type="radio"
                                                    name="area"
-                                                   checked="checked"
+                                                   checked
                                                    ms-click="@area(0)"
                                                    value="0">
                                             不限
@@ -585,7 +605,7 @@
                                                 </select>
                                             </div>
                                             <div class="col-xs-3">
-                                                <select class="form-control" name="city" placeholder="城市">
+                                                <select class="form-control" multiple id="city" name="city[]" placeholder="城市">
                                                     <option ms-for="($index, city) in @city">
                                                         @{{ city.city_name }}
                                                     </option>

@@ -170,6 +170,21 @@ var red_log = avalon.define({
             red_log.url = red_log.url+'&page='+page;
             red_log.getData();
         }
+    },
+    //搜索
+    search:function(){
+        $.ajax({
+            url:red_log.url+'&tasks_id='+red_log.tasks_id,
+            data:{name:$('[name="name"]').val(),status:$('[name="status"]').val()},
+            success:function(data){
+                red_log.data = data.data;
+                red_log.current_page = data.current_page;
+                red_log.pageBase = [];
+                for(var i =1; i <= data.last_page; i++){
+                    red_log.pageBase.push(i);
+                }
+            }
+        })
     }
 });
 
