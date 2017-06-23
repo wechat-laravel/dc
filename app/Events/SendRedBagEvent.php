@@ -14,22 +14,22 @@ class SendRedBagEvent extends Event
     public $open_id;
     public $tasks_id;
     public $offer;
-//    public $city;
-//    public $sex;
+    public $city;
+    public $sex;
 
     /**
      * Create a new event instance.
      *
      * @return void
      */
-    public function __construct($action, $open_id, $tasks_id, $offer/*, $city, $sex*/)
+    public function __construct($action, $open_id, $tasks_id, $offer, $city, $sex)
     {
         $this->action = $action;
         $this->open_id = $open_id;
         $this->tasks_id = $tasks_id;
         $this->offer = $offer;
-//        $this->city = $city;
-//        $this->sex = $sex;
+        $this->city = $city;
+        $this->sex = $sex;
     }
 
     /**

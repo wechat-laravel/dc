@@ -547,6 +547,7 @@ $('#editConfigModal').bootstrapValidator({
         success:function(data){
             if(data.success){
                 $("#editConfigModal").modal('hide');
+                $('[type="submit"]').attr('disabled',false);
                 //$("#editConfig").bootstrapValidator('resetForm')[0].reset();
                 alert('修改成功!');
                 red_bag.getRedBag();
