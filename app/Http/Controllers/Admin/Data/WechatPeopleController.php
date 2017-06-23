@@ -132,6 +132,8 @@ class WechatPeopleController extends Controller
 
         }
 
+        $color = ['null','null','#FF0000','#228B22','#FF7F00','#000080','#996600','#0099CC','#9933CC','#339999','#FF33CC','#336633','#CCC00'];
+
         if (!$task) return response()->json(['success'=>false,'msg'=>'非法的请求！']);
 
         $id = $request->input('id');
@@ -152,11 +154,11 @@ class WechatPeopleController extends Controller
 
                 if ($re->level_num){
 
-                    $str .= "<tr><td style='text-align:left' id=s".$re->id."><i style='margin-left:".$margin."px;' class='glyphicon glyphicon-triangle-right'></i>$re->name</td><td>$re->level_name</td><td>".$re->level_num." / ".$re->people_num."</td><td>$re->read_num</td><td>$re->read_at</td><td>$re->sex_name</td><td>".$re->province.'-'.$re->city."</td></tr>";
+                    $str .= "<tr><td style='text-align:left;' id=s".$re->id."><i style='margin-left:".$margin."px;' class='glyphicon glyphicon-triangle-right'></i>$re->name</td><td style='color:".$color[$re->level]."'>$re->level_name</td><td>".$re->level_num." / ".$re->people_num."</td><td>$re->read_num</td><td>$re->read_at</td><td>$re->sex_name</td><td>".$re->province.'-'.$re->city."</td></tr>";
                     
                 }else{
 
-                    $str .= "<tr><td style='text-align:left' id=s".$re->id."><i style='margin-left:".$margin."px;'></i>$re->name</td><td>$re->level_name</td><td>".$re->level_num." / ".$re->people_num."</td><td>$re->read_num</td><td>$re->read_at</td><td>$re->sex_name</td><td>".$re->province.'-'.$re->city."</td></tr>";
+                    $str .= "<tr><td style='text-align:left;' id=s".$re->id."><i style='margin-left:".$margin."px;'></i>$re->name</td><td style='color:".$color[$re->level]."'>$re->level_name</td><td>".$re->level_num." / ".$re->people_num."</td><td>$re->read_num</td><td>$re->read_at</td><td>$re->sex_name</td><td>".$re->province.'-'.$re->city."</td></tr>";
                     
                 }
 
