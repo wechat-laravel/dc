@@ -47,13 +47,13 @@ var red_bag = avalon.define({
     },
     //红包类型 固定金额
     guding:function(){
-        $("#suiji").attr('style','display:none');
-        $("#guding").attr('style','display:block');
+        $(".suiji").attr('style','display:none');
+        $(".guding").attr('style','display:block');
     },
     //红包类型 随机金额
     suiji:function(){
-        $("#suiji").attr('style','display:block');
-        $("#guding").attr('style','display:none');
+        $(".suiji").attr('style','display:block');
+        $(".guding").attr('style','display:none');
     },
     //停止一个配置
     stop:function(id){
@@ -90,7 +90,7 @@ var red_bag = avalon.define({
     //获取省份列表
     area:function(id){
         if(id == 1){
-            $("#area").attr('style','display:block');
+            $(".area").attr('style','display:block');
             $.ajax({
                 type:'get',
                 url:'/admin/service/red_bag?&getType=province',
@@ -107,7 +107,7 @@ var red_bag = avalon.define({
             });
         }
         else{
-            $("#area").attr('style','display:none');
+            $(".area").attr('style','display:none');
         }
     },
     //充值
@@ -135,6 +135,11 @@ var red_bag = avalon.define({
                 }
             });
         }
+    },
+    //修改配置
+    editConfig:function(indexId,id){
+        red_bag.article_id = indexId;
+        red_bag.redId = id;
     }
 });
 
@@ -168,7 +173,8 @@ var red_log = avalon.define({
     }
 });
 
-$('form').bootstrapValidator({
+//添加配置的表单验证
+$('#addConfig').bootstrapValidator({
     message: 'This value is not valid',
     feedbackIcons: {
         valid: 'glyphicon glyphicon-ok',
@@ -383,7 +389,7 @@ $('[name="begin_at"]').daterangepicker({
 
 
 //通过省份获取城市
-$("#province").on("change",function(){
+$(".province").on("change",function(){
     $.ajax({
      type:'get',
      url:'/admin/service/red_bag?&getType=city&prov_id='+$("option:selected",this).val(),
@@ -391,4 +397,164 @@ $("#province").on("change",function(){
         red_bag.city = data.data;
      }
      });
+});
+
+//修改配置的表单验证
+$('#editConfigModal').bootstrapValidator({
+    message: 'This value is not valid',
+    feedbackIcons: {
+        valid: 'glyphicon glyphicon-ok',
+        invalid: 'glyphicon glyphicon-remove',
+        validating: 'glyphicon glyphicon-refresh'
+    },
+    fields: {
+        event: {
+            validators: {
+                notEmpty: {
+                    message: '活动名称不能为空'
+                }
+            }
+        },
+        money: {
+            validators: {
+                notEmpty: {
+                    message: '输入单个红包金额'
+                },
+                lessThan: {
+                    value: 200,
+                    inclusive: true,
+                    message: '单个红包金额最大不能大于200'
+                },
+                greaterThan: {
+                    value:0,
+                    inclusive: false,
+                    message: '红包金额不能小于0'
+                }
+            }
+        },
+        edit_money_suiji_begin: {
+            validators: {
+                notEmpty: {
+                    message: '输入单个红包金额'
+                },
+                lessThan: {
+                    value: 200,
+                    inclusive: true,
+                    message: '随机金额最大不能大于200'
+                },
+                greaterThan: {
+                    value:0,
+                    inclusive: false,
+                    message: '红包金额不能小于0'
+                }
+            }
+        },
+        edit_money_suiji_end: {
+            validators: {
+                notEmpty: {
+                    message: '输入单个红包金额'
+                },
+                lessThan: {
+                    value: 200,
+                    inclusive: true,
+                    message: '随机红包金额最大不能大于200'
+                },
+                greaterThan: {
+                    value:0,
+                    inclusive: false,
+                    message: '红包金额不能小于0'
+                }
+            }
+        },
+        begin_at: {
+            validators: {
+                notEmpty: {
+                    message: '红包发放时间不能为空'
+                }
+            }
+        },
+        edit_action_form: {
+            validators: {
+                notEmpty: {
+                    message: '请选择奖励行为'
+                }
+            }
+        },
+        send_name: {
+            validators: {
+                notEmpty: {
+                    message: '红包发送者名称不能为空'
+                },
+                stringLength: {
+                    min: 1,
+                    max: 30,
+                    message: '红包发送者名称最大为30个字符'
+                }
+            }
+        },
+        wishing: {
+            validators: {
+                notEmpty: {
+                    message: '祝福语不能为空'
+                },
+                stringLength: {
+                    min: 1,
+                    max: 128,
+                    message: '红包祝福语最大为128个字符'
+                }
+            }
+        },
+        act_name: {
+            validators: {
+                notEmpty: {
+                    message: '活动名称不能为空'
+                },
+                stringLength: {
+                    min: 1,
+                    max: 30,
+                    message: '活动名称为1-30个字符'
+                }
+            }
+        }
+    }
+}).on('success.form.bv', function(e) {
+    e.preventDefault();
+
+    //检测随机红包金额 结束金额不能小于开始金额
+    var taxonomy = $('input[name="edit_taxonomy"]:checked').val();
+    if(taxonomy == 2){
+        if($('[name="edit_money_suiji_end"]').val() <= $('[name="edit_money_suiji_begin"]').val()){
+            alert('随机红包金额输入有误！');
+            return false;
+        }else if($('[name="edit_money_suiji_end"]').val() > red_bag.red_bag_data[red_bag.article_id].amount){
+            alert('随机红包不能大于余额！');
+            return false;
+        }
+    }
+
+    //把奖励行为放在一个数据中 1，转发给好友/群 2，转发给朋友圈
+    var action = [];
+    $('input[name="edit_action_form"]:checked').each(function(){
+        action.push($(this).val());
+    });
+
+    var data = $('#editConfig').serialize();
+    $.ajax({
+        url: '/admin/service/red_bag/editConfig?action='+action+'&id='+red_bag.redId,
+        type: 'PUT',
+        data: data,
+        datatype: 'text',
+        success:function(data){
+            if(data.success){
+                $("#editConfigModal").modal('hide');
+                //$("#editConfig").bootstrapValidator('resetForm')[0].reset();
+                alert('修改成功!');
+                red_bag.getRedBag();
+            }else{
+                alert(data.msg);
+                $('[type="submit"]').attr('disabled',false);
+                return false;
+            }
+        }
+    });
 });
