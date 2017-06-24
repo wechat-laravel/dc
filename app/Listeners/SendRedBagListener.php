@@ -58,6 +58,12 @@ class SendRedBagListener implements ShouldQueue
             ->select('status', 'amount', 'taxonomy','money', 'begin_at', 'end_at', 'send_name','offer','wishing',
                 'act_name', 'remark', 'get_limit', 'action','sex','area','province','city','total')->first();
 
+        if (!$event->city){
+
+            $event->city = '上海';
+
+        }
+
         //判断这个文章是否有红包功能
         if (!$data) {
 
@@ -119,7 +125,7 @@ class SendRedBagListener implements ShouldQueue
         }
 
         //判断是否指定城市
-        else if(!($data->area == 0 || strstr($data->city,''))){
+        else if(!($data->area == 0 || strstr($data->city,$event->city))){
             //停止
         }
         //判断红包动作，分享朋友圈/分享朋友  如果满足设置的条件开始发红包
