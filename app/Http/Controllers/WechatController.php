@@ -630,7 +630,7 @@ class WechatController extends Controller
 
             }
 
-            return response()->json($input);
+            return response()->json(['success'=>true,'msg'=>'提交成功！']);
 
         }else{
 
