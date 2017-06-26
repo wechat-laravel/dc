@@ -1,4 +1,5 @@
 var tml = "<div class='alert alert-danger alert-dismissible fade in' role='alert'><button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>×</span></button><p id='errinfo'>123</p></div>";
+var suc = "<div class='alert alert-success alert-dismissible fade in' role='alert'><button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>×</span></button><p id='success'>提交成功！</p></div>";
 $(function () {
     $('form').bootstrapValidator({
         feedbackIcons: {
@@ -49,7 +50,7 @@ $(function () {
                 $('#error-show').html(tml);
                 $('#errinfo').text(ret.msg);
             }else{
-                alert('提交成功！')
+                $('#error-show').html(suc);
                 $("#myModal").modal('hide');
             }
             $('form').bootstrapValidator('disableSubmitButtons', false);
