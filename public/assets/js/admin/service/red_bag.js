@@ -371,6 +371,9 @@ $('#addConfig').bootstrapValidator({
 
 var myDate = new Date();
 var endend = new Date().getDate()+7;
+if(endend > 31){
+    endend = 31;
+}
 var startDate =  new Date().getMonth()+1 +'/' + myDate.getDate()  + '/' + myDate.getFullYear();
 var endDate =  new Date().getMonth()+1 +'/' + endend  + '/' + myDate.getFullYear();
 
