@@ -91,7 +91,7 @@
         <nav class="navbar navbar-default navbar-fixed-bottom">
             <div class="container">
                 <div class="navbar-header" style="width: 100%">
-                    <a class="navbar-brand" href="https://www.baidu.com" style="height: 10px;">
+                    <a class="navbar-brand" href="https://mp.weixin.qq.com/mp/profile_ext?action=home&__biz=MzA4MjM1ODY1MA==&scene=124#wechat_redirect" style="height: 10px;">
                         <img class="logo-img" style="width: 20px;height: 20px;float: left;" src="{{ URL::asset('assets/images/z_logo.png') }}">
                         上海一问科技
                     </a>
