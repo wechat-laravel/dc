@@ -87,7 +87,7 @@
     @endif
     {{--<p class="text-center"><a href="http://maoliduo.cn/">一问科技技术支持</a></p>--}}
 
-    @if(!$task->is_ad)
+    @if($task->is_ad)
         <nav class="navbar navbar-default navbar-fixed-bottom">
             <div class="container">
                 <div class="navbar-header" style="width: 100%">
