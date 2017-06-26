@@ -371,24 +371,15 @@ $('#addConfig').bootstrapValidator({
 
 var myDate = new Date();
 var endend = new Date().getDate()+7;
-var month_31 = '135781012';
 var month = new Date().getMonth()+1;
-if(month_31.indexOf(month)){
-    if(endend > 31){
-        endend = 31;
-    }
-}else if('2'.indexOf(month)){
-    if(endend > 28){
-        endend = 28;
-    }
-}else{
-    if(endend > 30){
-        endend = 30;
-    }
+if(endend > 31){
+    endend = endend - 31;
+    month = month +1;
 }
 
+
 var startDate =  new Date().getMonth()+1 +'/' + myDate.getDate()  + '/' + myDate.getFullYear();
-var endDate =  new Date().getMonth()+1 +'/' + endend  + '/' + myDate.getFullYear();
+var endDate =  month +'/' + endend  + '/' + myDate.getFullYear();
 
 $('[name="begin_at"]').daterangepicker({
     "timePicker": true,
