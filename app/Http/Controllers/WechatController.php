@@ -4,12 +4,14 @@ namespace App\Http\Controllers;
 
 
 use App\Events\SendRedBagEvent;
+use App\Models\EnteredModel;
 use App\Models\GrantUserModel;
 use App\Models\SpreadPeopleModel;
 use App\Models\SpreadRecordModel;
 use App\Models\TasksModel;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Validator;
 use Mockery\CountValidator\Exception;
 use Monolog\Handler\IFTTTHandler;
 use phpDocumentor\Reflection\DocBlock\Tags\See;
@@ -576,6 +578,63 @@ class WechatController extends Controller
         }catch (Exception $e){
 
             return response()->json(['success'=>false,'msg'=>$e->getMessage()]);
+
+        }
+
+    }
+
+
+    public function entered(Request $request)
+    {
+
+        if ($request->ajax()){
+
+            //授权验证
+            if (!Session::has('w_user')){
+
+                return response()->json(['success'=>false,'msg'=>'页面已过期，请刷新后重新提交！']);
+
+            }
+
+            $user   = Session::get('w_user');
+
+            $input = $request->only(['tasks_id','name','sex','mobile','remark']);
+
+            $validator = Validator::make($input,[
+                'tasks_id'  => 'required|integer',
+                'name'      => 'required|max:20',
+                'sex'       => 'required|integer',
+                'mobile'    => 'required|max:20',
+                'remark'    => 'required|max:200'
+            ]);
+
+            if ($validator->fails()){
+
+                return response()->json(['success'=>false,'msg'=>'表单数据有误,请检查后重新提交']);
+
+            }
+
+            $preg = preg_match('/^1[3|4|5|7|8]\d{9}$/', $input['mobile']);
+
+            if (empty($preg))    return response()->json(['success'=>false,'msg'=>'手机格式有误！']);
+
+            $input['openid'] = $user[0]['id'];
+
+            try{
+
+                EnteredModel::create($input);
+
+            }catch (Exception $e){
+
+                return response()->json(['success'=>false,'msg'=>'提交失败！']);
+
+            }
+
+            return response()->json($input);
+
+        }else{
+
+            return response()->json(['success'=>false,'msg'=>'非法的请求！']);
 
         }
 

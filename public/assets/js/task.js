@@ -55,6 +55,5 @@ $(function () {
             }
             $('form').bootstrapValidator('disableSubmitButtons', false);
         });
-        // $('form').bootstrapValidator('disableSubmitButtons', false);
     });
 });

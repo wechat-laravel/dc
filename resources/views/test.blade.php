@@ -8,6 +8,7 @@
     <meta name="viewport" id="viewport" content="width=320, initial-scale=1, maximum-scale=1, user-scalable=no">
     <script src="{{ URL::asset('assets/js/jquery.min.js') }}" type="text/javascript" charset="utf-8"></script>
     <script src="{{ URL::asset('assets/js/bootstrap.min.js') }}" type="text/javascript" charset="utf-8"></script>
+    <script src="{{ URL::asset('assets/js/bootstrapValidator.min.js') }}" type="text/javascript" charset="utf-8"></script>
     <script src="{{ URL::asset('assets/js/ceshi.js') }}" type="text/javascript" charset="utf-8"></script>
     {{--<script src="http://res.wx.qq.com/open/js/jweixin-1.2.0.js" type="text/javascript" charset="utf-8"></script>--}}
     <style>
@@ -37,11 +38,13 @@
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                 <h4 class="modal-title" id="myModalLabel">请留下您的联系方式</h4>
             </div>
-            <div class="modal-body">
-                <form>
+            <form class="form">
+                {!! csrf_field() !!}
+                <input type="hidden" name="tasks_id" value="{{ $task->id }}">
+                <div class="modal-body">
                     <div class="form-group">
-                        <label for="exampleInputEmail1">您的名字</label>
-                        <input type="email" class="form-control" id="exampleInputEmail1" placeholder="请输入您的名字">
+                        <label>您的名字<small>（ 20字以内 ）</small></label>
+                        <input type="text" name="name" class="form-control"  placeholder="请输入您的名字">
                     </div>
                     <div class="form-group">
                         <label>您的性别</label>
@@ -53,19 +56,23 @@
                         </label>
                     </div>
                     <div class="form-group">
-                        <label for="exampleInputPassword1">您的手机号</label>
-                        <input type="password" class="form-control" id="exampleInputPassword1" placeholder="请输入您的手机号">
+                        <label>您的手机号</label>
+                        <input type="text" name="mobile" class="form-control" placeholder="请输入您的手机号">
                     </div>
                     <div class="form-group">
-                        <label>留言备注</label>
-                        <textarea class="form-control" rows="3"></textarea>
+                        <label>留言备注 <small>（ 200字以内 ）</small></label>
+                        <textarea class="form-control" rows="3" name="remark"></textarea>
                     </div>
-                </form>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-                <button type="button" class="btn btn-primary">提交</button>
-            </div>
+                    <div class="row">
+                        <div id="error-show"></div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                    <button type="submit" class="btn btn-primary">提交</button>
+                </div>
+            </form>
+
         </div>
     </div>
 </div>
