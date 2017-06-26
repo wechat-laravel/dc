@@ -45,13 +45,11 @@ $(function () {
             data: data,
             datatype: 'text'
         }).done(function(ret){
-            console.log(ret);
             if (!ret.success){
                 $('#error-show').html(tml);
                 $('#errinfo').text(ret.msg);
             }else{
-                //window.location = '/admin/task';
-                console.log(ret);
+                $("#myModal").modal('hide');
             }
             $('form').bootstrapValidator('disableSubmitButtons', false);
         });
