@@ -212,6 +212,9 @@ class WechatPeopleController extends Controller
                     'double' => function($query) use($id){
                         $query->select('openid')->where('action','wechat_group')->where('tasks_id',$id);
                     },
+                    'timeline' => function($query) use($id){
+                        $query->select('openid')->where('action','timeline')->where('tasks_id',$id);
+                    },
                     'qqs' => function($query) use($id){
                         $query->select('openid')->where('action','qq')->where('tasks_id',$id);
                     },

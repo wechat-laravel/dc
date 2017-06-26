@@ -60,6 +60,13 @@ class SpreadPeopleModel extends Model
 
     }
 
+    public function timeline()
+    {
+
+        return $this->hasMany('App\Models\SpreadRecordModel','openid','openid');
+
+    }
+
     public function qqs()
     {
 
