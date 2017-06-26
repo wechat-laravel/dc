@@ -49,6 +49,7 @@ $(function () {
                 $('#error-show').html(tml);
                 $('#errinfo').text(ret.msg);
             }else{
+                alert('提交成功！')
                 $("#myModal").modal('hide');
             }
             $('form').bootstrapValidator('disableSubmitButtons', false);

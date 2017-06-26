@@ -77,7 +77,7 @@
     </div>
 
     @if($task->mark === 'h5')
-        <iframe style="margin-bottom: 60px;" src="{{ $task->page_url }}" frameborder="0" width="100%" height="100%"></iframe>
+        <iframe style="margin-bottom: 20px;" src="{{ $task->page_url }}" frameborder="0" width="100%" height="100%"></iframe>
     @else
         <div class="row" style="margin-bottom: 60px;">
             <div class="col-xs-10 col-xs-offset-1 col-sm-8 col-sm-offset-2 col-md-6 col-md-offset-3 col-lg-4 col-lg-offset-4">
