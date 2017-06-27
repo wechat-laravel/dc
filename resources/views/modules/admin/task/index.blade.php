@@ -26,6 +26,7 @@
                                             <th>预览</th>
                                             <th>操作</th>
                                             <th>分析查看</th>
+                                            <th>报名信息</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -43,6 +44,9 @@
                                             <td>
                                                 <a class="btn btn-danger btn-sm"  ms-attr="{href:'/admin/data/wechat/'+@el.id}" target="_blank" type="button">数据图</a>
                                                 <a class="btn btn-success btn-sm" ms-attr="{href:'/admin/data/wechat_people/'+@el.id}" target="_blank" type="button">关系图</a>
+                                            </td>
+                                            <td>
+                                                <a class="btn btn-warning btn-sm" ms-attr="{href:'/admin/data/entered/'+@el.id}" target="_blank" type="button">留言查看</a>
                                             </td>
                                         </tr>
                                     </tbody>
