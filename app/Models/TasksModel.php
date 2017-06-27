@@ -8,6 +8,6 @@ class TasksModel extends Model
 {
     protected $table      = 'dc_tasks';
 
-    protected $fillable   = ['title','desc','img_url','page_url','qrcode_url','mark','user_id','editorValue','is_ad','entered_id'];
+    protected $fillable   = ['title','desc','img_url','page_url','qrcode_url','mark','user_id','editorValue','is_ad','ad_column_id'];
 
 }

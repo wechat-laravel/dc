@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Models\AdColumnModel;
 use App\Models\TasksModel;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -53,7 +54,9 @@ class TaskController extends Controller
     public function create()
     {
 
-        return view('modules.admin.task.create');
+        $ads = AdColumnModel::select('id','name')->where('user_id',Auth::id())->get();
+
+        return view('modules.admin.task.create',['ads'=>$ads]);
 
     }
 
@@ -67,7 +70,7 @@ class TaskController extends Controller
     {
         $str = str_random(32);
 
-        $input = $request->only(['title','desc','img_url','page_url']);
+        $input = $request->only(['title','desc','img_url','page_url','is_ad','ad_column_id']);
 
         $validator = Validator::make($input,[
             'title'     => 'required|max:50',
@@ -132,9 +135,11 @@ class TaskController extends Controller
 
         $task = TasksModel::find($id);
 
+        $ads = AdColumnModel::select('id','name')->where('user_id',Auth::id())->get();
+
         if ($task){
 
-            return view('modules.admin.task.edit',['task'=>$task]);
+            return view('modules.admin.task.edit',['task'=>$task,'ads'=>$ads]);
 
         }else{
 
@@ -164,7 +169,7 @@ class TaskController extends Controller
 
         }
 
-        $input = $request->only(['title','desc','img_url','page_url']);
+        $input = $request->only(['title','desc','img_url','page_url','is_ad','ad_column_id']);
 
         $validator = Validator::make($input,[
             'title'     => 'required|max:50',

@@ -78,3 +78,18 @@ $(function () {
 
     });
 });
+
+var show = avalon.define({
+    $id       : "show",
+    ad_column : false,
+
+    isAd      : function (e) {
+        if(e === 0){
+            $('#select').val(0);
+            show.ad_column = false;
+        }else{
+            show.ad_column = true;
+        }
+    }
+
+});

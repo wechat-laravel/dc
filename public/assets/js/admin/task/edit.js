@@ -78,3 +78,28 @@ $(function () {
 
     });
 });
+
+
+var show = avalon.define({
+    $id       : "show",
+    ad_column : false,
+
+    isAd      : function (e) {
+        if(e === 0){
+            show.ad_column = false;
+        }else{
+            show.ad_column = true;
+        }
+    },
+    isShow   : function () {
+        var  cc = $('input[name=is_ad]').val();
+        if (cc === 0){
+            show.ad_column = false;
+        }else{
+            show.ad_column = true;
+        }
+
+    }
+
+});
+show.isShow();
