@@ -105,9 +105,12 @@
                                     <table class="table table-bordered no-margin text-center table-hover">
                                         <thead>
                                         <tr>
-                                            <th width="60px;">模板ID</th>
-                                            <th width="200px;">模板名称</th>
-                                            <th width="200px;">广告图标</th>
+                                            @if(\Auth::user()->identity === 'admin')
+                                            <th>用户ID</th>
+                                            @endif
+                                            <th>模板ID</th>
+                                            <th>模板名称</th>
+                                            <th>广告图标</th>
                                             <th>广告标题</th>
                                             <th>广告跳转链接</th>
                                             <th>样式类别</th>
@@ -116,6 +119,9 @@
                                         </thead>
                                         <tbody>
                                             <tr ms-for="el in @data" data-for-rendered='@onLoads'>
+                                                @if(\Auth::user()->identity === 'admin')
+                                                <td>@{{ el.user_id }}</td>
+                                                @endif
                                                 <td>@{{ el.id }}</td>
                                                 <td>@{{ el.name  | truncate(20) }}</td>
                                                 <td><img ms-attr="{src : el.litimg}" width="30px;" height="30px;"></td>
