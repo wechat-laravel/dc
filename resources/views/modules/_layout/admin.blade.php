@@ -150,6 +150,7 @@
                     </a>
                     <ul class="treeview-menu">
                         <li :class="{active: @three==='service_red_bag'}"><a href="/admin/service/red_bag"><i class="fa fa-circle-o"></i>红包工具</a></li>
+                        <li :class="{active: @three==='service_ad_column'}"><a href="/admin/service/ad_column"><i class="fa fa-circle-o"></i>广告栏设置</a></li>
                     </ul>
                 </li>
                 <li class="treeview">
