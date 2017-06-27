@@ -14,6 +14,7 @@
                     <div class="panel-body">
                         <div class="bs-example bs-example-images">
                             <form class="create form">
+                                <input type="hidden" name="cc" value="{{ $task->is_ad }}">
                                 {!! csrf_field() !!}
                                 <div class="form-group">
                                     <label>任务编号</label>
@@ -37,6 +38,40 @@
                                         {!! $task->editorValue !!}
                                     </script>
 
+                                </div>
+                                <div class="form-group">
+                                    <label>广告栏是否开启</label>
+                                    <br>
+                                    @if($task->is_ad === 1)
+                                        <label class="radio-inline">
+                                            <input type="radio" name="is_ad"  value="0"  :click="@isAd(0)"> 不开启
+                                        </label>
+                                        <label class="radio-inline">
+                                            <input type="radio" name="is_ad"  value="1"  checked="checked" :click="@isAd(1)"> 开启
+                                        </label>
+                                    @else
+                                        <label class="radio-inline">
+                                            <input type="radio" name="is_ad"  value="0"  checked="checked" :click="@isAd(0)"> 不开启
+                                        </label>
+                                        <label class="radio-inline">
+                                            <input type="radio" name="is_ad"  value="1" :click="@isAd(1)"> 开启
+                                        </label>
+                                    @endif
+                                </div>
+                                <div class="form-group" :visible="ad_column">
+                                    <label>请选择广告栏模板 <small>（ 模板在 服务->广告栏设置 中创建于管理 ）</small></label>
+                                    <select class="form-control" name="ad_column_id" id="select">
+                                        <option value="0">系统默认模板</option>
+                                        @if($ads)
+                                            @foreach($ads as $ad)
+                                                @if($ad->id === $task->ad_column_id)
+                                                    <option value="{{ $ad->id }}" selected="selected">{{ $ad->name }}</option>
+                                                @else
+                                                    <option value="{{ $ad->id }}" >{{ $ad->name }}</option>
+                                                @endif
+                                            @endforeach
+                                        @endif
+                                    </select>
                                 </div>
                                 <button type="submit" class="btn btn-default">提交</button>
                             </form>

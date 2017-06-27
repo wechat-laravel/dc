@@ -30,7 +30,27 @@
                                 <div class="form-group">
                                     <label>页面内容编辑</label>
                                     <script id="editor" type="text/plain" style="width:100%;height:500px;"></script>
-
+                                </div>
+                                <div class="form-group">
+                                    <label>广告栏是否开启</label>
+                                    <br>
+                                    <label class="radio-inline">
+                                        <input type="radio" name="is_ad"  value="0" checked="checked" :click="@isAd(0)"> 不开启
+                                    </label>
+                                    <label class="radio-inline">
+                                        <input type="radio" name="is_ad"  value="1" :click="@isAd(1)"> 开启
+                                    </label>
+                                </div>
+                                <div class="form-group" :visible="ad_column">
+                                    <label>请选择广告栏模板 <small>（ 模板在 服务->广告栏设置 中创建于管理 ）</small></label>
+                                    <select class="form-control" name="ad_column_id" id="select">
+                                        <option value="0">系统默认模板</option>
+                                        @if($ads)
+                                            @foreach($ads as $ad)
+                                                <option value="{{ $ad->id }}">{{ $ad->name }}</option>
+                                            @endforeach
+                                        @endif
+                                    </select>
                                 </div>
                                 <button type="submit" class="btn btn-default">提交</button>
                             </form>

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Models\AdColumnModel;
 use App\Models\TasksModel;
 use Illuminate\Http\Request;
 
@@ -20,8 +21,9 @@ class CustomController extends Controller
      */
     public function index()
     {
+        $ads = AdColumnModel::select('id','name')->where('user_id',Auth::id())->get();
 
-        return view('modules.admin.task.custom');
+        return view('modules.admin.task.custom',['ads'=>$ads]);
 
     }
 
@@ -30,7 +32,7 @@ class CustomController extends Controller
 
         $str = str_random(32);
 
-        $input = $request->only(['title','desc','img_url','editorValue']);
+        $input = $request->only(['title','desc','img_url','editorValue','is_ad','ad_column_id']);
 
         $validator = Validator::make($input,[
             'title'         => 'required|max:50',
@@ -83,9 +85,11 @@ class CustomController extends Controller
 
         }
 
+        $ads = AdColumnModel::select('id','name')->where('user_id',Auth::id())->get();
+
         if ($task){
 
-            return view('modules.admin.task.custom_edit',['task'=>$task]);
+            return view('modules.admin.task.custom_edit',['task'=>$task,'ads'=>$ads]);
 
         }else{
 
@@ -110,7 +114,7 @@ class CustomController extends Controller
 
         }
 
-        $input = $request->only(['title','desc','img_url','editorValue']);
+        $input = $request->only(['title','desc','img_url','editorValue','is_ad','ad_column_id']);
 
         $validator = Validator::make($input,[
             'title'         => 'required|max:50',

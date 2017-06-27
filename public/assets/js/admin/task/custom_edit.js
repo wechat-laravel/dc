@@ -180,3 +180,28 @@ function clearLocalData () {
     UE.getEditor('editor').execCommand( "clearlocaldata" );
     alert("已清空草稿箱")
 }
+
+
+var show = avalon.define({
+    $id       : "show",
+    ad_column : false,
+
+    isAd      : function (e) {
+        if(e === 0){
+            show.ad_column = false;
+        }else{
+            show.ad_column = true;
+        }
+    },
+    isShow   : function () {
+        var  cc = parseInt($('input[name=cc]').val());
+        if (cc === 0){
+            show.ad_column = false;
+        }else if( cc === 1){
+            show.ad_column = true;
+        }
+
+    }
+
+});
+show.isShow();
