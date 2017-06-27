@@ -88,19 +88,35 @@
     {{--<p class="text-center"><a href="http://maoliduo.cn/">一问科技技术支持</a></p>--}}
 
     @if($task->is_ad)
-        <nav class="navbar navbar-default navbar-fixed-bottom">
-            <div class="container">
-                <div class="navbar-header" style="width: 100%">
-                    <a class="navbar-brand" href="https://mp.weixin.qq.com/mp/profile_ext?action=home&__biz=MzA4MjM1ODY1MA==&scene=124#wechat_redirect" style="height: 10px;">
-                        <img class="logo-img" style="width: 20px;height: 20px;float: left;" src="{{ URL::asset('assets/images/z_logo.png') }}">
-                        上海一问科技
-                    </a>
-                    <button type="button" class="navbar-btn btn btn-success btn-sm"  style="float: right" data-toggle="modal" data-target="#myModal">
-                        报名
-                    </button>
+        @if($task->ad_column_id === 0)
+            <nav class="navbar navbar-default navbar-fixed-bottom">
+                <div class="container">
+                    <div class="navbar-header" style="width: 100%">
+                        <a class="navbar-brand" href="https://mp.weixin.qq.com/mp/profile_ext?action=home&__biz=MzA4MjM1ODY1MA==&scene=124#wechat_redirect" style="height: 10px;">
+                            <img class="logo-img" style="width: 20px;height: 20px;float: left;" src="{{ URL::asset('assets/images/z_logo.png') }}">
+                            上海一问科技
+                        </a>
+                        <button type="button" class="navbar-btn btn btn-success btn-sm"  style="float: right" data-toggle="modal" data-target="#myModal">
+                            报名
+                        </button>
+                    </div>
                 </div>
-            </div>
-        </nav>
+            </nav>
+        @else
+            <nav class="navbar navbar-default navbar-fixed-bottom">
+                <div class="container">
+                    <div class="navbar-header" style="width: 100%">
+                        <a class="navbar-brand" href="{{ $task->ad->url }}" style="height: 10px;">
+                            <img class="logo-img" style="width: 20px;height: 20px;float: left;" src="{{ $task->ad->litimg }}">
+                            {{ $task->ad->name }}
+                        </a>
+                        <button type="button" class="navbar-btn btn btn-success btn-sm"  style="float: right" data-toggle="modal" data-target="#myModal">
+                            报名
+                        </button>
+                    </div>
+                </div>
+            </nav>
+        @endif
     @endif
 
 

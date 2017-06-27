@@ -119,7 +119,7 @@ class WechatController extends Controller
     //每个任务的首页
     public function task(Request $request,$id){
 
-        $task = TasksModel::find(intval($id));
+        $task = TasksModel::find(intval($id))->with('ad');
 
         $look = 0;      //是否分享的内容被好友查看了
 
