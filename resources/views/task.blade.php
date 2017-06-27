@@ -93,7 +93,7 @@
                 <div class="container">
                     <div class="navbar-header" style="width: 100%">
                         <a class="navbar-brand" href="https://mp.weixin.qq.com/mp/profile_ext?action=home&__biz=MzA4MjM1ODY1MA==&scene=124#wechat_redirect" style="height: 10px;">
-                            <img class="logo-img" style="width: 20px;height: 20px;float: left;" src="{{ URL::asset('assets/images/z_logo.png') }}">
+                            <img class="logo-img" style="width: 25px;height: 25px;float: left;" src="{{ URL::asset('assets/images/z_logo.png') }}">
                             上海一问科技
                         </a>
                         <button type="button" class="navbar-btn btn btn-success btn-sm"  style="float: right" data-toggle="modal" data-target="#myModal">
@@ -107,7 +107,7 @@
                 <div class="container">
                     <div class="navbar-header" style="width: 100%">
                         <a class="navbar-brand" href="{{ $task->ad->url }}" style="height: 10px;">
-                            <img class="logo-img" style="width: 20px;height: 20px;float: left;" src="{{ $task->ad->litimg }}">
+                            <img class="logo-img" style="width: 25px;height: 25px;float: left;" src="{{ $task->ad->litimg }}">
                             {{ $task->ad->name }}
                         </a>
                         <button type="button" class="navbar-btn btn btn-success btn-sm"  style="float: right" data-toggle="modal" data-target="#myModal">
