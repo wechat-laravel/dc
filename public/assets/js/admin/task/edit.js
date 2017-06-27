@@ -92,10 +92,10 @@ var show = avalon.define({
         }
     },
     isShow   : function () {
-        var  cc = $('input[name=is_ad]').val();
+        var  cc = parseInt($('input[name=cc]').val());
         if (cc === 0){
             show.ad_column = false;
-        }else{
+        }else if( cc === 1){
             show.ad_column = true;
         }
 

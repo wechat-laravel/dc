@@ -14,6 +14,7 @@
                     <div class="panel-body">
                         <div class="bs-example bs-example-images">
                             <form class="edit form">
+                                <input type="hidden" name="cc" value="{{ $task->is_ad }}">
                                 {!! csrf_field() !!}
                                 <div class="form-group">
                                     <label>任务编号</label>
