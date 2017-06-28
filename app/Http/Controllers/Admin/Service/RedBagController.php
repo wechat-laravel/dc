@@ -112,9 +112,9 @@ class RedBagController extends Controller
             'amount' => 'required',
             'action' => 'required',
             'begin_at' => 'required',
-            'send_name' => 'required',
+            'send_name' => 'required|max:10',
             'wishing' => 'required',
-            'act_name' => 'required',
+            'act_name' => 'required|max:10',
             'get_limit' => 'required',
         ], [
             'required' => ':attribute 不能为空'
