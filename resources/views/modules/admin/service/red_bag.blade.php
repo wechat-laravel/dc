@@ -302,7 +302,7 @@
                                     <input type="text" class="form-control" name="wishing" placeholder="例如 恭喜发财">
                                 </div>
                                 <div class="form-group">
-                                    <label>活动名称</label>
+                                    <label>红包活动名称</label>
                                     <input type="text" class="form-control" name="act_name" placeholder="例如 一问信息转发赢红包">
                                 </div>
                                 <div class="form-group">
@@ -641,7 +641,7 @@
                                            placeholder="例如 恭喜发财">
                                 </div>
                                 <div class="form-group">
-                                    <label>活动名称</label>
+                                    <label>红包活动名称</label>
                                     <input type="text"
                                            class="form-control"
                                            name="act_name"

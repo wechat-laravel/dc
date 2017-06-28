@@ -320,7 +320,7 @@ $('#addConfig').bootstrapValidator({
                 stringLength: {
                     min: 1,
                     max: 10,
-                    message: '活动名称为1-30个字符'
+                    message: '红包活动名称为1-30个字符'
                 }
             }
         }
@@ -529,7 +529,7 @@ $('#editConfigModal').bootstrapValidator({
         act_name: {
             validators: {
                 notEmpty: {
-                    message: '活动名称不能为空'
+                    message: '红包活动名称不能为空'
                 },
                 stringLength: {
                     min: 1,
