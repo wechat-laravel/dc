@@ -80,26 +80,26 @@
             <ul class="sidebar-menu">
                 <li class="header">菜单列表</li>
                 @if( Auth::user()->identity === 'admin')
-                {{--<li class="treeview" :class="{active: @two==='supper'}">--}}
-                    {{--<a href="#">--}}
-                        {{--<i class="fa fa-user"></i>--}}
-                        {{--<span>管理中心</span>--}}
-                        {{--<span class="pull-right-container">--}}
-                          {{--<i class="fa fa-angle-left pull-right"></i>--}}
-                        {{--</span>--}}
-                    {{--</a>--}}
-                    {{--<ul class="treeview-menu">--}}
-                        {{--<li :class="{active: @three==='supper_user' }">--}}
-                            {{--<a href="/admin/supper/user"><i class="fa fa-black-tie"></i>用户列表</a>--}}
-                        {{--</li>--}}
-                        {{--<li :class="{active: @three==='supper_recharge' }">--}}
-                            {{--<a href="/admin/supper/recharge"><i class="fa fa-database"></i>账户充值</a>--}}
-                        {{--</li>--}}
-                        {{--<li :class="{active: @three==='supper_record' }">--}}
-                            {{--<a href="/admin/supper/record"><i class="fa fa-lock"></i>充值记录</a>--}}
-                        {{--</li>--}}
-                    {{--</ul>--}}
-                {{--</li>--}}
+                <li class="treeview" :class="{active: @two==='supper'}">
+                    <a href="#">
+                        <i class="glyphicon glyphicon-home"></i>
+                        <span>管理中心</span>
+                        <span class="pull-right-container">
+                          <i class="fa fa-angle-left pull-right"></i>
+                        </span>
+                    </a>
+                    <ul class="treeview-menu">
+                        <li :class="{active: @three==='supper_user' }">
+                            <a href="/admin/supper/user"><i class="fa fa-group"></i>用户管理</a>
+                        </li>
+                        <li :class="{active: @three==='supper_recharge' }">
+                            <a href="#"><i class="fa fa-credit-card"></i>账户充值</a>
+                        </li>
+                        <li :class="{active: @three==='supper_record' }">
+                            <a href="#"><i class="fa fa-calendar"></i>充值记录</a>
+                        </li>
+                    </ul>
+                </li>
                 @endif
                 <li class="treeview" :class="{active: @two==='user'}">
                     <a href="#">
