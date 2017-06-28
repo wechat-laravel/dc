@@ -209,7 +209,7 @@ class RedBagController extends Controller
                 'event' => 'required',
                 'action' => 'required',
                 'begin_at' => 'required',
-                'send_name' => 'required',
+                'send_name' => 'required|max:10',
                 'wishing' => 'required',
                 'act_name' => 'required',
                 'get_limit' => 'required',
