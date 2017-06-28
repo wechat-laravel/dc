@@ -319,7 +319,7 @@ $('#addConfig').bootstrapValidator({
                 },
                 stringLength: {
                     min: 1,
-                    max: 30,
+                    max: 10,
                     message: '活动名称为1-30个字符'
                 }
             }
@@ -533,7 +533,7 @@ $('#editConfigModal').bootstrapValidator({
                 },
                 stringLength: {
                     min: 1,
-                    max: 30,
+                    max: 10,
                     message: '活动名称为1-30个字符'
                 }
             }
