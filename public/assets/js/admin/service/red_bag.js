@@ -509,8 +509,8 @@ $('#editConfigModal').bootstrapValidator({
                 },
                 stringLength: {
                     min: 1,
-                    max: 30,
-                    message: '红包发送者名称最大为30个字符'
+                    max: 10,
+                    message: '红包发送者名称最大为10个字符'
                 }
             }
         },
