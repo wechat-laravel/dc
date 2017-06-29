@@ -80,7 +80,11 @@
                                             @if(Auth::user()->identity === 'admin')
                                                 <td>@{{ el.user_id }}</td>
                                             @endif
-                                            <td>@{{ el.title | truncate(15) }}</td>
+                                            <td>
+                                                <a  class="desc" role="button" data-toggle="popover"  data-placement="top"  title="描述详情"  ms-attr="{'data-content':el.title}">
+                                                    @{{ el.title | truncate(10) }}
+                                                </a>
+                                            </td>
                                             <td>
                                                 <a  class="desc" role="button" data-toggle="popover"  data-placement="top"  title="描述详情"  ms-attr="{'data-content':el.desc}">
                                                     @{{ el.desc | truncate(10) }}
