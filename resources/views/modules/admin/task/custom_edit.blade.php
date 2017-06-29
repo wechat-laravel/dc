@@ -14,6 +14,9 @@
                     <div class="panel-body">
                         <div class="bs-example bs-example-images">
                             <form class="create form">
+                                <div class="form-group">
+                                    <div id="error-show"></div>
+                                </div>
                                 <input type="hidden" name="cc" value="{{ $task->is_ad }}">
                                 {!! csrf_field() !!}
                                 <div class="form-group">
@@ -75,10 +78,6 @@
                                 </div>
                                 <button type="submit" class="btn btn-default">提交</button>
                             </form>
-                        </div>
-                        <br>
-                        <div class="row">
-                            <div id="error-show"></div>
                         </div>
                     </div>
                 </div>

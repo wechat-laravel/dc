@@ -14,10 +14,10 @@
                 <div class="panel-heading"><strong>资料头像设置</strong></div>
                 <div class="panel-body">
                     <div class="col-md-6 col-sm-12 col-xs-12">
-                        <div class="row">
-                            <div id="error-show"></div>
-                        </div>
                         <form class="create form">
+                            <div class="form-group">
+                                <div id="error-show"></div>
+                            </div>
                             {!! csrf_field() !!}
                             <div class="form-group">
                                 <label>用户名</label>

@@ -16,6 +16,9 @@
                         <h4 class="modal-title" id="myModalLabel">添加一个模板</h4>
                     </div>
                     <form class="create form" enctype="multipart/form-data" id="create">
+                        <div class="form-group">
+                            <div id="error-show"></div>
+                        </div>
                         {!! csrf_field() !!}
                         <div class="modal-body">
                             <div class="form-group">
@@ -34,9 +37,6 @@
                             <div class="form-group">
                                 <label>广告跳转链接</label>
                                 <input type="text" name="url" class="form-control"  placeholder="请输入跳转的URL链接">
-                            </div>
-                            <div class="form-group">
-                                <div id="error-show"></div>
                             </div>
                         </div>
                         <div class="modal-footer">
@@ -57,6 +57,9 @@
                         <h4 class="modal-title" id="editModalLabel">编辑模板</h4>
                     </div>
                     <form class="edit form" enctype="multipart/form-data" id="edit">
+                        <div class="form-group">
+                            <div id="error-edit"></div>
+                        </div>
                         {!! csrf_field() !!}
                         <input type="hidden" name="id" ms-attr="{value : ad.id}">
                         <div class="modal-body">
@@ -76,9 +79,6 @@
                             <div class="form-group">
                                 <label>广告跳转链接</label>
                                 <input type="text" name="url" class="form-control"  ms-attr="{value : ad.url}" placeholder="请输入跳转的URL链接">
-                            </div>
-                            <div class="form-group">
-                                <div id="error-edit"></div>
                             </div>
                         </div>
                         <div class="modal-footer">

@@ -14,6 +14,9 @@
                     <div class="panel-body">
                         <div class="bs-example bs-example-images">
                             <form class="create form">
+                                <div class="form-group">
+                                    <div id="error-show"></div>
+                                </div>
                                 {!! csrf_field() !!}
                                 <div class="form-group">
                                     <label>封面标题</label>
@@ -54,10 +57,6 @@
                                 </div>
                                 <button type="submit" class="btn btn-default">提交</button>
                             </form>
-                        </div>
-                        <br>
-                        <div class="row">
-                            <div id="error-show"></div>
                         </div>
                     </div>
                 </div>

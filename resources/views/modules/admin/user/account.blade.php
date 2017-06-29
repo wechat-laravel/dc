@@ -12,10 +12,10 @@
                 <div class="panel panel-default">
                     <div class="panel-heading"><strong>修改账户密码</strong></div>
                     <div class="panel-body">
-                        <div class="row">
-                            <div id="error-show"></div>
-                        </div>
                         <form class="form">
+                            <div class="form-group">
+                                <div id="error-show"></div>
+                            </div>
                             {!! csrf_field() !!}
                             <div class="form-group">
                                 <label>原密码</label>
