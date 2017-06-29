@@ -33,6 +33,7 @@ var show = avalon.define({
     task_id  : 0,
 
     onLoads  : function () {
+        $('.desc').popover();
         $('.qrcode').popover();
     },
     getData : function(){
@@ -97,4 +98,5 @@ var show = avalon.define({
 show.onCurrentTab();
 $(function () {
     $('.qrcode').popover();
+    $('.desc').popover();
 });

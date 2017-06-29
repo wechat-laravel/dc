@@ -69,7 +69,6 @@
                                             <th>描述</th>
                                             <th>创建时间</th>
                                             <th>预览</th>
-                                            <th>操作</th>
                                             <th>分析查看</th>
                                             <th>报名信息</th>
                                             <th>操作</th>
@@ -82,14 +81,14 @@
                                                 <td>@{{ el.user_id }}</td>
                                             @endif
                                             <td>@{{ el.title | truncate(15) }}</td>
-                                            <td>@{{ el.desc | truncate(20) }}</td>
+                                            <td>
+                                                <a  class="desc" role="button" data-toggle="popover"  data-placement="top"  title="描述详情"  ms-attr="{'data-content':el.desc}">
+                                                    @{{ el.desc | truncate(10) }}
+                                                </a>
+                                            </td>
                                             <td>@{{ el.created_at*1000 | date("yyyy-MM-dd HH:mm") }}</td>
                                             <td style="width: 70px;padding: 0;margin:0;">
                                                 <button class="btn btn-default qrcode" data-trigger="focus" data-html="true" title="请打开微信扫一扫" data-placement="bottom" ms-attr="{'data-content':'<img src='+@el.qrcode_url+'>'}">查看</button>
-                                            </td>
-                                            <td>
-                                                <a class="btn btn-primary btn-sm" target="_blank" ms-if="@el.mark==='h5'" ms-attr="{href:'/admin/task/'+@el.id+'/edit'}" role="button">任务编辑</a>
-                                                <a class="btn btn-primary btn-sm" target="_blank" ms-if="@el.mark==='custom'" ms-attr="{href:'/admin/custom/'+@el.id+'/edit'}" role="button">任务编辑</a>
                                             </td>
                                             <td>
                                                 <a class="btn btn-danger btn-sm"  ms-attr="{href:'/admin/data/wechat/'+@el.id}" target="_blank" type="button">数据图</a>
@@ -99,7 +98,11 @@
                                                 <a :visible="el.is_ad" class="btn btn-warning btn-sm" ms-attr="{href:'/admin/data/entered/'+@el.id}" target="_blank" type="button">留言查看</a>
                                                 <a :visible="!el.is_ad" class="btn btn-warning btn-sm" href="#">未设置</a>
                                             </td>
-                                            <td><a href="#" class="btn btn-danger btn-sm" :click="@onConfirm(el.id)">删除</a></td>
+                                            <td>
+                                                <a class="btn btn-primary btn-sm" target="_blank" ms-if="@el.mark==='h5'" ms-attr="{href:'/admin/task/'+@el.id+'/edit'}" role="button">编辑</a>
+                                                <a class="btn btn-primary btn-sm" target="_blank" ms-if="@el.mark==='custom'" ms-attr="{href:'/admin/custom/'+@el.id+'/edit'}" role="button">编辑</a>
+                                                <a href="#" class="btn btn-danger btn-sm" :click="@onConfirm(el.id)">删除</a>
+                                            </td>
                                         </tr>
                                     </tbody>
                                 </table>
