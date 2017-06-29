@@ -7,6 +7,47 @@
 @endsection
 @section('content')
     <div ms-controller="show">
+        {{--操作结果提示框--}}
+        <div class="modal bs-result-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
+            <div class="modal-dialog modal-sm" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+                        <h4 class="modal-title" id="mySmallModalLabel">操作提示：</h4>
+                    </div>
+                    <div class="modal-body" id="infos"></div>
+                </div>
+            </div>
+        </div>
+
+        {{--删除确认框--}}
+        <div class="modal bs-delete-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
+            <div class="modal-dialog modal-sm" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title" id="myModalLabel">操作提示：</h4>
+                    </div>
+                    <div class="modal-body">
+                        <p>确定要删除嘛？一经删除不可恢复！</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                        <button type="submit" class="btn btn-primary" :click="@onDelete()">确定</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+
+                </div>
+            </div>
+        </div>
+
+
         <div class="row">
             <section class="col-md-12 col-sm-12 col-xs-12 connectedSortable ui-sortable">
                 <div class="nav-tabs-custom">
@@ -17,25 +58,34 @@
                             </div>
                             <div class="panel panel-default">
                                 <div class="table-responsive">
-                                    <table class="table no-margin text-center table-hover">
+                                    <table class="table table-bordered no-margin text-center table-hover">
                                     <thead>
                                         <tr>
                                             <th width="60px;">编号</th>
+                                            @if(Auth::user()->identity === 'admin')
+                                            <th>用户ID</th>
+                                            @endif
                                             <th>标题</th>
                                             <th>描述</th>
+                                            <th>创建时间</th>
                                             <th>预览</th>
                                             <th>操作</th>
                                             <th>分析查看</th>
                                             <th>报名信息</th>
+                                            <th>操作</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         <tr ms-for="el in @data" data-for-rendered='@onLoads'>
                                             <td>@{{ el.id }}</td>
+                                            @if(Auth::user()->identity === 'admin')
+                                                <td>@{{ el.user_id }}</td>
+                                            @endif
                                             <td>@{{ el.title | truncate(15) }}</td>
                                             <td>@{{ el.desc | truncate(20) }}</td>
+                                            <td>@{{ el.created_at*1000 | date("yyyy-MM-dd HH:mm") }}</td>
                                             <td style="width: 70px;padding: 0;margin:0;">
-                                                <button class="btn btn-default qrcode" data-trigger="focus" data-html="true" title="请打开微信扫一扫" data-placement="bottom" ms-attr="{'data-content':'<img src='+@el.qrcode_url+'>'}">点击查看</button>
+                                                <button class="btn btn-default qrcode" data-trigger="focus" data-html="true" title="请打开微信扫一扫" data-placement="bottom" ms-attr="{'data-content':'<img src='+@el.qrcode_url+'>'}">查看</button>
                                             </td>
                                             <td>
                                                 <a class="btn btn-primary btn-sm" target="_blank" ms-if="@el.mark==='h5'" ms-attr="{href:'/admin/task/'+@el.id+'/edit'}" role="button">任务编辑</a>
@@ -48,6 +98,7 @@
                                             <td>
                                                 <a class="btn btn-warning btn-sm" ms-attr="{href:'/admin/data/entered/'+@el.id}" target="_blank" type="button">留言查看</a>
                                             </td>
+                                            <td><a href="#" class="btn btn-danger btn-sm" :click="@onConfirm(el.id)">删除</a></td>
                                         </tr>
                                     </tbody>
                                 </table>

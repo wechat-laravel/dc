@@ -204,8 +204,34 @@ class TaskController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request,$id)
     {
+
+        if ($request->ajax()){
+
+            $id = intval($id);
+
+            if (Auth::user()->identity === 'admin'){
+
+                $task = TasksModel::find($id);
+
+            }else{
+
+                $task = TasksModel::where('id',$id)->where('user_id',Auth::id())->first();
+
+            }
+
+            if (!$task)  return response()->json(['success'=>false,'msg'=>'非法请求！']);
+
+            $task->delete();
+
+            return response()->json(['success'=>true,'msg'=>'操作成功！']);
+
+        }else{
+
+            return response()->json(['success'=>false,'msg'=>'非法请求！']);
+
+        }
 
     }
 }

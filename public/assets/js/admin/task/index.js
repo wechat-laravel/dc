@@ -30,6 +30,7 @@ var show = avalon.define({
     last     : 0,               //最后一页的页码
     total    : 0,               //所有的条数
     visible  : false,           //默认不显示（没有数据的提示）
+    task_id  : 0,
 
     onLoads  : function () {
         $('.qrcode').popover();
@@ -64,7 +65,31 @@ var show = avalon.define({
         var url  = show.url.substr(0, show.url.lastIndexOf('=') + 1);
         show.url = url + e;
         show.getData();
+    },
+    onConfirm:function (e) {
+        show.task_id = e;
+        $('.bs-delete-modal-sm').modal('show');
+    },
+    onDelete:function () {
+        $('.bs-delete-modal-sm').modal('hide');
+        $.ajax({
+            url:'/admin/task/'+show.task_id,
+            method: 'DELETE',
+            contentType: "application/json",
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        }).done(function (ret) {
+            if(ret.success){
+                $('#infos').text(ret.msg);
+                show.getData();
+            }else{
+                $('#infos').text(ret.msg);
+            }
+        });
+        $('.bs-result-modal-sm').modal('show');
     }
+    
 
 });
 
