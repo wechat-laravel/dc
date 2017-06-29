@@ -642,10 +642,15 @@ class WechatController extends Controller
 
     public function ceshi(){
 
+        $url = "https://mp.weixin.qq.com/s?timestamp=1498729376&src=3&ver=1&signature=fhaB2OEbnGGLWSuxJgZYMO5kJCvEUh8qAPNvDH-rX3Dw6fm0-TNuzBNKcsCr8tUIyO0g*HNQY7qGQoK0XurAmkP4VrqGZcMUbvQZgr0AiuELoj4fak3hq28KkbXpaow0dOwNdVrgMP3eahHbC4Jzg7tHXWIOC6jWxWsDewq6hKU=";
 
-        $task = TasksModel::find(20);
+        $cc = wx($url);
 
-        return view('test',['task'=>$task]);
+        var_dump($cc);
+
+//        $task = TasksModel::find(20);
+//
+//        return view('test',['task'=>$task]);
         //QrCode::format('png')->size(120)->generate('http://www.maoliduo.cn/wechat/task/16',public_path('assets/images/qrcode/GhZOsgxfFmdXS9sLP3i2DU7HOCoCsjZH.png'));
 
     }
