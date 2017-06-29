@@ -96,7 +96,7 @@
                             <a href="/admin/supper/recharge"><i class="fa fa-credit-card"></i>账户充值</a>
                         </li>
                         <li :class="{active: @three==='supper_record' }">
-                            <a href="#"><i class="fa fa-calendar"></i>充值记录</a>
+                            <a href="/admin/supper/record"><i class="fa fa-calendar"></i>充值记录</a>
                         </li>
                     </ul>
                 </li>

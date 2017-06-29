@@ -55,6 +55,8 @@ class RechargeController extends Controller
 
         $input['auth_id'] = Auth::id();
 
+        $input['auth_email'] = Auth::user()->email;
+
         unset($input['confirm']);
 
         try{
@@ -77,6 +79,26 @@ class RechargeController extends Controller
 
 
         return response()->json(['success'=>true,'msg'=>'操作成功！']);
+
+    }
+
+    public function record(Request $request)
+    {
+
+        if ($request->ajax()){
+
+            $records = RechargeRecordModel::select('id','user_id','user_email','auth_id','auth_email','money','remark','created_at')
+                            ->with([
+                                'user'=>function($query){
+                                    $query->select('id','avatar','balance');
+                                }
+                            ])->orderBy('created_at','desc')->paginate(10);
+                
+            return response()->json($records);
+
+        }
+
+        return view('modules.admin.supper.record');
 
     }
 
