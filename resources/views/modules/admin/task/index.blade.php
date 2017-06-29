@@ -96,7 +96,8 @@
                                                 <a class="btn btn-success btn-sm" ms-attr="{href:'/admin/data/wechat_people/'+@el.id}" target="_blank" type="button">关系图</a>
                                             </td>
                                             <td>
-                                                <a class="btn btn-warning btn-sm" ms-attr="{href:'/admin/data/entered/'+@el.id}" target="_blank" type="button">留言查看</a>
+                                                <a :visible="el.is_ad" class="btn btn-warning btn-sm" ms-attr="{href:'/admin/data/entered/'+@el.id}" target="_blank" type="button">留言查看</a>
+                                                <a :visible="!el.is_ad" class="btn btn-warning btn-sm" href="#">未设置</a>
                                             </td>
                                             <td><a href="#" class="btn btn-danger btn-sm" :click="@onConfirm(el.id)">删除</a></td>
                                         </tr>
