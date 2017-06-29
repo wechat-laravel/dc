@@ -148,7 +148,8 @@ return [
         Overtrue\LaravelWechat\ServiceProvider::class,
         Mews\Captcha\CaptchaServiceProvider::class,
         Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider::class,
-        SimpleSoftwareIO\QrCode\QrCodeServiceProvider::class
+        SimpleSoftwareIO\QrCode\QrCodeServiceProvider::class,
+        Yangqi\Htmldom\HtmldomServiceProvider::class,
 
     ],
 
@@ -200,7 +201,8 @@ return [
 
         'WeChat'    => Overtrue\LaravelWechat\Facade::class,
         'Captcha'   => Mews\Captcha\Facades\Captcha::class,
-        'QrCode'    => SimpleSoftwareIO\QrCode\Facades\QrCode::class
+        'QrCode'    => SimpleSoftwareIO\QrCode\Facades\QrCode::class,
+        'Htmldom'   => Yangqi\Htmldom\Htmldom::class,
 
     ],
 
