@@ -6,7 +6,6 @@
     个人中心
 @endsection
 @section('content')
-    <link href="{{ URL::asset('assets/css/style.css') }}" rel="stylesheet" type="text/css">
     <div ms-controller="show">
         <div class="row">
             <div class="nav-tabs-custom">

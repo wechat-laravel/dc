@@ -35,7 +35,7 @@
                                 <label>广告跳转链接</label>
                                 <input type="text" name="url" class="form-control"  placeholder="请输入跳转的URL链接">
                             </div>
-                            <div class="row">
+                            <div class="form-group">
                                 <div id="error-show"></div>
                             </div>
                         </div>
@@ -77,7 +77,7 @@
                                 <label>广告跳转链接</label>
                                 <input type="text" name="url" class="form-control"  ms-attr="{value : ad.url}" placeholder="请输入跳转的URL链接">
                             </div>
-                            <div class="row">
+                            <div class="form-group">
                                 <div id="error-edit"></div>
                             </div>
                         </div>

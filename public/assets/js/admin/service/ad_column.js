@@ -37,7 +37,7 @@ $(function () {
                         message: '模板名字不能为空'
                     },
                     stringLength :{
-                        max    : 100,
+                        max    : 20,
                         message: '长度请保持在20位以内'
                     }
                 }
@@ -48,7 +48,7 @@ $(function () {
                         message: '广告标题不能为空'
                     },
                     stringLength :{
-                        max    : 10,
+                        max    : 20,
                         message: '长度请保持在20位以内'
                     }
                 }
