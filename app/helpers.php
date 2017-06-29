@@ -45,3 +45,35 @@ function screenFile($file,$size)
     return  (['success'=>true,'path'=>$name]);
 
 }
+
+function wx($url){
+    $i       = 0;
+    $content = null;
+
+    while($i < 5)
+    {
+        $i ++;
+
+        try
+        {
+            $html = new \Yangqi\Htmldom\Htmldom($url);
+        } catch(\Exception $e)
+        {
+            continue;
+        }
+
+        //文章不可用
+        if($html->find('.global_error_msg',0))
+        {
+            break;
+        }
+
+        if($html->find('#js_content',0))
+        {
+            $content = $html->find('#js_content',0)->innertext;
+            break;
+        }
+    }
+
+    return $content;
+}

@@ -75,8 +75,8 @@ class TaskController extends Controller
         $validator = Validator::make($input,[
             'title'     => 'required|max:50',
             'desc'      => 'required|max:100',
-            'img_url'   => 'required|max:200',
-            'page_url'  => 'required|max:200'
+            'img_url'   => 'required|max:300',
+            'page_url'  => 'required|max:300'
         ]);
 
         if ($validator->fails()){
@@ -174,10 +174,10 @@ class TaskController extends Controller
         $validator = Validator::make($input,[
             'title'     => 'required|max:50',
             'desc'      => 'required|max:100',
-            'img_url'   => 'required|max:200',
-            'page_url'  => 'required|max:200'
+            'img_url'   => 'required|max:300',
+            'page_url'  => 'required|max:300'
         ]);
-
+        
         if ($validator->fails()){
 
             return response()->json(['success'=>false,'msg'=>'表单数据有误,请检查后重新提交']);
