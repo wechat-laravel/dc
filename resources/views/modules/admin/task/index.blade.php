@@ -92,7 +92,7 @@
                                             </td>
                                             <td>@{{ el.created_at*1000 | date("yyyy-MM-dd HH:mm") }}</td>
                                             <td>
-                                                <button class="btn btn-default qrcode" data-toggle="popover" data-trigger="focus" data-html="true" title="请打开微信扫一扫" data-placement="bottom" ms-attr="{'data-content':'<img src='+@el.qrcode_url+'>'}">查看</button>
+                                                <button class="btn btn-default qrcode" data-toggle="popover" data-html="true" title="请打开微信扫一扫" data-placement="bottom" ms-attr="{'data-content':'<img src='+@el.qrcode_url+'>'}">查看</button>
                                             </td>
                                             <td>
                                                 <a class="btn btn-danger btn-sm"  ms-attr="{href:'/admin/data/wechat/'+@el.id}" target="_blank" type="button">数据图</a>

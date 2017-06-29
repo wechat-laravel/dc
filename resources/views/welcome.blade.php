@@ -58,7 +58,7 @@
     </body>
     <script type="text/javascript">
         function goUrl(){
-            window.location = "/admin"
+            window.location = "/admin/task"
         }
     </script>
 </html>
