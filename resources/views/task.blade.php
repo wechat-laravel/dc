@@ -89,7 +89,7 @@
                 </div>
             </div>
         @else
-            <iframe style="margin-bottom: 20px;" src="{{ $task->page_url }}" frameborder="0" width="100%" height="100%"></iframe>
+            <iframe src="{{ $task->page_url }}" frameborder="0" width="100%" height="100%"></iframe>
         @endif
     @else
         <div class="row" style="margin-bottom: 60px;">
