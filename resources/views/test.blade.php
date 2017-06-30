@@ -14,7 +14,7 @@
     <style>
         body{
             height: 100%;
-            width: 100%;
+            max-width: 100%;
             position: absolute;
             bottom: 0;
             right: 0;
@@ -28,7 +28,6 @@
         *{
             border: 1px solid red;
             overflow-x:hidden;
-            max-width: 100%;
         }
         .video_iframe{
             max-width: 100%;
