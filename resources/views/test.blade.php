@@ -25,7 +25,7 @@
             font-family: -apple-system-font,"Helvetica Neue","PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;
             overflow-x:hidden;
         }
-        div,p,a,span{
+        div,p,a,span,img{
             border: 1px solid red;
         }
         img{
@@ -104,37 +104,37 @@
     </div>
 @endif
 
-@if($task->is_ad)
-    @if($task->ad_column_id === 0)
-        <nav class="navbar navbar-default navbar-fixed-bottom">
-            <div class="container">
-                <div class="navbar-header" style="width: 100%">
-                    <a class="navbar-brand" href="https://mp.weixin.qq.com/mp/profile_ext?action=home&__biz=MzA4MjM1ODY1MA==&scene=124#wechat_redirect" style="height: 10px;">
-                        <img class="logo-img" style="width: 25px;height: 25px;float: left;margin-right: 5px;margin-bottom: 5px;" src="{{ URL::asset('assets/images/z_logo.png') }}">
-                        上海一问科技
-                    </a>
-                    <button type="button" class="navbar-btn btn btn-success btn-sm"  style="float: right" data-toggle="modal" data-target="#myModal">
-                        报名
-                    </button>
-                </div>
-            </div>
-        </nav>
-    @else
-        <nav class="navbar navbar-default navbar-fixed-bottom">
-            <div class="container">
-                <div class="navbar-header" style="width: 100%">
-                    <a class="navbar-brand" href="{{ $task->ad->url }}" style="height: 10px;">
-                        <img class="logo-img" style="width: 25px;height: 25px;float: left;margin-right: 5px;margin-bottom: 5px;" src="{{ $task->ad->litimg }}">
-                        {{ $task->ad->name }}
-                    </a>
-                    <button type="button" class="navbar-btn btn btn-success btn-sm"  style="float: right" data-toggle="modal" data-target="#myModal">
-                        报名
-                    </button>
-                </div>
-            </div>
-        </nav>
-    @endif
-@endif
+{{--@if($task->is_ad)--}}
+    {{--@if($task->ad_column_id === 0)--}}
+        {{--<nav class="navbar navbar-default navbar-fixed-bottom">--}}
+            {{--<div class="container">--}}
+                {{--<div class="navbar-header" style="width: 100%">--}}
+                    {{--<a class="navbar-brand" href="https://mp.weixin.qq.com/mp/profile_ext?action=home&__biz=MzA4MjM1ODY1MA==&scene=124#wechat_redirect" style="height: 10px;">--}}
+                        {{--<img class="logo-img" style="width: 25px;height: 25px;float: left;margin-right: 5px;margin-bottom: 5px;" src="{{ URL::asset('assets/images/z_logo.png') }}">--}}
+                        {{--上海一问科技--}}
+                    {{--</a>--}}
+                    {{--<button type="button" class="navbar-btn btn btn-success btn-sm"  style="float: right" data-toggle="modal" data-target="#myModal">--}}
+                        {{--报名--}}
+                    {{--</button>--}}
+                {{--</div>--}}
+            {{--</div>--}}
+        {{--</nav>--}}
+    {{--@else--}}
+        {{--<nav class="navbar navbar-default navbar-fixed-bottom">--}}
+            {{--<div class="container">--}}
+                {{--<div class="navbar-header" style="width: 100%">--}}
+                    {{--<a class="navbar-brand" href="{{ $task->ad->url }}" style="height: 10px;">--}}
+                        {{--<img class="logo-img" style="width: 25px;height: 25px;float: left;margin-right: 5px;margin-bottom: 5px;" src="{{ $task->ad->litimg }}">--}}
+                        {{--{{ $task->ad->name }}--}}
+                    {{--</a>--}}
+                    {{--<button type="button" class="navbar-btn btn btn-success btn-sm"  style="float: right" data-toggle="modal" data-target="#myModal">--}}
+                        {{--报名--}}
+                    {{--</button>--}}
+                {{--</div>--}}
+            {{--</div>--}}
+        {{--</nav>--}}
+    {{--@endif--}}
+{{--@endif--}}
 
 </body>
 <script type="text/javascript" charset="UTF-8">
