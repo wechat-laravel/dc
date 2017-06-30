@@ -28,10 +28,10 @@
         *{
 	    max-width:100%;
         }
-	.row{
-	    margin-right:0px;
-	    margin-left:0px;
-	}
+        .row{
+            margin-right:0px;
+            margin-left:0px;
+        }
         .video_iframe{
             max-width: 100%;
         }
