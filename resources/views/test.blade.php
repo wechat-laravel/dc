@@ -78,7 +78,17 @@
 </div>
 
 @if($task->mark === 'h5')
-    <iframe src="{{ $task->page_url }}" frameborder="0" width="100%" height="100%"></iframe>
+    @if(preg_match('/mp.weixin.qq.com/', $task->page_url))
+        <div class="row" style="margin-bottom: 60px;">
+            <div class="col-xs-10 col-xs-offset-1 col-sm-8 col-sm-offset-2 col-md-6 col-md-offset-3 col-lg-4 col-lg-offset-4">
+                <div style="margin-top: 10px;">
+                    {!! $task->editorValue !!}
+                </div>
+            </div>
+        </div>
+    @else
+        <iframe style="margin-bottom: 20px;" src="{{ $task->page_url }}" frameborder="0" width="100%" height="100%"></iframe>
+    @endif
 @else
     <div class="row" style="margin-bottom: 60px;">
         <div class="col-xs-10 col-xs-offset-1 col-sm-8 col-sm-offset-2 col-md-6 col-md-offset-3 col-lg-4 col-lg-offset-4">
@@ -87,22 +97,41 @@
     </div>
 @endif
 
-@if(!$task->is_ad)
-    <nav class="navbar navbar-default navbar-fixed-bottom">
-        <div class="container">
-            <div class="navbar-header" style="width: 100%">
-                <a class="navbar-brand" href="https://www.baidu.com" style="height: 10px;">
-                    <img class="logo-img" style="width: 20px;height: 20px;float: left;" src="{{ URL::asset('assets/images/z_logo.png') }}">
-                    上海一问科技
-                </a>
-                <button type="button" class="navbar-btn btn btn-success btn-sm"  style="float: right" data-toggle="modal" data-target="#myModal">
-                    报名
-                </button>
+@if($task->is_ad)
+    @if($task->ad_column_id === 0)
+        <nav class="navbar navbar-default navbar-fixed-bottom">
+            <div class="container">
+                <div class="navbar-header" style="width: 100%">
+                    <a class="navbar-brand" href="https://mp.weixin.qq.com/mp/profile_ext?action=home&__biz=MzA4MjM1ODY1MA==&scene=124#wechat_redirect" style="height: 10px;">
+                        <img class="logo-img" style="width: 25px;height: 25px;float: left;margin-right: 5px;margin-bottom: 5px;" src="{{ URL::asset('assets/images/z_logo.png') }}">
+                        上海一问科技
+                    </a>
+                    <button type="button" class="navbar-btn btn btn-success btn-sm"  style="float: right" data-toggle="modal" data-target="#myModal">
+                        报名
+                    </button>
+                </div>
             </div>
-        </div>
-    </nav>
+        </nav>
+    @else
+        <nav class="navbar navbar-default navbar-fixed-bottom">
+            <div class="container">
+                <div class="navbar-header" style="width: 100%">
+                    <a class="navbar-brand" href="{{ $task->ad->url }}" style="height: 10px;">
+                        <img class="logo-img" style="width: 25px;height: 25px;float: left;margin-right: 5px;margin-bottom: 5px;" src="{{ $task->ad->litimg }}">
+                        {{ $task->ad->name }}
+                    </a>
+                    <button type="button" class="navbar-btn btn btn-success btn-sm"  style="float: right" data-toggle="modal" data-target="#myModal">
+                        报名
+                    </button>
+                </div>
+            </div>
+        </nav>
+    @endif
 @endif
 
 </body>
+<script type="text/javascript" charset="UTF-8">
+    $("img").each(function(){$(this).attr("data-src").indexOf("mmbiz.qpic.cn")>-1&&$(this).attr("src","http://wewen.io/image?src="+$(this).attr("data-src"))});
+</script>
 
 </html>
