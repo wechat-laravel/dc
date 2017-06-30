@@ -27,6 +27,8 @@
         }
         *{
             border: 1px solid red;
+            overflow-x:hidden;
+            max-width: 100%;
         }
         .video_iframe{
             max-width: 100%;
