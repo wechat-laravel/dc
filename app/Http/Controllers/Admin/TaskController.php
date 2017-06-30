@@ -193,14 +193,12 @@ class TaskController extends Controller
         }
 
         if($task->page_url !== $input['page_url']){
-
-
+            
             if (preg_match('/mp.weixin.qq.com/', $task->page_url)){
 
                 $content = wx($input['page_url']);
 
                 $input['editorValue'] = $content;
-
 
             }
 

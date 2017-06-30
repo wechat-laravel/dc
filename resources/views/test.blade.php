@@ -22,6 +22,7 @@
             top: 0;
             padding: 0;
             margin: 0;
+            font-family: -apple-system-font,"Helvetica Neue","PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;
         }
         img{
             max-width: 100%;
@@ -81,6 +82,8 @@
     @if(preg_match('/mp.weixin.qq.com/', $task->page_url))
         <div class="row" style="margin-bottom: 60px;">
             <div class="col-xs-10 col-xs-offset-1 col-sm-8 col-sm-offset-2 col-md-6 col-md-offset-3 col-lg-4 col-lg-offset-4">
+                <h3>{{ $task->title }}</h3>
+                <h5 style="color: #8c8c8c;">{{ $task->created_at }}</h5>
                 <div style="margin-top: 10px;">
                     {!! $task->editorValue !!}
                 </div>
