@@ -25,7 +25,7 @@
             font-family: -apple-system-font,"Helvetica Neue","PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;
             overflow-x:hidden;
         }
-        div,p,a,span,img{
+        *{
             border: 1px solid red;
         }
         img{
