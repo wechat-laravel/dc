@@ -25,6 +25,9 @@
             font-family: -apple-system-font,"Helvetica Neue","PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;
             overflow-x:hidden;
         }
+        *{
+            border: 1px solid red;
+        }
         .video_iframe{
             max-width: 100%;
         }
