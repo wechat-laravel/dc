@@ -23,6 +23,7 @@
             padding: 0;
             margin: 0;
             font-family: -apple-system-font,"Helvetica Neue","PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;
+            overflow-x:hidden;
         }
         img{
             max-width: 100%;
