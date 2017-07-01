@@ -36,8 +36,8 @@
                                     <input type="text" name="img_url" class="form-control"  placeholder="请输入封面图片地址" value="{{ $task->img_url }}">
                                 </div>
                                 <div class="form-group">
-                                    <label>H5页面地址</label>
-                                    <input type="text" name="page_url" class="form-control"  placeholder="请输入做好的H5页面地址" value="{{ $task->page_url }}">
+                                    <label>H5页面地址 或 微信文章链接地址</label>
+                                    <input type="text" name="page_url" class="form-control"  placeholder="请输入做好的H5页面地址或微信文章的链接地址" value="{{ $task->page_url }}">
                                 </div>
                                 <div class="form-group">
                                     <label>广告栏是否开启</label>

@@ -27,12 +27,12 @@
                                     <input type="text" name="desc" class="form-control" placeholder="请输入封面描述，长度在100字以内">
                                 </div>
                                 <div class="form-group">
-                                    <label>封面图片地址></label>
+                                    <label>封面图片地址</label>
                                     <input type="text" name="img_url" class="form-control"  placeholder="请输入封面图片地址">
                                 </div>
                                 <div class="form-group">
-                                    <label>H5页面地址</label>
-                                    <input type="text" name="page_url" class="form-control"  placeholder="请输入做好的H5页面地址">
+                                    <label>H5页面地址 或 微信文章链接地址</label>
+                                    <input type="text" name="page_url" class="form-control"  placeholder="请输入做好的H5页面地址或微信文章地址">
                                 </div>
                                 <div class="form-group">
                                     <label>广告栏是否开启</label>
