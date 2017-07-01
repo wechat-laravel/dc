@@ -34,7 +34,7 @@ class TaskController extends Controller
 
                 }
 
-                $data  = $res->paginate(10);
+                $data  = $res->orderBy('created_at','DESC')->paginate(10);
 
                 return response($data);
 
