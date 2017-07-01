@@ -5,13 +5,16 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no">
     <meta name="author" content="">
-    <link rel="icon" href="favicon.ico">
-    <title>一问信息科技</title>
+    <link rel="icon" href="{{ URL::asset('favicon.ico') }}">
+    <title>脉达传播</title>
     <link href="{{ URL::asset('assets/css/bootstrap.min.css') }}" rel="stylesheet">
     <link href="{{ URL::asset('assets/css/auth/login.css') }}" rel="stylesheet">
 </head>
 <style>
     [ms-controller]{visibility: hidden;}
+    body{
+        background-color: #F4F5F5;
+    }
 </style>
 <body>
 <div class="container-fluid" ms-controller="register" class="ms-controller">
@@ -21,8 +24,8 @@
     <div class="row">
         <div class="col-xs-10 col-xs-offset-1 col-sm-8 col-sm-offset-2 col-md-6 col-md-offset-3 col-lg-4 col-lg-offset-4" id="logindev">
             <h3 class="text-center" style="margin-bottom: 30px;">
-                <img class="logo-img" width="45px" height="45px;" src="{{ URL::asset('assets/images/z_logo.png') }}">
-                <span>一问信息科技</span>
+                <img class="logo-img" width="45px" height="45px;" src="{{ URL::asset('maidaM.png') }}">
+                <span>脉达传播</span>
             </h3>
             <form class="register form">
                 {!! csrf_field() !!}

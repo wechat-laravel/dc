@@ -15,6 +15,7 @@
                 display: table;
                 font-weight: 100;
                 font-family: 'Lato';
+                background-color: black;
             }
 
             .container {
@@ -52,7 +53,7 @@
     <body>
         <div class="container">
             <div class="content">
-                <div class="title" onclick="goUrl()">一问信息科技</div>
+                <div class="title" onclick="goUrl()"><img src="{{ URL::asset('green.png') }}" style="width: 500px;height: 300px;"></div>
             </div>
         </div>
     </body>

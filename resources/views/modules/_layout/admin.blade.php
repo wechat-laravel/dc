@@ -3,9 +3,10 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>一问信息科技</title>
+    <title>脉达传播</title>
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
     <meta name="csrf-token" content="{{ csrf_token() }}">
+    <link rel="icon" href="{{ URL::asset('favicon.ico') }}">
     <link rel="stylesheet" href="{{ URL::asset('assets/css/bootstrap.min.css') }}">
     <link rel="stylesheet" href="{{ URL::asset('assets/css/daterangepicker.css') }}">
     <link rel="stylesheet" href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.css">
@@ -21,8 +22,8 @@
 <div class="wrapper">
     <header class="main-header">
         <a href="#" class="logo">
-            <span class="logo-mini"><b>一</b>问</span>
-            <span class="logo-lg"><b>一问信息科技</b></span>
+            <span class="logo-mini"><img style="width: 30px;height: 30px;" src="{{ URL::asset('maidaM.png') }}" alt=""></span>
+            <span class="logo-lg"><img style="height: 95px;width: 150px;margin-top: -20px;" src="{{ URL::asset('green.png') }}" alt=""></span>
         </a>
         <nav class="navbar navbar-static-top">
             <a href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button">
