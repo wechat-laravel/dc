@@ -28,35 +28,3 @@ $(function () {
 
     });
 });
-
-
-var show = avalon.define({
-    $id      : 'show',
-    ava_err  : false,
-    upload   : false,
-
-    yulan    : function () {
-        show.upload = true;
-    },
-    onAvatar:function () {
-        var src = $('#imgsrc')[0];
-        if (src){
-            $.ajax({
-                url: '/admin/user/profile',
-                type: 'POST',
-                data: {
-                    'src' : src.src
-                },
-                headers: {
-                    'X-CSRF-TOKEN': $ ('meta[name="csrf-token"]').attr ('content')
-                },
-                dataType: 'text'
-            }).done(function(ret){
-                window.location.reload();
-            });
-        }else{
-            show.ava_err = true;
-        }
-    }
-
-});
