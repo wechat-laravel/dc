@@ -70,13 +70,15 @@ class TaskController extends Controller
     {
         $str = str_random(32);
 
-        $input = $request->only(['title','desc','img_url','page_url','is_ad','ad_column_id']);
+        $input = $request->only(['title','desc','img_url','page_url','is_ad','ad_column_id','wechat_url','wechat_name']);
 
         $validator = Validator::make($input,[
-            'title'     => 'required|max:50',
-            'desc'      => 'required|max:100',
-            'img_url'   => 'required|max:300',
-            'page_url'  => 'required|max:300'
+            'title'       => 'required|max:50',
+            'desc'        => 'required|max:100',
+            'img_url'     => 'required|max:300',
+            'page_url'    => 'required|max:300',
+            'wechat_url'  => 'max:300',
+            'wechat_name' => 'max:100'
         ]);
 
         if ($validator->fails()){
@@ -177,13 +179,15 @@ class TaskController extends Controller
 
         }
 
-        $input = $request->only(['title','desc','img_url','page_url','is_ad','ad_column_id']);
+        $input = $request->only(['title','desc','img_url','page_url','is_ad','ad_column_id','wechat_url','wechat_name']);
 
         $validator = Validator::make($input,[
-            'title'     => 'required|max:50',
-            'desc'      => 'required|max:100',
-            'img_url'   => 'required|max:300',
-            'page_url'  => 'required|max:300'
+            'title'       => 'required|max:50',
+            'desc'        => 'required|max:100',
+            'img_url'     => 'required|max:300',
+            'page_url'    => 'required|max:300',
+            'wechat_url'  => 'max:300',
+            'wechat_name' => 'max:100'
         ]);
         
         if ($validator->fails()){

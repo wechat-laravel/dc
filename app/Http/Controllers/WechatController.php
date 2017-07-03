@@ -648,7 +648,7 @@ class WechatController extends Controller
 
 //        var_dump($cc);
 
-        $task = TasksModel::find(19);
+        $task = TasksModel::find(54);
 //
         return view('test',['task'=>$task]);
         //QrCode::format('png')->size(120)->generate('http://www.maoliduo.cn/wechat/task/16',public_path('assets/images/qrcode/GhZOsgxfFmdXS9sLP3i2DU7HOCoCsjZH.png'));

@@ -40,6 +40,14 @@
                                     <input type="text" name="page_url" class="form-control"  placeholder="请输入做好的H5页面地址或微信文章的链接地址" value="{{ $task->page_url }}">
                                 </div>
                                 <div class="form-group">
+                                    <label>公众号名称 <small>（ 选填 ）</small></label>
+                                    <input type="text" name="wechat_name" class="form-control"  placeholder="可填写公众号名称，长度在50字以内" value="{{ $task->wechat_name }}">
+                                </div>
+                                <div class="form-group">
+                                    <label>公众号历史文章链接 <small>（ 选填 ）</small></label>
+                                    <input type="text" name="wechat_url"  class="form-control"  placeholder="可填写公众号历史文章url，方便用户关注" value="{{ $task->wechat_url }}">
+                                </div>
+                                <div class="form-group">
                                     <label>广告栏是否开启</label>
                                     <br>
                                     @if($task->is_ad === 1)

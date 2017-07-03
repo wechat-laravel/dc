@@ -36,6 +36,14 @@
                                     <input type="text" name="img_url" class="form-control"  placeholder="请输入封面图片地址" value="{{ $task->img_url }}">
                                 </div>
                                 <div class="form-group">
+                                    <label>公众号名称 <small>（ 选填 ）</small></label>
+                                    <input type="text" name="wechat_name" class="form-control"  placeholder="可填写公众号名称，长度在50字以内" value="{{ $task->wechat_name }}">
+                                </div>
+                                <div class="form-group">
+                                    <label>公众号历史文章链接 <small>（ 选填 ）</small></label>
+                                    <input type="text" name="wechat_url"  class="form-control"  placeholder="可填写公众号历史文章url，方便用户关注" value="{{ $task->wechat_url }}">
+                                </div>
+                                <div class="form-group">
                                     <label>页面内容编辑</label>
                                     <script id="editor" type="text/plain" style="width:100%;height:500px;">
                                         {!! $task->editorValue !!}

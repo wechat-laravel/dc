@@ -8,7 +8,7 @@ class TasksModel extends Model
 {
     protected $table      = 'dc_tasks';
 
-    protected $fillable   = ['title','desc','img_url','page_url','qrcode_url','mark','user_id','editorValue','is_ad','ad_column_id'];
+    protected $fillable   = ['wechat_name','wechat_url','title','desc','img_url','page_url','qrcode_url','mark','user_id','editorValue','is_ad','ad_column_id'];
 
     public function ad()
     {

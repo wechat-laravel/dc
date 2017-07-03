@@ -15,6 +15,9 @@
 </head>
 <style>
     [ms-controller]{visibility: hidden;}
+    .skin-green-light .treeview-menu>li.active>a {
+        background-color: #D2D6DE;
+    }
 </style>
 <body class="hold-transition skin-green-light sidebar-mini" class="ms-controller" ms-controller="admin">
 <div class="wrapper">
@@ -71,7 +74,7 @@
             <ul class="sidebar-menu">
                 <li class="header">菜单列表</li>
                 @if( Auth::user()->identity === 'admin')
-                <li class="treeview" :class="{active: @two==='supper'}">
+                <li class="treeview active">
                     <a href="#">
                         <i class="glyphicon glyphicon-home"></i>
                         <span>管理中心</span>
@@ -92,7 +95,7 @@
                     </ul>
                 </li>
                 @endif
-                <li class="treeview" :class="{active: @two==='user'}">
+                <li class="treeview active">
                     <a href="#">
                         <i class="fa fa-user"></i>
                         <span>个人中心</span>
@@ -112,7 +115,7 @@
                         </li>
                     </ul>
                 </li>
-                <li class="treeview" :class="{active: @two==='task'|| @two==='custom' }">
+                <li class="treeview active" >
                     <a href="#">
                         <i class="fa fa-dashboard"></i>
                         <span>任务管理</span>
@@ -125,14 +128,11 @@
                             <a href="/admin/task"><i class="fa fa-calendar"></i>任务列表</a>
                         </li>
                         <li :class="{active: @three==='task_create' }">
-                            <a href="/admin/task/create"><i class="fa fa-tags"></i>封装链接</a>
-                        </li>
-                        <li :class="{active: @two==='custom' && @three==='' }">
-                            <a href="/admin/custom"><i class="fa fa-edit"></i>图文原创</a>
+                            <a href="/admin/task/create"><i class="fa fa-tags"></i>文章创建</a>
                         </li>
                     </ul>
                 </li>
-                <li class="treeview" :class="{active: @two==='service'}">
+                <li class="treeview active">
                     <a href="#">
                         <i class="fa fa-folder"></i> <span>服务插件</span>
                         <span class="pull-right-container">

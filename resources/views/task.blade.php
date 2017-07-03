@@ -92,7 +92,7 @@
             <div class="row" style="margin-bottom: 60px;">
                 <div class="col-xs-10 col-xs-offset-1 col-sm-8 col-sm-offset-2 col-md-6 col-md-offset-3 col-lg-4 col-lg-offset-4">
                     <h3>{{ $task->title }}</h3>
-                    <h5 style="color: #8c8c8c;">{{ $task->created_at }}</h5>
+                    <h5 style="color: #8c8c8c;">{{ substr($task->created_at,0,10) }} <a href="{{ $task->wechat_url }}">{{ $task->wechat_name }}</a></h5>
                     <div style="margin-top: 10px;">
                         {!! $task->editorValue !!}
                     </div>
@@ -104,6 +104,8 @@
     @else
         <div class="row" style="margin-bottom: 60px;">
             <div class="col-xs-10 col-xs-offset-1 col-sm-8 col-sm-offset-2 col-md-6 col-md-offset-3 col-lg-4 col-lg-offset-4">
+                <h3>{{ $task->title }}</h3>
+                <h5 style="color: #8c8c8c;">{{ substr($task->created_at,0,10) }} <a href="{{ $task->wechat_url }}">{{ $task->wechat_name }}</a></h5>
                 {!! $task->editorValue !!}
             </div>
         </div>
