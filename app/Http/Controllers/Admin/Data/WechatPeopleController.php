@@ -96,7 +96,7 @@ class WechatPeopleController extends Controller
 
         }
 
-        return view('modules.admin.data.wechat_people',['task_id'=>$task->id]);
+        return view('modules.admin.data.wechat_people',['task_id'=>$task->id,'title'=>$task->title]);
 
     }
 

@@ -46,7 +46,7 @@ class EnteredController extends Controller
 
         }
 
-        return view('modules.admin.data.entered',['task_id'=>intval($id)]);
+        return view('modules.admin.data.entered',['task_id'=>$task->id,'title'=>$task->title]);
 
     }
 

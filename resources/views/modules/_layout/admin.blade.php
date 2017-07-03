@@ -144,7 +144,7 @@
                 </li>
                 <li class="treeview" :class="{active: @two==='service'}">
                     <a href="#">
-                        <i class="fa fa-folder"></i> <span>服务</span>
+                        <i class="fa fa-folder"></i> <span>服务插件</span>
                         <span class="pull-right-container">
                             <i class="fa fa-angle-left pull-right"></i>
                         </span>
@@ -170,7 +170,7 @@
             </h1>
             <ol class="breadcrumb">
                 <li><a href="#"><i class="fa fa-home"></i>后台管理</a></li>
-                <li class="active">@yield('menu')</li>
+                <li class="active" >@yield('menu')</li>
             </ol>
         </section>
         <section class="content">

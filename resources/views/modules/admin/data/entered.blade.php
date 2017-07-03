@@ -1,9 +1,9 @@
 @extends('modules._layout.admin')
 @section('title')
-    报名信息
+    报名信息 <a href="/admin/data/wechat/{{ $task_id }}" style="margin-right: 10px;">数据图</a><a href="/admin/data/wechat_people/{{ $task_id }}">关系图</a>
 @endsection
 @section('menu')
-    留言查看
+    留言查看 > {{ $title }}
 @endsection
 @section('content')
     <div ms-controller="show">

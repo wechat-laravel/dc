@@ -1,4 +1,10 @@
 @extends('modules._layout.admin')
+@section('title')
+    数据图 <a href="/admin/data/wechat_people/{{ $task_id }}" style="margin-right: 10px;">关系图</a><a href="/admin/data/entered/{{ $task_id }}">报名信息</a>
+@endsection
+@section('menu')
+    任务管理 > {{ $title }}
+@endsection
 @section('content')
     <div ms-controller="show">
         <input type="hidden" name="task_id" value="{{ $task_id }}">
