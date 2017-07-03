@@ -82,7 +82,7 @@ $(function () {
             var data = $('.create.form').serialize();
 
             $.ajax({
-                url: '/admin/task',
+                url: show.url,
                 type: 'POST',
                 data: data,
                 datatype: 'text'
