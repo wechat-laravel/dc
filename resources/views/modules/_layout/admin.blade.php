@@ -69,15 +69,7 @@
                     <a href="#"><i class="fa fa-circle text-success"></i> 在线</a>
                 </div>
             </div>
-            <form action="#" method="get" class="sidebar-form">
-                <div class="input-group">
-                    <input type="text" name="q" class="form-control" placeholder="Search...">
-              <span class="input-group-btn">
-                <button type="submit" name="search" id="search-btn" class="btn btn-flat"><i class="fa fa-search"></i>
-                </button>
-              </span>
-                </div>
-            </form>
+          
             <ul class="sidebar-menu">
                 <li class="header">菜单列表</li>
                 @if( Auth::user()->identity === 'admin')
@@ -181,7 +173,7 @@
         <div class="pull-right hidden-xs">
             <b>版本</b> 1.0.0
         </div>
-        <strong>Copyright &copy; 2017/5/11 <a href="http://hackqy.com">Hackqy</a>.</strong> 版权所有保留
+        <strong>Copyright &copy; 一问科技 </strong> 版权所有
     </footer>
 </div>
 
