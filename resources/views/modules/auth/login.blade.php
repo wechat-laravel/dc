@@ -48,7 +48,7 @@
                                         <input type="checkbox"> 记住我
                                     </label>
                                     <label class="pull-right">
-                                        <span><a href="">忘记密码了？</a></span>
+                                        <span><a href="/auth/forget">忘记密码了？</a></span>
                                     </label>
                                 </div>
                             </div>

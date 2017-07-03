@@ -233,19 +233,28 @@ class AuthController extends Controller
             }else{
 
                 try{
+                    if ($request->has('method')){
 
-                    DB::transaction(function() use($data){
+                        
 
-                        //过期的,和没有的 可以直接发送
-                        CaptchaModel::create(['email'=>$data['email'],'vcode'=>$data['activationcode']]);
+                    }else{
 
-                        Mail::send('activemail',$data,function($message) use($data){
+                        DB::transaction(function() use($data){
 
-                            $message->to($data['email'])->subject("欢迎您注册(乐其意-DC网站)");
+                            //过期的,和没有的 可以直接发送
+                            CaptchaModel::create(['email'=>$data['email'],'vcode'=>$data['activationcode']]);
+
+                            Mail::send('activemail',$data,function($message) use($data){
+
+                                $message->to($data['email'])->subject("欢迎您注册(脉达传播)");
+
+                            });
 
                         });
 
-                    });
+                    }
+
+
 
                 }catch (\Exception $e){
 
@@ -267,6 +276,13 @@ class AuthController extends Controller
             return response()->json(['success'=>false,'msg'=>'请输入邮箱地址!']);
 
         }
+
+    }
+
+    public  function getForget()
+    {
+
+        return view('modules.auth.forget');
 
     }
 

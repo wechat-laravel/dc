@@ -14,9 +14,7 @@
     <link rel="stylesheet" href="{{ URL::asset('assets/css/adminlte/_all-skins.min.css') }}">
 </head>
 <style>
-    .ms-controller {
-        visibility: hidden
-    }
+    [ms-controller]{visibility: hidden;}
 </style>
 <body class="hold-transition skin-green-light sidebar-mini" class="ms-controller" ms-controller="admin">
 <div class="wrapper">

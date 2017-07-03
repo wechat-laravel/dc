@@ -229,7 +229,7 @@ class IndexController extends Controller
 
                     Mail::send('updateMail',$data,function($message) use($data){
 
-                        $message->to($data['email'])->subject("修改密码(乐其意-DC网站)");
+                        $message->to($data['email'])->subject("修改密码(脉达传播)");
 
                     });
 
