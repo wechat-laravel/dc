@@ -1,6 +1,6 @@
 @extends('modules._layout.admin')
 @section('title')
-    封装链接
+    文章创建
 @endsection
 @section('menu')
     任务管理
@@ -10,7 +10,7 @@
         <div class="row">
             <div class="nav-tabs-custom">
                 <div class="panel panel-default">
-                    <div class="panel-heading"><strong>H5任务创建</strong></div>
+                    <div class="panel-heading"><strong>任务创建</strong></div>
                     <div class="panel-body">
                         <div class="bs-example bs-example-images">
                             <form class="create form">

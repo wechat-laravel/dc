@@ -1,3 +1,31 @@
+var show = avalon.define({
+    $id       : "show",
+    ad_column : false,
+    method    : '0',
+    url       : '/admin/task',
+    cus_url   : '/admin/custom',
+
+    isAd      : function (e) {
+        if(e === 0){
+            $('#select').val(0);
+            show.ad_column = false;
+        }else{
+            show.ad_column = true;
+        }
+    },
+    onMethod  : function () {
+        show.method = $('#method').val();
+        if (show.method === 'h5'){
+            show.url = '/admin/task';
+        }else if(show.method === 'custom'){
+            show.url = '/admin/custom';
+        }else{
+            show.url = '';
+        }
+    }
+
+});
+
 var tml = "<div class='alert alert-danger alert-dismissible fade in' role='alert'><button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>×</span></button><p id='errinfo'>123</p></div>";
 $(function () {
     $('form').bootstrapValidator({
@@ -48,48 +76,32 @@ $(function () {
         }
     }).on('success.form.bv', function(e) {
         e.preventDefault();
+        if(show.url === ''){
+            $('#error-show').html(tml);
+            $('#errinfo').text('请选择一种创建方式！');
+        }else{
+            var data = $('.create.form').serialize();
 
-        var data = $('.create.form').serialize();
-        
-        $.ajax({
-            url: '/admin/task',
-            type: 'POST',
-            data: data,
-            datatype: 'text'
-        }).done(function(ret){
-            if (!ret.success){
-                $('#error-show').html(tml);
-                $('#errinfo').text(ret.msg);
-            }else{
-                location.href = '/admin/task';
-            }
-        });
-
+            $.ajax({
+                url: '/admin/task',
+                type: 'POST',
+                data: data,
+                datatype: 'text'
+            }).done(function(ret){
+                if (!ret.success){
+                    $('#error-show').html(tml);
+                    $('#errinfo').text(ret.msg);
+                }else{
+                    location.href = '/admin/task';
+                }
+            });
+        }
         $('form').bootstrapValidator('disableSubmitButtons', false);
 
     });
 });
 
-var show = avalon.define({
-    $id       : "show",
-    ad_column : false,
-    method    : '0',
-    h5_url    : '/admin/task',
-    cus_url   : '/admin/custom',
 
-    isAd      : function (e) {
-        if(e === 0){
-            $('#select').val(0);
-            show.ad_column = false;
-        }else{
-            show.ad_column = true;
-        }
-    },
-    onMethod  : function () {
-        show.method = $('#method').val();
-    }
-
-});
 
 
 //实例化编辑器
