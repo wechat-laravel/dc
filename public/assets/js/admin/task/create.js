@@ -2,8 +2,7 @@ var show = avalon.define({
     $id       : "show",
     ad_column : false,
     method    : '0',
-    url       : '/admin/task',
-    cus_url   : '/admin/custom',
+    url       : '',
 
     isAd      : function (e) {
         if(e === 0){
