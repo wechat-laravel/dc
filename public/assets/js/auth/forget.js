@@ -48,7 +48,7 @@ $(function () {
         e.preventDefault();
         var data = $('.register.form').serialize();
         $.ajax({
-            url: '/auth/register',
+            url: '/auth/forget',
             type: 'POST',
             data: data,
             datatype: 'text'
@@ -57,7 +57,7 @@ $(function () {
                 $('#error-show').html(vm.tml);
                 $('#errinfo').text(ret.msg);
             }else{
-                window.location = '/admin/task';
+                window.location = '/auth/login';
             }
             $('form').bootstrapValidator('disableSubmitButtons', false);
         });
