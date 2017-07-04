@@ -189,9 +189,20 @@ class WechatPeopleController extends Controller
 
         if (!$task) return response()->json(['success'=>false,'msg'=>'非法的请求！']);
 
+        //选出来转发过的
+        $ids = SpreadRecordModel::select('openid')->where('tasks_id',$id)->whereIn('action',['wechat','wechat_group','timeline','qq','qzone'])->groupBy('openid')->get();
+
+        $openids = [];
+
+        foreach ($ids as $ds ){
+
+            $openids[] = $ds->openid;
+
+        }
+
         if ($request->ajax()){
 
-            $res = SpreadPeopleModel::where('tasks_id',$id)->orderBy('created_at','asc')
+            $res = SpreadPeopleModel::where('tasks_id',$id)->whereIn('openid',$openids)->orderBy('people_num','desc')
                 ->with([
 
                     'user'=>function($query){
@@ -261,7 +272,7 @@ class WechatPeopleController extends Controller
                             //TODO 这里first取得时候有问题
                             $query->select('id','openid','stay')->where('action','browse')->orderBy('created_at','desc');
                         }
-                    ])->paginate(10);
+                    ])->orderBy('people_num','desc')->paginate(10);
 
             return response()->json($res);
 
