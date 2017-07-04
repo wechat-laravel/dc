@@ -34,7 +34,11 @@ class TaskController extends Controller
 
                 }
 
-                $data  = $res->orderBy('created_at','DESC')->paginate(10);
+                $data  = $res->with([
+                    'red'=>function($query){
+                           $query->select('id','tasks_id');
+                    }
+                ])->orderBy('created_at','DESC')->paginate(10);
 
                 return response($data);
 

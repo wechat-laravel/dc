@@ -6,7 +6,6 @@
     个人中心
 @endsection
 @section('content')
-    <div ms-controller="show">
         <div class="row">
             <div class="nav-tabs-custom">
                 <div class="panel panel-default">
@@ -35,9 +34,4 @@
                     </div>
                 </div>
             </div>
-        </div>
-    </div>
-@endsection
-@section('afterScript')
-    <script type="text/javascript" src="{{ URL::asset('assets/js/admin/user/assets.js') }}"></script>
 @endsection

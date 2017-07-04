@@ -27,12 +27,14 @@ class RedLogController extends Controller
                     return RedLogModel::where('tasks_id', \Input::get('tasks_id'))
                         ->where('open_id',$open_id->openid)
                         ->with('info')
+                        ->orderBy('created_at','DESC')
                         ->paginate(10);
                 }else{
                     return RedLogModel::where('tasks_id', \Input::get('tasks_id'))
                         ->where('open_id',$open_id->openid)
                         ->where('status',intval(\Input::get('status')))
                         ->with('info')
+                        ->orderBy('created_at','DESC')
                         ->paginate(10);
                 }
 
@@ -40,11 +42,13 @@ class RedLogController extends Controller
                 if(\Input::get('status') == 0){
                     return RedLogModel::where('tasks_id', \Input::get('tasks_id'))
                         ->with('info')
+                        ->orderBy('created_at','DESC')
                         ->paginate(10);
                 }else{
                     return RedLogModel::where('tasks_id', \Input::get('tasks_id'))
                         ->where('status',intval(\Input::get('status')))
                         ->with('info')
+                        ->orderBy('created_at','DESC')
                         ->paginate(10);
                 }
             }else if(\Input::get('name')!= ''){
@@ -53,10 +57,12 @@ class RedLogController extends Controller
                 return RedLogModel::where('tasks_id', \Input::get('tasks_id'))
                     ->where('open_id',$open_id->openid)
                     ->with('info')
+                    ->orderBy('created_at','DESC')
                     ->paginate(10);
             }
             return RedLogModel::where('tasks_id', \Input::get('tasks_id'))
                 ->with('info')
+                ->orderBy('created_at','DESC')
                 ->paginate(10);
         }
     }

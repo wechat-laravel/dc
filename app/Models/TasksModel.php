@@ -17,4 +17,9 @@ class TasksModel extends Model
 
     }
 
+    public function red()
+    {
+        return $this->hasOne('App\Models\RedBagModel','tasks_id','id');
+    }
+
 }
