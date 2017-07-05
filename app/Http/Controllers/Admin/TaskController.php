@@ -79,9 +79,8 @@ class TaskController extends Controller
         $validator = Validator::make($input,[
             'title'       => 'required|max:50',
             'desc'        => 'required|max:100',
-            'img_url'     => 'required|max:300',
-            'page_url'    => 'required|max:300',
-            'wechat_url'  => 'max:300',
+            'img_url'     => 'required',
+            'page_url'    => 'required',
             'wechat_name' => 'max:100'
         ]);
 
@@ -188,9 +187,8 @@ class TaskController extends Controller
         $validator = Validator::make($input,[
             'title'       => 'required|max:50',
             'desc'        => 'required|max:100',
-            'img_url'     => 'required|max:300',
-            'page_url'    => 'required|max:300',
-            'wechat_url'  => 'max:300',
+            'img_url'     => 'required',
+            'page_url'    => 'required',
             'wechat_name' => 'max:100'
         ]);
         

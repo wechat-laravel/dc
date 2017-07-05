@@ -37,9 +37,8 @@ class CustomController extends Controller
         $validator = Validator::make($input,[
             'title'         => 'required|max:50',
             'desc'          => 'required|max:100',
-            'img_url'       => 'required|max:200',
+            'img_url'       => 'required',
             'editorValue'   => 'required',
-            'wechat_url'    => 'max:300',
             'wechat_name'   => 'max:100'
         ]);
 
@@ -121,9 +120,8 @@ class CustomController extends Controller
         $validator = Validator::make($input,[
             'title'         => 'required|max:50',
             'desc'          => 'required|max:100',
-            'img_url'       => 'required|max:200',
+            'img_url'       => 'required',
             'editorValue'   => 'required',
-            'wechat_url'    => 'max:300',
             'wechat_name'   => 'max:100'
         ]);
 
