@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin\Data;
 
+use App\Models\GrantUserModel;
 use App\Models\SpreadPeopleModel;
 use App\Models\SpreadRecordModel;
 use App\Models\TasksModel;
@@ -20,11 +21,11 @@ class WechatPeopleController extends Controller
     {
         if (Auth::user()->identity !== 'admin'){
 
-            $task = TasksModel::where('user_id',Auth::id())->where('id',intval($id))->first();
+            $task = TasksModel::select('id','title')->where('user_id',Auth::id())->where('id',intval($id))->first();
 
         }else{
 
-            $task = TasksModel::find(intval($id));
+            $task = TasksModel::select('id','title')->where('id',intval($id))->first();
 
         }
 
@@ -104,11 +105,11 @@ class WechatPeopleController extends Controller
     {
         if (Auth::user()->identity !== 'admin'){
 
-            $task = TasksModel::where('user_id',Auth::id())->where('id',intval($id))->first();
+            $task = TasksModel::select('id','title')->where('user_id',Auth::id())->where('id',intval($id))->first();
 
         }else{
 
-            $task = TasksModel::find(intval($id));
+            $task = TasksModel::select('id','title')->where('id',intval($id));
 
         }
 
@@ -124,11 +125,11 @@ class WechatPeopleController extends Controller
     {
         if (Auth::user()->identity !== 'admin'){
 
-            $task = TasksModel::where('user_id',Auth::id())->where('id',intval($task_id))->first();
+            $task = TasksModel::select('id','title')->where('user_id',Auth::id())->where('id',intval($task_id))->first();
 
         }else{
 
-            $task = TasksModel::find(intval($task_id));
+            $task = TasksModel::select('id','title')->where('id',intval($task_id))->first();
 
         }
 
@@ -177,13 +178,14 @@ class WechatPeopleController extends Controller
     public function onForward(Request $request,$id)
     {
         $id = intval($id);
+
         if (Auth::user()->identity !== 'admin'){
 
-            $task = TasksModel::where('user_id',Auth::id())->where('id',$id)->first();
+            $task = TasksModel::select('id','title')->where('user_id',Auth::id())->where('id',$id)->first();
 
         }else{
 
-            $task = TasksModel::find($id);
+            $task = TasksModel::select('id','title')->where('id',$id)->first();
 
         }
 
@@ -246,19 +248,19 @@ class WechatPeopleController extends Controller
 
     public function onLayer(Request $request,$id)
     {
-        if (Auth::user()->identity !== 'admin'){
-
-            $task = TasksModel::where('user_id',Auth::id())->where('id',intval($id))->first();
-
-        }else{
-
-            $task = TasksModel::find(intval($id));
-
-        }
-
-        if (!$task) return response()->json(['success'=>false,'msg'=>'非法的请求！']);
-
         if ($request->ajax()){
+
+            if (Auth::user()->identity !== 'admin'){
+
+                $task = TasksModel::select('id','title')->where('user_id',Auth::id())->where('id',intval($id))->first();
+
+            }else{
+
+                $task = TasksModel::select('id','title')->where('id',intval($id))->first();
+
+            }
+
+            if (!$task) return response()->json(['success'=>false,'msg'=>'非法的请求！']);
 
             $layer = intval($request->input('layer'));
 
@@ -284,19 +286,22 @@ class WechatPeopleController extends Controller
 
     }
 
+    //用户来源路径
     public function onInfo(Request $request,$id)
     {
         $id = intval($id);
 
         $people_id = intval($request->input('people_id'));
 
+        $openid    = e($request->input('openid'));
+
         if (Auth::user()->identity !== 'admin'){
 
-            $task = TasksModel::where('user_id',Auth::id())->where('id',$id)->first();
+            $task = TasksModel::select('id','title')->where('user_id',Auth::id())->where('id',$id)->first();
 
         }else{
 
-            $task = TasksModel::find($id);
+            $task = TasksModel::select('id','title')->where('id',$id)->first();
 
         }
 
@@ -326,14 +331,14 @@ class WechatPeopleController extends Controller
 
         }else{
 
-            return view('modules.admin.data.wechat_info',['task'=>$task,'people_id'=>$people_id]);
+            return view('modules.admin.data.wechat_info',['task'=>$task,'people_id'=>$people_id,'openid'=>$openid]);
 
         }
 
     }
 
-    public function infos($openid,$task_id){
-
+    public function infos($openid,$task_id)
+    {
         $res = SpreadPeopleModel::where('openid',$openid)
                     ->where('tasks_id',$task_id)
                     ->with([
@@ -350,6 +355,53 @@ class WechatPeopleController extends Controller
         }else{
 
             return true;
+
+        }
+
+    }
+
+    //用户足迹
+    public function onMore(Request $request,$openid)
+    {
+        if($request->ajax()){
+
+            if(Auth::user()->identity === 'admin'){
+
+                $more = SpreadPeopleModel::select('id','openid','tasks_id','name','level','people_num','read_num','read_at')->where('openid',$openid)
+                    ->with([
+                        'task'=>function($query){
+                            $query->select('id','title');
+                        }
+                    ])->orderBy('created_at','DESC')->paginate(10);
+
+            }else{
+                //先找出当前用户创建的所有任务ID，任务标题保存起来
+                $tasks  = TasksModel::select('id')->where('user_id',Auth::id())->get();
+
+                $ids    = [];
+
+                foreach ($tasks as $task){
+
+                    $ids[] = $task->id;
+
+                }
+
+                //然后在people表里找到 该Openid是否存在在这些任务中
+
+                $more =  SpreadPeopleModel::select('id','openid','tasks_id','level','people_num','read_num','read_at')->where('openid',$openid)->whereIn('tasks_id',$ids)
+                    ->with([
+                        'task'=>function($query){
+                            $query->select('id','title');
+                        }
+                    ])->orderBy('created_at','DESC')->paginate(10);
+
+            }
+
+            return response()->json($more);
+
+        }else{
+
+            return response()->json(['success'=>false,'msg'=>'非法的请求操作！']);
 
         }
 

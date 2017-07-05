@@ -18,6 +18,13 @@ class SpreadPeopleModel extends Model
 
     ];
 
+    public function task()
+    {
+
+        return $this->hasOne('App\Models\TasksModel','id','tasks_id');
+
+    }
+
     public function user()
     {
 

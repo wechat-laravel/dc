@@ -9,12 +9,13 @@
     <div ms-controller="show">
         <input type="hidden" name="task_id" value="{{ $task->id }}">
         <input type="hidden" name="people_id" value="{{ $people_id }}">
+        <input type="hidden" name="openid" value="{{ $openid }}">
         <div class="row">
             <section class="col-md-12 col-sm-12 col-xs-12 connectedSortable ui-sortable">
                 <div class="nav-tabs-custom">
                     <div class="tab-content">
                         <div class="page-header">
-                            <h4>客户详情</h4>
+                            <h4>用户来源</h4>
                         </div>
                         <div class="panel panel-default">
                             <div class="panel-heading">来源路径</div>
@@ -30,6 +31,70 @@
                                 </div>
                             </div>
                         </div>
+                    </div>
+                    <div class="tab-content">
+                        <div class="page-header">
+                            <h4>用户足迹</h4>
+                        </div>
+                        <div class="panel panel-default">
+                            <div class="panel-heading">访问过的任务记录</div>
+                            <div class="panel-body">
+                                <div class="table-responsive">
+                                    <table class="table no-margin text-center table-hover">
+                                        <thead>
+                                        <tr>
+                                            <th>任务编号</th>
+                                            <th>任务标题</th>
+                                            <th>所属层级</th>
+                                            <th>下级人数</th>
+                                            <th>阅读次数</th>
+                                            <th>最后阅读时间</th>
+                                            <th>来源</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <tr ms-for="el in @data" data-for-rendered='@onLoads'>
+                                            <td>@{{ el.tasks_id }}</td>
+                                            <td>@{{ el.task ? el.task.title : '【该任务已被删除】'}}</td>
+                                            <td>@{{ el.level_name }}</td>
+                                            <td>@{{ el.people_num }} </td>
+                                            <td>@{{ el.read_num }} </td>
+                                            <td>@{{ el.read_at }} </td>
+                                            <td>
+                                                <a :visible="el.task" class="btn btn-default btn-sm" ms-attr="{href:'/admin/data/wechat_info/'+el.tasks_id+'?people_id='+el.id+'&openid='+el.openid}">详情</a>
+                                                <a :visible="!el.task" class="btn btn-default btn-sm" >无</a>
+                                            </td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-content">
+                        <div class="jumbotron text-center" :visible="visible" >
+                            <h4><i class="glyphicon glyphicon-exclamation-sign" style="margin-right: 20px;"></i>抱歉，暂没有数据</h4>
+                        </div>
+                        <nav aria-label="Page navigation" style="text-align: center">
+                            <ul class="pagination">
+                                <li :visible="@curr > 1">
+                                    <a :click="@toPage(curr-1)" href="#" aria-label="Previous">
+                                        <span aria-hidden="true">&laquo;</span>
+                                    </a>
+                                </li>
+                                <li :for="el in @pages" :class="{active : @el===@curr}">
+                                    <a :click="@toPage(el)" href="#">@{{ el }}</a>
+                                </li>
+                                <li :visible="@curr < @last">
+                                    <a :click="@toPage(curr+1)" href="#" aria-label="Next">
+                                        <span aria-hidden="true">&raquo;</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#">共@{{ total }}条数据</a>
+                                </li>
+                            </ul>
+                        </nav>
                     </div>
                 </div>
             </section>

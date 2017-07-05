@@ -89,7 +89,7 @@
                                         <td>@{{ el.read_num*5 + el.people_num*100 }}</td>
                                         <td>@{{ el.read_num }}</td>
                                         <td>@{{ el.single[0].stay }} s</td>
-                                        <td><a class="btn btn-default" ms-attr="{href:'/admin/data/wechat_info/{{ $task_id }}?people_id='+el.id}">详情</a></td>
+                                        <td><a class="btn btn-default btn-sm" ms-attr="{href:'/admin/data/wechat_info/{{ $task_id }}?people_id='+el.id+'&openid='+el.openid}">详情</a></td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -125,7 +125,7 @@
                                         <td>@{{ el.single.length }} / @{{ el.double.length }} / @{{ el.timeline.length }} /@{{ el.qqs.length }} / @{{ el.qqzone.length }}</td>
                                         <td>@{{ el.record.length }}</td>
                                         <td>@{{ el.records.length }}</td>
-                                        <td><a class="btn btn-default" ms-attr="{href:'/admin/data/wechat_info/{{ $task_id }}?people_id='+el.id}">详情</a></td>
+                                        <td><a class="btn btn-default btn-sm" ms-attr="{href:'/admin/data/wechat_info/{{ $task_id }}?people_id='+el.id+'&openid='+el.openid}">详情</a></td>
                                     </tr>
                                 </tbody>
                             </table>
