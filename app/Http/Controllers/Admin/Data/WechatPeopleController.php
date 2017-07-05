@@ -295,6 +295,10 @@ class WechatPeopleController extends Controller
 
         $openid    = e($request->input('openid'));
 
+        $user_info = GrantUserModel::where('openid',$openid)->first();
+
+        if (!$user_info) return response()->json(['success'=>false,'msg'=>'没有该用户，非法的请求！']);
+
         if (Auth::user()->identity !== 'admin'){
 
             $task = TasksModel::select('id','title')->where('user_id',Auth::id())->where('id',$id)->first();
@@ -331,7 +335,7 @@ class WechatPeopleController extends Controller
 
         }else{
 
-            return view('modules.admin.data.wechat_info',['task'=>$task,'people_id'=>$people_id,'openid'=>$openid]);
+            return view('modules.admin.data.wechat_info',['task'=>$task,'people_id'=>$people_id,'openid'=>$openid,'user_info'=>$user_info]);
 
         }
 

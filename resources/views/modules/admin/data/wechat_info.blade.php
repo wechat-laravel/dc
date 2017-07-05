@@ -15,6 +15,17 @@
                 <div class="nav-tabs-custom">
                     <div class="tab-content">
                         <div class="page-header">
+                            <h4>用户详情</h4>
+                        </div>
+                        <div class="panel panel-default">
+                            <div class="panel-heading">用户信息</div>
+                            <div class="panel-body">
+                                稍安勿躁，稍后开放 红包奖励与备注功能！
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-content">
+                        <div class="page-header">
                             <h4>用户来源</h4>
                         </div>
                         <div class="panel panel-default">

@@ -39,7 +39,7 @@ var show = avalon.define({
     //用户来源
     onInfo  : function () {
         $.ajax({
-            url:'/admin/data/wechat_info/'+show.task_id+'?people_id='+show.people_id,
+            url:'/admin/data/wechat_info/'+show.task_id+'?people_id='+show.people_id+'&openid='+show.openid,
             success:function (ret) {
                 show.infos = ret.data;
             }
