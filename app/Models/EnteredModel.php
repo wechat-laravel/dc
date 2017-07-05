@@ -23,6 +23,11 @@ class EnteredModel extends Model
 
     }
 
+    public function people()
+    {
+        return $this->hasOne('App\Models\SpreadPeopleModel','openid','openid');
+    }
+
     public function getSexNameAttribute()
     {
         if (isset($this->attributes['sex'])) {

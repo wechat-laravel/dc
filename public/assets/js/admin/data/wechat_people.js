@@ -172,7 +172,6 @@ var show = avalon.define({
     forwards : [],
     layer    : 1,
     layers   : [],
-    infos    : [],
     url      : "",
     pages    : [],              //储存要展示的页数
     last     : 0,               //最后一页的页码
@@ -258,17 +257,6 @@ var show = avalon.define({
         show.layer = e;
         show.url   = '/admin/data/wechat_layer/'+show.task_id+'?layer='+e+'&page=1';
         show.getData('layers');
-    },
-    //最短路径
-    onInfo  : function (e) {
-        show.maoliduo = false;
-        show.shows  = 'info';
-        $.ajax({
-            url:'/admin/data/wechat_info/'+show.task_id+'?id='+e,
-            success:function (ret) {
-                show.infos = ret.data;
-            }
-        })
     },
     toPage: function (e,name){
         var url  = show.url.substr(0, show.url.lastIndexOf('=') + 1);

@@ -20,13 +20,15 @@ class EnteredController extends Controller
     public function index(Request $request,$id)
     {
 
+        $id = intval($id);
+
         if (Auth::user()->identity !== 'admin'){
 
-            $task = TasksModel::where('user_id',Auth::id())->where('id',intval($id))->first();
+            $task = TasksModel::where('user_id',Auth::id())->where('id',$id)->first();
 
         }else{
 
-            $task = TasksModel::find(intval($id));
+            $task = TasksModel::find($id);
 
         }
 
@@ -38,6 +40,9 @@ class EnteredController extends Controller
 
                 'user'=>function($query){
                     $query->select('id','openid','name','avatar','city','province');
+                },
+                'people'=>function($query) use($id){
+                    $query->select('id','openid')->where('tasks_id',$id);
                 }
 
             ])->orderBy('created_at','desc')->paginate(10);

@@ -29,6 +29,7 @@
                                             <th>电话</th>
                                             <th>留言备注</th>
                                             <th>留言时间</th>
+                                            <th>来源路径</th>
                                         </tr>
                                         </thead>
                                         <tbody>
@@ -41,6 +42,7 @@
                                                 <td>@{{ el.mobile }} </td>
                                                 <td>@{{ el.remark }} </td>
                                                 <td>@{{ el.created_at*1000 | date("yyyy-MM-dd HH:mm")}} </td>
+                                                <td><a class="btn btn-default" ms-attr="{href:'/admin/data/wechat_info/{{ $task_id }}?people_id='+el.people.id}">详情</a></td>
                                             </tr>
                                         </tbody>
                                     </table>

@@ -89,7 +89,7 @@
                                         <td>@{{ el.read_num*5 + el.people_num*100 }}</td>
                                         <td>@{{ el.read_num }}</td>
                                         <td>@{{ el.single[0].stay }} s</td>
-                                        <td><button class="btn btn-default" :click="@onInfo(el.id)">详情</button></td>
+                                        <td><a class="btn btn-default" ms-attr="{href:'/admin/data/wechat_info/{{ $task_id }}?people_id='+el.id}">详情</a></td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -125,29 +125,10 @@
                                         <td>@{{ el.single.length }} / @{{ el.double.length }} / @{{ el.timeline.length }} /@{{ el.qqs.length }} / @{{ el.qqzone.length }}</td>
                                         <td>@{{ el.record.length }}</td>
                                         <td>@{{ el.records.length }}</td>
-                                        <td><button class="btn btn-default" :click="@onInfo(el.id)">详情</button></td>
+                                        <td><a class="btn btn-default" ms-attr="{href:'/admin/data/wechat_info/{{ $task_id }}?people_id='+el.id}">详情</a></td>
                                     </tr>
                                 </tbody>
                             </table>
-                            </div>
-                        </div>
-                        <div ms-visible="@shows==='info'" style="width: 100%;">
-                            <div class="page-header">
-                                <h4>客户详情</h4>
-                            </div>
-                            <div class="panel panel-default">
-                                <div class="panel-heading">最短路径</div>
-                                <div class="panel-body">
-                                    <div class="bs-example bs-example-images text-center" data-example-id="image-shapes" ms-for="el in @infos">
-                                        <i class="glyphicon glyphicon-arrow-right" style="float: left;margin-top: 15px;"></i>
-                                        <a href="#" style="float: left;margin-right: 10px;"><img ms-attr="{src: @el.avatar}" class="img-circle"  style="width: 40px;height: 40px;"/>
-                                            <br>
-                                             @{{ el.name }}
-                                            <br>
-                                            @{{ el.created_at.date | truncate(16,'') }}
-                                        </a>
-                                    </div>
-                                </div>
                             </div>
                         </div>
                         <div class="tab-content" :visible="maoliduo">
