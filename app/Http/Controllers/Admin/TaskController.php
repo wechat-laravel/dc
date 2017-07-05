@@ -87,7 +87,7 @@ class TaskController extends Controller
 
         if ($validator->fails()){
 
-            return response()->json(['success'=>false,'msg'=>'表单数据有误,请检查后重新提交']);
+            return response()->json(['success'=>false,'msg'=>$validator->errors()->all()]);
 
         }
 
@@ -196,7 +196,7 @@ class TaskController extends Controller
         
         if ($validator->fails()){
 
-            return response()->json(['success'=>false,'msg'=>'表单数据有误,请检查后重新提交']);
+            return response()->json(['success'=>false,'msg'=>$validator->errors()->all()]);
 
         }
 
