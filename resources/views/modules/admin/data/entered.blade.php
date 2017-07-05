@@ -1,6 +1,6 @@
 @extends('modules._layout.admin')
 @section('title')
-    报名信息 <a href="/admin/data/wechat/{{ $task_id }}" style="margin-right: 10px;">数据图</a><a href="/admin/data/wechat_people/{{ $task_id }}">关系图</a>
+   <a href="/admin/data/wechat/{{ $task_id }}" style="margin-right: 10px;">数据图</a><a href="/admin/data/wechat_people/{{ $task_id }}">关系图</a> 报名信息
 @endsection
 @section('menu')
     留言查看 > {{ $title }}

@@ -1,6 +1,6 @@
 @extends('modules._layout.admin')
 @section('title')
-    用户来源图 <a href="/admin/data/wechat/{{ $task->id }}" style="margin-right: 10px;">数据图</a><a href="/admin/data/wechat_people/{{ $task->id }}" style="margin-right: 10px;">关系图</a><a href="/admin/data/entered/{{ $task->id }}">报名信息</a>
+    <a href="/admin/data/wechat/{{ $task->id }}" style="margin-right: 10px;">数据图</a><a href="/admin/data/wechat_people/{{ $task->id }}" style="margin-right: 10px;">关系图</a><a href="/admin/data/entered/{{ $task->id }}">报名信息</a> 用户来源图
 @endsection
 @section('menu')
     任务管理 > {{ $task->title }}
