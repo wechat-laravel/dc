@@ -184,6 +184,7 @@ var show = avalon.define({
     onPUF : function(res){
         // 使用刚指定的配置项和数据显示图表。
         if (res === 'wang'){
+            show.maoliduo = false;
             show.shows = 'wang';
             wgt.setOption(wgt_data);
         }else if(res === 'peoples'){
