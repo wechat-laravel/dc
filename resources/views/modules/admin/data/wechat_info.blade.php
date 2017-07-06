@@ -148,7 +148,7 @@
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="#">共@{{ total }}条数据</a>
+                                    <a href="#">共@{{ rtotal }}条数据</a>
                                 </li>
                             </ul>
                         </nav>
