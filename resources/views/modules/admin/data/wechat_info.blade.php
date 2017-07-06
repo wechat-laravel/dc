@@ -182,6 +182,25 @@
                                                     <button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#myModal">红包奖励</button>
                                                 </td>
                                             </tr>
+                                            <tr>
+                                                <th colspan="6">以下为备注的用户信息。</th>
+                                            </tr>
+                                            <tr>
+                                                <th>姓名</th>
+                                                <th>年龄</th>
+                                                <th>性别</th>
+                                                <th>微信号</th>
+                                                <th>手机号</th>
+                                                <th>备注</th>
+                                            </tr>
+                                            <tr>
+                                                <td>{{ $user_remark->name }}</td>
+                                                <td>{{ $user_remark->age }}</td>
+                                                <td>{{ $user_remark->sex_name }}</td>
+                                                <td>{{ $user_remark->wechat_id }}</td>
+                                                <td>{{ $user_remark->mobile }}</td>
+                                                <td>{{ $user_remark->remark }}</td>
+                                            </tr>
                                         </tbody>
                                     </table>
                                 </div>

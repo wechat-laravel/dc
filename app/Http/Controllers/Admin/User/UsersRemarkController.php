@@ -15,6 +15,30 @@ use Mockery\CountValidator\Exception;
 class UsersRemarkController extends Controller
 {
 
+    //查看一个openid的备注信息
+    public function show(Request $request, $openid)
+    {
+        $openid  = e($openid);
+
+        $exists  = GrantUserModel::where('openid',$openid)->exists();
+
+        if (!$exists)    return response()->json(['success'=>false,'msg'=>'非法的请求，没有该用户存在！']);
+
+        $user = UsersRemarkModel::where('openid',$openid)->where('user_id',Auth::id())->first();
+
+        if ($user){
+
+            return response()->json(['success'=>true,'data'=>$user]);
+
+        }else{
+
+            return response()->json(['success'=>false,'msg'=>'还没有备注信息！']);
+
+        }
+
+
+    }
+
     //给授权的用户备注信息
     public function remark(Request $request)
     {

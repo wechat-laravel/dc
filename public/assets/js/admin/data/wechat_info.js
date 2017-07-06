@@ -224,8 +224,8 @@ $(function () {
                         message: '姓名必填！'
                     },
                     stringLength :{
-                        max    : 50,
-                        message: '长度请保持在50位以内'
+                        max    : 20,
+                        message: '长度请保持在20位以内'
                     }
                 }
             }

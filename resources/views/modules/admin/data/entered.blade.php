@@ -7,6 +7,62 @@
 @endsection
 @section('content')
     <div ms-controller="show">
+        {{--备注框--}}
+        <div class="modal fade user remark" id="user_remark" tabindex="-1" role="dialog" aria-labelledby="userModalLabel">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title" id="userModalLabel">用户信息备注</h4>
+                    </div>
+                    <form class="remark form" enctype="multipart/form-data" id="remark">
+                        <div class="form-group">
+                            <div id="rerror-show"></div>
+                        </div>
+                        {!! csrf_field() !!}
+                        <input type="hidden" name="openid" ms-attr="{value: openid}">
+                        <div class="modal-body">
+                            <label>请注意： 微信号与手机号必须填其中一项!</label>
+                                <div class="form-group">
+                                    <label>姓名</label>
+                                    <input type="text" name="name" class="form-control" ms-attr="{value : user.name ? user.name : '' }" placeholder="请输入姓名">
+                                </div>
+                                <div class="form-group">
+                                    <label>年龄</label>
+                                    <input type="text" name="age"  class="form-control" ms-attr="{value :user.age ? user.age : '' }" placeholder="没有可不填">
+                                </div>
+                                <div class="form-group">
+                                    <label>性别</label>
+                                    <select class="form-control" name="sex">
+                                        <option ms-attr="{selected : user.sex === 0 ? 'selected' : '' }" value="0">不详</option>
+                                        <option ms-attr="{selected : user.sex === 1 ? 'selected' : '' }" value="1">男</option>
+                                        <option ms-attr="{selected : user.sex === 2 ? 'selected' : '' }" value="2">女</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label>微信号</label>
+                                    <input type="text" name="wechat_id" class="form-control" ms-attr="{value : user.wechat_id ? user.wechat_id : ''}" placeholder="微信号与手机号必须填其中一项!">
+                                </div>
+                                <div class="form-group">
+                                    <label>手机号</label>
+                                    <input type="text" name="mobile" class="form-control" ms-attr="{value :user.mobile ? user.mobile : '' }" placeholder="微信号与手机号必须填其中一项!">
+                                </div>
+                                <div class="form-group">
+                                    <label>备注</label>
+                                    <input type="text" name="remark" class="form-control" ms-attr="{value : user.remark ? user.remark : '' }" placeholder="没有可不填">
+                                </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-primary" data-dismiss="modal">关闭</button>
+                            <button type="submit" class="btn btn-success">修改</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+
+
         <input type="hidden" name="task_id" value="{{ $task_id }}">
         <div class="row">
             <section class="col-md-12 col-sm-12 col-xs-12 connectedSortable ui-sortable">
@@ -29,6 +85,7 @@
                                             <th>电话</th>
                                             <th>留言备注</th>
                                             <th>留言时间</th>
+                                            <th>设置</th>
                                             <th>来源</th>
                                         </tr>
                                         </thead>
@@ -42,6 +99,7 @@
                                                 <td>@{{ el.mobile }} </td>
                                                 <td>@{{ el.remark }} </td>
                                                 <td>@{{ el.created_at*1000 | date("yyyy-MM-dd HH:mm")}} </td>
+                                                <td><a class="btn btn-primary btn-sm" :click="onRemark(el.openid)">备注</a></td>
                                                 <td><a class="btn btn-default btn-sm" ms-attr="{href:'/admin/data/wechat_info/{{ $task_id }}?people_id='+el.people.id+'&openid='+el.openid}">详情</a></td>
                                             </tr>
                                         </tbody>
@@ -81,5 +139,6 @@
     </div>
 @endsection
 @section('afterScript')
+    <script src="{{ URL::asset('assets/js/bootstrapValidator.min.js') }}" type="text/javascript" charset="utf-8"></script>
     <script type="text/javascript" src="{{ URL::asset('assets/js/admin/data/entered.js') }}"></script>
 @endsection
