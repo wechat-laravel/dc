@@ -121,7 +121,7 @@ class RedRewardController extends Controller
 
                 }else{
 
-                    return response()->json(['success'=>false,'msg'=>$r->err_code_des]);
+                    return response()->json(['success'=>false,'msg'=>$r->return_msg]);
 
                 }
 
@@ -145,7 +145,30 @@ class RedRewardController extends Controller
      */
     public function show($id)
     {
-        //
+        $id = e($id);
+
+        $exists = GrantUserModel::where('openid',$id)->exists();
+
+        if (!$exists){
+
+            return response()->json(['success'=>false,'msg'=>'非法的请求，没有该用户!']);
+
+        }else{
+            //区分普通用户与管理员
+            if (Auth::user()->identity === 'admin'){
+
+                $res = RedLogModel::where('tasks_id',0)->where('open_id',$id)->orderBy('created_at','DESC')->paginate(10);
+
+            }else{
+
+                $res = RedLogModel::where('tasks_id',0)->where('open_id',$id)->where('user_id',Auth::id())->orderBy('created_at','DESC')->paginate(10);
+
+            }
+
+            return response()->json($res);
+
+        }
+
     }
 
     /**

@@ -7,8 +7,7 @@
 @endsection
 @section('content')
     <div ms-controller="show">
-
-        <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal fade red reward" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -66,7 +65,7 @@
                             <div class="panel-heading">用户信息</div>
                             <div class="panel-body">
                                 <div class="table-responsive">
-                                    <table class="table no-margin text-center table-hover">
+                                    <table class="table table-bordered no-margin text-center table-hover">
                                         <thead>
                                         <tr>
                                             <th>头像</th>
@@ -94,6 +93,67 @@
                             </div>
                         </div>
                     </div>
+
+                    <div class="tab-content">
+                        <div class="page-header">
+                            <h4>奖励记录</h4>
+                        </div>
+                        <div class="panel panel-default">
+                            <div class="panel-heading">红包奖励记录</div>
+                            <div class="panel-body">
+                                <div class="table-responsive">
+                                    <table class="table table-bordered no-margin text-center table-hover">
+                                        <thead>
+                                        <tr>
+                                            <th>编号</th>
+                                            <th>账户ID</th>
+                                            <th>奖励金额</th>
+                                            <th>状态</th>
+                                            <th>说明</th>
+                                            <th>时间</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr ms-for="el in @rdata">
+                                                <td>@{{ el.id }}</td>
+                                                <td>@{{ el.user_id }}</td>
+                                                <td>@{{ el.total_amount }}</td>
+                                                <td>@{{ el.status_name }}</td>
+                                                <td>@{{ el.return_msg }}</td>
+                                                <td>@{{ el.created_at }}</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-content">
+                        <div class="jumbotron text-center" :visible="visible" >
+                            <h4><i class="glyphicon glyphicon-exclamation-sign" style="margin-right: 20px;"></i>抱歉，暂没有数据</h4>
+                        </div>
+                        <nav aria-label="Page navigation" style="text-align: center">
+                            <ul class="pagination">
+                                <li :visible="@rcurr > 1">
+                                    <a :click="@rtoPage(rcurr-1)" href="#" aria-label="Previous">
+                                        <span aria-hidden="true">&laquo;</span>
+                                    </a>
+                                </li>
+                                <li :for="el in @rpages" :class="{active : @el===@rcurr}">
+                                    <a :click="@rtoPage(el)" href="#">@{{ el }}</a>
+                                </li>
+                                <li :visible="@rcurr < @rlast">
+                                    <a :click="@rtoPage(rcurr+1)" href="#" aria-label="Next">
+                                        <span aria-hidden="true">&raquo;</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#">共@{{ total }}条数据</a>
+                                </li>
+                            </ul>
+                        </nav>
+                    </div>
+
                     <div class="tab-content">
                         <div class="page-header">
                             <h4>用户来源</h4>
@@ -177,7 +237,6 @@
                             </ul>
                         </nav>
                     </div>
-                </div>
             </section>
         </div>
     </div>
