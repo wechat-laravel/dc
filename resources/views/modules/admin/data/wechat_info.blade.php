@@ -51,6 +51,101 @@
             </div>
         </div>
 
+        {{--备注框--}}
+        <div class="modal fade user remark" id="user_remark" tabindex="-1" role="dialog" aria-labelledby="userModalLabel">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title" id="userModalLabel">用户信息备注</h4>
+                    </div>
+                    <form class="remark form" enctype="multipart/form-data" id="remark">
+                        <div class="form-group">
+                            <div id="rerror-show"></div>
+                        </div>
+                        {!! csrf_field() !!}
+                        <input type="hidden" name="openid" value="{{ $openid }}">
+                        <div class="modal-body">
+                            <label>请注意： 微信号与手机号必须填其中一项!</label>
+                            @if($user_remark)
+                                <div class="form-group">
+                                    <label>姓名</label>
+                                    <input type="text" name="name" class="form-control" value="{{ $user_remark->name }}"  placeholder="请输入姓名">
+                                </div>
+                                <div class="form-group">
+                                    <label>年龄</label>
+                                    <input type="text" name="age"  class="form-control" value="{{ $user_remark->age }}" placeholder="没有可不填">
+                                </div>
+                                <div class="form-group">
+                                    <label>性别</label>
+                                    <select class="form-control" name="sex">
+                                        @if($user_remark->sex === 0)
+                                            <option value="0" selected="selected">不详</option>
+                                            <option value="1">男</option>
+                                            <option value="2">女</option>
+                                        @elseif($user_remark->sex === 1)
+                                            <option value="0">不详</option>
+                                            <option value="1" selected="selected">男</option>
+                                            <option value="2">女</option>
+                                        @else
+                                            <option value="0">不详</option>
+                                            <option value="1">男</option>
+                                            <option value="2" selected="selected">女</option>
+                                        @endif
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label>微信号</label>
+                                    <input type="text" name="wechat_id" class="form-control" value="{{ $user_remark->wechat_id }}" placeholder="微信号与手机号必须填其中一项!">
+                                </div>
+                                <div class="form-group">
+                                    <label>手机号</label>
+                                    <input type="text" name="mobile" class="form-control"  value="{{ $user_remark->mobile }}" placeholder="微信号与手机号必须填其中一项!">
+                                </div>
+                                <div class="form-group">
+                                    <label>备注</label>
+                                    <input type="text" name="remark" class="form-control"  value="{{ $user_remark->remark }}" placeholder="没有可不填">
+                                </div>
+                            @else
+                                <div class="form-group">
+                                    <label>姓名</label>
+                                    <input type="text" name="name" class="form-control"  placeholder="请输入姓名">
+                                </div>
+                                <div class="form-group">
+                                    <label>年龄</label>
+                                    <input type="text" name="age"  class="form-control"  placeholder="没有可不填">
+                                </div>
+                                <div class="form-group">
+                                    <label>性别</label>
+                                    <select class="form-control" name="sex">
+                                        <option value="0">不详</option>
+                                        <option value="1">男</option>
+                                        <option value="2">女</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label>微信号</label>
+                                    <input type="text" name="wechat_id" class="form-control"  placeholder="微信号与手机号必须填其中一项!">
+                                </div>
+                                <div class="form-group">
+                                    <label>手机号</label>
+                                    <input type="text" name="mobile" class="form-control"  placeholder="微信号与手机号必须填其中一项!">
+                                </div>
+                                <div class="form-group">
+                                    <label>备注</label>
+                                    <input type="text" name="remark" class="form-control"  placeholder="没有可不填">
+                                </div>
+                            @endif
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-primary" data-dismiss="modal">关闭</button>
+                            <button type="submit" class="btn btn-success">修改</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
         <input type="hidden" name="task_id" value="{{ $task->id }}">
         <input type="hidden" name="people_id" value="{{ $people_id }}">
         <input type="hidden" name="openid" value="{{ $openid }}">
@@ -82,7 +177,7 @@
                                                 <td style="line-height: 40px;">{{ $user_info->name }}</td>
                                                 <td style="line-height: 40px;">{{ $user_info->sex_name }}</td>
                                                 <td style="line-height: 40px;">{{ $user_info->province }}-{{ $user_info->city }}</td>
-                                                <td style="line-height: 40px;"><a class="btn btn-primary btn-sm">备注</a></td>
+                                                <td style="line-height: 40px;"><a class="btn btn-primary btn-sm" data-toggle="modal" data-target="#user_remark">信息备注</a></td>
                                                 <td style="line-height: 40px;">
                                                     <button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#myModal">红包奖励</button>
                                                 </td>

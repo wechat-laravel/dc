@@ -125,6 +125,7 @@ show.onCurrentTab();
 show.onReward();
 
 var tml = "<div class='alert alert-danger alert-dismissible fade in' role='alert'><button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>×</span></button><p id='errinfo'>123</p></div>";
+var rtml = "<div class='alert alert-danger alert-dismissible fade in' role='alert'><button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>×</span></button><p id='rerrinfo'>123</p></div>";
 $(function () {
     $('.create.form').bootstrapValidator({
         feedbackIcons: {
@@ -199,13 +200,53 @@ $(function () {
             processData: false,
             contentType: false
         }).done(function(ret){
-            console.log(ret);
             if (!ret.success){
                 $('#error-show').html(tml);
                 $('#errinfo').text(ret.msg);
             }else{
                 $('.modal.fade.red.reward').modal('hide');
                 show.onReward();
+            }
+            $('form').bootstrapValidator('disableSubmitButtons', false);
+        });
+    });
+    // 备注
+    $('.remark.form').bootstrapValidator({
+        feedbackIcons: {
+            valid: 'glyphicon glyphicon-ok',
+            invalid: 'glyphicon glyphicon-remove',
+            validating: 'glyphicon glyphicon-refresh'
+        },
+        fields: {
+            name: {
+                validators: {
+                    notEmpty: {
+                        message: '姓名必填！'
+                    },
+                    stringLength :{
+                        max    : 50,
+                        message: '长度请保持在50位以内'
+                    }
+                }
+            }
+        }
+    }).on('success.form.bv', function(e) {
+        e.preventDefault();
+        var data = new FormData($('#remark')[0]);
+        $.ajax({
+            url: '/admin/user/remark',
+            type: 'POST',
+            data: data,
+            dataType: 'JSON',
+            cache: false,
+            processData: false,
+            contentType: false
+        }).done(function(ret){
+            if (!ret.success){
+                $('#rerror-show').html(rtml);
+                $('#rerrinfo').text(ret.msg);
+            }else{
+                window.location.reload();
             }
             $('form').bootstrapValidator('disableSubmitButtons', false);
         });

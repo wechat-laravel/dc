@@ -6,6 +6,7 @@ use App\Models\GrantUserModel;
 use App\Models\SpreadPeopleModel;
 use App\Models\SpreadRecordModel;
 use App\Models\TasksModel;
+use App\Models\UsersRemarkModel;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
@@ -297,6 +298,9 @@ class WechatPeopleController extends Controller
 
         $user_info = GrantUserModel::where('openid',$openid)->first();
 
+        //用户备注信息
+        $user_remark = UsersRemarkModel::where('openid',$openid)->where('user_id',Auth::id())->first();
+
         if (!$user_info) return response()->json(['success'=>false,'msg'=>'没有该用户，非法的请求！']);
 
         if (Auth::user()->identity !== 'admin'){
@@ -335,7 +339,7 @@ class WechatPeopleController extends Controller
 
         }else{
 
-            return view('modules.admin.data.wechat_info',['task'=>$task,'people_id'=>$people_id,'openid'=>$openid,'user_info'=>$user_info]);
+            return view('modules.admin.data.wechat_info',['task'=>$task,'people_id'=>$people_id,'openid'=>$openid,'user_info'=>$user_info,'user_remark'=>$user_remark]);
 
         }
 
