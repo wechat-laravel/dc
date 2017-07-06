@@ -10,6 +10,7 @@ class RedLogModel extends Model
     protected $table = 'dc_red_log';
 
     protected $fillable = [
+        'user_id',
         'open_id',
         'tasks_id',
         'total_amount',

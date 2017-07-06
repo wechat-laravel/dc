@@ -7,6 +7,51 @@
 @endsection
 @section('content')
     <div ms-controller="show">
+
+        <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title" id="myModalLabel">红包发送</h4>
+                    </div>
+                    <form class="create form" enctype="multipart/form-data" id="create">
+                        <div class="form-group">
+                            <div id="error-show"></div>
+                        </div>
+                        {!! csrf_field() !!}
+                        <input type="hidden" name="openid" value="{{ $openid }}">
+                        <div class="modal-body">
+                            <div class="form-group">
+                                <label>红包发送者名称<small>（ 10个字以内 ）</small></label>
+                                <input type="text" name="send_name" class="form-control"  placeholder="请输入红包发送名称">
+                            </div>
+                            <div class="form-group">
+                                <label>红包祝福语<small>（ 10个字以内 ）</small></label>
+                                <input type="text" name="wishing" class="form-control"  placeholder="请输入红包祝福语">
+                            </div>
+                            <div class="form-group">
+                                <label>红包活动名称<small>（ 10个字以内 ）</small></label>
+                                <input type="text" name="act_name" class="form-control"  placeholder="请输入红包活动名称">
+                            </div>
+                            <div class="form-group">
+                                <label>红包发送金额</label>
+                                <input type="text" name="money" class="form-control"  placeholder="请输入红包发送金额">
+                            </div>
+                            <div class="form-group">
+                                <label>备注<small>（ 可填项 ）</small></label>
+                                <input type="text" name="remark" class="form-control"  placeholder="请输入备注">
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                            <button type="submit" class="btn btn-danger">发送</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
         <input type="hidden" name="task_id" value="{{ $task->id }}">
         <input type="hidden" name="people_id" value="{{ $people_id }}">
         <input type="hidden" name="openid" value="{{ $openid }}">
@@ -20,7 +65,32 @@
                         <div class="panel panel-default">
                             <div class="panel-heading">用户信息</div>
                             <div class="panel-body">
-                                稍安勿躁，稍后开放 红包奖励与备注功能！
+                                <div class="table-responsive">
+                                    <table class="table no-margin text-center table-hover">
+                                        <thead>
+                                        <tr>
+                                            <th>头像</th>
+                                            <th>用户名</th>
+                                            <th>性别</th>
+                                            <th>城市</th>
+                                            <th>设置</th>
+                                            <th>功能</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td><img src="{{ $user_info->avatar }}" class="img-circle" style="width: 40px;height: 40px;"></td>
+                                                <td style="line-height: 40px;">{{ $user_info->name }}</td>
+                                                <td style="line-height: 40px;">{{ $user_info->sex_name }}</td>
+                                                <td style="line-height: 40px;">{{ $user_info->province }}-{{ $user_info->city }}</td>
+                                                <td style="line-height: 40px;"><a class="btn btn-primary btn-sm">备注</a></td>
+                                                <td style="line-height: 40px;">
+                                                    <button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#myModal">红包奖励</button>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -113,5 +183,6 @@
     </div>
 @endsection
 @section('afterScript')
+    <script src="{{ URL::asset('assets/js/bootstrapValidator.min.js') }}" type="text/javascript" charset="utf-8"></script>
     <script type="text/javascript" src="{{ URL::asset('assets/js/admin/data/wechat_info.js') }}"></script>
 @endsection

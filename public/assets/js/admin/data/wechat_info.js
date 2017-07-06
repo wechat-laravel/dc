@@ -84,3 +84,90 @@ var show = avalon.define({
 
 show.onInfo();
 show.onCurrentTab();
+
+var tml = "<div class='alert alert-danger alert-dismissible fade in' role='alert'><button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>×</span></button><p id='errinfo'>123</p></div>";
+$(function () {
+    $('.create.form').bootstrapValidator({
+        feedbackIcons: {
+            valid: 'glyphicon glyphicon-ok',
+            invalid: 'glyphicon glyphicon-remove',
+            validating: 'glyphicon glyphicon-refresh'
+        },
+        fields: {
+            send_name: {
+                validators: {
+                    notEmpty: {
+                        message: '红包发送者名称不能为空'
+                    },
+                    stringLength :{
+                        max    : 10,
+                        message: '长度请保持在10位以内'
+                    }
+                }
+            },
+            wishing: {
+                validators: {
+                    notEmpty: {
+                        message: '红包祝福语不能为空'
+                    },
+                    stringLength :{
+                        max    : 10,
+                        message: '长度请保持在10位以内'
+                    }
+                }
+            },
+            act_name: {
+                validators: {
+                    notEmpty: {
+                        message: '红包活动名称不能为空'
+                    },
+                    stringLength :{
+                        max    : 10,
+                        message: '长度请保持在10位以内'
+                    }
+                }
+            },
+            money :{
+                validators: {
+                    notEmpty: {
+                        message: '发送金额不能为空'
+                    },
+                    between :{
+                        min    : 1,
+                        max    : 200,
+                        message: '红包金额的范围为1-200'
+                    }
+                }
+            },
+            remark: {
+                validators: {
+                    stringLength :{
+                        max    : 10,
+                        message: '长度请保持在200位以内'
+                    }
+                }
+            }
+        }
+    }).on('success.form.bv', function(e) {
+        e.preventDefault();
+        var data = new FormData($('#create')[0]);
+        $.ajax({
+            url: '/admin/service/red_reward',
+            type: 'POST',
+            data: data,
+            dataType: 'JSON',
+            cache: false,
+            processData: false,
+            contentType: false
+        }).done(function(ret){
+            console.log(ret);
+            if (!ret.success){
+                $('#error-show').html(tml);
+                $('#errinfo').text(ret.msg);
+            }else{
+                window.location.reload();
+            }
+            $('form').bootstrapValidator('disableSubmitButtons', false);
+        });
+    });
+});

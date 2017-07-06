@@ -20,6 +20,9 @@ Route::group([
     //广告栏
     Route::resource('ad_column','AdColumnController');
 
+    //红包奖励
+    Route::resource('red_reward','RedRewardController');
+
     //帮助中心
     Route::resource('help','HelpController');
 

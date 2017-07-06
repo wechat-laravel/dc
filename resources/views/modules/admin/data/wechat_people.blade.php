@@ -13,7 +13,7 @@
                 <div class="nav-tabs-custom">
                     <ul class="nav nav-tabs pull-right ui-sortable-handle">
                         <li class="pull-left header"><i class="fa fa-question-circle"></i>传播关系分析</li>
-                        <li class="pull-right"><a href="#revenue-chart" data-toggle="tab" :click="@onPUF('forwards')" aria-expanded="true">转发客户</a></li>
+                        <li class="pull-right"><a href="#revenue-chart" data-toggle="tab" :click="@onPUF('forwards')" aria-expanded="true">转发用户</a></li>
                         <li class="pull-right"><a href="#revenue-chart" data-toggle="tab" :click="@onPUF('layers')" aria-expanded="true">层级影响力</a></li>
                         <li class="pull-right"><a href="#revenue-chart" data-toggle="tab" :click="@onPUF('peoples')" aria-expanded="true">表格数据</a></li>
                         <li class="pull-right  active"><a href="#revenue-chart" data-toggle="tab" :click="@onPUF('wang')" aria-expanded="true">脉络图</a></li>
