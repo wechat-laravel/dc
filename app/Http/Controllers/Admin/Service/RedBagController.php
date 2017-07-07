@@ -103,6 +103,54 @@ class RedBagController extends Controller
                     return response()->json(['success'=>true, 'msg'=>'充值成功']);
                 }
             }
+
+            //余额转出
+            if ($getType === 'red_turn'){
+
+                $red_bag_id = intval($request->input('id'));
+
+                $tasks_id   = intval($request->input('tasks_id'));
+
+                $red_amount = intval($request->input('red_amount'));
+
+                //转出要先看 是否是自己的任务
+                $red_bag = RedBagModel::where('id',$red_bag_id)->where('tasks_id',$tasks_id)->where('user_id',Auth::id())->first();
+
+                if (!$red_bag){
+
+                    return response()->json(['success'=>false,'msg'=>'找不到要转出余额的红包任务！']);
+
+                }else{
+
+                    if ($red_bag->amount >= $red_amount){
+
+                        //红包任务余额减去  个人账户余额增加 并记录
+                        DB::transaction(function() use($red_bag_id,$tasks_id,$red_amount){
+
+                            RedBagModel::where('id',$red_bag_id)->decrement('amount',$red_amount);
+
+                            SpendRecordModel::create([
+                                'user_id'    => Auth::id(),
+                                'mark'       => 'trun',
+                                'tasks_id'   => $tasks_id,
+                                'money'      => $red_amount,
+                            ]);
+
+                            UserModel::where('id',Auth::id())->increment('balance',$red_amount);
+
+                        });
+
+                        return response()->json(['success'=>true,'msg'=>'转出成功！']);
+
+                    }else{
+
+                        return response()->json(['success'=>false,'msg'=>'转出余额不得大于该红包任务的余额！']);
+
+                    }
+
+                }
+
+            }
         }
 
         return view('modules.admin.service.red_bag');

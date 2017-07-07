@@ -118,10 +118,6 @@ var red_bag = avalon.define({
         red_bag.tasks_id = tasks_id;
 
     },
-    //红包任务余额转出
-    zhuanchu:function(id){
-        console.log(id);
-    },
     //提交充值
     chongzhiCommit:function(){
         if($('[name="total"]').val() <= 0){
@@ -587,4 +583,39 @@ $('#editConfigModal').bootstrapValidator({
             }
         }
     });
+});
+//转出余额
+$('.turn.form').bootstrapValidator({
+    feedbackIcons: {
+        valid: 'glyphicon glyphicon-ok',
+        invalid: 'glyphicon glyphicon-remove',
+        validating: 'glyphicon glyphicon-refresh'
+    },
+    fields: {
+        red_amount: {
+            validators: {
+                notEmpty: {
+                    message: '转出余额不能为空值！'
+                }
+            }
+        }
+    }
+}).on('success.form.bv', function(e) {
+    e.preventDefault();
+
+    $.ajax({
+        url:'/admin/service/red_bag?&getType=red_turn&id='+red_bag.redId+'&tasks_id='+red_bag.tasks_id+'&red_amount='+$('input[name=red_amount]').val(),
+        success:function(data){
+            if(data.success){
+                alert(data.msg);
+                red_bag.getRedBag();
+                $("#red_turn").modal('hide');
+                $('input[name=red_amount]').val('');
+            }else{
+                alert(data.msg);
+            }
+            $('form').bootstrapValidator('disableSubmitButtons', false);
+        }
+    });
+
 });

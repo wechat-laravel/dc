@@ -1,6 +1,30 @@
 @extends('modules._layout.admin')
 @section('content')
     <div ms-controller="red_bag" class="ms-controller">
+
+        <div class="modal fade bs-example-modal-sm" id="red_turn" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
+            <div class="modal-dialog modal-sm" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title">红包余额转出</h4>
+                    </div>
+                    <form class="turn form" enctype="multipart/form-data" id="create">
+                        <div class="modal-body">
+                            <div class="form-group">
+                                <label>转出余额</label>
+                                <input type="text" name="red_amount"  class="form-control">
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                            <button type="submit" class="btn btn-primary">提交</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
         <div class="box box-info">
             <div class="box-header with-border">
                 <h3 class="box-title">
@@ -58,7 +82,10 @@
                                         data-toggle="modal"
                                         data-target="#chongzhiModal">充值</button>
                             </td>
-                            <td><a class="btn btn-success btn-sm" :click="@zhuanchu(data.id)">转出</a></td>
+                            <td><a class="btn btn-success btn-sm"
+                                   ms-click="@chongzhi($index, data.id,data.title.id)"
+                                   data-toggle="modal"
+                                   data-target="#red_turn">转出</a></td>
                             <td>@{{ data.taxonomy_name }}</td>
                             <td>@{{ data.money }}</td>
                             <td>@{{ data.action_name }}</td>
