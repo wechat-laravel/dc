@@ -31,6 +31,7 @@ var wgt_data = {
         offset: 1,
         color: '#cdd0d5'
     }]),
+    tooltip: {},
     legend: [{
         tooltip: {
             show: true
