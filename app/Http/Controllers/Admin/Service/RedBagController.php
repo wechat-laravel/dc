@@ -87,6 +87,8 @@ class RedBagController extends Controller
 
                         RedBagModel::where('id',$request->get('id'))->increment('total',$request->get('total'));
 
+                        RedBagModel::where('id',$request->get('id'))->increment('amount',$request->get('total'));
+
                         SpendRecordModel::create([
                             'user_id'    => Auth::id(),
                             'mark'       => 'task',
