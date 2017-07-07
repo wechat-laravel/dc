@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin\User;
 
 use App\Models\CaptchaModel;
+use App\Models\SpendRecordModel;
 use App\Models\UserModel;
 use Illuminate\Http\Request;
 
@@ -182,7 +183,24 @@ class IndexController extends Controller
     public function assets(Request $request)
     {
 
-        return view('modules.admin.user.assets');
+        if ($request->ajax()){
+
+            $record = SpendRecordModel::where('user_id',Auth::id())->with([
+                'task'=>function($query){
+                    $query->select('id','title');
+                },
+                'user'=>function($query){
+                    $query->select('openid','name','avatar');
+                }
+            ])->orderBy('created_at','DESC')->paginate(10);
+
+            return response()->json($record);
+
+        }else{
+
+            return view('modules.admin.user.assets');
+
+        }
 
     }
 

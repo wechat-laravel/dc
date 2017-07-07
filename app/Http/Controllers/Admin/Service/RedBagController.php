@@ -97,6 +97,8 @@ class RedBagController extends Controller
                         ]);
 
                         UserModel::where('id',Auth::id())->decrement('balance',$request->get('total'));
+                        //对应的消费总额要加上去
+                        UserModel::where('id',Auth::id())->increment('consume',$request->get('total'));
 
                     });
 
@@ -137,6 +139,8 @@ class RedBagController extends Controller
                             ]);
 
                             UserModel::where('id',Auth::id())->increment('balance',$red_amount);
+
+                            UserModel::where('id',Auth::id())->decrement('consume',$red_amount);
 
                         });
 
@@ -209,6 +213,8 @@ class RedBagController extends Controller
         DB::transaction(function() use($request){
 
             UserModel::where('id',Auth::id())->decrement('balance',$request->get('amount'));
+
+            UserModel::where('id',Auth::id())->increment('consume',$request->get('amount'));
 
             $money = $request->get('money');
             //判断红包类型 taxonomy 1固定金额 2随机金额

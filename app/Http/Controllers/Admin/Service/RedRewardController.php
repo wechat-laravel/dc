@@ -119,6 +119,8 @@ class RedRewardController extends Controller
 
                     UserModel::where('id', Auth::id())->decrement('balance', $r->total_amount/100);
 
+                    UserModel::where('id', Auth::id())->increment('consume', $r->total_amount/100);
+
                 }else{
 
                     return response()->json(['success'=>false,'msg'=>$r->return_msg]);

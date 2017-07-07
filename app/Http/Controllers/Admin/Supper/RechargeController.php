@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin\Supper;
 
 use App\Models\RechargeRecordModel;
+use App\Models\SpendRecordModel;
 use App\Models\UserModel;
 use Illuminate\Http\Request;
 
@@ -66,6 +67,12 @@ class RechargeController extends Controller
                 $user->balance = $user->balance + $input['money'];
 
                 $user->update();
+
+                SpendRecordModel::create([
+                    'user_id' => $input['user_id'],
+                    'mark'    => 'recharge',
+                    'money'   => $input['money']
+                ]);
 
                 RechargeRecordModel::create($input);
 
