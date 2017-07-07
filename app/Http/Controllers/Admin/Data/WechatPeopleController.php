@@ -58,8 +58,7 @@ class WechatPeopleController extends Controller
                 }
 
                 $data['user'][$re->openid] = $re->name.'：ID'.$re->id;
-
-
+                
                 $data['data'][] = [
 
                     'name'     => $re->name.'：ID'.$re->id,
