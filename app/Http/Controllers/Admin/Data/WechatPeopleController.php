@@ -325,7 +325,7 @@ class WechatPeopleController extends Controller
                                     $query->select('openid','avatar');
                             }])->first();
 
-            $this->info_data[] = ['name'=>$res->name,'avatar'=>$res->user->avatar,'created_at'=>$res->created_at];
+            $this->info_data[] = ['id'=>$res->id,'openid'=>$res->openid,'name'=>$res->name,'avatar'=>$res->user->avatar,'created_at'=>$res->created_at];
 
             if ($res->upper){
 
@@ -354,7 +354,7 @@ class WechatPeopleController extends Controller
                             $query->select('openid','avatar');
                     }])->first();
 
-        $this->info_data[] = ['name'=>$res->name,'avatar'=>$res->user->avatar,'created_at'=>$res->created_at];
+        $this->info_data[] = ['id'=>$res->id,'openid'=>$res->openid,'name'=>$res->name,'avatar'=>$res->user->avatar,'created_at'=>$res->created_at];
 
         if ($res->upper){
 

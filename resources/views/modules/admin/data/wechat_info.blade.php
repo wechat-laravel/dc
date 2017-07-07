@@ -252,8 +252,8 @@
                         </div>
                     </div>
                     <div class="tab-content">
-                        <div class="jumbotron text-center" :visible="visible" >
-                            <h4><i class="glyphicon glyphicon-exclamation-sign" style="margin-right: 20px;"></i>抱歉，暂没有数据</h4>
+                        <div class="jumbotron text-center" :visible="rvisible" >
+                            <h4><i class="glyphicon glyphicon-exclamation-sign" style="margin-right: 20px;"></i>抱歉，没有红包奖励的记录！</h4>
                         </div>
                         <nav aria-label="Page navigation" style="text-align: center">
                             <ul class="pagination">
@@ -286,7 +286,7 @@
                             <div class="panel-body">
                                 <div class="bs-example bs-example-images text-center" data-example-id="image-shapes" ms-for="el in @infos">
                                     <i class="glyphicon glyphicon-arrow-right" style="float: left;margin-top: 15px;"></i>
-                                    <a href="#" style="float: left;margin-right: 10px;"><img ms-attr="{src: @el.avatar}" class="img-circle"  style="width: 40px;height: 40px;"/>
+                                    <a ms-attr="{href : '/admin/data/wechat_info/{{ $task->id }}?people_id='+el.id+'&openid='+el.openid }" style="float: left;margin-right: 10px;"><img ms-attr="{src: @el.avatar}" class="img-circle"  style="width: 40px;height: 40px;"/>
                                         <br>
                                         @{{ el.name }}
                                         <br>
