@@ -194,12 +194,21 @@
                                                 <th>备注</th>
                                             </tr>
                                             <tr>
-                                                <td>{{ $user_remark->name }}</td>
-                                                <td>{{ $user_remark->age }}</td>
-                                                <td>{{ $user_remark->sex_name }}</td>
-                                                <td>{{ $user_remark->wechat_id }}</td>
-                                                <td>{{ $user_remark->mobile }}</td>
-                                                <td>{{ $user_remark->remark }}</td>
+                                                @if($user_remark)
+                                                    <td>{{ $user_remark->name ? $user_remark->name : '无' }}</td>
+                                                    <td>{{ $user_remark->age  ? $user_remark->age  : '无'}}</td>
+                                                    <td>{{ $user_remark->sex_name ? $user_remark->sex_name : '无' }}</td>
+                                                    <td>{{ $user_remark->wechat_id ? $user_remark->wechat_id : '无'}}</td>
+                                                    <td>{{ $user_remark->mobile ? $user_remark->mobile : '无'}}</td>
+                                                    <td>{{ $user_remark->remark ? $user_remark->remark : '无' }}</td>
+                                                @else
+                                                    <td>无</td>
+                                                    <td>无</td>
+                                                    <td>无</td>
+                                                    <td>无</td>
+                                                    <td>无</td>
+                                                    <td>无</td>
+                                                @endif
                                             </tr>
                                         </tbody>
                                     </table>
