@@ -15,6 +15,7 @@ var red_bag = avalon.define({
     city:[],
     article_id:0,
     redId:0,
+    tasks_id:0,
     //获取我的监控的文章
     getData:function(){
         $.ajax({
@@ -111,9 +112,15 @@ var red_bag = avalon.define({
         }
     },
     //充值
-    chongzhi:function(data_id,id){
+    chongzhi:function(data_id,id,tasks_id){
         red_bag.article_id = data_id;
         red_bag.redId = id;
+        red_bag.tasks_id = tasks_id;
+
+    },
+    //红包任务余额转出
+    zhuanchu:function(id){
+        console.log(id);
     },
     //提交充值
     chongzhiCommit:function(){
@@ -122,7 +129,7 @@ var red_bag = avalon.define({
             return false;
         }else{
             $.ajax({
-                url:'/admin/service/red_bag?&getType=chongzhiCommit&id='+red_bag.redId+'&total='+$('[name="total"]').val(),
+                url:'/admin/service/red_bag?&getType=chongzhiCommit&id='+red_bag.redId+'&tasks_id='+red_bag.tasks_id+'&total='+$('[name="total"]').val(),
                 success:function(data){
                     if(data.success){
                         alert(data.msg);

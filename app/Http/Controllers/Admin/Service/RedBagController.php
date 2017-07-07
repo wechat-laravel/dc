@@ -7,12 +7,15 @@ use App\Models\CityModel;
 use App\Models\ProvinceModel;
 use App\Models\RedBagModel;
 use App\Models\RedLogModel;
+use App\Models\SpendRecordModel;
 use App\Models\TasksModel;
 use App\Models\UserModel;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Mail;
@@ -24,7 +27,7 @@ class RedBagController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         /*$action = 1;//1，转发给好友/群。2，分享到朋友圈
         $open_id = 'ome0zxCc1qvM_bLzYIOTzy2BVzlg';
@@ -79,7 +82,22 @@ class RedBagController extends Controller
                 if($balance < \Input::get('total')){
                     return response()->json(['success'=>false, 'msg'=>'账户余额不足，联系客户充值！qq：2905582908']);
                 }else{
-                    RedBagModel::where('id',\Input::get('id'))->increment('total',\Input::get('total'));
+
+                    DB::transaction(function() use($request){
+
+                        RedBagModel::where('id',$request->get('id'))->increment('total',$request->get('total'));
+
+                        SpendRecordModel::create([
+                            'user_id'    => Auth::id(),
+                            'mark'       => 'task',
+                            'tasks_id'   => intval($request->get('tasks_id')),
+                            'money'      => intval($request->get('total')),
+                        ]);
+
+                        UserModel::where('id',Auth::id())->decrement('balance',$request->get('total'));
+
+                    });
+
                     return response()->json(['success'=>true, 'msg'=>'充值成功']);
                 }
             }
@@ -132,43 +150,63 @@ class RedBagController extends Controller
         }
 
         //判断账户余额是否足够
-        if($request->get('amount') > \Auth::user()->balance){
+        if($request->get('amount') > Auth::user()->balance){
             return response()->json(['success'=>false,'msg'=>'您的余额不足，请联系客服充值！']);
         }
 
-        UserModel::where('id',\Auth::id())->decrement('balance',$request->get('amount'));
+        //加上事务，任务创建成功 与 用户余额钱减掉 才算通过
 
-        $money = $request->get('money');
-        //判断红包类型 taxonomy 1固定金额 2随机金额
-        if($request->get('taxonomy') == 2){
-            $money = $request->get('money_suiji_begin') . '-' .$request->get('money_suiji_end');
-        }
+        DB::transaction(function() use($request){
 
-        //处理开始结束时间
-        $time = explode('-',$request->get('begin_at'));
+            UserModel::where('id',Auth::id())->decrement('balance',$request->get('amount'));
 
-        RedBagModel::create([
-            'user_id'=>\Auth::id(),
-            'event'=>e($request->get('event')),
-            'tasks_id'=>intval($request->get('article_id')),
-            'total'=>intval($request->get('amount')),
-            'amount'=>intval($request->get('amount')),
-            'action'=>$request->get('action'),
-            'taxonomy'=>$request->get('taxonomy'),
-            'money'=>$money,
-            'get_limit'=>intval($request->get('get_limit')),
-            'offer'=>intval($request->get('offer')),
-            'begin_at'=>strtotime($time[0]),
-            'end_at'=>strtotime($time[1]),
-            'send_name'=>e($request->get('send_name')),
-            'wishing'=>e($request->get('wishing')),
-            'act_name'=>e($request->get('act_name')),
-            'remark'=>e($request->get('remark')),
-            'sex'=>intval($request->get('sex')),
-            'area'=>intval($request->get('area')),
-            'province'=>intval($request->get('area')),
-            'city'=>intval($request->get('area')),
-        ]);
+            $money = $request->get('money');
+            //判断红包类型 taxonomy 1固定金额 2随机金额
+            if($request->get('taxonomy') == 2){
+                $money = $request->get('money_suiji_begin') . '-' .$request->get('money_suiji_end');
+            }
+
+            //记录本次消费记录
+            SpendRecordModel::create([
+                'user_id'    => Auth::id(),
+                'mark'       => 'task',
+                'tasks_id'   => intval($request->get('article_id')),
+                'money'      => intval($request->get('amount')),
+                'remark'     => e($request->get('remark')),
+                'send_name'  => e($request->get('send_name')),
+                'wishing'    => e($request->get('wishing')),
+                'act_name'   => e($request->get('act_name')),
+            ]);
+
+            //处理开始结束时间
+            $time = explode('-',$request->get('begin_at'));
+
+            //红包任务创建
+            RedBagModel::create([
+                'user_id'=> Auth::id(),
+                'event'=>e($request->get('event')),
+                'tasks_id'=>intval($request->get('article_id')),
+                'total'=>intval($request->get('amount')),
+                'amount'=>intval($request->get('amount')),
+                'action'=>$request->get('action'),
+                'taxonomy'=>$request->get('taxonomy'),
+                'money'=>$money,
+                'get_limit'=>intval($request->get('get_limit')),
+                'offer'=>intval($request->get('offer')),
+                'begin_at'=>strtotime($time[0]),
+                'end_at'=>strtotime($time[1]),
+                'send_name'=>e($request->get('send_name')),
+                'wishing'=>e($request->get('wishing')),
+                'act_name'=>e($request->get('act_name')),
+                'remark'=>e($request->get('remark')),
+                'sex'=>intval($request->get('sex')),
+                'area'=>intval($request->get('area')),
+                'province'=>intval($request->get('area')),
+                'city'=>intval($request->get('area')),
+            ]);
+
+        });
+
         return response()->json(['success'=>true, 'msg'=>'执行成功']);
     }
 

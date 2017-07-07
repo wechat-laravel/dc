@@ -6,7 +6,7 @@
                 <h3 class="box-title">
                     红包工具
                     <button type="button"
-                            class="btn btn-block btn-success"
+                            class="btn btn-block btn-sm btn-success"
                             style="margin-top: 3%;"
                             data-toggle="modal"
                             data-target="#myModal">
@@ -31,32 +31,34 @@
                             <th>总金额</th>
                             <th>余额</th>
                             <th>充值</th>
+                            <th>余额</th>
                             <th>类型</th>
                             <th>红包金额</th>
                             <th>奖励行为</th>
                             <th>上限/个/人</th>
                             <th>发放时间</th>
-                            <th>领取详情</th>
+                            <th>领取</th>
                             <th>状态</th>
-                            <th>操作</th>
+                            <th>配置</th>
                         </tr>
                         </thead>
                         <tbody>
                         <tr ms-for="($index, data) in @red_bag_data">
                             <td>@{{ data.id }}</td>
-                            <td>@{{ data.event }}</td>
-                            <td>@{{ data.title.title }}</td>
+                            <td>@{{ data.event |truncate(10) }}</td>
+                            <td>@{{ data.title.title |truncate(10) }}</td>
                             <td>@{{ data.title.id }}</td>
                             <td>@{{ data.total }}</td>
                             <td>
                                 @{{ data.amount }}
                             </td>
                             <td>
-                                <button class="btn btn-block btn-info"
-                                        ms-click="@chongzhi($index, data.id)"
+                                <button class="btn btn-warning btn-sm"
+                                        ms-click="@chongzhi($index, data.id,data.title.id)"
                                         data-toggle="modal"
                                         data-target="#chongzhiModal">充值</button>
                             </td>
+                            <td><a class="btn btn-success btn-sm" :click="@zhuanchu(data.id)">转出</a></td>
                             <td>@{{ data.taxonomy_name }}</td>
                             <td>@{{ data.money }}</td>
                             <td>@{{ data.action_name }}</td>
@@ -67,30 +69,30 @@
                                         data-toggle="modal"
                                         ms-click="tasks(data.title.id)"
                                         data-target="#detailModal"
-                                        class="btn btn-block btn-info">
-                                    领取详情
+                                        class="btn btn-info btn-sm">
+                                    详情
                                 </button>
                             </td>
                             <td ms-if="data.status == 1">
-                                <button class="btn btn-default">运行</button>
+                                运行中
                             </td>
                             <td ms-if="data.status == 0">
-                                <button class="btn btn-default">停止</button>
+                                已停止
                             </td>
                             <td>
                                 <button type="button"
                                         data-toggle="modal"
                                         data-target="#editConfigModal"
                                         ms-click="@editConfig($index,data.id)"
-                                        class="btn btn-block btn-info">修改配置</button>
+                                        class="btn btn-sm btn-info">修改</button>
                                 <button type="button"
                                         ms-if="data.status == 0"
                                         ms-click="start(data.id)"
-                                        class="btn btn-block btn-info">开启</button>
+                                        class="btn btn-sm btn-info">开启</button>
                                 <button type="button"
                                         ms-if="data.status == 1"
                                         ms-click="stop(data.id)"
-                                        class="btn btn-block btn-danger">停止</button>
+                                        class="btn btn-sm btn-danger">停止</button>
                             </td>
                         </tr>
                         </tbody>
