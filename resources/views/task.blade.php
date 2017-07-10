@@ -110,7 +110,7 @@
             </div>
         </div>
     @endif
-    {{--<p class="text-center"><a href="http://maoliduo.cn/">一问科技技术支持</a></p>--}}
+    {{--<p class="text-center"><a href="http://maidamaida.com/">一问科技技术支持</a></p>--}}
 
     @if($task->is_ad)
         @if($task->ad_column_id === 0)
@@ -152,7 +152,7 @@
         wx.onMenuShareAppMessage({
             title: '<?=$task->title?>',
             desc: '<?=$task->desc?>',
-            link: 'http://www.maoliduo.cn/wechat/task/<?=$task->id?>?openid=<?=$user[0]['id']?>&source=wechat&mark='+mark,
+            link: 'http://www.maidamaida.com/wechat/task/<?=$task->id?>?openid=<?=$user[0]['id']?>&source=wechat&mark='+mark,
             imgUrl: '<?=$task->img_url?>',
             trigger: function (res) {
                 // 不要尝试在trigger中使用ajax异步请求修改本次分享的内容，因为客户端分享操作是一个同步操作，这时候使用ajax的回包会还没有返回
@@ -160,7 +160,7 @@
             },
             success: function (res) {
 		        $.ajax({
-		            url: 'http://www.maoliduo.cn/wechat/record?openid=<?=$user[0]['id']?>&action=wechat&mark='+mark+'&upper=<?=$upper?>'+'&task_id=<?=$task->id?>',
+		            url: 'http://www.maidamaida.com/wechat/record?openid=<?=$user[0]['id']?>&action=wechat&mark='+mark+'&upper=<?=$upper?>'+'&task_id=<?=$task->id?>',
                     success:function(ret){
                         if(!ret.success){
 			                alert(ret.msg);
@@ -177,7 +177,7 @@
         wx.onMenuShareTimeline({
             title: '<?=$task->title?>',
             desc: '<?=$task->desc?>',
-            link: 'http://www.maoliduo.cn/wechat/task/<?=$task->id?>?openid=<?=$user[0]['id']?>&source=timeline',
+            link: 'http://www.maidamaida.com/wechat/task/<?=$task->id?>?openid=<?=$user[0]['id']?>&source=timeline',
             imgUrl: '<?=$task->img_url?>',
             trigger: function (res) {
                 // 不要尝试在trigger中使用ajax异步请求修改本次分享的内容，因为客户端分享操作是一个同步操作，这时候使用ajax的回包会还没有返回
@@ -185,7 +185,7 @@
             },
             success: function (res) {
                 $.ajax({
-                    url: 'http://www.maoliduo.cn/wechat/record?openid=<?=$user[0]['id']?>&action=timeline&mark='+mark+'&upper=<?=$upper?>'+'&task_id=<?=$task->id?>',
+                    url: 'http://www.maidamaida.com/wechat/record?openid=<?=$user[0]['id']?>&action=timeline&mark='+mark+'&upper=<?=$upper?>'+'&task_id=<?=$task->id?>',
                     success:function(ret){
                         if(!ret.success){
                             alert(ret.msg);
@@ -202,7 +202,7 @@
         wx.onMenuShareQQ({
             title: '<?=$task->title?>',
             desc: '<?=$task->desc?>',
-            link: 'http://www.maoliduo.cn/wechat/task/<?=$task->id?>?openid=<?=$user[0]['id']?>&source=qq',
+            link: 'http://www.maidamaida.com/wechat/task/<?=$task->id?>?openid=<?=$user[0]['id']?>&source=qq',
             imgUrl: '<?=$task->img_url?>',
             trigger: function (res) {
                 // 不要尝试在trigger中使用ajax异步请求修改本次分享的内容，因为客户端分享操作是一个同步操作，这时候使用ajax的回包会还没有返回
@@ -210,7 +210,7 @@
             },
             success: function (res) {
                 $.ajax({
-                    url: 'http://www.maoliduo.cn/wechat/record?openid=<?=$user[0]['id']?>&action=qq&mark='+mark+'&upper=<?=$upper?>'+'&task_id=<?=$task->id?>',
+                    url: 'http://www.maidamaida.com/wechat/record?openid=<?=$user[0]['id']?>&action=qq&mark='+mark+'&upper=<?=$upper?>'+'&task_id=<?=$task->id?>',
                     success:function(ret){
                         if(!ret.success){
                             alert(ret.msg);
@@ -227,7 +227,7 @@
         wx.onMenuShareQZone({
             title: '<?=$task->title?>',
             desc: '<?=$task->desc?>',
-            link: 'http://www.maoliduo.cn/wechat/task/<?=$task->id?>?openid=<?=$user[0]['id']?>&source=qzone',
+            link: 'http://www.maidamaida.com/wechat/task/<?=$task->id?>?openid=<?=$user[0]['id']?>&source=qzone',
             imgUrl: '<?=$task->img_url?>',
             trigger: function (res) {
                 // 不要尝试在trigger中使用ajax异步请求修改本次分享的内容，因为客户端分享操作是一个同步操作，这时候使用ajax的回包会还没有返回
@@ -235,7 +235,7 @@
             },
             success: function (res) {
                 $.ajax({
-                    url: 'http://www.maoliduo.cn/wechat/record?openid=<?=$user[0]['id']?>&action=qzone&mark='+mark+'&upper=<?=$upper?>'+'&task_id=<?=$task->id?>',
+                    url: 'http://www.maidamaida.com/wechat/record?openid=<?=$user[0]['id']?>&action=qzone&mark='+mark+'&upper=<?=$upper?>'+'&task_id=<?=$task->id?>',
                     success:function(ret){
                         if(!ret.success){
                             alert(ret.msg);
@@ -253,7 +253,7 @@
 
     function stay(){
         $.ajax({
-            url : 'http://www.maoliduo.cn/wechat/stay?stay=1'
+            url : 'http://www.maidamaida.com/wechat/stay?stay=1'
         })
     }
     setInterval(stay,1000);

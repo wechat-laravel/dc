@@ -4,7 +4,7 @@
         <strong><span style="font-family: 微软雅黑;font-size: 16px"><span style="font-family:微软雅黑">一问信息科技（上海）有限公司数字营销系统使用指南</span></span></strong>
     </h2>
     <p>
-        <span style="font-family: 微软雅黑;font-size: 16px"><span style="font-family:微软雅黑">一：登录官网</span> www.maoliduo.cn</span>
+        <span style="font-family: 微软雅黑;font-size: 16px"><span style="font-family:微软雅黑">一：登录官网</span> www.maidamaida.com</span>
     </p>
     <p>
         <span style=";font-family:微软雅黑;font-size:16px">&nbsp;</span>
