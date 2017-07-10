@@ -648,10 +648,29 @@ class WechatController extends Controller
 
 //        var_dump($cc);
 
-        $task = TasksModel::find(54);
+//        $task = TasksModel::find(54);
 //
-        return view('test',['task'=>$task]);
-        //QrCode::format('png')->size(120)->generate('http://www.maoliduo.cn/wechat/task/16',public_path('assets/images/qrcode/GhZOsgxfFmdXS9sLP3i2DU7HOCoCsjZH.png'));
+//        return view('test',['task'=>$task]);
+
+//        $res = TasksModel::select('id','qrcode_url')->where('id','<',57)->orderBy('created_at','desc')->get();
+//
+//        try{
+//
+//            foreach ($res  as $re){
+//
+//                QrCode::format('png')->size(120)->generate('http://www.maidamaida.com/wechat/task/'.$re->id,public_path("$re->qrcode_url"));
+//
+//            }
+//
+//        }catch (Exception $e){
+//
+//            return response()->json(['success'=>false,'msg'=>$e->getMessage()]);
+//
+//        }
+
+
+        return response()->json(['success'=>true,'msg'=>'测试屏蔽！']);
+//        QrCode::format('png')->size(120)->generate('http://www.maidamaida.com/wechat/task/57',public_path('/assets/images/qrcode/fApwRzHbKnLK6GmURiWUxyVWacs6OIGY.png'));
 
     }
 
