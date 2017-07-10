@@ -652,21 +652,21 @@ class WechatController extends Controller
 //
 //        return view('test',['task'=>$task]);
 
-//        $res = TasksModel::select('id','qrcode_url')->where('id','<',57)->orderBy('created_at','desc')->get();
-//
-//        try{
-//
-//            foreach ($res  as $re){
-//
-//                QrCode::format('png')->size(120)->generate('http://www.maidamaida.com/wechat/task/'.$re->id,public_path("$re->qrcode_url"));
-//
-//            }
-//
-//        }catch (Exception $e){
-//
-//            return response()->json(['success'=>false,'msg'=>$e->getMessage()]);
-//
-//        }
+        $res = TasksModel::select('id','qrcode_url')->orderBy('created_at','desc')->get();
+
+        try{
+
+            foreach ($res  as $re){
+
+                QrCode::format('png')->size(120)->generate('http://www.maidamaida.com/wechat/task/'.$re->id,public_path("$re->qrcode_url"));
+
+            }
+
+        }catch (Exception $e){
+
+            return response()->json(['success'=>false,'msg'=>$e->getMessage()]);
+
+        }
 
 
         return response()->json(['success'=>true,'msg'=>'测试屏蔽！']);
