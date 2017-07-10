@@ -93,12 +93,12 @@
     </div>
 </div>
 {{--微信二维码--}}
-<div class="modal fade bs-qrcode-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
+<div class="modal fade bs-qrcode-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" style="width: 250px;height: 300px;margin: 0 auto;">
     <div class="modal-dialog modal-sm" role="document">
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title" id="myModalLabel">长按图片加好友</h4>
+                <h5 class="modal-title" id="myModalLabel">长按图片加好友</h5>
             </div>
             <img class="img-rounded center-block" src="{{ URL::asset('ceshi.jpg') }}" style="width: 200px;height: 200px;">
         </div>
@@ -106,12 +106,12 @@
 </div>
 
 {{--商务通链接二维码--}}
-<div class="modal fade bs-zixun-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
+<div class="modal fade bs-zixun-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" style="width: 250px;height: 300px;margin: 0 auto;">
     <div class="modal-dialog modal-sm" role="document">
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title" id="myModalLabel">长按图片在线咨询</h4>
+                <h5 class="modal-title" id="myModalLabel">长按图片在线咨询</h5>
             </div>
             <img class="img-rounded center-block" src="{{ URL::asset('ceshi.jpg') }}" style="width: 200px;height: 200px;">
         </div>
