@@ -92,6 +92,31 @@
         </div>
     </div>
 </div>
+{{--微信二维码--}}
+<div class="modal fade bs-qrcode-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
+    <div class="modal-dialog modal-sm" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">长按图片加好友</h4>
+            </div>
+            <img class="img-rounded center-block" src="{{ URL::asset('ceshi.jpg') }}" style="width: 200px;height: 200px;">
+        </div>
+    </div>
+</div>
+
+{{--商务通链接二维码--}}
+<div class="modal fade bs-zixun-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
+    <div class="modal-dialog modal-sm" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">长按图片在线咨询</h4>
+            </div>
+            <img class="img-rounded center-block" src="{{ URL::asset('ceshi.jpg') }}" style="width: 200px;height: 200px;">
+        </div>
+    </div>
+</div>
 
 @if($task->mark === 'h5')
     @if(preg_match('/mp.weixin.qq.com/', $task->page_url))
@@ -131,14 +156,14 @@
                     打Ta电话
                 </div>
                 <div class="text-center col-sm-4 col-xs-4" style="float: left;">
-                    <a href="#" class="btn" style="background-color: #4CB25C;width: 40px;height: 40px; border-radius: 20px;">
+                    <a onclick="onQrcode()" class="btn" style="background-color: #4CB25C;width: 40px;height: 40px; border-radius: 20px;">
                         <i class="fa fa-wechat" style="color:white;background-color:#4CB25C;font-size: 20px;line-height: 28px;margin-left: -7px;"></i>
                     </a>
                     <br>
                     加Ta微信
                 </div>
                 <div class="text-center col-sm-4 col-xs-4" style="float: left;">
-                    <a href="#" class="btn" style="background-color: #337AB7;width: 40px;height: 40px; border-radius: 20px;">
+                    <a onclick="onZixun()" class="btn" style="background-color: #337AB7;width: 40px;height: 40px; border-radius: 20px;">
                         <i class="fa fa-commenting-o" style="color:white;background-color:#337AB7;font-size: 20px;line-height: 27px;margin-left: -5px;"></i>
                     </a>
                     <br>
@@ -194,6 +219,12 @@
 <script type="text/javascript" charset="UTF-8">
     function onMobile(){
         alert('电话');
+    }
+    function onQrcode(){
+        $('.bs-qrcode-modal-sm').modal('show');
+    }
+    function onZixun(){
+        $('.bs-zixun-modal-sm').modal('show');
     }
 </script>
 
