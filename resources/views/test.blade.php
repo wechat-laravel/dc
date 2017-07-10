@@ -4,7 +4,10 @@
     <title>{{ $task->title }}</title>
     <meta name="DC"content="{{ $task->desc }}">
     <meta name="description"content="{{ $task->desc }}">
+    <meta name="format-detection" content="telephone=no">
+    <meta http-equiv="x-rim-auto-match" content="none">
     <link rel="stylesheet" href="{{ URL::asset('assets/css/bootstrap.min.css') }}">
+    <link rel="stylesheet" href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.css">
     <meta name="viewport" id="viewport" content="width=320, initial-scale=1, maximum-scale=1, user-scalable=no">
     <script src="{{ URL::asset('assets/js/jquery.min.js') }}" type="text/javascript" charset="utf-8"></script>
     <script src="{{ URL::asset('assets/js/bootstrap.min.js') }}" type="text/javascript" charset="utf-8"></script>
@@ -24,6 +27,7 @@
             margin: 0;
             font-family: -apple-system-font,"Helvetica Neue","PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;
             overflow-x:hidden;
+            /*background-color: #F4F5F5;*/
         }
         *{
 	    max-width:100%;
@@ -104,7 +108,7 @@
         <iframe style="margin-bottom: 20px;" src="{{ $task->page_url }}" frameborder="0" width="100%" height="100%"></iframe>
     @endif
 @else
-    <div class="row" style="margin-bottom: 60px;">
+    <div class="row" style="margin-bottom: 50px;">
         <div class="col-xs-12 col-sm-8 col-sm-offset-2 col-md-6 col-md-offset-3 col-lg-4 col-lg-offset-4">
             <h3>{{ $task->title }}</h3>
             <h5 style="color: #8c8c8c;">{{ substr($task->created_at,0,10) }} <a href="{{ $task->wechat_url }}">{{ $task->wechat_name }}</a></h5>
@@ -112,7 +116,48 @@
         </div>
     </div>
 @endif
-
+<div style="width: 100%;background-color:#F4F5F5;padding-top: 2px;">
+    <h5 class="text-center"><b>本文由 <span style="color: red">奥迪 银牌顾问 徐悦</span>分享推荐</b></h5>
+    <div class="row" style="padding:10px 10px 0px 10px;">
+        <div class="col-xs-12 col-sm-8 col-sm-offset-2 col-md-6 col-md-offset-3 col-lg-4 col-lg-offset-4" style="background-color:#FFFFFF;padding-top: 10px;">
+            <img src="{{ URL::asset('wewen.png') }}" class="img-circle center-block" style="width: 40px;height: 40px;">
+            <h5 class="text-center"><b>奥迪公司</b>  <a class="btn btn-default btn-xs">银牌顾问</a></h5>
+            <div class="center-block" style="margin-top: 25px;">
+                <div class="text-center col-sm-4 col-xs-4" style="float: left;">
+                    <a href="tel:13764567708"  class="btn" style="background-color: orange;width: 40px;height: 40px; border-radius: 20px;">
+                        <i class="fa fa-phone" style="color:white;background-color:orange;font-size: 25px;line-height: 28px;margin-left: -5px;"></i>
+                    </a>
+                    <br>
+                    打Ta电话
+                </div>
+                <div class="text-center col-sm-4 col-xs-4" style="float: left;">
+                    <a href="#" class="btn" style="background-color: #4CB25C;width: 40px;height: 40px; border-radius: 20px;">
+                        <i class="fa fa-wechat" style="color:white;background-color:#4CB25C;font-size: 20px;line-height: 28px;margin-left: -7px;"></i>
+                    </a>
+                    <br>
+                    加Ta微信
+                </div>
+                <div class="text-center col-sm-4 col-xs-4" style="float: left;">
+                    <a href="#" class="btn" style="background-color: #337AB7;width: 40px;height: 40px; border-radius: 20px;">
+                        <i class="fa fa-commenting-o" style="color:white;background-color:#337AB7;font-size: 20px;line-height: 27px;margin-left: -5px;"></i>
+                    </a>
+                    <br>
+                    在线咨询
+                </div>
+            </div>
+            <div style="clear: both"></div>
+            <div style="margin-top: 20px;color: #938C8C">
+                <p class="text-justify" >
+                    <ul class="list-unstyled">
+                        <li>标题一 ：<span><b>标题一具体内容</b></span></li>
+                        <li>标题二 ：<span>标题二具体内容</span></li>
+                        <li>标题三 ：<span>标题三具体内容信息(爱上肯定会啊四度空间哈sd卡加上框架的哈商大框架哈sd卡就)</span></li>
+                    </ul>
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
 {{--@if($task->is_ad)--}}
     {{--@if($task->ad_column_id === 0)--}}
         {{--<nav class="navbar navbar-default navbar-fixed-bottom">--}}
@@ -147,6 +192,9 @@
 
 </body>
 <script type="text/javascript" charset="UTF-8">
+    function onMobile(){
+        alert('电话');
+    }
 </script>
 
 </html>
