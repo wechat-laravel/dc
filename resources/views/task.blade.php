@@ -25,7 +25,7 @@
             font-family: -apple-system-font,"Helvetica Neue","PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;
             overflow-x:hidden;
         }
-	*{
+	    *{
             max-width:100%;
         }
         .row{
@@ -38,6 +38,7 @@
         img{
             max-width: 100%;
         }
+        .row p a{ width:100%;overflow:hidden; text-overflow: ellipsis; display:block;}
     </style>
 </head>
 <body>

@@ -42,6 +42,7 @@
         img{
             max-width: 100%;
         }
+        .row p a{ width:100%;overflow:hidden; text-overflow: ellipsis; display:block;}
     </style>
 </head>
 <body>
@@ -142,11 +143,11 @@
     </div>
 @endif
 <div style="width: 100%;background-color:#F4F5F5;padding-top: 2px;">
-    <h5 class="text-center"><b>本文由 <span style="color: red">微问 湿人 阳癫疯</span>分享推荐</b></h5>
+    <h5 class="text-center"><b>本文由<span style="color: red"> ( 分享来源 ) </span>分享推荐</b></h5>
     <div class="row" style="padding:10px 10px 0px 10px;">
         <div class="col-xs-12 col-sm-8 col-sm-offset-2 col-md-6 col-md-offset-3 col-lg-4 col-lg-offset-4" style="background-color:#FFFFFF;padding-top: 10px;">
             <img src="{{ URL::asset('wewen.png') }}" class="img-circle center-block" style="width: 40px;height: 40px;">
-            <h5 class="text-center"><b>微问数据</b>  <a class="btn btn-default btn-xs">金牌湿人</a></h5>
+            <h5 class="text-center"><b>（ 标题 ）</b>  <a class="btn btn-default btn-xs">（ 标签 ）</a></h5>
             <div class="center-block" style="margin-top: 25px;">
                 <div class="text-center col-sm-4 col-xs-4" style="float: left;">
                     <a href="tel:13764567708"  class="btn" style="background-color: orange;width: 40px;height: 40px; border-radius: 20px;">
@@ -160,7 +161,7 @@
                         <i class="fa fa-wechat" style="color:white;background-color:#4CB25C;font-size: 20px;line-height: 28px;margin-left: -7px;"></i>
                     </a>
                     <br>
-                    加Ta微信
+                    微信二维码
                 </div>
                 <div class="text-center col-sm-4 col-xs-4" style="float: left;">
                     <a onclick="onZixun()" class="btn" style="background-color: #337AB7;width: 40px;height: 40px; border-radius: 20px;">
@@ -176,7 +177,7 @@
                     <ul class="list-unstyled">
                         <li>标题一 ：<span><b>标题一具体内容</b></span></li>
                         <li>标题二 ：<span>标题二具体内容</span></li>
-                        <li>标题三 ：<span>标题三具体内容信息(爱上肯定会啊四度空间哈sd卡加上框架的哈商大框架哈sd卡就)</span></li>
+                        <li>标题三 ：<span>标题三具体内容</span></li>
                     </ul>
                 </p>
             </div>

@@ -13,7 +13,7 @@
                 <div class="modal-content">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                        <h4 class="modal-title" id="myModalLabel">添加一个模板</h4>
+                        <h4 class="modal-title" id="myModalLabel">添加样式一广告模板</h4>
                     </div>
                     <form class="create form" enctype="multipart/form-data" id="create">
                         <div class="form-group">
@@ -97,7 +97,8 @@
                         <div style="width: 100%;">
                             <div class="page-header">
                                 <h4>广告栏设置</h4>
-                                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">添加一个模板</button>
+                                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal" style="margin-right: 20px;">添加样式一广告模板</button>
+                                {{--<a href="/admin/service/ad_column/create" class="btn btn-primary">添加样式二广告模板</a>--}}
                             </div>
                             <div class="panel panel-default">
                                 <div class="panel-heading">广告模板</div>

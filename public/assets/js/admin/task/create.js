@@ -12,6 +12,7 @@ var show = avalon.define({
             show.ad_column = true;
         }
     },
+
     onMethod  : function () {
         show.method = $('#method').val();
         if (show.method === 'h5'){

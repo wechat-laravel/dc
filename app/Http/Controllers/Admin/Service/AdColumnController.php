@@ -47,7 +47,9 @@ class AdColumnController extends Controller
      */
     public function create()
     {
-        //
+
+        return view('modules.admin.service.ad_create');
+
     }
 
     /**
@@ -61,33 +63,48 @@ class AdColumnController extends Controller
 
         if (!$request->has('id')){
 
-            $file = screenFile($request->file('litimg'),2);
+            //样式一创建
+            if (!$request->has('share')) {
 
-            if(!$file['success'])  return $file;
+                $file = screenFile($request->file('litimg'), 2);
 
-            $input = $request->only(['name','title','url']);
+                if (!$file['success']) return $file;
 
-            $validator = Validator::make($input,[
-                'name'      => 'required|max:100',
-                'title'     => 'required|max:10',
-                'url'       => 'required|max:200',
-            ]);
+                $input = $request->only(['name', 'title', 'url']);
 
-            if ($validator->fails()){
+                $validator = Validator::make($input, [
+                    'name' => 'required|max:100',
+                    'title' => 'required|max:10',
+                    'url' => 'required|max:200',
+                ]);
 
-                return response()->json(['success'=>false,'msg'=>'表单数据有误,请检查后重新提交']);
+                if ($validator->fails()) {
+
+                    return response()->json(['success' => false, 'msg' => '表单数据有误,请检查后重新提交']);
+
+                }
+
+                $input['user_id'] = Auth::id();
+
+                $input['litimg'] = $file['path'];
+
+                $input['mark'] = 1;
+
+                AdColumnModel::create($input);
+
+                return response()->json(['success' => true, 'msg' => '创建成功！']);
+
+            } else {
+
+                $input = $request->all();
+
+                $file = screenFile($request->file('qrcode'), 2);
+
+                if (!$file['success']) return $file;
+
+                return response()->json($input);
 
             }
-
-            $input['user_id'] = Auth::id();
-
-            $input['litimg'] = $file['path'];
-
-            $input['mark']   = 1;
-
-            AdColumnModel::create($input);
-
-            return response()->json(['success'=>true,'msg'=>'创建成功！']);
 
         }else{
 
@@ -131,11 +148,10 @@ class AdColumnController extends Controller
 
             $ads->update($input);
 
+
             return response()->json(['success'=>true,'msg'=>'修改成功！']);
 
         }
-
-
 
     }
 
