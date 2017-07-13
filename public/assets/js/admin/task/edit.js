@@ -33,17 +33,6 @@ $(function () {
 
                 }
             },
-            img_url: {
-                validators: {
-                    notEmpty: {
-                        message: '封面图片地址不能为空'
-                    },
-                    uri :{
-                        message: '格式不正确'
-                    }
-
-                }
-            },
             page_url: {
                 validators: {
                     notEmpty: {
@@ -58,13 +47,16 @@ $(function () {
     }).on('success.form.bv', function(e) {
         e.preventDefault();
 
-        var data = $('.edit.form').serialize();
+        var data = new FormData($('.edit.form')[0]);
         var id   = $('input[name=id]').val();
         $.ajax({
-            url: '/admin/task/'+id,
-            type: 'PUT',
+            url: '/admin/task',
+            type: 'POST',
             data: data,
-            datatype: 'text'
+            dataType: 'JSON',
+            cache: false,
+            processData: false,
+            contentType: false
         }).done(function(ret){
             if (!ret.success){
                 $('#error-show').html(tml);

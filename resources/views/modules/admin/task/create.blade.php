@@ -28,7 +28,8 @@
                                 </div>
                                 <div class="form-group">
                                     <label>封面图片地址</label>
-                                    <input type="text" name="img_url" class="form-control"  placeholder="请输入封面图片地址">
+                                    <input type="file" name="img_url"  class="projectfile"  multiple="multiple">
+                                    <p class="help-block">请上传大小在2M以内的图片</p>
                                 </div>
                                 <div class="form-group">
                                     <label>公众号名称 <small>（ 选填 ）</small></label>

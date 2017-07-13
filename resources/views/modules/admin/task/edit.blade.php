@@ -32,8 +32,9 @@
                                     <input type="text" name="desc" class="form-control"  placeholder="请输入封面描述，长度在100字以内" value="{{ $task->desc }}">
                                 </div>
                                 <div class="form-group">
-                                    <label>封面图片地址</label>
-                                    <input type="text" name="img_url" class="form-control"  placeholder="请输入封面图片地址" value="{{ $task->img_url }}">
+                                    <label>封面图片地址 <small>（ 重新上传，将替换原图 ）</small></label>
+                                    <input type="file" name="img_url"  class="projectfile"  multiple="multiple">
+                                    <p class="help-block">请上传大小在2M以内的图片</p>
                                 </div>
                                 <div class="form-group">
                                     <label>H5页面地址 或 微信文章链接地址</label>

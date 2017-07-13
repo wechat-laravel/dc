@@ -60,19 +60,7 @@ $(function () {
                     }
 
                 }
-            },
-            img_url: {
-                validators: {
-                    notEmpty: {
-                        message: '封面图片地址不能为空'
-                    },
-                    uri :{
-                        message: '格式不正确'
-                    }
-
-                }
             }
-
         }
     }).on('success.form.bv', function(e) {
         e.preventDefault();
@@ -80,13 +68,15 @@ $(function () {
             $('#error-show').html(tml);
             $('#errinfo').text('请选择一种创建方式！');
         }else{
-            var data = $('.create.form').serialize();
-
+            var data = new FormData($('.create.form')[0]);
             $.ajax({
                 url: show.url,
                 type: 'POST',
                 data: data,
-                datatype: 'text'
+                dataType: 'JSON',
+                cache: false,
+                processData: false,
+                contentType: false
             }).done(function(ret){
                 if (!ret.success){
                     $('#error-show').html(tml);

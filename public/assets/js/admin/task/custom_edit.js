@@ -32,30 +32,21 @@ $(function () {
                     }
 
                 }
-            },
-            img_url: {
-                validators: {
-                    notEmpty: {
-                        message: '封面图片地址不能为空'
-                    },
-                    uri :{
-                        message: '格式不正确'
-                    }
-
-                }
             }
-
         }
     }).on('success.form.bv', function(e) {
         e.preventDefault();
 
-        var data = $('.create.form').serialize();
+        var data = new FormData($('.create.form')[0]);
         var id   = $('input[name=id]').val();
         $.ajax({
-            url: '/admin/custom/'+id,
-            type: 'PUT',
+            url: '/admin/custom',
+            type: 'POST',
             data: data,
-            datatype: 'text'
+            dataType: 'JSON',
+            cache: false,
+            processData: false,
+            contentType: false
         }).done(function(ret){
             if (!ret.success){
                 $('#error-show').html(tml);
