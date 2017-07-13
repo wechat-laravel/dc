@@ -146,7 +146,7 @@
                 </li>
                 <li class="treeview">
                     <a href="/admin/service/help">
-                        <i class="fa fa-align-justify"></i> <span>使用指南</span>
+                        <i class="fa fa-question-circle"></i> <span>系统帮助</span>
                     </a>
                 </li>
             </ul>
@@ -169,7 +169,7 @@
     </div>
     <footer class="main-footer">
         <div class="pull-right hidden-xs">
-            <b>版本</b> 1.0.0
+            <b>版本</b> 1.1.7
         </div>
         <strong>Copyright &copy; 一问科技 </strong> 版权所有
     </footer>
