@@ -334,10 +334,10 @@ $('#addConfig').bootstrapValidator({
     //检测随机红包金额 结束金额不能小于开始金额
     var taxonomy = $('input[name="taxonomy"]:checked').val();
     if(taxonomy == 2){
-        if($('[name="money_suiji_end"]').val() <= $('[name="money_suiji_begin"]').val()){
+        if(parseInt($('[name="money_suiji_end"]').val()) <= parseInt($('[name="money_suiji_begin"]').val())){
             alert('随机红包金额输入有误！');
             return false;
-        }else if($('[name="money_suiji_end"]').val() > $('[name="amount"]').val()){
+        }else if(parseInt($('[name="money_suiji_end"]').val()) > parseInt($('[name="amount"]').val())){
             alert('随机红包不能大于总金额！');
             return false;
         }
@@ -548,10 +548,10 @@ $('#editConfigModal').bootstrapValidator({
     //检测随机红包金额 结束金额不能小于开始金额
     var taxonomy = $('input[name="edit_taxonomy"]:checked').val();
     if(taxonomy == 2){
-        if($('[name="edit_money_suiji_end"]').val() <= $('[name="edit_money_suiji_begin"]').val()){
+        if(parseInt($('[name="edit_money_suiji_end"]').val()) <= parseInt($('[name="edit_money_suiji_begin"]').val())){
             alert('随机红包金额输入有误！');
             return false;
-        }else if($('[name="edit_money_suiji_end"]').val() > red_bag.red_bag_data[red_bag.article_id].amount){
+        }else if(parseInt($('[name="edit_money_suiji_end"]').val()) > parseInt(red_bag.red_bag_data[red_bag.article_id].amount)){
             alert('随机红包不能大于余额！');
             return false;
         }
