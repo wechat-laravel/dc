@@ -135,7 +135,7 @@ class AdColumnController extends Controller
 
                 $input['qrcode']  = $qrcode['path'];
 
-                $input['litimg']  = $litimg['litimg'];
+                $input['litimg']  = $litimg['path'];
 
                 $input['mark']    = 2;
 
