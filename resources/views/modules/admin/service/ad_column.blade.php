@@ -13,7 +13,7 @@
                 <div class="modal-content">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                        <h4 class="modal-title" id="myModalLabel">添加样式一广告模板</h4>
+                        <h4 class="modal-title" id="myModalLabel">添加留言模板</h4>
                     </div>
                     <form class="create form" enctype="multipart/form-data" id="create">
                         <div class="form-group">
@@ -97,8 +97,14 @@
                         <div style="width: 100%;">
                             <div class="page-header">
                                 <h4>广告栏设置</h4>
-                                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal" style="margin-right: 20px;">添加样式一广告模板</button>
-                                {{--<a href="/admin/service/ad_column/create" class="btn btn-primary">添加样式二广告模板</a>--}}
+                                <button type="button" class="btn btn-success" data-toggle="modal" data-target="#myModal" style="margin-right: 20px;">
+                                    <i class="glyphicon glyphicon-plus" style="margin-right: 5px;"></i>
+                                    留言广告模板
+                                </button>
+                                <a href="/admin/service/ad_column/create" class="btn btn-success">
+                                    <i class="glyphicon glyphicon-plus" style="margin-right: 5px;"></i>
+                                    自定义广告模板
+                                </a>
                             </div>
                             <div class="panel panel-default">
                                 <div class="panel-heading">广告模板</div>
@@ -113,8 +119,7 @@
                                             <th>模板名称</th>
                                             <th>广告图标</th>
                                             <th>广告标题</th>
-                                            <th>广告跳转链接</th>
-                                            <th>样式类别</th>
+                                            <th>模板类别</th>
                                             <th>操作</th>
                                         </tr>
                                         </thead>
@@ -127,10 +132,10 @@
                                                 <td>@{{ el.name  | truncate(20) }}</td>
                                                 <td><img ms-attr="{src : el.litimg}" width="30px;" height="30px;"></td>
                                                 <td>@{{ el.title | truncate(20) }}</td>
-                                                <td><a ms-attr="{href : el.url }" target="_blank">跳转的地址</a></td>
-                                                <td>样式一</td>
+                                                <td>@{{ el.mark_name }}</td>
                                                 <td>
-                                                    <button type="button" class="btn btn-success btn-sm" :click="onEdit(el.id)">编辑</button>
+                                                    <button ms-if="el.mark===1" type="button" class="btn btn-success btn-sm" :click="onEdit(el.id)">编辑</button>
+                                                    <a ms-if="el.mark===2" ms-attr="{href: '/admin/service/ad_column/'+el.id+'/edit'}" type="button" class="btn btn-success btn-sm">编辑</a>
                                                 </td>
                                             </tr>
                                         </tbody>

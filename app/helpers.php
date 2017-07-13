@@ -12,7 +12,7 @@
 function screenFile($file,$size)
 {
 
-    if(!$file) return (['success'=>false,'message'=>'图片不存在 !']);
+    if(!$file) return (['success'=>false,'msg'=>'图片不存在 !']);
 
     if($file->isValid()){
 

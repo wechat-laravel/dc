@@ -26,7 +26,7 @@
                     <div class="tab-content">
                         <div style="width: 100%;">
                             <div class="page-header">
-                                <h4>广告栏样式二创建</h4>
+                                <h4>自定义广告模板</h4>
                             </div>
                             {{--<div class="form-group">--}}
                                 {{--<label>样式选择</label>--}}
@@ -37,14 +37,22 @@
                                 {{--</select>--}}
                             {{--</div>--}}
                         </div>
-                        {{--<hr>--}}
                         <div class="row">
                             <form class="create form" enctype="multipart/form-data">
                             <div class="col-md-5 col-sm-12 col-xs-12">
                                         {!! csrf_field() !!}
                                         <div class="form-group">
+                                            <label>模板名称</label>
+                                            <input type="text" name="name" class="form-control"  placeholder="请输入模板名称">
+                                        </div>
+                                        <div class="form-group">
                                             <label>分享来源</label>
                                             <input type="text" name="share" class="form-control"  placeholder="请输入分享推荐来源">
+                                        </div>
+                                        <div class="form-group">
+                                            <label>广告图标</label>
+                                            <input type="file" name="litimg"  class="projectfile"  multiple="multiple">
+                                            <p class="help-block">请上传大小在2M以内的图片</p>
                                         </div>
                                         <div class="form-group">
                                             <label>主体名称</label>
@@ -103,9 +111,6 @@
                                             <label>标题三内容链接 <small>（ 选填 ）</small></label>
                                             <input type="text" name="three_d_url"  class="form-control"  placeholder="请输入小一内容">
                                         </div>
-                                        <div class="form-group">
-                                            <div id="error-show"></div>
-                                        </div>
                                         <a class="btn btn-primary btn-block" style="height: 100%;" :click="@preview()">预览</a>
                                 </div>
                                 <div class="col-md-1 col-sm-12 col-xs-12" style="margin-bottom: 20px;">
@@ -120,7 +125,7 @@
                                                 <h5 class="text-center"><b>@{{ title ? ' '+title+' ' : '（ 主体名称 ）' }}</b><a class="btn btn-default btn-xs">@{{ label ? ' '+label+' ' : '（ 主体标签 ）' }}</a></h5>
                                                 <div class="center-block" style="margin-top: 25px;">
                                                     <div class="text-center col-sm-4 col-xs-4" style="float: left;">
-                                                        <a href="tel:13764567708"  class="btn" style="background-color: orange;width: 40px;height: 40px; border-radius: 20px;">
+                                                        <a href="#" :click="@onMobile" class="btn" style="background-color: orange;width: 40px;height: 40px; border-radius: 20px;">
                                                             <i class="fa fa-phone" style="color:white;background-color:orange;font-size: 25px;line-height: 28px;margin-left: -2px;"></i>
                                                         </a>
                                                         <br>
@@ -134,7 +139,7 @@
                                                         微信二维码
                                                     </div>
                                                     <div class="text-center col-sm-4 col-xs-4" style="float: left;">
-                                                        <a onclick="onZixun()" class="btn" style="background-color: #337AB7;width: 40px;height: 40px; border-radius: 20px;">
+                                                        <a target="_blank" ms-attr="{href: chat_url ? chat_url : '#'}" class="btn" style="background-color: #337AB7;width: 40px;height: 40px; border-radius: 20px;">
                                                             <i class="fa fa-commenting-o" style="color:white;background-color:#337AB7;font-size: 20px;line-height: 27px;margin-left: -2px;"></i>
                                                         </a>
                                                         <br>
@@ -156,6 +161,10 @@
                                     </div>
                                     <br>
                                     <input type="submit" class="btn btn-success btn-block" style="height: 100%;" value="确认提交">
+                                    <br>
+                                    <div class="form-group">
+                                        <div id="error-show"></div>
+                                    </div>
                                 </div>
                             </form>
                         </div>

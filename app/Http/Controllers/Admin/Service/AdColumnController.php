@@ -24,11 +24,11 @@ class AdColumnController extends Controller
 
             if (Auth::user()->identity === 'admin'){
 
-                $ads = AdColumnModel::select()->paginate(10);
+                $ads = AdColumnModel::select()->orderBy('created_at','DESC')->paginate(10);
 
             }else{
 
-                $ads = AdColumnModel::where('user_id',Auth::id())->paginate(10);
+                $ads = AdColumnModel::where('user_id',Auth::id())->orderBy('created_at','DESC')->paginate(10);
 
             }
 
@@ -63,7 +63,7 @@ class AdColumnController extends Controller
 
         if (!$request->has('id')){
 
-            //样式一创建
+            //留言模板创建
             if (!$request->has('share')) {
 
                 $file = screenFile($request->file('litimg'), 2);
@@ -95,18 +95,58 @@ class AdColumnController extends Controller
                 return response()->json(['success' => true, 'msg' => '创建成功！']);
 
             } else {
+            //自定义模板
 
-                $input = $request->all();
+                $qrcode = screenFile($request->file('qrcode'), 2);
 
-                $file = screenFile($request->file('qrcode'), 2);
+                if (!$qrcode['success']) return $qrcode;
 
-                if (!$file['success']) return $file;
+                $litimg = screenFile($request->file('litimg'), 2);
 
-                return response()->json($input);
+                if (!$litimg['success']) return $litimg;
+
+                $input = $request->only(['name','share', 'title', 'label','mobile','chat_url','one_t','one_d','one_d_url','two_t','two_d','two_d_url','three_t','three_d','three_d_url']);
+
+                $validator = Validator::make($input, [
+                    'name'        => 'required|max:100',
+                    'share'       => 'required|max:20',
+                    'title'       => 'required|max:20',
+                    'label'       => 'required|max:20',
+                    'mobile'      => 'required|max:30',
+                    'chat_url'    => 'required|max:300',
+                    'one_t'       => 'required|max:20',
+                    'one_d'       => 'required|max:100',
+                    'one_d_url'   => 'max:300',
+                    'two_t'       => 'required|max:20',
+                    'two_d'       => 'required|max:100',
+                    'two_d_url'   => 'max:300',
+                    'three_t'     => 'required|max:20',
+                    'three_d'     => 'required|max:100',
+                    'three_d_url' => 'max:300',
+                ]);
+
+
+                if ($validator->fails()) {
+
+                    return response()->json(['success' => false, 'msg' =>$validator->errors()->all()]);
+
+                }
+                $input['user_id'] = Auth::id();
+
+                $input['qrcode']  = $qrcode['path'];
+
+                $input['litimg']  = $litimg['litimg'];
+
+                $input['mark']    = 2;
+
+                AdColumnModel::create($input);
+
+                return response()->json(['success'=>true,'msg'=>'创建成功！']);
 
             }
 
         }else{
+        //编辑修改
 
             $id = intval($request->input('id'));
 
@@ -122,34 +162,94 @@ class AdColumnController extends Controller
 
             if (!$ads)   return response()->json(['success'=>false,'msg'=>'非法请求！']);
 
-            $input = $request->only(['name','title','url']);
+            //区分留言模板还是自定义模板
+            if (!$request->has('share')){
 
-            $validator = Validator::make($input,[
-                'name'      => 'required|max:100',
-                'title'     => 'required|max:10',
-                'url'       => 'required|max:200',
-            ]);
+                //留言模板编辑
+                $input = $request->only(['name','title','url']);
 
-            if ($validator->fails()){
+                $validator = Validator::make($input,[
+                    'name'      => 'required|max:100',
+                    'title'     => 'required|max:10',
+                    'url'       => 'required|max:200',
+                ]);
 
-                return response()->json(['success'=>false,'msg'=>'表单数据有误,请检查后重新提交']);
+                if ($validator->fails()){
+
+                    return response()->json(['success'=>false,'msg'=>$validator->errors()->all()]);
+
+                }
+
+                if ($request->hasFile('litimg')){
+
+                    $file = screenFile($request->file('litimg'),2);
+
+                    if(!$file['success'])  return $file;
+
+                    $input['litimg'] = $file['path'];
+
+                }
+
+                $ads->update($input);
+
+
+                return response()->json(['success'=>true,'msg'=>'修改成功！']);
+
+            }else{
+                //自定义模板的编辑
+
+                $input = $request->only(['name','share', 'title', 'label','mobile','chat_url','one_t','one_d','one_d_url','two_t','two_d','two_d_url','three_t','three_d','three_d_url']);
+
+                $validator = Validator::make($input, [
+                    'name'        => 'required|max:100',
+                    'share'       => 'required|max:20',
+                    'title'       => 'required|max:20',
+                    'label'       => 'required|max:20',
+                    'mobile'      => 'required|max:30',
+                    'chat_url'    => 'required|max:300',
+                    'one_t'       => 'required|max:20',
+                    'one_d'       => 'required|max:100',
+                    'one_d_url'   => 'max:300',
+                    'two_t'       => 'required|max:20',
+                    'two_d'       => 'required|max:100',
+                    'two_d_url'   => 'max:300',
+                    'three_t'     => 'required|max:20',
+                    'three_d'     => 'required|max:100',
+                    'three_d_url' => 'max:300',
+                ]);
+
+
+                if ($validator->fails()) {
+
+                    return response()->json(['success' => false, 'msg' =>$validator->errors()->all()]);
+
+                }
+
+                if ($request->hasFile('litimg')){
+
+                    $litimg = screenFile($request->file('litimg'),2);
+
+                    if(!$litimg['success'])  return $litimg;
+
+                    $input['litimg'] = $litimg['path'];
+
+                }
+
+                if ($request->hasFile('qrcode')){
+
+                    $qrcode = screenFile($request->file('qrcode'),2);
+
+                    if(!$qrcode['success'])  return $qrcode;
+
+                    $input['qrcode'] = $qrcode['path'];
+
+                }
+
+                $ads->update($input);
+
+                return response()->json(['success'=>true,'msg'=>'修改成功！']);
 
             }
-
-            if ($request->hasFile('litimg')){
-
-                $file = screenFile($request->file('litimg'),2);
-
-                if(!$file['success'])  return $file;
-
-                $input['litimg'] = $file['path'];
-
-            }
-
-            $ads->update($input);
-
-
-            return response()->json(['success'=>true,'msg'=>'修改成功！']);
 
         }
 
@@ -172,8 +272,9 @@ class AdColumnController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Request $request,$id)
     {
+
         $id = intval($id);
 
         if (Auth::user()->identity === 'admin'){
@@ -186,13 +287,20 @@ class AdColumnController extends Controller
 
         }
 
-        if ($ad){
+        if (!$ad){
+
+            return response()->json(['success'=>false,'msg'=>'非法的请求！']);
+
+        }
+        //留言模板的编辑 是直接ajax加载过去的
+        if ($request->ajax()){
 
             return response()->json(['success'=>true,'ad'=>$ad]);
 
         }else{
+        //自定义模板需要跳转
 
-            return response()->json(['success'=>false,'msg'=>'非法的请求！']);
+            return view('modules.admin.service.ad_edit',['ad'=>$ad]);
 
         }
 
