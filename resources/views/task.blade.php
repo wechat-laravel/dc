@@ -193,9 +193,9 @@
                                 <div style="margin-top: 20px;color: #938C8C">
                                     <p class="text-justify" >
                                     <ul class="list-unstyled">
-                                        <li><b>{{ $task->ad->one_t }} ：<span><a href="{{ $task->ad->one_d_url ? $task->ad->one_d_url : '#' }}"></a>{{ $task->ad->one_d }}</span></b></li>
-                                        <li><b>{{ $task->ad->two_t }} ：<span><a href="{{ $task->ad->two_d_url ? $task->ad->two_d_url : '#' }}"></a>{{ $task->ad->two_d }}</span></b></li>
-                                        <li><b>{{ $task->ad->three_t }} ：<span><a href="{{ $task->ad->three_d_url ? $task->ad->three_d_url : '#' }}"></a>{{ $task->ad->three_d }}</span></b></li>
+                                        <li><b>{{ $task->ad->one_t }} ：<a href="{{ $task->ad->one_d_url ? $task->ad->one_d_url : '#' }}"></a>{{ $task->ad->one_d }}</b></li>
+                                        <li><b>{{ $task->ad->two_t }} ：<a href="{{ $task->ad->two_d_url ? $task->ad->two_d_url : '#' }}"></a>{{ $task->ad->two_d }}</b></li>
+                                        <li><b>{{ $task->ad->three_t }} ：<a href="{{ $task->ad->three_d_url ? $task->ad->three_d_url : '#' }}"></a>{{ $task->ad->three_d }}</b></li>
                                     </ul>
                                     </p>
                                 </div>
