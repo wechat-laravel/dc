@@ -216,7 +216,7 @@
             title: '<?=$task->title?>',
             desc: '<?=$task->desc?>',
             link: 'http://www.maidamaida.com/wechat/task/<?=$task->id?>?openid=<?=$user[0]['id']?>&source=wechat&mark='+mark,
-            imgUrl: '<?=$task->img_url?>',
+            imgUrl: 'http://www.maidamaida.com<?=$task->img_url?>',
             trigger: function (res) {
                 // 不要尝试在trigger中使用ajax异步请求修改本次分享的内容，因为客户端分享操作是一个同步操作，这时候使用ajax的回包会还没有返回
                 //alert('用户点击发送给朋友');
@@ -241,7 +241,7 @@
             title: '<?=$task->title?>',
             desc: '<?=$task->desc?>',
             link: 'http://www.maidamaida.com/wechat/task/<?=$task->id?>?openid=<?=$user[0]['id']?>&source=timeline',
-            imgUrl: '<?=$task->img_url?>',
+            imgUrl: 'http://www.maidamaida.com<?=$task->img_url?>',
             trigger: function (res) {
                 // 不要尝试在trigger中使用ajax异步请求修改本次分享的内容，因为客户端分享操作是一个同步操作，这时候使用ajax的回包会还没有返回
                 //alert('用户点击发送给朋友');
@@ -266,7 +266,7 @@
             title: '<?=$task->title?>',
             desc: '<?=$task->desc?>',
             link: 'http://www.maidamaida.com/wechat/task/<?=$task->id?>?openid=<?=$user[0]['id']?>&source=qq',
-            imgUrl: '<?=$task->img_url?>',
+            imgUrl: 'http://www.maidamaida.com<?=$task->img_url?>',
             trigger: function (res) {
                 // 不要尝试在trigger中使用ajax异步请求修改本次分享的内容，因为客户端分享操作是一个同步操作，这时候使用ajax的回包会还没有返回
                 //alert('用户点击发送给朋友');
@@ -291,7 +291,7 @@
             title: '<?=$task->title?>',
             desc: '<?=$task->desc?>',
             link: 'http://www.maidamaida.com/wechat/task/<?=$task->id?>?openid=<?=$user[0]['id']?>&source=qzone',
-            imgUrl: '<?=$task->img_url?>',
+            imgUrl: 'http://www.maidamaida.com<?=$task->img_url?>',
             trigger: function (res) {
                 // 不要尝试在trigger中使用ajax异步请求修改本次分享的内容，因为客户端分享操作是一个同步操作，这时候使用ajax的回包会还没有返回
                 //alert('用户点击发送给朋友');
