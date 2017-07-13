@@ -129,19 +129,68 @@
                 </div>
             </nav>
         @else
-            <nav class="navbar navbar-default navbar-fixed-bottom">
-                <div class="container">
-                    <div class="navbar-header" style="width: 100%">
-                        <a class="navbar-brand" href="{{ $task->ad->url }}" style="height: 10px;">
-                            <img class="logo-img" style="width: 25px;height: 25px;float: left;margin-right: 5px;margin-bottom: 5px;" src="{{ $task->ad->litimg }}">
-                            {{ $task->ad->name }}
-                        </a>
-                        <button type="button" class="navbar-btn btn btn-success btn-sm"  style="float: right" data-toggle="modal" data-target="#myModal">
-                            报名
-                        </button>
+            {{--区分留言模板与自定义模板--}}
+            @if($task->ad->mark === 1)
+                <nav class="navbar navbar-default navbar-fixed-bottom">
+                    <div class="container">
+                        <div class="navbar-header" style="width: 100%">
+                            <a class="navbar-brand" href="{{ $task->ad->url }}" style="height: 10px;">
+                                <img class="logo-img" style="width: 25px;height: 25px;float: left;margin-right: 5px;margin-bottom: 5px;" src="{{ $task->ad->litimg }}">
+                                {{ $task->ad->name }}
+                            </a>
+                            <button type="button" class="navbar-btn btn btn-success btn-sm"  style="float: right" data-toggle="modal" data-target="#myModal">
+                                报名
+                            </button>
+                        </div>
                     </div>
-                </div>
-            </nav>
+                </nav>
+            @else
+                {{--H5的页面不支持--}}
+                @if($task->mark === 'custom' || preg_match('/mp.weixin.qq.com/', $task->page_url))
+                    <div style="width: 100%;background-color:#F4F5F5;padding-top: 2px;">
+                        <h5 class="text-center"><b>本文由<span style="color: red"> {{ $task->ad->share }} </span>分享推荐</b></h5>
+                        <div class="row" style="padding:10px 10px 0px 10px;">
+                            <div class="col-xs-12 col-sm-8 col-sm-offset-2 col-md-6 col-md-offset-3 col-lg-4 col-lg-offset-4" style="background-color:#FFFFFF;padding-top: 10px;">
+                                <img src="{{ $task->ad->litimg }}" class="img-circle center-block" style="width: 40px;height: 40px;">
+                                <h5 class="text-center"><b> {{ $task->ad->title }} </b>  <a class="btn btn-default btn-xs"> {{ $task->ad->label }} </a></h5>
+                                <div class="center-block" style="margin-top: 25px;">
+                                    <div class="text-center col-sm-4 col-xs-4" style="float: left;">
+                                        <a href="tel:{{ $task->ad->mobile }}"  class="btn" style="background-color: orange;width: 40px;height: 40px; border-radius: 20px;">
+                                            <i class="fa fa-phone" style="color:white;background-color:orange;font-size: 25px;line-height: 28px;margin-left: -5px;"></i>
+                                        </a>
+                                        <br>
+                                        打Ta电话
+                                    </div>
+                                    <div class="text-center col-sm-4 col-xs-4" style="float: left;">
+                                        <a onclick="onQrcode()" class="btn" style="background-color: #4CB25C;width: 40px;height: 40px; border-radius: 20px;">
+                                            <i class="fa fa-wechat" style="color:white;background-color:#4CB25C;font-size: 20px;line-height: 28px;margin-left: -7px;"></i>
+                                        </a>
+                                        <br>
+                                        微信二维码
+                                    </div>
+                                    <div class="text-center col-sm-4 col-xs-4" style="float: left;">
+                                        <a  href="{{ $task->ad->chat_url }}" class="btn" style="background-color: #337AB7;width: 40px;height: 40px; border-radius: 20px;">
+                                            <i class="fa fa-commenting-o" style="color:white;background-color:#337AB7;font-size: 20px;line-height: 27px;margin-left: -5px;"></i>
+                                        </a>
+                                        <br>
+                                        在线咨询
+                                    </div>
+                                </div>
+                                <div style="clear: both"></div>
+                                <div style="margin-top: 20px;color: #938C8C">
+                                    <p class="text-justify" >
+                                    <ul class="list-unstyled">
+                                        <li><b>{{ $task->ad->one_t }} ：<span><a href="{{ $task->ad->one_t_url ? $task->ad->one_t_url : '#' }}"></a>{{ $task->ad->one_d }}</span></b></li>
+                                        <li><b>{{ $task->ad->two_t }} ：<span><a href="{{ $task->ad->two_t_url ? $task->ad->two_t_url : '#' }}"></a>{{ $task->ad->two_d }}</span></b></li>
+                                        <li><b>{{ $task->ad->three_t }} ：<span><a href="{{ $task->ad->three_t_url ? $task->ad->three_t_url : '#' }}"></a>{{ $task->ad->three_d }}</span></b></li>
+                                    </ul>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                @endif
+            @endif
         @endif
     @endif
 </body>
