@@ -41,9 +41,9 @@ class RedBagController extends Controller
             //获取用户的监控的文章
             if($getType == 'article'){
                 if(\Auth::user()->identity == 'admin'){
-                    $article_base = TasksModel::select(['id', 'title'])->get();
+                    $article_base = TasksModel::select(['id', 'title'])->orderBy('created_at','DESC')->get();
                 }else{
-                    $article_base = TasksModel::where('user_id', \Auth::id())->select(['id', 'title'])->get();
+                    $article_base = TasksModel::where('user_id', \Auth::id())->select(['id', 'title'])->orderBy('created_at','DESC')->get();
                 }
 
                 $article        = [];
@@ -58,9 +58,9 @@ class RedBagController extends Controller
             //获取用户设置的红包规则
             if($getType == 'redBag'){
                 if(\Auth::user()->identity == 'admin'){
-                    return RedBagModel::with('title')->paginate(10);
+                    return RedBagModel::with('title')->orderBy('created_at','DESC')->paginate(10);
                 }
-                return RedBagModel::where('user_id', \Auth::id())->with('title')->paginate(10);
+                return RedBagModel::where('user_id', \Auth::id())->with('title')->orderBy('created_at','DESC')->paginate(10);
             }
 
             //获取省份列表
