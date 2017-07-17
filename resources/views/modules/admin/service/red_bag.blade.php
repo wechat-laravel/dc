@@ -1,4 +1,10 @@
 @extends('modules._layout.admin')
+@section('title')
+    红包工具
+@endsection
+@section('menu')
+    服务插件
+@endsection
 @section('content')
     <div ms-controller="red_bag" class="ms-controller">
 
