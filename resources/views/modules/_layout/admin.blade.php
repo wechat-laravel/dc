@@ -173,7 +173,7 @@
         <strong>Copyright &copy; 一问科技 </strong> 版权所有
     </footer>
     <nav class="navbar navbar-fixed-bottom" style="width: 55px;height: 55px;padding: 0;">
-        <a href="#top" class="btn-success btn-lg" style="margin-bottom: 50px;padding: 10px 13px;" ><i class="fa fa-arrow-up"></i></a>
+        <a href="#top" class="btn-success btn-lg" style="margin-bottom: 50px;padding: 7px 10px;position: fixed;right: 12px;bottom: 10px;" ><i class="fa fa-arrow-up"></i></a>
     </nav>
 </div>
 
