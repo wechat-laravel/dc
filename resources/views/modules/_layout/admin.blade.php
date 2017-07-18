@@ -21,7 +21,7 @@
 </style>
 <body class="hold-transition skin-green-light sidebar-mini" class="ms-controller" ms-controller="admin">
 <div class="wrapper">
-    <header class="main-header">
+    <header class="main-header" id="top">
         <a href="#" class="logo">
             <span class="logo-mini"><img style="width: 30px;height: 30px;" src="{{ URL::asset('maidaM.png') }}" alt=""></span>
             <span class="logo-lg"><img style="height: 95px;width: 150px;margin-top: -20px;" src="{{ URL::asset('green.png') }}" alt=""></span>
@@ -70,7 +70,6 @@
                     <a href="#"><i class="fa fa-circle text-success"></i> 在线</a>
                 </div>
             </div>
-          
             <ul class="sidebar-menu">
                 <li class="header">菜单列表</li>
                 @if( Auth::user()->identity === 'admin')
@@ -173,6 +172,9 @@
         </div>
         <strong>Copyright &copy; 一问科技 </strong> 版权所有
     </footer>
+    <nav class="navbar navbar-fixed-bottom" style="width: 55px;height: 55px;padding: 0;">
+        <a href="#top" class="btn-success btn-lg" style="margin-bottom: 50px;padding: 10px 13px;" ><i class="fa fa-arrow-up"></i></a>
+    </nav>
 </div>
 
 <script src="{{ URL::asset('assets/js/jquery.min.js') }}"></script>

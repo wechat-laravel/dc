@@ -15,7 +15,6 @@
                     {{--<li role="presentation" :class="{active: curr === 'help'}" :click="@onCurr('help')"><a href="#">问题帮助</a></li>--}}
                 </ul>
             </div>
-
             {{--更新日志--}}
             <div class="panel-body" :visible="curr === 'update'">
 
@@ -314,10 +313,7 @@
                         </div>
                     </div>
 
-
-
                 </div>
-
 
             </div>
 
@@ -333,8 +329,6 @@
                 {{--每次更新日志记录的结束--}}
 
             </div>
-
-
         </div>
     </div>
 
