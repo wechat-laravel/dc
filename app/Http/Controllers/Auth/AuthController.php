@@ -50,7 +50,7 @@ class AuthController extends Controller
     public function postLogin(Request $request)
     {
 
-        $input = $request->only(['email','password']);
+        $input = $request->only(['email','password','remember']);
 
         $validator = Validator::make($input,[
 
@@ -72,15 +72,11 @@ class AuthController extends Controller
 
             if (!$user) return  response()->json(['success'=>false,'msg'=>'该邮箱未注册使用！']);
 
-            $bool = Hash::check($input['password'],$user->password);
-
-            if (!$bool){
+            if(!Auth::attempt(['email'=>$input['email'],'password'=>$input['password']],$input['remember'])){
 
                 return  response()->json(['success'=>false,'msg'=>'用户密码错误! ']);
 
             }
-
-            Auth::loginUsingId($user->id);
 
 
         }catch (\Exception $e){

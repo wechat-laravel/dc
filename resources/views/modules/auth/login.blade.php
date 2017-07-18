@@ -45,7 +45,7 @@
                             <div class="form-group">
                                 <div class="checkbox">
                                     <label class="pull-left">
-                                        <input type="checkbox"> 记住我
+                                        <input type="checkbox" name="remember"> 记住我
                                     </label>
                                     <label class="pull-right">
                                         <span><a href="/auth/forget">忘记密码了？</a></span>

@@ -19,19 +19,24 @@ class WechatController extends Controller
      */
     public function index(Request $request,$id)
     {
+        $id = intval($id);
+
         if (Auth::user()->identity !== 'admin'){
 
-            $task = TasksModel::where('user_id',Auth::id())->where('id',intval($id))->first();
+            $task = TasksModel::where('user_id',Auth::id())->where('id',$id)->first();
 
         }else{
 
-            $task = TasksModel::find(intval($id));
+            $task = TasksModel::find($id);
 
         }
 
         if (!$task) return response()->json(['success'=>false,'msg'=>'非法的请求！']);
 
+
         if ($request->ajax()) {
+
+//            $avg = $this->avg($id);
 
             //数据统计
             $top = [
@@ -111,7 +116,7 @@ class WechatController extends Controller
             $uv = [[], [], [], [], [], [], [], []];
 
             //总浏览量
-            $res = SpreadRecordModel::select('openid','source','action', 'stay', 'level', 'created_at')->where('tasks_id',intval($id))->orderBy('created_at', 'asc')->get();
+            $res = SpreadRecordModel::select('openid','source','action', 'stay', 'level', 'created_at')->where('tasks_id',$id)->orderBy('created_at', 'asc')->get();
 
             foreach ($res as $re) {
 
@@ -459,5 +464,17 @@ class WechatController extends Controller
         return view('modules.admin.data.wechat_show',['task_id'=>$task->id,'title'=>$task->title]);
 
     }
+
+    //统计所有任务
+    public  function avg($id)
+    {
+        //
+//        SpreadRecordModel::select('');
+
+        return 1;
+
+    }
+
+
 
 }
