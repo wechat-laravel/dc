@@ -44,7 +44,24 @@ class RechargeController extends Controller
 
 //        QrCode::format('png')->size(200)->generate($qrcode_url, public_path('assets/images/recharge/1.png'));
 
-        var_dump($response);
+        //请求结果判断
+        if ($response->return_code === 'FAIL'){
+
+            return response()->json(['success'=>false,'msg'=>$response->return_msg]);
+
+        }else{
+            //业务结果判断
+            if ($response->result_code === 'SUCCESS'){
+                //请求结果与业务结果都为SUCCESS的时候 才有二维码链接
+                var_dump($response);
+
+            }else{
+
+                return response()->json(['success'=>false,'code'=>$response->err_code,'msg'=>$response->err_code_des]);
+
+            }
+
+        }
 
     }
 
