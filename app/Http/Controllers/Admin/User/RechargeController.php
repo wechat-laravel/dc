@@ -157,12 +157,17 @@ class RechargeController extends Controller
 
     public  function pay(Request $request)
     {
+        Log::info($request);
+
+        Log::info($request->input());
 
         //$notify     这个参数为微信扫码支付后返回通知的对象，可以以对象或数组形式来读取通知内容。
         //$successful 这个参数其实就是判断 用户是否付款成功了（result_code == ‘SUCCESS’）
         $response = $this->wechat->payment->handleNotify(function($notify, $successful){
 
-            var_dump($notify);exit;
+            Log::info($notify);
+
+            Log::info($successful);
 
             //查看返回的商户订单号，在表里是否存在
 
@@ -221,6 +226,8 @@ class RechargeController extends Controller
             return true; // 或者错误消息
 
         });
+
+        Log::info($response);
 
         return $response;
 
