@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin\User;
 
+use App\Models\PayWechatModel;
 use EasyWeChat\Payment\Order;
 use Illuminate\Http\Request;
 
@@ -41,11 +42,20 @@ class RechargeController extends Controller
         $options = [
             'body'             =>  '脉达传播-会员充值',                        //商品描述
             'detail'           =>  '上海一问科技信息有限公司',                  //商品详情
-            'out_trade_no'     =>  'weiwen'.date('YmdHis').rand(1000, 9999),  //商户订单号
-            'total_fee'        =>  100,                                      //订单总金额，单位为分
+            'out_trade_no'     =>  'weiwen'.date('YmdHis').rand(1000, 9999),  //商户订单号(必须保存下来)
+            'total_fee'        =>  100,                                       //订单总金额，单位为分
             'notify_url'       =>  'http://www.maidamaida.com/wechat/pay',    //异步接收微信支付结果通知的回调地址，通知url必须为外网可访问的url，不能携带参数
             'trade_type'       =>  'NATIVE',                                  //交易类型（取值如下：JSAPI，NATIVE，APP）
         ];
+
+        //保证订单号是唯一的！
+        $exists = PayWechatModel::where('out_trade_no',$options['out_trade_no'])->exists();
+
+        if ($exists){
+            //TODO 这样写还是有很小的概率会出现的
+            $options['out_trade_no'] = 'weiwen'.date('YmdHis').rand(1000, 9999);
+
+        }
 
         $payment = $this->wechat->payment;
 
@@ -54,21 +64,31 @@ class RechargeController extends Controller
 
         try{
 
-            $data = [];
-
-
             //统一下单
             $result = $payment->prepare($order);
 
             if ($result->return_code == 'SUCCESS' && $result->result_code == 'SUCCESS'){
 
-                $data['prepay_id'] = $result->prepay_id;
+                $data = [
+                    'user_id'      => Auth::id(),
+                    'total_fee'    => $options['total_fee'],
+                    'out_trade_no' => $options['out_trade_no'],
+                    'prepay_id'    => $result->prepay_id,
+                    'code_url'     => $result->code_url,
+                ];
 
-                $data['code_url']  = $result->code_url;
+                $res = PayWechatModel::create($data);
 
-                $data['user_id']   = Auth::id();
+                //表的out_trade_no唯一，所以如果创建成功，则可以生产二维码
+                if ($res){
 
-                QrCode::format('png')->size(200)->generate($result->code_url, public_path('assets/images/recharge/2.png'));
+                    QrCode::format('png')->size(200)->generate($result->code_url, public_path('assets/images/recharge/'.$data['out_trade_no'].'.png'));
+
+                }else{
+
+                    return response()->json(['success'=>false,'msg'=>'服务器超时，请刷新重试！']);
+
+                }
 
             }else{
 
@@ -76,7 +96,7 @@ class RechargeController extends Controller
 
             }
 
-            return response($data);
+            return response()->json(['success'=>true,'data'=>$options['out_trade_no']]);
 
 
         }catch (Exception $e){
@@ -131,7 +151,32 @@ class RechargeController extends Controller
 
     public  function pay()
     {
-        return 2;
+        //$notify     这个参数为微信扫码支付后返回通知的对象，可以以对象或数组形式来读取通知内容。
+        //$successful 这个参数其实就是判断 用户是否付款成功了（result_code == ‘SUCCESS’）
+        $response = $this->wechat->payment->handleNotify(function($notify, $successful){
+
+            //查看返回的商户订单号，在表里是否存在
+            $out_trade_no  = $notify->ut_trade_no;
+
+
+
+            //支付结果
+            if ($successful){
+
+
+
+            }else{
+
+            }
+            //查询订单
+            $order = $notify->out_trade_no;
+
+            return true; // 或者错误消息
+
+        });
+
+        return $response;
+
     }
 
 }
