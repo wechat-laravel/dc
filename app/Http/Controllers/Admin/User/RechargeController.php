@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers\Admin\User;
 
-use App\Http\Controllers\Admin\Service\WxMchPayHelper;
 use EasyWeChat\Payment\Order;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 use Mockery\CountValidator\Exception;
 use SimpleSoftwareIO\QrCode\Facades\QrCode;
 
@@ -42,7 +42,7 @@ class RechargeController extends Controller
             'body'             =>  '脉达传播-会员充值',                        //商品描述
             'detail'           =>  '上海一问科技信息有限公司',                  //商品详情
             'out_trade_no'     =>  'weiwen'.date('YmdHis').rand(1000, 9999),  //商户订单号
-            'total_fee'        =>  1000,                                      //订单总金额，单位为分
+            'total_fee'        =>  100,                                      //订单总金额，单位为分
             'notify_url'       =>  'http://www.maidamaida.com/wechat/pay',    //异步接收微信支付结果通知的回调地址，通知url必须为外网可访问的url，不能携带参数
             'trade_type'       =>  'NATIVE',                                  //交易类型（取值如下：JSAPI，NATIVE，APP）
         ];
@@ -54,14 +54,29 @@ class RechargeController extends Controller
 
         try{
 
+            $data = [];
+
+
             //统一下单
             $result = $payment->prepare($order);
 
-//            if ($result->return_code == 'SUCCESS' && $result->result_code == 'SUCCESS'){
-//
-                return response($result);
-//
-//            }
+            if ($result->return_code == 'SUCCESS' && $result->result_code == 'SUCCESS'){
+
+                $data['prepay_id'] = $result->prepay_id;
+
+                $data['code_url']  = $result->code_url;
+
+                $data['user_id']   = Auth::id();
+
+                QrCode::format('png')->size(200)->generate($result->code_url, public_path('assets/images/recharge/2.png'));
+
+            }else{
+
+                return response()->json(['success'=>false,'code'=>$result->err_code,'msg'=>$result->err_code_des]);
+
+            }
+
+            return response($data);
 
 
         }catch (Exception $e){
@@ -71,7 +86,7 @@ class RechargeController extends Controller
         }
 
 
-//
+//        原生写法
 //        try{
 //
 //            $wxMchPayHelper = new WxMchPayHelper($options);
