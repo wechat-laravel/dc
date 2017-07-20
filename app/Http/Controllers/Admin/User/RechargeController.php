@@ -44,7 +44,7 @@ class RechargeController extends Controller
 
 //        QrCode::format('png')->size(200)->generate($qrcode_url, public_path('assets/images/recharge/1.png'));
 
-        return $response;
+        var_dump($response);
 
     }
 
