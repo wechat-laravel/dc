@@ -56,7 +56,8 @@ class RechargeController extends Controller
                 var_dump($response);
 
             }else{
-
+                var_dump($response);
+                
                 return response()->json(['success'=>false,'code'=>$response->err_code,'msg'=>$response->err_code_des]);
 
             }
