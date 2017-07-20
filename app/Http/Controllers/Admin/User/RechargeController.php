@@ -14,7 +14,9 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Mockery\CountValidator\Exception;
+use Monolog\Handler\StreamHandler;
 use SimpleSoftwareIO\QrCode\Facades\QrCode;
+use Symfony\Component\HttpKernel\Tests\Logger;
 
 class RechargeController extends Controller
 {
@@ -155,13 +157,12 @@ class RechargeController extends Controller
 
     public  function pay(Request $request)
     {
-        $input = $request->all();
-
-//        Log::useFiles(storage_path().'/logs/ceshi.log')->info('用户注册原始数据:',$input);
 
         //$notify     这个参数为微信扫码支付后返回通知的对象，可以以对象或数组形式来读取通知内容。
         //$successful 这个参数其实就是判断 用户是否付款成功了（result_code == ‘SUCCESS’）
         $response = $this->wechat->payment->handleNotify(function($notify, $successful){
+
+            var_dump($notify);exit;
 
             //查看返回的商户订单号，在表里是否存在
 
