@@ -143,7 +143,7 @@ class WxMchPayHelper
         }
         return $reqPar;
     }
-    function arrayToXml($arr)
+    protected function arrayToXml($arr)
     {
         $xml = '<xml>';
         foreach ($arr as $key => $val) {
