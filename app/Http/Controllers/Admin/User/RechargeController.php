@@ -157,7 +157,7 @@ class RechargeController extends Controller
     {
         $input = $request->all();
 
-        Log::useFiles(storage_path().'/logs/ceshi.log')->info('用户注册原始数据:',$input);
+//        Log::useFiles(storage_path().'/logs/ceshi.log')->info('用户注册原始数据:',$input);
 
         //$notify     这个参数为微信扫码支付后返回通知的对象，可以以对象或数组形式来读取通知内容。
         //$successful 这个参数其实就是判断 用户是否付款成功了（result_code == ‘SUCCESS’）
