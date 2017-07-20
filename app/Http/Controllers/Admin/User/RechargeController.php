@@ -187,7 +187,7 @@ class RechargeController extends Controller
                 //事务，如果支付成功的话，对应的账号余额要加上去
                 DB::transaction(function() use($pays){
 
-                    $user = UserModel::where('user_id',$pays->user_id)->first();
+                    $user = UserModel::where('id',$pays->user_id)->first();
 
                     $money = $pays->total_fee /100 ;
 
@@ -218,7 +218,7 @@ class RechargeController extends Controller
             return true; // 或者错误消息
 
         });
-        
+
         return $response;
 
     }
