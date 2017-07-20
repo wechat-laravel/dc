@@ -53,7 +53,13 @@ class RechargeController extends Controller
                 if ($response->result_code == "SUCCESS"){
 
                     //请求结果与业务结果都为SUCCESS的时候 才返回一个二维码链接(code_url),还有一个预支付交易会话标识(prepay_id)可用于后续接口调用中使用，该值有效期为2小时
-                    QrCode::format('png')->size(200)->generate($response->code_url, public_path('assets/images/recharge/1.png'));
+                    $code_url = $response->code_url;
+
+                    if ($code_url){
+
+                        QrCode::format('png')->size(200)->generate($code_url, public_path('assets/images/recharge/1.png'));
+
+                    }
 
                     return response()->json(['success'=>true,'msg'=>'二维码生成成功！']);
 
