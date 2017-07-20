@@ -47,6 +47,14 @@ class WxMchPayHelper
         return $this->exec('https://api.mch.weixin.qq.com/mmpaymkttransfers/sendgroupredpack');
     }
     /**
+     * 扫码支付(模式二) 调用统一下单API接口
+     */
+    public function qrcode_two()
+    {
+        return $this->exec('https://api.mch.weixin.qq.com/pay/unifiedorder');
+    }
+
+    /**
      * 检查生成签名参数
      */
     protected function check_sign_parameters()
@@ -95,7 +103,7 @@ class WxMchPayHelper
         $unSignParaString = $this->formatQueryParaMap($this->parameters, false);
         return $this->sign($unSignParaString, env('WECHAT_SECRET'));
     }
-    function curl_post_ssl($url, $vars, $second = 30, $aHeader = array())
+    protected function curl_post_ssl($url, $vars, $second = 30, $aHeader = array())
     {
         $ch = curl_init();
         //超时时间
@@ -118,7 +126,7 @@ class WxMchPayHelper
         curl_close($ch);
         return $data;
     }
-    function formatQueryParaMap($paraMap, $urlencode)
+    protected function formatQueryParaMap($paraMap, $urlencode)
     {
         $buff = "";
         ksort($paraMap);
