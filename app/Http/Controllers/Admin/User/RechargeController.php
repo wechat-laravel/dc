@@ -186,7 +186,9 @@ class RechargeController extends Controller
 
                     $user = UserModel::where('user_id',$pays->user_id)->first();
 
-                    $user->balance = $user->balance + $pays->total_fee;
+                    $money = $pays->total_fee /100 ;
+
+                    $user->balance = $user->balance + $money;
 
                     $user->update();
 
@@ -195,7 +197,7 @@ class RechargeController extends Controller
                     SpendRecordModel::create([
                         'user_id' =>  $pays->user_id,
                         'mark'    =>  'recharge',
-                        'money'   =>  $pays->total_fee
+                        'money'   =>  $money
                     ]);
 
                 });
