@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+use Mockery\CountValidator\Exception;
 use SimpleSoftwareIO\QrCode\Facades\QrCode;
 
 class RechargeController extends Controller
@@ -38,32 +39,43 @@ class RechargeController extends Controller
             'trade_type'       =>  'NATIVE',                                 //交易类型（取值如下：JSAPI，NATIVE，APP）
         ];
 
-        $wxMchPayHelper = new WxMchPayHelper($options);
+        try{
 
-        $response = $wxMchPayHelper->qrcode_two();
+            $wxMchPayHelper = new WxMchPayHelper($options);
+
+            $response = $wxMchPayHelper->qrcode_two();
 
 
-        //请求结果判断
-        if ($response->return_code == "SUCCESS"){
+            //请求结果判断
+            if ($response->return_code == "SUCCESS"){
 
-            //业务结果判断
-            if ($response->result_code == "SUCCESS"){
+                //业务结果判断
+                if ($response->result_code == "SUCCESS"){
 
-                //请求结果与业务结果都为SUCCESS的时候 才返回一个二维码链接(code_url),还有一个预支付交易会话标识(prepay_id)可用于后续接口调用中使用，该值有效期为2小时
-                QrCode::format('png')->size(200)->generate($response->code_url, public_path('assets/images/recharge/1.png'));
+                    //请求结果与业务结果都为SUCCESS的时候 才返回一个二维码链接(code_url),还有一个预支付交易会话标识(prepay_id)可用于后续接口调用中使用，该值有效期为2小时
+                    QrCode::format('png')->size(200)->generate($response->code_url, public_path('assets/images/recharge/1.png'));
 
+                    return response()->json(['success'=>true,'msg'=>'二维码生成成功！']);
+
+
+                }else{
+
+                    return response()->json(['success'=>false,'code'=>$response->err_code,'msg'=>$response->err_code_des]);
+
+                }
 
             }else{
 
-                return response()->json(['success'=>false,'code'=>$response->err_code,'msg'=>$response->err_code_des]);
+                return response()->json(['success'=>false,'msg'=>$response->return_msg]);
 
             }
 
-        }else{
+        }catch (Exception $e){
 
-            return response()->json(['success'=>false,'msg'=>$response->return_msg]);
+            return response()->json(['success'=>false,'msg'=>$e->getMessage()]);
 
         }
+
 
     }
 
