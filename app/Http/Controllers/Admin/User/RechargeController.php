@@ -45,40 +45,32 @@ class RechargeController extends Controller
 
             $response = $wxMchPayHelper->qrcode_two();
 
+            //xml字符串转成的对象 很难操作，这里转成数组
             $response = (array)$response;
 
-            var_dump($response);
-//            //请求结果判断
-//            if ($response->return_code == "SUCCESS"){
-//
-//                //业务结果判断
-//                if ($response->result_code == "SUCCESS"){
-//
-//                    //请求结果与业务结果都为SUCCESS的时候 才返回一个二维码链接(code_url),还有一个预支付交易会话标识(prepay_id)可用于后续接口调用中使用，该值有效期为2小时
-//                    $code_url = $response->code_url;
-//
-//                    var_dump($response);
-//                    var_dump($code_url);
-////                    if ($code_url){
-////
-////                        QrCode::format('png')->size(200)->generate($code_url, public_path('assets/images/recharge/1.png'));
-////
-////                    }
-//
-//                    return response()->json(['success'=>true,'msg'=>'二维码生成成功！']);
-//
-//
-//                }else{
-//
-//                    return response()->json(['success'=>false,'code'=>$response->err_code,'msg'=>$response->err_code_des]);
-//
-//                }
-//
-//            }else{
-//
-//                return response()->json(['success'=>false,'msg'=>$response->return_msg]);
-//
-//            }
+            //请求结果判断
+            if ($response['return_code'] === "SUCCESS"){
+
+                //业务结果判断
+                if ($response['result_code'] === "SUCCESS"){
+
+                    //请求结果与业务结果都为SUCCESS的时候 才返回一个二维码链接(code_url),还有一个预支付交易会话标识(prepay_id)可用于后续接口调用中使用，该值有效期为2小时
+                    QrCode::format('png')->size(200)->generate($response['code_url'], public_path('assets/images/recharge/1.png'));
+
+                    return response()->json(['success'=>true,'msg'=>'二维码生成成功！']);
+
+
+                }else{
+
+                    return response()->json(['success'=>false,'code'=>$response['err_code'],'msg'=>$response['err_code_des']]);
+
+                }
+
+            }else{
+
+                return response()->json(['success'=>false,'msg'=>$response['return_msg']]);
+
+            }
 
         }catch (Exception $e){
 
