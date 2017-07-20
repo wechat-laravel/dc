@@ -3,12 +3,15 @@
 namespace App\Http\Controllers\Admin\User;
 
 use App\Models\PayWechatModel;
+use App\Models\SpendRecordModel;
+use App\Models\UserModel;
 use EasyWeChat\Payment\Order;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Mockery\CountValidator\Exception;
 use SimpleSoftwareIO\QrCode\Facades\QrCode;
 
@@ -156,20 +159,58 @@ class RechargeController extends Controller
         $response = $this->wechat->payment->handleNotify(function($notify, $successful){
 
             //查看返回的商户订单号，在表里是否存在
-            $out_trade_no  = $notify->ut_trade_no;
 
+            $pays = PayWechatModel::where('out_trade_no',$notify->ut_trade_no)->first();
 
+            if (!$pays){
 
-            //支付结果
+                return 'Order not exist.'; // 告诉微信，我已经处理完了，订单没找到，别再通知我了
+
+            }
+            // 检查订单是否已经更新过支付状态
+            if($pays->status === 1){
+
+                return true;   // 已经支付成功了就不再更新了
+
+            }
+
+            //用户是否支付成功
             if ($successful){
 
+                $pays->status = 1;
 
+                $pays->pay_time = time();
+
+                //事务，如果支付成功的话，对应的账号余额要加上去
+                DB::transaction(function() use($pays){
+
+                    $user = UserModel::where('user_id',$pays->user_id)->first();
+
+                    $user->balance = $user->balance + $pays->total_fee;
+
+                    $user->update();
+
+                    $pays->update();
+
+                    SpendRecordModel::create([
+                        'user_id' =>  $pays->user_id,
+                        'mark'    =>  'recharge',
+                        'money'   =>  $pays->total_fee
+                    ]);
+
+                });
 
             }else{
 
+                $pays->status = 2;
+
+                $pays->err_code_des = $notify->err_code_des;
+
+                $pays->upadte();
+
             }
-            //查询订单
-            $order = $notify->out_trade_no;
+
+
 
             return true; // 或者错误消息
 

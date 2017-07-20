@@ -57,7 +57,7 @@
                                         <td><img :if="el.user" ms-attr="{src : el.user.avatar}" style="width: 20px;height: 20px;margin-right: 5px;">
                                            @{{ el.user ? el.user.name : ''}}
                                         </td>
-                                        <td>@{{ el.mark === 'trun' ? ' + '+el.money  : ' - '+el.money }}</td>
+                                        <td>@{{ el.mark === 'trun' || el.mark === 'recharge' ? ' + '+el.money  : ' - '+el.money }}</td>
                                         <td>@{{ el.created_at*1000 | date("yyyy-MM-dd HH:mm") }}</td>
                                     </tr>
                                 </tbody>
