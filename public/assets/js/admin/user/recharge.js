@@ -53,7 +53,7 @@ $(function () {
     }).on('success.form.bv', function (e) {
         e.preventDefault();
         var money  = parseInt($('input[name=money]').val());
-        var remark = $('input[name=remark]').val();
+        var remark = $('#remark').val();
         var url    = '';
         if(remark){
             url = '/admin/user/qrcode?money='+money+'&remark='+remark;
