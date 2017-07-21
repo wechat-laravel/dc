@@ -15,9 +15,21 @@
                         <h4 class="modal-title" id="myModalLabel">通过微信支付 <small>（ 打开微信扫一扫 ）</small></h4>
                     </div>
                     <div class="modal-body">
-                        <img  src="{{ URL::asset('assets/images/qrcode/3LeLXJFN4LguoAVw6PWSZ4z5CCYYBoaD.png') }}" width="50%">
+                        <img  id="qr" src="{{ URL::asset('assets/images/wx-pub-tip.png') }}" width="50%">
                         <img  src="{{ URL::asset('assets/images/wx-pub-tip.png') }}" width="50%">
                     </div>
+                </div>
+            </div>
+        </div>
+        {{--操作结果提示框--}}
+        <div class="modal fade bs-result-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
+            <div class="modal-dialog modal-sm" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+                        <h4 class="modal-title" id="mySmallModalLabel">操作提示：</h4>
+                    </div>
+                    <div class="modal-body" id="infos"></div>
                 </div>
             </div>
         </div>
@@ -58,7 +70,7 @@
                                     <label>备注 <small>（选填）</small></label>
                                     <textarea class="form-control" rows="3"></textarea>
                                 </div>
-                                <a class="btn btn-success btn-block" :click="@onRecharge">提交</a>
+                                <input type="submit" class="btn btn-success btn-block">
                             </form>
                         </div>
                     </div>
