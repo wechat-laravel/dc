@@ -1,6 +1,6 @@
 @extends('modules._layout.admin')
 @section('title')
-    余额充值
+    账户充值
 @endsection
 @section('menu')
     个人中心

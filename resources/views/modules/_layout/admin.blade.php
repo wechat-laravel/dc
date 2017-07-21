@@ -109,6 +109,9 @@
                         <li :class="{active: @three==='user_assets' }">
                             <a href="/admin/user/assets"><i class="fa fa-database"></i>账户资产</a>
                         </li>
+                        <li :class="{active: @three==='user_recharge' }">
+                            <a href="/admin/user/recharge"><i class="fa fa-jpy"></i>账户充值</a>
+                        </li>
                         <li :class="{active: @three==='user_account' }">
                             <a href="/admin/user/account"><i class="fa fa-lock"></i>安全设置</a>
                         </li>
@@ -168,7 +171,7 @@
     </div>
     <footer class="main-footer">
         <div class="pull-right hidden-xs">
-            <b>版本</b> 1.1.8
+            <b>版本</b> 1.1.9
         </div>
         <strong>Copyright &copy; 一问科技 </strong> 版权所有
     </footer>

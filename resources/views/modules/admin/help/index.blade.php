@@ -17,7 +17,20 @@
             </div>
             {{--更新日志--}}
             <div class="panel-body" :visible="curr === 'update'">
-
+                {{--每次更新日志记录的开始--}}
+                <div class="box box-success">
+                    <div class="box-header with-border">
+                        <h3 class="box-title">更新时间：2017-7-21 v1.1.9</h3>
+                    </div>
+                    <div class="box-body">
+                        <p>新增功能：</p>
+                        <ul>
+                            <li>个人中心 > 账户充值 :添加 在线微信支付功能、线下打款方式 </li>
+                                <li>使用在线支付接口，收取4%的手续费</li>
+                            <li>线下打款免手续费</li>
+                        </ul>
+                    </div>
+                </div>
                 {{--每次更新日志记录的开始--}}
                 <div class="box box-success">
                     <div class="box-header with-border">
