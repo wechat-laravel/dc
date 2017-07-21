@@ -2,6 +2,7 @@ var show = avalon.define({
     $id      : "show",
     money    : 0,
     order    : '',
+    cc       : 1,
     onMoney  : function (e) {
         show.money = parseInt(e);
     },
@@ -12,14 +13,13 @@ var show = avalon.define({
             if(ret.success){
                 $('#myModal').modal('hide');
                 alert('支付成功！');
-                window.clearInterval(cc);
+                window.clearInterval(show.cc);
             }else{
                 console.log(ret.msg);
             }
         });
     }
 });
-
 
 $(function () {
     $('.form').bootstrapValidator({
@@ -51,7 +51,7 @@ $(function () {
                 $('#qr').attr('src',ret.src);
                 show.order = ret.order;
                 $('#myModal').modal('show');
-                var cc = window.setInterval(show.onQuery,2000);
+                show.cc = window.setInterval(show.onQuery,2000);
             }else{
                 $('#infos').text(ret.msg);
                 $('.bs-result-modal-sm').modal('show');
