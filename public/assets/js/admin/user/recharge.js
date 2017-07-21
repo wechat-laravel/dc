@@ -1,13 +1,22 @@
 var show = avalon.define({
     $id      : "show",
     money    : 0,
+    order    : '',
     onMoney  : function (e) {
         show.money = parseInt(e);
     },
     onQuery  : function () {
-        setTimeout(function () {
-            console.log(1);
-        }, 1000);
+        $.ajax({
+            url:'/admin/user/query?order='+show.order
+        }).done(function (ret) {
+            if(ret.success){
+                $('#myModal').modal('hide');
+                alert('支付成功！');
+                window.clearInterval(cc);
+            }else{
+                console.log(ret.msg);
+            }
+        });
     }
 });
 
@@ -40,8 +49,9 @@ $(function () {
         }).done(function (ret) {
             if(ret.success){
                 $('#qr').attr('src',ret.src);
+                show.order = ret.order;
                 $('#myModal').modal('show');
-
+                var cc = window.setInterval(show.onQuery,2000);
             }else{
                 $('#infos').text(ret.msg);
                 $('.bs-result-modal-sm').modal('show');

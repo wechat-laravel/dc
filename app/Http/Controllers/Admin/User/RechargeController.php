@@ -109,7 +109,7 @@ class RechargeController extends Controller
 
                 }
 
-                return response()->json(['success'=>true,'src'=>'/assets/images/recharge/'.Auth::id().'.png']);
+                return response()->json(['success'=>true,'src'=>'/assets/images/recharge/'.Auth::id().'.png','order'=>$options['out_trade_no']]);
 
             }catch (Exception $e){
 
@@ -235,14 +235,47 @@ class RechargeController extends Controller
     }
 
     //查询订单状态
-    public  function query()
+    public  function query(Request $request)
     {
-        //商户订单号
-        $out_trade_no = 'WV201707211042443057D1';
+        if ($request->ajax()){
 
-        $res = $this->wechat->payment->query($out_trade_no);
+            //商户订单号
+            $out_trade_no = e($request->input('order'));
 
-        return response($res);
+            $res = $this->wechat->payment->query($out_trade_no);
+
+            //判断返回状态码
+            if ($res->return_code === 'SUCCESS'){
+                //返回业务结果的是否成功
+                if ($res->result_code === 'SUCCESS'){
+                    //判断交易状态
+                    if ($res->trade_state === 'SUCCESS'){
+
+                        return response()->json(['success'=>true,'msg'=>'支付成功！']);
+
+                    }else{
+
+                        return response()->json(['success'=>false,'msg'=>'交易状态：'.$res->trade_state]);
+
+                    }
+
+                }else{
+
+                    return response()->json(['success'=>false,'msg'=>$res->err_code_des]);
+
+                }
+
+            }else{
+
+                return response()->json(['success'=>false,'msg'=>$res->return_msg]);
+
+            }
+
+        }else{
+
+            return response()->json(['success'=>false,'msg'=>'非法的请求！']);
+
+        }
 
     }
 
