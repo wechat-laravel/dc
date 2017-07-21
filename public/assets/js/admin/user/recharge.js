@@ -48,7 +48,7 @@ $(function () {
             url:'/admin/user/qrcode?money='+money
         }).done(function (ret) {
             if(ret.success){
-                $('#qr').attr('src',ret.src);
+                $('#qr').attr('src','data:image/png;base64,'+ret.src);
                 show.order = ret.order;
                 $('#myModal').modal('show');
                 show.cc = window.setInterval(show.onQuery,2000);
