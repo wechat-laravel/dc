@@ -1,8 +1,13 @@
 var show = avalon.define({
     $id      : "show",
     money    : 0,
-    onMoney    : function (e) {
+    onMoney  : function (e) {
         show.money = parseInt(e);
+    },
+    onQuery  : function () {
+        setTimeout(function () {
+            console.log(1);
+        }, 1000);
     }
 });
 
@@ -36,12 +41,11 @@ $(function () {
             if(ret.success){
                 $('#qr').attr('src',ret.src);
                 $('#myModal').modal('show');
+
             }else{
                 $('#infos').text(ret.msg);
+                $('.bs-result-modal-sm').modal('show');
             }
-            $('.bs-result-modal-sm').modal('show');
-
-
         });
         $('form').bootstrapValidator('disableSubmitButtons', false);
     });

@@ -234,4 +234,16 @@ class RechargeController extends Controller
 
     }
 
+    //查询订单状态
+    public  function query()
+    {
+        //商户订单号
+        $out_trade_no = 'WV201707211042443057D1';
+
+        $res = $this->wechat->payment->query($out_trade_no);
+
+        return response($res);
+
+    }
+
 }
