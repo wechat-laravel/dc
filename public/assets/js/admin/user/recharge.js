@@ -13,7 +13,7 @@ var show = avalon.define({
             if(ret.success){
                 $('#myModal').modal('hide');
                 window.clearInterval(show.cc);
-                alert('支付成功！');
+                alert('支付成功！刷新当前页面可查看余额！');
             }else{
                 console.log(ret.msg);
             }

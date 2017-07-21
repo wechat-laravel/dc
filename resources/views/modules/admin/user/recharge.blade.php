@@ -19,10 +19,13 @@
                         <img  src="{{ URL::asset('assets/images/wx-pub-tip.png') }}" width="50%">
                     </div>
                 </div>
+                <div class="alert alert-success" role="alert">
+                    提示：在线支付接口手续费4%，线下打款免手续费
+                </div>
             </div>
         </div>
         {{--操作结果提示框--}}
-        <div class="modal fade bs-result-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
+        <div class="modal bs-result-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
             <div class="modal-dialog modal-sm" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -39,7 +42,7 @@
                 <div class="panel panel-default">
                     <div class="panel-heading"><strong>账户（ 余额充值 ）</strong></div>
                     <div class="panel-body">
-                        <div class="col-lg-6">
+                        <div class="col-lg-6 col-md-6">
                             <h4><b>当前余额：<span style="color:#00A65A ">{{ Auth::user()->balance }}</span></b></h4>
                             <form class="form">
                                 <div class="form-group">
@@ -65,6 +68,7 @@
                                     <a style="border: 2px solid #00A65A;padding: 10px 5px;line-height: 40px;">
                                         <img src="{{ URL::asset('assets/images/wx_pay.png') }}" style="width: 116px;height: 31px;">
                                     </a>
+                                    <span style="color: darkorange"><b>（ 注：在线支付接口手续费4% ）</b></span>
                                 </div>
                                 <div class="form-group">
                                     <label>备注 <small>（选填）</small></label>
@@ -72,6 +76,19 @@
                                 </div>
                                 <input type="submit" class="btn btn-success btn-block">
                             </form>
+                        </div>
+                        <div class="col-lg-6 col-md-6">
+                            <h4><b>温馨提示：</b></h4>
+                            <p><b>线下打款免手续费</b></p>
+                            <p>
+                                <ul>
+                                    <li>银行支行：中国建设银行上海市呼玛路支行</li>
+                                    <li>银行账户：6217001210020202766</li>
+                                    <li>账户姓名：蔡庆忠</li>
+                                    <li>客服QQ  ：765898961</li>
+                                </ul>
+                            </p>
+                            <p>有问题，联系客服咨询</p>
                         </div>
                     </div>
                 </div>
