@@ -8,7 +8,7 @@ class PayWechatModel extends Model
 {
     protected $table      = 'dc_pay_wechat';
 
-    protected $fillable   = ['user_id','total_fee','out_trade_no','prepay_id','code_url','status','err_code_des','pay_time'];
+    protected $fillable   = ['user_id','total_fee','out_trade_no','prepay_id','code_url','status','err_code_des','pay_time','remark'];
 
     protected $appends = [
 

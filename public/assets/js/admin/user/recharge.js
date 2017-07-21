@@ -11,9 +11,10 @@ var show = avalon.define({
             url:'/admin/user/query?order='+show.order
         }).done(function (ret) {
             if(ret.success){
-                $('#myModal').modal('hide');
-                window.clearInterval(show.cc);
-                alert('支付成功！刷新当前页面可查看余额！');
+                // $('#myModal').modal('hide');
+                // window.clearInterval(show.cc);
+                // alert('支付成功！刷新当前页面可查看余额！');
+                location.href = '/admin/user/assets';
             }else{
                 console.log(ret.msg);
             }
@@ -38,14 +39,30 @@ $(function () {
                         message: '充值金额必须为整数'
                     }
                 }
+            },
+            remark: {
+                validators: {
+                    stringLength :{
+                        max    : 200,
+                        message: '长度请保持在200以内！'
+                    }
+
+                }
             }
         }
     }).on('success.form.bv', function (e) {
         e.preventDefault();
-        var money = parseInt($('input[name=money]').val());
+        var money  = parseInt($('input[name=money]').val());
+        var remark = $('input[name=remark]').val();
+        var url    = '';
+        if(remark){
+            url = '/admin/user/qrcode?money='+money+'&remark='+remark;
+        }else{
+            url = '/admin/user/qrcode?money='+money;
+        }
 
         $.ajax({
-            url:'/admin/user/qrcode?money='+money
+            url:url
         }).done(function (ret) {
             if(ret.success){
                 $('#qr').attr('src','data:image/png;base64,'+ret.src);

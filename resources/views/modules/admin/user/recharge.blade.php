@@ -72,7 +72,7 @@
                                 </div>
                                 <div class="form-group">
                                     <label>备注 <small>（选填）</small></label>
-                                    <textarea class="form-control" rows="3"></textarea>
+                                    <textarea class="form-control" name="remark" rows="3"></textarea>
                                 </div>
                                 <input type="submit" class="btn btn-success btn-block">
                             </form>

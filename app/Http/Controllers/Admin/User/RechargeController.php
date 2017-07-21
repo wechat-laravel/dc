@@ -89,6 +89,13 @@ class RechargeController extends Controller
                         'code_url'     => $result->code_url,
                     ];
 
+                    //如果有备注的话，加入备注
+                    if ($request->has('remark')){
+
+                        $data['remark'] = e($request->input('remark'));
+
+                    }
+
                     $res = PayWechatModel::create($data);
 
                     //表的out_trade_no唯一，所以如果创建成功，则可以生产二维码
@@ -214,7 +221,8 @@ class RechargeController extends Controller
                     SpendRecordModel::create([
                         'user_id' =>  $pays->user_id,
                         'mark'    =>  'recharge',
-                        'money'   =>  $money
+                        'money'   =>  $money,
+                        'remark'  =>  $pays->remark
                     ]);
 
                 });
