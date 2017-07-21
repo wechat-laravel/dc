@@ -12,8 +12,8 @@ var show = avalon.define({
         }).done(function (ret) {
             if(ret.success){
                 $('#myModal').modal('hide');
-                alert('支付成功！');
                 window.clearInterval(show.cc);
+                alert('支付成功！');
             }else{
                 console.log(ret.msg);
             }
