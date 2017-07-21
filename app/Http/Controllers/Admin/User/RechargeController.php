@@ -94,6 +94,13 @@ class RechargeController extends Controller
 
                     //表的out_trade_no唯一，所以如果创建成功，则可以生产二维码
                     if ($res){
+
+                        if (is_file(public_path('assets/images/recharge/'.Auth::id().'.png'))){
+
+                            unlink(public_path('assets/images/recharge/'.Auth::id().'.png'));
+
+                        }
+
                         //保证一个用户只会有一个付款二维码存在
                         QrCode::format('png')->size(200)->generate($result->code_url, public_path('assets/images/recharge/'.Auth::id().'.png'));
 
