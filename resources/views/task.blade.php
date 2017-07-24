@@ -165,7 +165,7 @@
                         <h5 class="text-center"><b>本文由<span style="color: red"> {{ $task->ad->share }} </span>分享推荐</b></h5>
                         <div class="row" style="padding:10px 10px 0px 10px;">
                             <div class="col-xs-12 col-sm-8 col-sm-offset-2 col-md-6 col-md-offset-3 col-lg-4 col-lg-offset-4" style="background-color:#FFFFFF;padding-top: 10px;">
-                                <img src="{{ $task->ad->litimg }}" class="img-circle center-block" style="width: 40px;height: 40px;">
+                                <img src="{{ $task->ad->litimg }}" id="icon" class="img-circle center-block" style="width: 40px;height: 40px;">
                                 <h5 class="text-center"><b> {{ $task->ad->title }} </b>  <a class="btn btn-default btn-xs"> {{ $task->ad->label }} </a></h5>
                                 <div class="center-block" style="margin-top: 25px;">
                                     <div class="text-center col-sm-4 col-xs-4" style="float: left;">
@@ -332,6 +332,7 @@
         effect:"fadeIn",
         failure_limit : 10
     });
+    $('#icon').attr('class','img-circle center-block');
 </script>
 
 </html>
