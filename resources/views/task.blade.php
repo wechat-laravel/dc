@@ -52,7 +52,7 @@
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                     <h5 class="modal-title" id="myModalLabel">长按图片加好友</h5>
                 </div>
-                <img class="img-rounded center-block" src="{{ $task->ad_column_id ? $task->ad->qrcode : '/wewen.png' }}" style="width: 200px;height: 200px;">
+                <img class="img-rounded center-block" id="wx_qrcode" src="{{ $task->ad_column_id ? $task->ad->qrcode : '/wewen.png' }}" style="width: 200px;height: 200px;">
             </div>
         </div>
     </div>
@@ -333,6 +333,7 @@
         failure_limit : 10
     });
     $('#icon').attr('class','img-circle center-block');
+    $('#wx_qrcode').attr('class','img-rounded center-block');
 </script>
 
 </html>
