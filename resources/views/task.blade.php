@@ -12,6 +12,7 @@
     <script src="{{ URL::asset('assets/js/bootstrapValidator.min.js') }}" type="text/javascript" charset="utf-8"></script>
     <script src="{{ URL::asset('assets/js/task.js') }}" type="text/javascript" charset="utf-8"></script>
     <script src="http://res.wx.qq.com/open/js/jweixin-1.2.0.js" type="text/javascript" charset="utf-8"></script>
+    <script src="https://cdn.bootcss.com/jquery_lazyload/1.9.7/jquery.lazyload.js"></script>
     <style>
         body{
             height: 100%;
@@ -324,7 +325,12 @@
     function onQrcode(){
         $('.bs-qrcode-modal-sm').modal('show');
     }
-
+    $(document).ready(function($){
+        $("img").lazyload({
+            placeholder:"grey.gif", //加载图片前的占位图片
+            effect:"fadeIn" //加载图片使用的效果(淡入)
+        });
+    });
 </script>
 
 </html>
