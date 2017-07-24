@@ -20,7 +20,7 @@
         <div style="font-size: 17px;color: #13243f;font-family: Lato;font-weight: 400;
         max-width: 538px;line-height: 23px;margin-bottom: 19px;">
             请勿将验证码告诉其他人!&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;网站地址:
-            <span style="color: #219290;font-family: Lato;font-weight: 600;">dc.le71.cn</span>
+            <span style="color: #219290;font-family: Lato;font-weight: 600;">www.maidamaida.com</span>
             <span style="color: #101a30;font-family: Lato;font-weight: 400;"> . </span>
         </div>
         <div style="font-size: 17px;color: #13243f;font-family: Lato;font-weight: 400;">

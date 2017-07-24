@@ -28,7 +28,7 @@ class UserModel extends Model implements AuthenticatableContract,
      *
      * @var array
      */
-    protected $fillable = ['name','avatar', 'email', 'password','qq','wechat_id','mobile','identity','balance','consume'];
+    protected $fillable = ['name','avatar', 'email', 'password','qq','wechat_id','mobile','identity','balance','consume','overdue_at'];
 
     /**
      * The attributes excluded from the model's JSON form.

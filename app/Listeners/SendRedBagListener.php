@@ -67,56 +67,57 @@ class SendRedBagListener implements ShouldQueue
         //判断这个文章是否有红包功能
         if (!$data) {
 
-            $mail['email'] = '810281839@qq.com';
-            $mail['notice'] = '该文章并没有配置红包功能，但是在调用接口。文章id为' . $this->tasks_id;
-
-            Cache::remember('tasks_id-' . $this->tasks_id . '-not', 60 * 24, function () use ($mail) {
-                Mail::send('noticeMail', $mail, function ($message) use ($mail) {
-                    $message->to($mail['email'])->subject("微问数据--通知消息");
-                });
-                return '已经发送邮件';
-            });
+//            $mail['email'] = '136466380@qq.com';
+//            $mail['notice'] = '该文章并没有配置红包功能，但是在调用接口。文章id为' . $this->tasks_id;
+//
+//            Cache::remember('tasks_id-' . $this->tasks_id . '-not', 60 * 24, function () use ($mail) {
+//                Mail::send('noticeMail', $mail, function ($message) use ($mail) {
+//                    $message->to($mail['email'])->subject("微问数据--通知消息");
+//                });
+//                return '已经发送邮件';
+//            });
         }
 
         //判断这个活动停止了没有
         else if ($data->status == 0) {
 
-            $mail['email'] = '810281839@qq.com';
-            $mail['notice'] = '该帐号的红包功能已经关闭，文章仍在传播！文章id为' . $this->tasks_id;
+//            $mail['email'] = '136466380@qq.com';
+//            $mail['notice'] = '该帐号的红包功能已经关闭，文章仍在传播！文章id为' . $this->tasks_id;
+//
+//            Cache::remember('tasks_id-' . $this->tasks_id . '-status0', 60 * 24, function () use ($mail) {
+//                Mail::send('noticeMail', $mail, function ($message) use ($mail) {
+//                    $message->to($mail['email'])->subject("微问数据--通知消息");
+//                });
+//                return '已经发送邮件';
+//            });
 
-            Cache::remember('tasks_id-' . $this->tasks_id . '-status0', 60 * 24, function () use ($mail) {
-                Mail::send('noticeMail', $mail, function ($message) use ($mail) {
-                    $message->to($mail['email'])->subject("微问数据--通知消息");
-                });
-                return '已经发送邮件';
-            });
         }
 
         //判断账户余额是否充足
         else if ($data->amount <= 0) {
 
-            $mail['email'] = '810281839@qq.com';
-            $mail['notice'] = '该帐号的红包功能余额不足！文章id为' . $this->tasks_id;
-
-            Cache::remember('tasks_id-' . $this->tasks_id . '-amount', 60 * 24, function () use ($mail) {
-                Mail::send('noticeMail', $mail, function ($message) use ($mail) {
-                    $message->to($mail['email'])->subject("微问数据--通知消息");
-                });
-                return '已经发送邮件';
-            });
+//            $mail['email'] = '810281839@qq.com';
+//            $mail['notice'] = '该帐号的红包功能余额不足！文章id为' . $this->tasks_id;
+//
+//            Cache::remember('tasks_id-' . $this->tasks_id . '-amount', 60 * 24, function () use ($mail) {
+//                Mail::send('noticeMail', $mail, function ($message) use ($mail) {
+//                    $message->to($mail['email'])->subject("微问数据--通知消息");
+//                });
+//                return '已经发送邮件';
+//            });
         }
 
         //判断调用接口的时候是否还在进行
         else if (time() < strtotime($data->begin_at) || time() > strtotime($data->end_at)) {
-            $mail['email'] = '810281839@qq.com';
-            $mail['notice'] = '该帐号的红包功能活动时间已经过期，仍在调用接口！文章id为' . $this->tasks_id;
-
-            Cache::remember('tasks_id-' . $this->tasks_id . '-beign_at||end_at', 60 * 24, function () use ($mail) {
-                Mail::send('noticeMail', $mail, function ($message) use ($mail) {
-                    $message->to($mail['email'])->subject("微问数据--通知消息");
-                });
-                return '已经发送邮件';
-            });
+//            $mail['email'] = '810281839@qq.com';
+//            $mail['notice'] = '该帐号的红包功能活动时间已经过期，仍在调用接口！文章id为' . $this->tasks_id;
+//
+//            Cache::remember('tasks_id-' . $this->tasks_id . '-beign_at||end_at', 60 * 24, function () use ($mail) {
+//                Mail::send('noticeMail', $mail, function ($message) use ($mail) {
+//                    $message->to($mail['email'])->subject("微问数据--通知消息");
+//                });
+//                return '已经发送邮件';
+//            });
         }
 
         //判断是否指定性别

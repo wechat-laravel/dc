@@ -151,7 +151,11 @@ class AuthController extends Controller
 
                         try{
 
-                            $user = UserModel::create(['email'=>$input['email'],'password' => Hash::make($input['password'])]);
+                            //默认注册的身份为游客身份，可以免费体验5天
+
+                            $overdue_at = time() + 432000;
+
+                            $user = UserModel::create(['email'=>$input['email'],'password' => Hash::make($input['password']),'overdue_at'=>$overdue_at]);
 
                             Auth::loginUsingId($user->id);
 
