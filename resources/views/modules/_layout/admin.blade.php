@@ -214,7 +214,7 @@
     </div>
     <footer class="main-footer">
         <div class="pull-right hidden-xs">
-            <b>版本</b> 1.1.9
+            <b>版本</b> 2.0.0
         </div>
         <strong>Copyright &copy; 一问科技 </strong> 版权所有
     </footer>

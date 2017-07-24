@@ -20,6 +20,19 @@
                 {{--每次更新日志记录的开始--}}
                 <div class="box box-success">
                     <div class="box-header with-border">
+                        <h3 class="box-title">更新时间：2017-7-24 v2.0.0</h3>
+                    </div>
+                    <div class="box-body">
+                        <p>权限调整：</p>
+                        <ul>
+                            <li>所有用户调整为游客身份，可免费体验站内所有功能，为期5天 </li>
+                            <li>体验时间过期后，所有功能将停止使用，如有需要转成会员，请联系我们的管理员。</li>
+                        </ul>
+                    </div>
+                </div>
+                {{--每次更新日志记录的开始--}}
+                <div class="box box-success">
+                    <div class="box-header with-border">
                         <h3 class="box-title">更新时间：2017-7-21 v1.1.9</h3>
                     </div>
                     <div class="box-body">
