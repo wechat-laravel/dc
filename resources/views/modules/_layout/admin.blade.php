@@ -20,6 +20,44 @@
     }
 </style>
 <body class="hold-transition skin-green-light sidebar-mini" class="ms-controller" ms-controller="admin">
+
+{{--系统通知框--start--}}
+@if( Auth::user()->identity === 'visitor')
+<div class="modal fade overdue" tabindex="-1" role="dialog" >
+    <div class="modal-dialog" role="document" style="margin-top: 200px;">
+        <div class="modal-content">
+            <div class="modal-header" style="background-color: #337AB7">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" style="color: white"><b>系统通知：</b></h4>
+            </div>
+            <div class="modal-body">
+                <p class="text-center">
+                    尊敬的游客，您好！
+                </p>
+                <ul>
+                    <li>
+                        由于网站正式上线，我们对网站的所有用户根据身份作出调整限制。
+                    </li>
+                    <li>
+                        网站注册的用户默认为游客身份，游客可免费体验网站所有功能5天的时间
+                    </li>
+                    <li>
+                        超出5天后，所有功能将无法继续使用，体验到期时间可在右上角点击头像查看
+                    </li>
+                    <li>
+                        如需继续使用，请联系管理员QQ：765898961 开通会员身份。
+                    </li>
+                    <li>
+                        变更为会员身份后，将不再出现此通知（本通知为每隔半小时通知一次）
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+@endif
+{{--系统通知框--end--}}
+
 <div class="wrapper">
     <header class="main-header" id="top">
         <a href="#" class="logo">
@@ -35,14 +73,16 @@
                     <li class="dropdown user user-menu">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                             <img src="{{ Auth::user()->avatar ? Auth::user()->avatar : URL::asset('assets/images/user.jpg') }}" class="user-image" alt="User Image">
-                            <span class="hidden-xs">{{ Auth::user()->name ? Auth::user()->name : Auth::user()->identity_name  }}</span>
+                            <span class="hidden-xs">{{ Auth::user()->email  }}</span>
                         </a>
                         <ul class="dropdown-menu">
                             <li class="user-header">
                                 <img src="{{ Auth::user()->avatar ? Auth::user()->avatar : URL::asset('assets/images/user.jpg') }}" class="img-circle" alt="User Image">
                                 <p>
-                                    {{ Auth::user()->name ? Auth::user()->name : Auth::user()->identity_name  }}
-                                    <small>身份：{{ Auth::user()->identity_name }}</small>
+                                    身份：{{ Auth::user()->identity_name }}
+                                    @if( Auth::user()->identity === 'visitor' )
+                                        <small>体验过期时间：{{ date('Y-m-d m:i:s',Auth::user()->overdue_at) }}</small>
+                                    @endif
                                 </p>
                             </li>
                             <li class="user-footer">
@@ -66,7 +106,7 @@
                     <img src="{{ Auth::user()->avatar ? Auth::user()->avatar : URL::asset('assets/images/user.jpg') }}" class="img-circle" alt="User Image">
                 </div>
                 <div class="pull-left info">
-                    <p>{{ Auth::user()->name ? Auth::user()->name : Auth::user()->identity_name  }}</p>
+                    <p>{{ Auth::user()->identity_name }}身份 </p>
                     <a href="#"><i class="fa fa-circle text-success"></i> 在线</a>
                 </div>
             </div>
@@ -94,6 +134,8 @@
                     </ul>
                 </li>
                 @endif
+                @if(Auth::user()->identity === 'visitor' && Auth::user()->overdue_at < time())
+                @else
                 <li class="treeview active">
                     <a href="#">
                         <i class="fa fa-user"></i>
@@ -146,6 +188,7 @@
                         <li :class="{active: @three==='service_ad_column'}"><a href="/admin/service/ad_column"><i class="fa fa-circle-o"></i>广告栏设置</a></li>
                     </ul>
                 </li>
+                @endif
                 <li class="treeview">
                     <a href="/admin/service/help">
                         <i class="fa fa-question-circle"></i> <span>系统帮助</span>

@@ -19,7 +19,7 @@
                         <li><span class="info-box-text"><small>今日:</small>@{{top.pv_today}}</span></li>
                         <li><span class="info-box-text"><small>昨日:</small>@{{top.pv_yesterday}}</span></li>
                     </ul>
-                    <a class="small-box-footer">高于98.2%的H5&nbsp;&nbsp;<i class="fa fa-question-circle"></i></a>
+                    {{--<a class="small-box-footer">高于98.2%的H5&nbsp;&nbsp;<i class="fa fa-question-circle"></i></a>--}}
                 </div>
             </div>
             <div class="col-md-3 col-sm-6 col-xs-12">
@@ -32,7 +32,7 @@
                         <li><span class="info-box-text"><small>今日:</small>@{{ top.uv_today }}</span></li>
                         <li><span class="info-box-text"><small>昨日:</small>@{{ top.uv_yesterday }}</span></li>
                     </ul>
-                    <a class="small-box-footer">高于98.2%的H5&nbsp;&nbsp;<i class="fa fa-question-circle"></i></a>
+                    {{--<a class="small-box-footer">高于98.2%的H5&nbsp;&nbsp;<i class="fa fa-question-circle"></i></a>--}}
                 </div>
             </div>
             <div class="col-md-3 col-sm-6 col-xs-12">
@@ -45,7 +45,7 @@
                         <li><span class="info-box-text"><small>今日:</small>@{{ top.share_today }}</span></li>
                         <li><span class="info-box-text"><small>昨日:</small>@{{ top.share_yesterday }}</span></li>
                     </ul>
-                    <a class="small-box-footer">高于98.2%的H5&nbsp;&nbsp;<i class="fa fa-question-circle"></i></a>
+                    {{--<a class="small-box-footer">高于98.2%的H5&nbsp;&nbsp;<i class="fa fa-question-circle"></i></a>--}}
                 </div>
             </div>
             <div class="col-md-3 col-sm-6 col-xs-12">
@@ -58,7 +58,7 @@
                         <li><span class="info-box-text"><small>&nbsp;</small></span></li>
                         <li><span class="info-box-text"><small>&nbsp;</small></span></li>
                     </ul>
-                    <a class="small-box-footer">高于98.2%的H5&nbsp;&nbsp;<i class="fa fa-question-circle"></i></a>
+                    {{--<a class="small-box-footer">高于98.2%的H5&nbsp;&nbsp;<i class="fa fa-question-circle"></i></a>--}}
                 </div>
             </div>
         </div>

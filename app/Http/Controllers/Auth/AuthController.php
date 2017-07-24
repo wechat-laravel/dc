@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers\Auth;
 
-use Validator;
 use App\Models\UserModel;
 use Illuminate\Http\Request;
 use App\Models\CaptchaModel;
@@ -13,6 +12,7 @@ use Illuminate\Support\Facades\Mail;
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\ThrottlesLogins;
 use Illuminate\Foundation\Auth\AuthenticatesAndRegistersUsers;
+use Illuminate\Support\Facades\Validator;
 
 class AuthController extends Controller
 {
