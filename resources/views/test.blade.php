@@ -14,6 +14,7 @@
     <script src="{{ URL::asset('assets/js/bootstrapValidator.min.js') }}" type="text/javascript" charset="utf-8"></script>
     <script src="{{ URL::asset('assets/js/ceshi.js') }}" type="text/javascript" charset="utf-8"></script>
     {{--<script src="http://res.wx.qq.com/open/js/jweixin-1.2.0.js" type="text/javascript" charset="utf-8"></script>--}}
+    <script src="https://cdn.bootcss.com/jquery_lazyload/1.9.7/jquery.lazyload.js"></script>
     <style>
         body{
             height: 100%;
@@ -46,7 +47,18 @@
     </style>
 </head>
 <body>
-
+{{--微信二维码--}}
+<div class="modal fade bs-qrcode-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" style="width: 250px;height: 300px;margin: 50% auto;">
+    <div class="modal-dialog modal-sm" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h5 class="modal-title" id="myModalLabel">长按图片加好友</h5>
+            </div>
+            <img class="img-rounded center-block" src="{{ $task->ad_column_id ? $task->ad->qrcode : '/wewen.png' }}" style="width: 200px;height: 200px;">
+        </div>
+    </div>
+</div>
 <!-- Modal -->
 <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
     <div class="modal-dialog" role="document">
@@ -93,36 +105,10 @@
         </div>
     </div>
 </div>
-{{--微信二维码--}}
-<div class="modal fade bs-qrcode-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" style="width: 250px;height: 300px;margin: 50% auto;">
-    <div class="modal-dialog modal-sm" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h5 class="modal-title" id="myModalLabel">长按图片加好友</h5>
-            </div>
-            <img class="img-rounded center-block" src="{{ URL::asset('ceshi.jpg') }}" style="width: 200px;height: 200px;">
-        </div>
-    </div>
-</div>
-
-{{--商务通链接二维码--}}
-<div class="modal fade bs-zixun-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" style="width: 250px;height: 300px;margin: 50% auto;">
-    <div class="modal-dialog modal-sm" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h5 class="modal-title" id="myModalLabel">长按图片在线咨询</h5>
-            </div>
-            <img class="img-rounded center-block" src="{{ URL::asset('ceshi.jpg') }}" style="width: 200px;height: 200px;">
-        </div>
-    </div>
-</div>
-
 @if($task->mark === 'h5')
     @if(preg_match('/mp.weixin.qq.com/', $task->page_url))
         <div class="row" style="margin-bottom: 60px;">
-            <div class="col-xs-12  col-sm-8 col-sm-offset-2 col-md-6 col-md-offset-3 col-lg-4 col-lg-offset-4">
+            <div class="col-xs-12 col-sm-8 col-sm-offset-2 col-md-6 col-md-offset-3 col-lg-4 col-lg-offset-4">
                 <h3>{{ $task->title }}</h3>
                 <h5 style="color: #8c8c8c;">{{ substr($task->created_at,0,10) }} <a href="{{ $task->wechat_url }}">{{ $task->wechat_name }}</a></h5>
                 <div style="margin-top: 10px;">
@@ -131,10 +117,10 @@
             </div>
         </div>
     @else
-        <iframe style="margin-bottom: 20px;" src="{{ $task->page_url }}" frameborder="0" width="100%" height="100%"></iframe>
+        <iframe src="{{ $task->page_url }}" frameborder="0" width="100%" height="100%"></iframe>
     @endif
 @else
-    <div class="row" style="margin-bottom: 50px;">
+    <div class="row" style="margin-bottom: 60px;">
         <div class="col-xs-12 col-sm-8 col-sm-offset-2 col-md-6 col-md-offset-3 col-lg-4 col-lg-offset-4">
             <h3>{{ $task->title }}</h3>
             <h5 style="color: #8c8c8c;">{{ substr($task->created_at,0,10) }} <a href="{{ $task->wechat_url }}">{{ $task->wechat_name }}</a></h5>
@@ -142,82 +128,91 @@
         </div>
     </div>
 @endif
-<div style="width: 100%;background-color:#F4F5F5;padding-top: 2px;">
-    <h5 class="text-center"><b>本文由<span style="color: red"> ( 分享来源 ) </span>分享推荐</b></h5>
-    <div class="row" style="padding:10px 10px 0px 10px;">
-        <div class="col-xs-12 col-sm-8 col-sm-offset-2 col-md-6 col-md-offset-3 col-lg-4 col-lg-offset-4" style="background-color:#FFFFFF;padding-top: 10px;">
-            <img src="{{ URL::asset('wewen.png') }}" class="img-circle center-block" style="width: 40px;height: 40px;">
-            <h5 class="text-center"><b>（ 标题 ）</b>  <a class="btn btn-default btn-xs">（ 标签 ）</a></h5>
-            <div class="center-block" style="margin-top: 25px;">
-                <div class="text-center col-sm-4 col-xs-4" style="float: left;">
-                    <a href="tel:13764567708"  class="btn" style="background-color: orange;width: 40px;height: 40px; border-radius: 20px;">
-                        <i class="fa fa-phone" style="color:white;background-color:orange;font-size: 25px;line-height: 28px;margin-left: -5px;"></i>
-                    </a>
-                    <br>
-                    打Ta电话
-                </div>
-                <div class="text-center col-sm-4 col-xs-4" style="float: left;">
-                    <a onclick="onQrcode()" class="btn" style="background-color: #4CB25C;width: 40px;height: 40px; border-radius: 20px;">
-                        <i class="fa fa-wechat" style="color:white;background-color:#4CB25C;font-size: 20px;line-height: 28px;margin-left: -7px;"></i>
-                    </a>
-                    <br>
-                    微信二维码
-                </div>
-                <div class="text-center col-sm-4 col-xs-4" style="float: left;">
-                    <a onclick="onZixun()" class="btn" style="background-color: #337AB7;width: 40px;height: 40px; border-radius: 20px;">
-                        <i class="fa fa-commenting-o" style="color:white;background-color:#337AB7;font-size: 20px;line-height: 27px;margin-left: -5px;"></i>
-                    </a>
-                    <br>
-                    在线咨询
-                </div>
-            </div>
-            <div style="clear: both"></div>
-            <div style="margin-top: 20px;color: #938C8C">
-                <p class="text-justify" >
-                    <ul class="list-unstyled">
-                        <li>标题一 ：<span><b>标题一具体内容</b></span></li>
-                        <li>标题二 ：<span>标题二具体内容</span></li>
-                        <li>标题三 ：<span>标题三具体内容</span></li>
-                    </ul>
-                </p>
-            </div>
-        </div>
-    </div>
-</div>
-{{--@if($task->is_ad)--}}
-    {{--@if($task->ad_column_id === 0)--}}
-        {{--<nav class="navbar navbar-default navbar-fixed-bottom">--}}
-            {{--<div class="container">--}}
-                {{--<div class="navbar-header" style="width: 100%">--}}
-                    {{--<a class="navbar-brand" href="https://mp.weixin.qq.com/mp/profile_ext?action=home&__biz=MzA4MjM1ODY1MA==&scene=124#wechat_redirect" style="height: 10px;">--}}
-                        {{--<img class="logo-img" style="width: 25px;height: 25px;float: left;margin-right: 5px;margin-bottom: 5px;" src="{{ URL::asset('assets/images/z_logo.png') }}">--}}
-                        {{--上海一问科技--}}
-                    {{--</a>--}}
-                    {{--<button type="button" class="navbar-btn btn btn-success btn-sm"  style="float: right" data-toggle="modal" data-target="#myModal">--}}
-                        {{--报名--}}
-                    {{--</button>--}}
-                {{--</div>--}}
-            {{--</div>--}}
-        {{--</nav>--}}
-    {{--@else--}}
-        {{--<nav class="navbar navbar-default navbar-fixed-bottom">--}}
-            {{--<div class="container">--}}
-                {{--<div class="navbar-header" style="width: 100%">--}}
-                    {{--<a class="navbar-brand" href="{{ $task->ad->url }}" style="height: 10px;">--}}
-                        {{--<img class="logo-img" style="width: 25px;height: 25px;float: left;margin-right: 5px;margin-bottom: 5px;" src="{{ $task->ad->litimg }}">--}}
-                        {{--{{ $task->ad->name }}--}}
-                    {{--</a>--}}
-                    {{--<button type="button" class="navbar-btn btn btn-success btn-sm"  style="float: right" data-toggle="modal" data-target="#myModal">--}}
-                        {{--报名--}}
-                    {{--</button>--}}
-                {{--</div>--}}
-            {{--</div>--}}
-        {{--</nav>--}}
-    {{--@endif--}}
-{{--@endif--}}
+{{--<p class="text-center"><a href="http://maidamaida.com/">一问科技技术支持</a></p>--}}
 
+@if($task->is_ad)
+    @if($task->ad_column_id === 0)
+        <nav class="navbar navbar-default navbar-fixed-bottom">
+            <div class="container">
+                <div class="navbar-header" style="width: 100%">
+                    <a class="navbar-brand" href="https://mp.weixin.qq.com/mp/profile_ext?action=home&__biz=MzA4MjM1ODY1MA==&scene=124#wechat_redirect" style="height: 10px;">
+                        <img class="logo-img" style="width: 25px;height: 25px;float: left;margin-right: 5px;margin-bottom: 5px;" src="{{ URL::asset('assets/images/z_logo.png') }}">
+                        上海一问科技
+                    </a>
+                    <button type="button" class="navbar-btn btn btn-success btn-sm"  style="float: right" data-toggle="modal" data-target="#myModal">
+                        报名
+                    </button>
+                </div>
+            </div>
+        </nav>
+    @else
+        {{--区分留言模板与自定义模板--}}
+        @if($task->ad->mark === 1)
+            <nav class="navbar navbar-default navbar-fixed-bottom">
+                <div class="container">
+                    <div class="navbar-header" style="width: 100%">
+                        <a class="navbar-brand" href="{{ $task->ad->url }}" style="height: 10px;">
+                            <img class="logo-img" style="width: 25px;height: 25px;float: left;margin-right: 5px;margin-bottom: 5px;" src="{{ $task->ad->litimg }}">
+                            {{ $task->ad->name }}
+                        </a>
+                        <button type="button" class="navbar-btn btn btn-success btn-sm"  style="float: right" data-toggle="modal" data-target="#myModal">
+                            报名
+                        </button>
+                    </div>
+                </div>
+            </nav>
+        @else
+            {{--H5的页面不支持--}}
+            @if($task->mark === 'custom' || preg_match('/mp.weixin.qq.com/', $task->page_url))
+                <div style="width: 100%;background-color:#F4F5F5;padding-top: 2px;">
+                    <h5 class="text-center"><b>本文由<span style="color: red"> {{ $task->ad->share }} </span>分享推荐</b></h5>
+                    <div class="row" style="padding:10px 10px 0px 10px;">
+                        <div class="col-xs-12 col-sm-8 col-sm-offset-2 col-md-6 col-md-offset-3 col-lg-4 col-lg-offset-4" style="background-color:#FFFFFF;padding-top: 10px;">
+                            <img src="{{ $task->ad->litimg }}" class="img-circle center-block" style="width: 40px;height: 40px;">
+                            <h5 class="text-center"><b> {{ $task->ad->title }} </b>  <a class="btn btn-default btn-xs"> {{ $task->ad->label }} </a></h5>
+                            <div class="center-block" style="margin-top: 25px;">
+                                <div class="text-center col-sm-4 col-xs-4" style="float: left;">
+                                    <a href="tel:{{ $task->ad->mobile }}"  class="btn" style="background-color: orange;width: 40px;height: 40px; border-radius: 20px;">
+                                        <i class="fa fa-phone" style="color:white;background-color:orange;font-size: 25px;line-height: 28px;margin-left: -5px;"></i>
+                                    </a>
+                                    <br>
+                                    打Ta电话
+                                </div>
+                                <div class="text-center col-sm-4 col-xs-4" style="float: left;">
+                                    <a onclick="onQrcode()" class="btn" style="background-color: #4CB25C;width: 40px;height: 40px; border-radius: 20px;">
+                                        <i class="fa fa-wechat" style="color:white;background-color:#4CB25C;font-size: 20px;line-height: 28px;margin-left: -7px;"></i>
+                                    </a>
+                                    <br>
+                                    微信二维码
+                                </div>
+                                <div class="text-center col-sm-4 col-xs-4" style="float: left;">
+                                    <a  href="{{ $task->ad->chat_url }}" class="btn" style="background-color: #337AB7;width: 40px;height: 40px; border-radius: 20px;">
+                                        <i class="fa fa-commenting-o" style="color:white;background-color:#337AB7;font-size: 20px;line-height: 27px;margin-left: -5px;"></i>
+                                    </a>
+                                    <br>
+                                    在线咨询
+                                </div>
+                            </div>
+                            <div style="clear: both"></div>
+                            <div style="margin-top: 20px;color: #938C8C">
+                                <p class="text-justify" >
+                                <ul class="list-unstyled">
+                                    <li><b>{{ $task->ad->one_t }} ：<a href="{{ $task->ad->one_d_url ? $task->ad->one_d_url : '#' }}">{{ $task->ad->one_d }}</a></b></li>
+                                    <li><b>{{ $task->ad->two_t }} ：<a href="{{ $task->ad->two_d_url ? $task->ad->two_d_url : '#' }}">{{ $task->ad->two_d }}</a></b></li>
+                                    <li><b>{{ $task->ad->three_t }} ：<a href="{{ $task->ad->three_d_url ? $task->ad->three_d_url : '#' }}">{{ $task->ad->three_d }}</a></b></li>
+                                </ul>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            @endif
+        @endif
+    @endif
+@endif
 </body>
 <script type="text/javascript" charset="UTF-8">
+    $("img").each(function(){$(this).attr("data-src")&&$(this).attr("data-src").indexOf("mmbiz.qpic.cn")>-1&&$(this).attr("src","http://wewen.io/image?src="+$(this).attr("data-src"))});
     function onMobile(){
         alert('电话');
     }
@@ -227,6 +222,68 @@
     function onZixun(){
         $('.bs-zixun-modal-sm').modal('show');
     }
+
+    $('img').each(function(){$(this).attr('data-original',$(this).attr('src'))&&$(this).removeAttr("src")&&$(this).attr('class','lazy')});
+    $(".lazy").lazyload({
+//        placeholder:"/square-image.png", //加载图片前的占位图片
+        threshold : 200,    //设置临界点，距离屏幕200像素时提前加载
+        effect:"fadeIn",
+        failure_limit : 10
+    });
+
+
+
+//    function LGY_imgScrollLoad(option){
+//        this.oImg = document.getElementById(option.wrapID).getElementsByTagName('img');
+//        this.sHolder_src = option.holder_src;
+//        this.int();
+//    }
+//    LGY_imgScrollLoad.prototype = {
+//        loadImg:function(){
+//            //保存document在变量里，减少对document的查询
+//            var doc = document;
+//            for(var n=0,i = this.oImg.length;n<i;n++){
+//                //获取图片占位符图片地址
+//                var hSrc = this.oImg[n].getAttribute(this.sHolder_src);
+//                if(hSrc){
+//                    var scrollTop = doc.body.scrollTop||doc.documentElement.scrollTop,
+//                            windowHeight = doc.documentElement.clientHeight,
+//                            offsetTop = this.oImg[n].getBoundingClientRect().top + scrollTop,
+//                            imgHeight = this.oImg[n].clientHeight,
+//                            justTop = offsetTop + imgHeight;
+//                    // 判断图片是否在可见区域
+//                    if(justTop>scrollTop&&offsetTop<(scrollTop+windowHeight)){
+//                        //alert(offsetTop);
+//                        this.isLoad(hSrc,n);
+//                    }
+//                }
+//            }
+//        },
+//        isLoad:function(src,n){
+//            var src = src,
+//                    n = n,
+//                    o_img = new Image(),
+//                    _that = this;
+//            o_img.onload = (function(n){
+//                _that.oImg[n].setAttribute('src',src);
+//                _that.oImg[n].removeAttribute(_that.sHolder_src);
+//            })(n);
+//            o_img.src = src;
+//        },
+//        int:function(){
+//            this.loadImg();
+//            var _that = this,
+//                    timer = null;
+//            // 滚动：添加定时器，防止频繁调用loadImg函数
+//            window.onscroll = function(){
+//                clearTimeout(timer);
+//                timer = setTimeout(function(){
+//                    _that.loadImg();
+//                },100);
+//            }
+//        }
+//    }
+
 </script>
 
 </html>

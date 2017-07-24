@@ -648,7 +648,7 @@ class WechatController extends Controller
 
 //        var_dump($cc);
 
-        $task = TasksModel::find(19);
+        $task = TasksModel::find(82);
 //
         return view('test',['task'=>$task]);
 
@@ -669,7 +669,7 @@ class WechatController extends Controller
 //        }
 
 
-        return response()->json(['success'=>true,'msg'=>'测试屏蔽！']);
+//        return response()->json(['success'=>true,'msg'=>'测试屏蔽！']);
 //        QrCode::format('png')->size(120)->generate('http://www.maidamaida.com/wechat/task/57',public_path('/assets/images/qrcode/fApwRzHbKnLK6GmURiWUxyVWacs6OIGY.png'));
 
     }
