@@ -212,7 +212,7 @@
 @endif
 </body>
 <script type="text/javascript" charset="UTF-8">
-    $("img").each(function(){$(this).attr("data-src")&&$(this).attr("data-src").indexOf("mmbiz.qpic.cn")>-1&&$(this).attr("src","http://wewen.io/image?src="+$(this).attr("data-src"))});
+    $("img").each(function(){$(this).attr("data-src")&&$(this).attr("data-src").indexOf("mmbiz.qpic.cn")>-1&&$(this).attr("src","http://www.maidamaida.com/image?src="+$(this).attr("data-src"))});
     function onMobile(){
         alert('电话');
     }
