@@ -7,7 +7,6 @@
     <meta name="format-detection" content="telephone=no">
     <meta http-equiv="x-rim-auto-match" content="none">
     <link rel="stylesheet" href="{{ URL::asset('assets/css/bootstrap.min.css') }}">
-    <link rel="stylesheet" href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.css">
     <meta name="viewport" id="viewport" content="width=320, initial-scale=1, maximum-scale=1, user-scalable=no">
     <script src="{{ URL::asset('assets/js/jquery.min.js') }}" type="text/javascript" charset="utf-8"></script>
     <script src="{{ URL::asset('assets/js/bootstrap.min.js') }}" type="text/javascript" charset="utf-8"></script>
@@ -230,59 +229,8 @@
         effect:"fadeIn",
         failure_limit : 10
     });
-
-
-
-//    function LGY_imgScrollLoad(option){
-//        this.oImg = document.getElementById(option.wrapID).getElementsByTagName('img');
-//        this.sHolder_src = option.holder_src;
-//        this.int();
-//    }
-//    LGY_imgScrollLoad.prototype = {
-//        loadImg:function(){
-//            //保存document在变量里，减少对document的查询
-//            var doc = document;
-//            for(var n=0,i = this.oImg.length;n<i;n++){
-//                //获取图片占位符图片地址
-//                var hSrc = this.oImg[n].getAttribute(this.sHolder_src);
-//                if(hSrc){
-//                    var scrollTop = doc.body.scrollTop||doc.documentElement.scrollTop,
-//                            windowHeight = doc.documentElement.clientHeight,
-//                            offsetTop = this.oImg[n].getBoundingClientRect().top + scrollTop,
-//                            imgHeight = this.oImg[n].clientHeight,
-//                            justTop = offsetTop + imgHeight;
-//                    // 判断图片是否在可见区域
-//                    if(justTop>scrollTop&&offsetTop<(scrollTop+windowHeight)){
-//                        //alert(offsetTop);
-//                        this.isLoad(hSrc,n);
-//                    }
-//                }
-//            }
-//        },
-//        isLoad:function(src,n){
-//            var src = src,
-//                    n = n,
-//                    o_img = new Image(),
-//                    _that = this;
-//            o_img.onload = (function(n){
-//                _that.oImg[n].setAttribute('src',src);
-//                _that.oImg[n].removeAttribute(_that.sHolder_src);
-//            })(n);
-//            o_img.src = src;
-//        },
-//        int:function(){
-//            this.loadImg();
-//            var _that = this,
-//                    timer = null;
-//            // 滚动：添加定时器，防止频繁调用loadImg函数
-//            window.onscroll = function(){
-//                clearTimeout(timer);
-//                timer = setTimeout(function(){
-//                    _that.loadImg();
-//                },100);
-//            }
-//        }
-//    }
+    $('#icon').attr('class','img-circle center-block');
+    $('#wx_qrcode').attr('class','img-rounded center-block');
 
 </script>
 
