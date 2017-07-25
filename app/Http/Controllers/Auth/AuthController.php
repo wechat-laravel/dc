@@ -13,6 +13,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\ThrottlesLogins;
 use Illuminate\Foundation\Auth\AuthenticatesAndRegistersUsers;
 use Illuminate\Support\Facades\Validator;
+use Mews\Captcha\Facades\Captcha;
 
 class AuthController extends Controller
 {
@@ -371,6 +372,20 @@ class AuthController extends Controller
 
                 return response()->json(['success'=>true,'msg'=>'密码重置成功!']);
             }
+        }
+
+    }
+    //路由闭包形式的验证码验证改为方法内部验证
+    public function captcha(){
+
+        if (Captcha::check($_GET['captcha'])) {
+
+            return response()->json(['success' => true]);
+
+        } else {
+
+            return response()->json(['success' => false]);
+
         }
 
     }
