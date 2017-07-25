@@ -22,7 +22,7 @@ function Pages(current,last){
 }
 
 var wgt  = echarts.init(document.getElementById('wgt'));
-
+wgt.hideLoading();
 var wgt_data = {
     backgroundColor: new echarts.graphic.RadialGradient(0.3, 0.3, 0.8, [{
         offset: 0,
@@ -57,11 +57,11 @@ var wgt_data = {
         type: 'graph',
         layout: 'force',
         force: {
-            repulsion: 50
+            repulsion: 5
         },
         data: [{
             "name": "原点",
-            "symbolSize": 10,
+            "symbolSize": 5,
             "value": 27
         }, {
             "name": "小明",

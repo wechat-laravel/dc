@@ -38,7 +38,7 @@ class WechatPeopleController extends Controller
                     'levels'  => [],                                                     //记录当前文章有几个层级
                     'cate'    => [],                                                     //层级格式
                     'user'    => [],                                                     //存储openid对应的用户名
-                    'data'    => [['name'=>'起点','symbolSize'=>30,'value'=>0]],         //网状图数据
+                    'data'    => [['name'=>'起点','symbolSize'=>10,'value'=>0]],         //网状图数据
                     'links'   => [],                                                     //阶层链接
             ];
 
@@ -65,7 +65,9 @@ class WechatPeopleController extends Controller
 
                     'category' => $re->level_name,
 
-                    'value'    => $re->people_num
+                    'value'    => $re->people_num,
+
+                    'symbolSize' => 5
 
                 ];
 
