@@ -224,7 +224,7 @@
     }
     function stay(){
         $.ajax({
-            url : 'http://www.maidamaida.com/wechat/rstay?stay=1'
+            url : 'http://dc.leqiyi.cn/wechat/rstay?stay=<?=$stay?>'
         })
     }
     setInterval(stay,1000);

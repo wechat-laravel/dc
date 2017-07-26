@@ -10,6 +10,7 @@ use App\Models\SpreadPeopleModel;
 use App\Models\SpreadRecordModel;
 use App\Models\TasksModel;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Redis;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Validator;
@@ -77,44 +78,6 @@ class WechatController extends Controller
 
         return $this->wechat->server->serve();
     }
-
-//    public function addMenu()
-//    {
-//        try{
-//
-//            $buttons = [
-//                [
-//                    "type" => "click",
-//                    "name" => "乐其意",
-//                    "key"  => "V1001_LE71"
-//                ],
-//                [
-//                    "name"       => "菜单",
-//                    "sub_button" => [
-//                        [
-//                            "type" => "view",
-//                            "name" => "首页",
-//                            "url"  => "http://dc.le71.cn/"
-//                        ],
-//                    ],
-//                ],
-//            ];
-//
-//            $menu = $this->wechat->menu;
-//
-//            $menu->add($buttons);
-//
-//            $menus = $menu->all();
-//
-//        }catch (\Exception $e){
-//
-//            return response()->json(['success'=>false,'msg'=>$e->getMessage()]);
-//
-//        }
-//
-//        return response($menus);
-
-//    }
 
 
     //每个任务的首页
@@ -492,40 +455,6 @@ class WechatController extends Controller
 
     }
 
-    public function stayTime(Request $request)
-    {
-
-        if ($request->has('stay')){
-
-            if (!Session::has('now_id')){
-
-                return response()->json(['success'=>false,'msg'=>'缺少必要的参数！']);
-
-            }
-
-            $now_id = Session::get('now_id');
-
-
-            try{
-
-                SpreadRecordModel::where('id',$now_id)->increment('stay',1);
-
-            }catch (Exception $e){
-
-                return response()->json(['success'=>false,'msg'=>$e->getMessage()]);
-
-            }
-
-            return response()->json(['success'=>true,'msg'=>'OK']);
-
-        }else{
-
-            return response()->json(['success'=>false,'msg'=>'缺少必要的参数！']);
-
-        }
-
-    }
-
     public function upper($task_id,$openid,$id,$level)
     {
         try{
@@ -622,80 +551,225 @@ class WechatController extends Controller
 
     }
 
-    public function ceshi(){
+    //记录文章页面停留时长
+    public function stayTime(Request $request)
+    {
 
-//        $url = "https://mp.weixin.qq.com/s?timestamp=1498729376&src=3&ver=1&signature=fhaB2OEbnGGLWSuxJgZYMO5kJCvEUh8qAPNvDH-rX3Dw6fm0-TNuzBNKcsCr8tUIyO0g*HNQY7qGQoK0XurAmkP4VrqGZcMUbvQZgr0AiuELoj4fak3hq28KkbXpaow0dOwNdVrgMP3eahHbC4Jzg7tHXWIOC6jWxWsDewq6hKU=";
-//
-//        $cc = wx($url);
+        if ($request->has('stay')){
 
-//        var_dump($cc);
+            if (!Session::has('now_id')){
+
+                return response()->json(['success'=>false,'msg'=>'缺少必要的参数！']);
+
+            }
+
+            $id = intval(Session::get('now_id'));
+
+            try{
+
+                //一：把当前记录的ID存进 集合里，当索引使用
+
+                //检测当前id是否已存在集合中
+                $exists_id = Redis::sismember('record_id_list',$id);
+
+                if (!$exists_id){
+                    //添加到集合
+                    if(!Redis::sadd('record_id_list',$id)){
+
+                        return response()->json(['success'=>false,'msg'=>'索引添加失败！']);
+
+                    }
+
+                }
+                //HASH表中是否存在id, 在这里id是作为key的
+                $exists = Redis::hexists("$id",'time');
+
+                if ($exists){
+                    //递增返回的是递增后的数值，在这里所以不会为0的，所以这样判断
+                    if (Redis::hincrby("$id",'stay',1) && Redis::hincrby($id,'time',1)){
+
+                        return response()->json(['success'=>true,'msg'=>'递增成功！']);
+
+                    }else{
+
+                        return response()->json(['success'=>false,'msg'=>'递增失败！']);
+
+                    }
+
+                }else{
+
+                    Redis::hmset($id,['stay'=>1,'time'=>time()]);
+
+                }
+
+                return response()->json(['success'=>true,'msg'=>'记录成功！']);
+
+            }catch (Exception $e){
+
+                return response()->json(['success'=>false,'msg'=>$e->getMessage()]);
+            }
+
+        }else{
+
+            return response()->json(['success'=>false,'msg'=>'缺少必要的参数！']);
+
+        }
+
+    }
+
+    //定时更新停留时长的脚本
+    public function upStay()
+    {
+        $sql  = 'UPDATE `dc_spread_record` SET `stay` = CASE `id`';
+        $ids  = [];
+
+        //过期时间标准，允许有5秒的时差
+        $time = time()-5;
+
+        //列出所有的id索引
+        $list  = Redis::smembers('record_id_list');
+
+        if (empty($list))  return response()->json(['success'=>false,'msg'=>'索引列表为空！']);
+
+        foreach ($list as $id){
+
+            //根据ID找对应的HASH表数据
+            $res = Redis::hgetall($id);
+
+            if ($res){
+
+                //小于这个时间，说明页面浏览已经停止了
+                if ($res['time'] < $time){
+
+                    $sql .= ' WHEN '.intval($id).' THEN '.intval($res['stay']);
+
+                    $ids []= $id;
+
+                }
+
+            }else{
+
+                continue;
+
+            }
+
+        }
+
+        //如果不为空，则表示有过期的数据。
+        if (!empty($ids)){
+
+            $str  = implode($ids,',');
+
+            $sql .= ' END WHERE `id` IN ('.$str.');';
+
+        }else{
+
+            return response()->json(['success'=>false,'msg'=>'没有过期的数据！']);
+        }
+
+        try{
+
+            $result = DB::update(DB::raw($sql));
+
+        }catch (Exception $e){
+
+            return response()->json(['success'=>false,'msg'=>$e->getMessage()]);
+        }
+
+        //返回的值为影响的行数，如果为0表示没有修改
+        if ($result){
+            //修改完之后才要删除掉这些过期的
+            foreach ($ids as $id){
+
+                Redis::srem('record_id_list',$id);
+
+                Redis::hdel($id,['stay','time']);
+
+            }
+
+        }
+
+        return response()->json(['success'=>true,'msg'=>'修改成功！']);
+
+    }
+
+    public function ceshi(Request $request){
+
+        //测试用的
+
+        $stay = 1;
+
+        if ($request->has('stay')){
+
+            $stay = intval($request->input('stay'));
+
+        }
 
         $task = TasksModel::find(82);
-//
-        return view('test',['task'=>$task]);
 
-//        $res = TasksModel::select('id','qrcode_url')->orderBy('created_at','desc')->get();
-//
-//        try{
-//
-//            foreach ($res  as $re){
-//
-//                QrCode::format('png')->size(120)->generate('http://www.maidamaida.com/wechat/task/'.$re->id,public_path("$re->qrcode_url"));
-//
-//            }
-//
-//        }catch (Exception $e){
-//
-//            return response()->json(['success'=>false,'msg'=>$e->getMessage()]);
-//
-//        }
-
-
-//        return response()->json(['success'=>true,'msg'=>'测试屏蔽！']);
-//        QrCode::format('png')->size(120)->generate('http://www.maidamaida.com/wechat/task/57',public_path('/assets/images/qrcode/fApwRzHbKnLK6GmURiWUxyVWacs6OIGY.png'));
-
-//        try{
-//
-//            Redis::set('hackqy','cool');
-//
-//            $foo = Redis::get('foo');
-//
-//            return $foo;
-//
-//        }catch (Exception $e){
-//
-//            return response()->json(['success'=>false,'msg'=>$e->getMessage()]);
-//        }
+        return view('test',['task'=>$task,'stay'=>$stay]);
 
     }
 
     //redis
     public function rstayTime(Request $request)
     {
+        if ($request->ajax()){
 
-//        if ($request->has('stay')){
-//
-//        try{
-//
-//            Redis::hset('hackqy','cool');
-//
-//            $foo = Redis::get('foo');
-//
-//            return $foo;
-//
-//        }catch (Exception $e){
-//
-//            return response()->json(['success'=>false,'msg'=>$e->getMessage()]);
-//        }
-//
-//            return response()->json(['success'=>true,'msg'=>['s'=>$stay,'id'=>$now_id]]);
-//
-//        }else{
-//
-//            return response()->json(['success'=>false,'msg'=>'缺少必要的参数！']);
-//
-//        }
+            try{
+
+                $id = intval($request->input('stay'));
+
+                //一：把当前记录的ID存进 集合里，当索引使用
+
+                //检测当前id是否已存在集合中
+                $exists_id = Redis::sismember('record_id_list',$id);
+
+                if (!$exists_id){
+                    //添加到集合
+                    if(!Redis::sadd('record_id_list',$id)){
+
+                        return response()->json(['success'=>false,'msg'=>'索引添加失败！']);
+
+                    }
+
+                }
+                //HASH表中是否存在id, 在这里id是作为key的
+                $exists = Redis::hexists("$id",'time');
+
+                if ($exists){
+                    //递增返回的是递增后的数值，在这里所以不会为0的，所以这样判断
+                    if (Redis::hincrby("$id",'stay',1) && Redis::hincrby($id,'time',1)){
+
+                        return response()->json(['success'=>true,'msg'=>'递增成功！']);
+
+                    }else{
+
+                        return response()->json(['success'=>false,'msg'=>'递增失败！']);
+
+                    }
+
+                }else{
+
+                    Redis::hmset($id,['stay'=>1,'time'=>time()]);
+
+                }
+
+                return response()->json(['success'=>true,'msg'=>'记录成功！']);
+
+
+            }catch (Exception $e){
+
+                return response()->json(['success'=>false,'msg'=>$e->getMessage()]);
+            }
+
+        }else{
+
+            return response()->json(['success'=>false,'msg'=>'非法的请求！']);
+
+        }
 
     }
+
 
 }
