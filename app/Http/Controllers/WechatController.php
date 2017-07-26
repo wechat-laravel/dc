@@ -664,7 +664,7 @@ class WechatController extends Controller
 
         }else{
 
-            return response()->json(['success'=>false,'msg'=>'没有过期的数据！']);
+            return response()->json(['success'=>true,'msg'=>'没有过期的数据！']);
         }
 
         try{
