@@ -16,7 +16,9 @@ class IndexController extends Controller
      */
     public function index()
     {
-        return view('modules.admin.index');
+
+//        return view('modules.admin.index');
+
     }
 
     /**

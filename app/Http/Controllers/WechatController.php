@@ -10,6 +10,7 @@ use App\Models\SpreadPeopleModel;
 use App\Models\SpreadRecordModel;
 use App\Models\TasksModel;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Redis;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Validator;
 use Mockery\CountValidator\Exception;
@@ -124,9 +125,6 @@ class WechatController extends Controller
         $look = 0;      //是否分享的内容被好友查看了
 
         if (!$task) return response()->json(['success'=>false,'msg'=>'非法的请求！']);
-
-
-	    Session::forget('stay');
 
         Session::put('tasks_id',$task->id);
 
@@ -505,28 +503,12 @@ class WechatController extends Controller
 
             }
 
-            if (Session::has('stay')){
-
-                $stay = Session::get('stay');
-		
-                $stay = $stay+1;
-
-                Session::put('stay',$stay);
-
-            }else{
-
-                $stay = 1;
-
-                Session::put('stay',$stay);
-
-            }
-
             $now_id = Session::get('now_id');
 
 
             try{
 
-                SpreadRecordModel::where('id',$now_id)->update(['stay'=>$stay]);
+                SpreadRecordModel::where('id',$now_id)->increment('stay',1);
 
             }catch (Exception $e){
 
@@ -534,7 +516,7 @@ class WechatController extends Controller
 
             }
 
-            return response()->json(['success'=>true,'msg'=>['s'=>$stay,'id'=>$now_id]]);
+            return response()->json(['success'=>true,'msg'=>'OK']);
 
         }else{
 
@@ -671,6 +653,48 @@ class WechatController extends Controller
 
 //        return response()->json(['success'=>true,'msg'=>'测试屏蔽！']);
 //        QrCode::format('png')->size(120)->generate('http://www.maidamaida.com/wechat/task/57',public_path('/assets/images/qrcode/fApwRzHbKnLK6GmURiWUxyVWacs6OIGY.png'));
+
+//        try{
+//
+//            Redis::set('hackqy','cool');
+//
+//            $foo = Redis::get('foo');
+//
+//            return $foo;
+//
+//        }catch (Exception $e){
+//
+//            return response()->json(['success'=>false,'msg'=>$e->getMessage()]);
+//        }
+
+    }
+
+    //redis
+    public function rstayTime(Request $request)
+    {
+
+//        if ($request->has('stay')){
+//
+//        try{
+//
+//            Redis::hset('hackqy','cool');
+//
+//            $foo = Redis::get('foo');
+//
+//            return $foo;
+//
+//        }catch (Exception $e){
+//
+//            return response()->json(['success'=>false,'msg'=>$e->getMessage()]);
+//        }
+//
+//            return response()->json(['success'=>true,'msg'=>['s'=>$stay,'id'=>$now_id]]);
+//
+//        }else{
+//
+//            return response()->json(['success'=>false,'msg'=>'缺少必要的参数！']);
+//
+//        }
 
     }
 

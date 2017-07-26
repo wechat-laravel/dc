@@ -222,6 +222,12 @@
     function onZixun(){
         $('.bs-zixun-modal-sm').modal('show');
     }
+    function stay(){
+        $.ajax({
+            url : 'http://www.maidamaida.com/wechat/rstay?stay=1'
+        })
+    }
+    setInterval(stay,1000);
 
     $('img').each(function(){$(this).attr('data-original',$(this).attr('src'))&&$(this).removeAttr("src")&&$(this).attr('class','lazy')});
     $(".lazy").lazyload({
