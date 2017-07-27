@@ -629,7 +629,7 @@ class WechatController extends Controller
         //列出所有的id索引
         $list  = Redis::smembers('record_id_list');
 
-        if (empty($list))  return response()->json(['success'=>false,'msg'=>'empty']);
+        if (empty($list))  return response()->json(['success'=>true,'msg'=>'empty']);
 
         foreach ($list as $id){
 
