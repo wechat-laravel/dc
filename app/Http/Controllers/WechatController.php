@@ -142,13 +142,14 @@ class WechatController extends Controller
         ];
 
         //记录层级
-        $level = SpreadRecordModel::where('openid',$user[0]['id'])->where('action','browse')->where('tasks_id',$task->id)->orderBy('created_at','asc')->first();
+        $level = SpreadRecordModel::where('tasks_id',$task->id)->where('openid',$user[0]['id'])->where('action','browse')->orderBy('created_at','asc')->first();
 
         if ($level){
 
-                $record['level'] = $level->level;
+            $record['level'] = $level->level;
 
         }else{
+            //Redis UV : 如果没有浏览记录的话说明新的UV +1
 
             if ($this->openid){
 
@@ -183,7 +184,7 @@ class WechatController extends Controller
             if ($this->mark && $this->openid){
 
                 //检查当前连接标识
-                $upper = SpreadRecordModel::where('ip',0)->where('openid',$this->openid)->where('tasks_id',$task->id)->where('mark',$this->mark)->first();
+                $upper = SpreadRecordModel::where('tasks_id',$task->id)->where('ip',0)->where('openid',$this->openid)->where('mark',$this->mark)->first();
 
                 if (!$upper)  return response()->json(['success'=>false,'msg'=>'非法请求！']);
 
@@ -195,7 +196,7 @@ class WechatController extends Controller
 
 		            if($user[0]['id'] !== $upper->openid){
 		    
-                        $num = SpreadRecordModel::select('id')->where('action','browse')->where('source','wechat')->where('tasks_id',$task->id)
+                        $num = SpreadRecordModel::select('id')->where('tasks_id',$task->id)->where('action','browse')->where('source','wechat')
                                                   ->where('mark',$this->mark)->whereNotIn('openid',[$upper->openid,$user[0]['id']])->groupBy('openid')->get();
 
                         if ($num){
@@ -209,7 +210,12 @@ class WechatController extends Controller
 
                                     $upper->update(['action'=>'wechat_group']);
 
-                                    SpreadRecordModel::where('action','browse')->where('mark',$this->mark)->where('tasks_id',$task->id)->where('source','wechat')->update(['source'=>'wechat_group']);
+                                    //同时将原来的分享到微信好友次数-1  微信群次数+1
+                                    SpreadPeopleModel::where('tasks_id',$task->id)->where('openid',$upper->openid)->increment('wechat_group',1);
+
+                                    SpreadPeopleModel::where('tasks_id',$task->id)->where('openid',$upper->openid)->decrement('wechat',1);
+
+                                    SpreadRecordModel::where('tasks_id',$task->id)->where('action','browse')->where('mark',$this->mark)->where('source','wechat')->update(['source'=>'wechat_group']);
 
                                 }catch (Exception $e){
 
@@ -250,7 +256,7 @@ class WechatController extends Controller
         }
 
         try{
-
+            //Redis source : 这里可以取record的 source 对应的+1
             $last = SpreadRecordModel::create($record);
 
             //记录在用户关系表里
@@ -292,7 +298,7 @@ class WechatController extends Controller
 
             }
 
-
+            //如果有上级，看上级是否记录的改下级，如果没有该层级的所有上级 都添加该记录
             if ($people->upper){
 
                 //上级
@@ -415,8 +421,8 @@ class WechatController extends Controller
             return response()->json(['success'=>false,'msg'=>'action值错误：'.$input['action']]);
 
         }
-
-        $level = SpreadRecordModel::where('openid',$user[0]['id'])->where('tasks_id',$input['task_id'])->orderBy('created_at','desc')->first();
+        //这里直接把该人的操作记录 在传播用户表 对应的转发方式的值+1
+        $level = SpreadPeopleModel::where('openid',$user[0]['id'])->where('tasks_id',$input['task_id'])->first();
 
         if (!$level) return response()->json(['success'=>false,'msg'=>'非法的操作！']);
 
@@ -432,6 +438,8 @@ class WechatController extends Controller
         try{
 
             SpreadRecordModel::create($record);
+            //相应的 操作次数+1
+            SpreadPeopleModel::where('tasks_id',$record['task_id'])->where('openid',$record['openid'])->increment($record['action'],1);
 
             if ($record['action'] === 'wechat' && $record['action'] === 'qq'){
 
