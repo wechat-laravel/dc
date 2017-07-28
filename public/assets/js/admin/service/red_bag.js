@@ -143,6 +143,11 @@ var red_bag = avalon.define({
     editConfig:function(indexId,id){
         red_bag.article_id = indexId;
         red_bag.redId = id;
+    },
+    zhuanchu : function(id,tasks_id){
+        red_bag.redId = id;
+        red_bag.tasks_id = tasks_id;
+        $('#red_turn').modal('show');
     }
 });
 

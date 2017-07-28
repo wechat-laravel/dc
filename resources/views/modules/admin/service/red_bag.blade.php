@@ -76,22 +76,19 @@
                         <tr ms-for="($index, data) in @red_bag_data">
                             <td>@{{ data.id }}</td>
                             <td>@{{ data.event |truncate(10) }}</td>
-                            <td>@{{ data.title.title |truncate(10) }}</td>
-                            <td>@{{ data.title.id }}</td>
+                            <td>@{{ data.title ? data.title.title : '文章已被删除' |truncate(10)}}</td>
+                            <td>@{{ data.title ? data.title.id : 0}}</td>
                             <td>@{{ data.total }}</td>
                             <td>
                                 @{{ data.amount }}
                             </td>
                             <td>
                                 <button class="btn btn-warning btn-sm"
-                                        ms-click="@chongzhi($index, data.id,data.title.id)"
+                                        ms-click="@chongzhi($index, data.id, data.title ? data.title.id : 0)"
                                         data-toggle="modal"
                                         data-target="#chongzhiModal">充值</button>
                             </td>
-                            <td><a class="btn btn-success btn-sm"
-                                   ms-click="@chongzhi($index, data.id,data.title.id)"
-                                   data-toggle="modal"
-                                   data-target="#red_turn">转出</a></td>
+                            <td><a class="btn btn-success btn-sm" ms-click="@zhuanchu(data.id,data.title ? data.title.id : 100)">转出</a></td>
                             <td>@{{ data.taxonomy_name }}</td>
                             <td>@{{ data.money }}</td>
                             <td>@{{ data.action_name }}</td>
