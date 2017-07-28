@@ -116,309 +116,300 @@ class WechatController extends Controller
 
             $times = ceil($times/1000);
 
-            $res = [];
-
-            for ($i =0 ; $i <= $times;$i++){
+            //每次取出数据 就处理数据，避免一次数据过大
+            for ($i =0 ; $i < $times;$i++){
                 //偏移量
                 $offset = $i * 1000;
                 //每次取出的条数
                 $limit  = 1000;
 
-                if (empty($res)){
+                $res = SpreadRecordModel::select('openid','source','action', 'stay', 'level', 'created_at')->where('tasks_id',$id)->orderBy('created_at', 'asc')->skip($offset)->take($limit)->get()->toArray();
 
-                    $res = SpreadRecordModel::select('openid','source','action', 'stay', 'level', 'created_at')->where('tasks_id',$id)->orderBy('created_at', 'asc')->skip($offset)->take($limit)->get()->toArray();
+                foreach ($res as $re) {
+                    //PV,UV,分享统计与走势
+                    if ($re['action'] === 'browse') {
 
-                }else{
+                        //今天
+                        if ($re['created_at'] >= $days[0]) {
 
-                    $res = array_merge($res,SpreadRecordModel::select('openid','source','action', 'stay', 'level', 'created_at')->where('tasks_id',$id)->orderBy('created_at', 'asc')->skip($offset)->take($limit)->get()->toArray());
+                            $top['pv_today'] += 1;
 
-                }
+                            $top['current']['pv'][intval(date('H',$re['created_at']))] += 1;
 
-            }
+                            $uv[0] = [];
 
-            foreach ($res as $re) {
-                //PV,UV,分享统计与走势
-                if ($re['action'] === 'browse') {
+                            if (!in_array($re['openid'], $uv[6])) {
 
-                    //今天
-                    if ($re['created_at'] >= $days[0]) {
+                                $uv[6][] = $re['openid'];
 
-                        $top['pv_today'] += 1;
+                                $top['uv_today'] += 1;
 
-                        $top['current']['pv'][intval(date('H',$re['created_at']))] += 1;
+                                $top['uv_everyday'][6] += 1;
 
-                        $uv[0] = [];
+                                $top['current']['uv'][intval(date('H',$re['created_at']))] += 1;
 
-                        if (!in_array($re['openid'], $uv[6])) {
+                            }
 
-                            $uv[6][] = $re['openid'];
+                            $top['pv_everyday'][6] += 1;
 
-                            $top['uv_today'] += 1;
+                        } elseif ($re['created_at'] >= $days[1] && $re['created_at'] < $days[0]) {
 
-                            $top['uv_everyday'][6] += 1;
+                            $top['pv_yesterday'] += 1;
 
-                            $top['current']['uv'][intval(date('H',$re['created_at']))] += 1;
+                            if (!in_array($re['openid'], $uv[5])) {
 
-                        }
+                                $uv[5][] = $re['openid'];
 
-                        $top['pv_everyday'][6] += 1;
+                                $top['uv_yesterday'] += 1;
 
-                    } elseif ($re['created_at'] >= $days[1] && $re['created_at'] < $days[0]) {
+                                $top['uv_everyday'][5] += 1;
 
-                        $top['pv_yesterday'] += 1;
+                            }
 
-                        if (!in_array($re['openid'], $uv[5])) {
+                            $top['pv_everyday'][5] += 1;
 
-                            $uv[5][] = $re['openid'];
+                        } elseif ($re['created_at'] >= $days[2] && $re['created_at'] < $days[1]) {
 
-                            $top['uv_yesterday'] += 1;
+                            if (!in_array($re['openid'], $uv[4])) {
 
-                            $top['uv_everyday'][5] += 1;
+                                $uv[4][] = $re['openid'];
 
-                        }
+                                $top['uv_everyday'][4] += 1;
 
-                        $top['pv_everyday'][5] += 1;
+                            }
 
-                    } elseif ($re['created_at'] >= $days[2] && $re['created_at'] < $days[1]) {
+                            $top['pv_everyday'][4] += 1;
 
-                        if (!in_array($re['openid'], $uv[4])) {
+                        } elseif ($re['created_at'] >= $days[3] && $re['created_at'] < $days[2]) {
 
-                            $uv[4][] = $re['openid'];
+                            if (!in_array($re['openid'], $uv[3])) {
 
-                            $top['uv_everyday'][4] += 1;
+                                $uv[3][] = $re['openid'];
 
-                        }
+                                $top['uv_everyday'][3] += 1;
 
-                        $top['pv_everyday'][4] += 1;
+                            }
 
-                    } elseif ($re['created_at'] >= $days[3] && $re['created_at'] < $days[2]) {
+                            $top['pv_everyday'][3] += 1;
 
-                        if (!in_array($re['openid'], $uv[3])) {
+                        } elseif ($re['created_at'] >= $days[4] && $re['created_at'] < $days[3]) {
 
-                            $uv[3][] = $re['openid'];
+                            if (!in_array($re['openid'], $uv[2])) {
 
-                            $top['uv_everyday'][3] += 1;
+                                $uv[2][] = $re['openid'];
 
-                        }
+                                $top['uv_everyday'][2] += 1;
 
-                        $top['pv_everyday'][3] += 1;
+                            }
 
-                    } elseif ($re['created_at'] >= $days[4] && $re['created_at'] < $days[3]) {
+                            $top['pv_everyday'][2] += 1;
 
-                        if (!in_array($re['openid'], $uv[2])) {
+                        } elseif ($re['created_at'] >= $days[5] && $re['created_at'] < $days[4]) {
 
-                            $uv[2][] = $re['openid'];
+                            if (!in_array($re['openid'], $uv[1])) {
 
-                            $top['uv_everyday'][2] += 1;
+                                $uv[1][] = $re['openid'];
 
-                        }
+                                $top['uv_everyday'][1] += 1;
 
-                        $top['pv_everyday'][2] += 1;
+                            }
 
-                    } elseif ($re['created_at'] >= $days[5] && $re['created_at'] < $days[4]) {
+                            $top['pv_everyday'][1] += 1;
 
-                        if (!in_array($re['openid'], $uv[1])) {
+                        } elseif ($re['created_at'] >= $days[6] && $re['created_at'] < $days[5]) {
 
-                            $uv[1][] = $re['openid'];
+                            if (!in_array($re['openid'], $uv[0])) {
 
-                            $top['uv_everyday'][1] += 1;
+                                $uv[0][] = $re['openid'];
 
-                        }
+                                $top['uv_everyday'][0] += 1;
 
-                        $top['pv_everyday'][1] += 1;
+                            }
 
-                    } elseif ($re['created_at'] >= $days[6] && $re['created_at'] < $days[5]) {
-
-                        if (!in_array($re['openid'], $uv[0])) {
-
-                            $uv[0][] = $re['openid'];
-
-                            $top['uv_everyday'][0] += 1;
+                            $top['pv_everyday'][0] += 1;
 
                         }
 
-                        $top['pv_everyday'][0] += 1;
+                        if (!in_array($re['openid'], $uv[7])) {
 
-                    }
+                            $uv[7][] = $re['openid'];
 
-                    if (!in_array($re['openid'], $uv[7])) {
+                            $top['uv_num'] += 1;
 
-                        $uv[7][] = $re['openid'];
+                            $top['level']['uv'][$re['level']] += 1;
 
-                        $top['uv_num'] += 1;
+                        }
 
-                        $top['level']['uv'][$re['level']] += 1;
+                        $top['pv_num'] += 1;
 
-                    }
+                        $top['level']['pv'][$re['level']] += 1;
 
-                    $top['pv_num'] += 1;
+                        $top['stay_avg'] += $re['stay'];
 
-                    $top['level']['pv'][$re['level']] += 1;
+                        //时间段统计
+                        if ($re['stay'] <= 5){
 
-                    $top['stay_avg'] += $re['stay'];
+                            $top['stay']['this'][0] += 1;
 
-                    //时间段统计
-                    if ($re['stay'] <= 5){
+                        }elseif ($re['stay'] > 5 && $re['stay'] <= 10 ){
 
-                        $top['stay']['this'][0] += 1;
+                            $top['stay']['this'][1] += 1;
 
-                    }elseif ($re['stay'] > 5 && $re['stay'] <= 10 ){
+                        }elseif ($re['stay'] > 10 && $re['stay'] <= 20 ){
 
-                        $top['stay']['this'][1] += 1;
+                            $top['stay']['this'][2] += 1;
 
-                    }elseif ($re['stay'] > 10 && $re['stay'] <= 20 ){
+                        }elseif ($re['stay'] > 20 && $re['stay'] <= 40 ){
 
-                        $top['stay']['this'][2] += 1;
+                            $top['stay']['this'][3] += 1;
 
-                    }elseif ($re['stay'] > 20 && $re['stay'] <= 40 ){
+                        }elseif ($re['stay'] > 40 && $re['stay'] <= 80 ){
 
-                        $top['stay']['this'][3] += 1;
+                            $top['stay']['this'][4] += 1;
 
-                    }elseif ($re['stay'] > 40 && $re['stay'] <= 80 ){
+                        }elseif ($re['stay'] > 80 && $re['stay'] <= 160 ){
 
-                        $top['stay']['this'][4] += 1;
+                            $top['stay']['this'][5] += 1;
 
-                    }elseif ($re['stay'] > 80 && $re['stay'] <= 160 ){
+                        }elseif ($re['stay'] > 160 && $re['stay'] <= 320 ){
 
-                        $top['stay']['this'][5] += 1;
+                            $top['stay']['this'][6] += 1;
 
-                    }elseif ($re['stay'] > 160 && $re['stay'] <= 320 ){
+                        }elseif ($re['stay'] > 320 && $re['stay'] <= 640 ){
 
-                        $top['stay']['this'][6] += 1;
+                            $top['stay']['this'][7] += 1;
 
-                    }elseif ($re['stay'] > 320 && $re['stay'] <= 640 ){
+                        }elseif ($re['stay'] > 640 && $re['stay'] <= 1280 ){
 
-                        $top['stay']['this'][7] += 1;
+                            $top['stay']['this'][8] += 1;
 
-                    }elseif ($re['stay'] > 640 && $re['stay'] <= 1280 ){
+                        }elseif ($re['stay'] > 1280 ){
 
-                        $top['stay']['this'][8] += 1;
+                            $top['stay']['this'][9] += 1;
 
-                    }elseif ($re['stay'] > 1280 ){
+                        }
 
-                        $top['stay']['this'][9] += 1;
+                        //统计来源数据
+                        switch ($re['source']){
 
-                    }
+                            //单人对话
+                            case 'wechat':
 
-                    //统计来源数据
-                    switch ($re['source']){
+                                $top['browse'][0]['value'] += 1 ;
 
-                        //单人对话
-                        case 'wechat':
+                                break;
 
-                            $top['browse'][0]['value'] += 1 ;
+                            //朋友圈
+                            case 'timeline':
 
-                            break;
+                                $top['browse'][1]['value'] += 1 ;
 
-                        //朋友圈
-                        case 'timeline':
+                                break;
 
-                            $top['browse'][1]['value'] += 1 ;
+                            //微信群
+                            case 'wechat_group':
 
-                            break;
+                                $top['browse'][2]['value'] += 1 ;
 
-                        //微信群
-                        case 'wechat_group':
+                                break;
 
-                            $top['browse'][2]['value'] += 1 ;
+                            case 'article':
 
-                            break;
+                                $top['browse'][3]['value'] += 1 ;
 
-                        case 'article':
+                                break;
 
-                            $top['browse'][3]['value'] += 1 ;
+                            //其他
+                            default :
 
-                            break;
+                                $top['browse'][4]['value'] += 1 ;
 
-                        //其他
-                        default :
+                                break;
+                        }
 
-                            $top['browse'][4]['value'] += 1 ;
+                        $top['visit']['this'][intval(date('H',$re['created_at']))] += 1;
 
-                            break;
-                    }
+                    } else {
 
-                    $top['visit']['this'][intval(date('H',$re['created_at']))] += 1;
+                        //今天
+                        if ($re['created_at'] >= $days[0]) {
 
-                } else {
+                            $top['share_today'] += 1;
 
-                    //今天
-                    if ($re['created_at'] >= $days[0]) {
+                            $top['share_everyday'][6] += 1;
 
-                        $top['share_today'] += 1;
+                            $top['current']['share'][intval(date('H',$re['created_at']))] += 1;
 
-                        $top['share_everyday'][6] += 1;
+                        } elseif ($re['created_at'] >= $days[1] && $re['created_at'] < $days[0]) {
 
-                        $top['current']['share'][intval(date('H',$re['created_at']))] += 1;
+                            $top['share_yesterday'] += 1;
 
-                    } elseif ($re['created_at'] >= $days[1] && $re['created_at'] < $days[0]) {
+                            $top['share_everyday'][5] += 1;
 
-                        $top['share_yesterday'] += 1;
+                        } elseif ($re['created_at'] >= $days[2] && $re['created_at'] < $days[1]) {
 
-                        $top['share_everyday'][5] += 1;
+                            $top['share_everyday'][4] += 1;
 
-                    } elseif ($re['created_at'] >= $days[2] && $re['created_at'] < $days[1]) {
+                        } elseif ($re['created_at'] >= $days[3] && $re['created_at'] < $days[2]) {
 
-                        $top['share_everyday'][4] += 1;
+                            $top['share_everyday'][3] += 1;
 
-                    } elseif ($re['created_at'] >= $days[3] && $re['created_at'] < $days[2]) {
+                        } elseif ($re['created_at'] >= $days[4] && $re['created_at'] < $days[3]) {
 
-                        $top['share_everyday'][3] += 1;
+                            $top['share_everyday'][2] += 1;
 
-                    } elseif ($re['created_at'] >= $days[4] && $re['created_at'] < $days[3]) {
+                        } elseif ($re['created_at'] >= $days[5] && $re['created_at'] < $days[4]) {
 
-                        $top['share_everyday'][2] += 1;
+                            $top['share_everyday'][1] += 1;
 
-                    } elseif ($re['created_at'] >= $days[5] && $re['created_at'] < $days[4]) {
+                        } elseif ($re['created_at'] >= $days[6] && $re['created_at'] < $days[5]) {
 
-                        $top['share_everyday'][1] += 1;
+                            $top['share_everyday'][0] += 1;
 
-                    } elseif ($re['created_at'] >= $days[6] && $re['created_at'] < $days[5]) {
+                        }
 
-                        $top['share_everyday'][0] += 1;
+                        $top['share_num'] += 1;
 
-                    }
+                        $top['level']['share'][$re['level']] += 1;
 
-                    $top['share_num'] += 1;
+                        //统计分享去向
+                        switch ($re['action']){
 
-                    $top['level']['share'][$re['level']] += 1;
+                            //QQ好友
+                            case 'qq':
 
-                    //统计分享去向
-                    switch ($re['action']){
+                                $top['action'][1]['value'] += 1 ;
 
-                        //QQ好友
-                        case 'qq':
+                                break;
 
-                            $top['action'][1]['value'] += 1 ;
+                            //朋友圈
+                            case 'timeline':
 
-                            break;
+                                $top['action'][2]['value'] += 1 ;
 
-                        //朋友圈
-                        case 'timeline':
+                                break;
 
-                            $top['action'][2]['value'] += 1 ;
+                            //微信群
+                            case 'wechat_group':
 
-                            break;
+                                $top['action'][3]['value'] += 1 ;
 
-                        //微信群
-                        case 'wechat_group':
+                                break;
 
-                            $top['action'][3]['value'] += 1 ;
+                            case 'qzone':
 
-                            break;
+                                $top['action'][4]['value'] += 1 ;
 
-                        case 'qzone':
+                                break;
 
-                            $top['action'][4]['value'] += 1 ;
+                            //默认分享给微信好友
+                            default :
 
-                            break;
+                                $top['action'][0]['value'] += 1 ;
 
-                        //默认分享给微信好友
-                        default :
+                                break;
+                        }
 
-                            $top['action'][0]['value'] += 1 ;
-
-                            break;
                     }
 
                 }
@@ -435,6 +426,7 @@ class WechatController extends Controller
 
             }
 
+            //传播层级统计(放了11个单元，每一层直接对应，没有0层的，所以最后去掉头一个单元)
             array_shift($top['level']['pv']);
 
             array_shift($top['level']['uv']);
