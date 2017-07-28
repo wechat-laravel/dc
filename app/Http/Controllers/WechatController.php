@@ -82,6 +82,8 @@ class WechatController extends Controller
 
     //每个任务的首页
     public function task(Request $request,$id){
+        //每次新的浏览都要清楚之前的now_id
+        Session::forget('now_id');
 
         $task = TasksModel::where('id',intval($id))->with('ad')->first();
 
