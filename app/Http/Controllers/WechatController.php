@@ -705,7 +705,7 @@ class WechatController extends Controller
 
                 Redis::srem('record_id_list',$id);
 
-                Redis::hdel($id,['stay','time']);
+                Redis::hdel($id,['stay','time','tasks_id']);
 
             }
 
