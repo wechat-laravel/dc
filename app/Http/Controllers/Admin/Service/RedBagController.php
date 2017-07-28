@@ -116,11 +116,11 @@ class RedBagController extends Controller
                 $red_amount = intval($request->input('red_amount'));
 
                 //转出要先看 是否是自己的任务
-                $red_bag = RedBagModel::where('id',$red_bag_id)->where('tasks_id',$tasks_id)->where('user_id',Auth::id())->first();
+                $red_bag = RedBagModel::where('id',$red_bag_id)->where('user_id',Auth::id())->first();
 
                 if (!$red_bag){
 
-                    return response()->json(['success'=>false,'msg'=>'找不到要转出余额的红包任务！']);
+                    return response()->json(['success'=>false,'msg'=>'找不到要余额转出的红包任务！']);
 
                 }else{
 
