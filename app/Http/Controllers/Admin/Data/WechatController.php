@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Redis;
 
 class WechatController extends Controller
 {
@@ -34,6 +35,10 @@ class WechatController extends Controller
         if (!$task) return response()->json(['success'=>false,'msg'=>'非法的请求！']);
 
         if ($request->ajax()) {
+            //检测是否有缓存
+//            if (!Redis::hexists($id.'_top','pv_today')){
+
+//            }
 
             //数据统计
             $top = [
@@ -462,6 +467,19 @@ class WechatController extends Controller
                 }
 
             }
+
+//            //数据图头部4个模块的缓存存放
+//            Redis::hmset($id.'_top',
+//                [
+//                    'pv_today'=>$top['pv_today'],'pv_yesterday'=>$top['pv_yesterday'],'pv_num'=>$top['pv_num'],
+//                    'uv_today'=>$top['uv_today'],'uv_yesterday'=>$top['uv_yesterday'],'uv_num'=>$top['uv_num'],
+//                    'share_today'=>$top['share_today'],'share_yesterday'=>$top['share_yesterday'],'share_num'=>$top['share_num'],
+//                    'stay_avg'=>$top['stay_avg']
+//                ]);
+//            //设置过期时间为每天晚上的零点（因为这样可以免去再计算处理昨天的数据量，直接缓存的时候做好）
+//            Redis::expire($id.'_top',259200);
+
+
 
             return response()->json(['success'=>true,'top'=>$top]);
 

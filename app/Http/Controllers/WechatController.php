@@ -84,6 +84,8 @@ class WechatController extends Controller
     public function task(Request $request,$id){
         //每次新的浏览都要清楚之前的now_id
         Session::forget('now_id');
+        //task_id 当前任务id
+        Session::forget('tsk_id');
 
         $task = TasksModel::where('id',intval($id))->with('ad')->first();
 
@@ -317,8 +319,9 @@ class WechatController extends Controller
 
             }
 
-
             Session::put('now_id',$last->id);
+
+            Session::put('tsk_id',intval($id));
 
         }catch (Exception $e){
 
@@ -573,7 +576,15 @@ class WechatController extends Controller
 
             }
 
-            $id = intval(Session::get('now_id'));
+            if (!Session::has('tsk_id')){
+
+                return response()->json(['success'=>false,'msg'=>'缺少必要的参数！']);
+
+            }
+
+            $id  = intval(Session::get('now_id'));
+            //任务ID
+            $tsk = intval(Session::get('tsk_id'));
 
             try{
 
@@ -591,6 +602,7 @@ class WechatController extends Controller
                     }
 
                 }
+
                 //HASH表中是否存在id, 在这里id是作为key的
                 $exists = Redis::hexists("$id",'time');
 
@@ -608,7 +620,7 @@ class WechatController extends Controller
 
                 }else{
 
-                    Redis::hmset($id,['stay'=>1,'time'=>time()]);
+                    Redis::hmset($id,['stay'=>1,'time'=>time(),'tasks_id'=>$tsk]);
 
                 }
 
