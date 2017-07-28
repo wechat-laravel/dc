@@ -427,7 +427,7 @@ class WechatController extends Controller
             }else{
 
                 //过期时间标准，允许有5秒的时差
-                $time = time()-60;
+                $time = time()-5;
                 //列出所有浏览记录的id索引
                 $list  = Redis::smembers('record_id_list');
 
@@ -437,9 +437,9 @@ class WechatController extends Controller
 
                 }else{
 
-                    foreach ($list as $id){
+                    foreach ($list as $list_id){
                         //根据ID找对应的HASH表数据
-                        $res = Redis::hgetall($id);
+                        $res = Redis::hgetall($list_id);
 
                         if ($res){
 
