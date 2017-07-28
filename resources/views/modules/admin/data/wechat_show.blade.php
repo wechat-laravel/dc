@@ -51,8 +51,8 @@
             <div class="col-md-3 col-sm-6 col-xs-12">
                 <div class="small-box bg-red text-center">
                     <div class="inner">
-                        <h4><i class="fa fa-clock-o" style="margin-right:10px;"></i>@{{ top.stay_avg }}s</h4>
-                        <span class="info-box-text">平均停留时长</span>
+                        <h4><i class="fa fa-clock-o" style="margin-right:10px;"></i>@{{ top.current_num }}个</h4>
+                        <span class="info-box-text">当前浏览人数</span>
                     </div>
                     <ul class="list-inline">
                         <li><span class="info-box-text"><small>&nbsp;</small></span></li>

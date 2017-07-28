@@ -719,17 +719,17 @@ class WechatController extends Controller
 
         //测试用的
 
-        $stay = 1;
-
-        if ($request->has('stay')){
-
-            $stay = intval($request->input('stay'));
-
-        }
-
-        $task = TasksModel::find(82);
-
-        return view('test',['task'=>$task,'stay'=>$stay]);
+//        $stay = 1;
+//
+//        if ($request->has('stay')){
+//
+//            $stay = intval($request->input('stay'));
+//
+//        }
+//
+//        $task = TasksModel::find(82);
+//
+//        return view('test',['task'=>$task,'stay'=>$stay]);
 
     }
 

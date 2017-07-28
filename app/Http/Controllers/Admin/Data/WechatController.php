@@ -54,7 +54,7 @@ class WechatController extends Controller
                 'share_today' => 0,                                     //分享今天总数
                 'share_yesterday' => 0,                                 //分享昨天总数
                 'share_everyday' => [0, 0, 0, 0, 0, 0, 0],
-                'stay_avg' => 0,                                        //平均停留时长
+                'current_num' => 0,                                        //平均停留时长
                 'days' => [],
                 'level' => ['pv'=>[0,0,0,0,0,0,0,0,0,0,0],
                             'uv'=>[0,0,0,0,0,0,0,0,0,0,0],
@@ -249,8 +249,6 @@ class WechatController extends Controller
 
                         $top['level']['pv'][$re['level']] += 1;
 
-                        $top['stay_avg'] += $re['stay'];
-
                         //时间段统计
                         if ($re['stay'] <= 5){
 
@@ -423,11 +421,45 @@ class WechatController extends Controller
 
             if ($top['pv_num'] === 0){
 
-                $top['stay_avg'] = 0;
+                $top['current_num'] = 0;
 
             }else{
 
-                $top['stay_avg'] = intval($top['stay_avg'] / $top['pv_num']);
+                //当前浏览人数
+                $ids  = [];
+                //过期时间标准，允许有5秒的时差
+                $time = time()-5;
+                //列出所有浏览记录的id索引
+                $list  = Redis::smembers('record_id_list');
+
+                if (empty($list)){
+
+                    $top['current_num'] = 0;
+
+                }else{
+
+                    foreach ($list as $id){
+                        //根据ID找对应的HASH表数据
+                        $res = Redis::hgetall($id);
+
+                        if ($res){
+
+                            //小于这个时间，说明页面浏览已经停止了
+                            if ($res['time'] > $time  && $res['tasks_id'] === $id){
+
+                                $top['current_num'] += 1;
+
+                            }
+
+                        }else{
+
+                            continue;
+
+                        }
+
+                    }
+
+                }
 
             }
 
@@ -474,7 +506,7 @@ class WechatController extends Controller
 //                    'pv_today'=>$top['pv_today'],'pv_yesterday'=>$top['pv_yesterday'],'pv_num'=>$top['pv_num'],
 //                    'uv_today'=>$top['uv_today'],'uv_yesterday'=>$top['uv_yesterday'],'uv_num'=>$top['uv_num'],
 //                    'share_today'=>$top['share_today'],'share_yesterday'=>$top['share_yesterday'],'share_num'=>$top['share_num'],
-//                    'stay_avg'=>$top['stay_avg']
+//                    'current_num'=>$top['current_num']
 //                ]);
 //            //设置过期时间为每天晚上的零点（因为这样可以免去再计算处理昨天的数据量，直接缓存的时候做好）
 //            Redis::expire($id.'_top',259200);
