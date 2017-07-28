@@ -418,17 +418,15 @@ class WechatController extends Controller
                 }
 
             }
-
+            //当前浏览人数
             if ($top['pv_num'] === 0){
 
                 $top['current_num'] = 0;
 
             }else{
 
-                //当前浏览人数
-                $ids  = [];
                 //过期时间标准，允许有5秒的时差
-                $time = time()-5;
+                $time = time()-10;
                 //列出所有浏览记录的id索引
                 $list  = Redis::smembers('record_id_list');
 
@@ -445,7 +443,7 @@ class WechatController extends Controller
                         if ($res){
 
                             //小于这个时间，说明页面浏览已经停止了
-                            if ($res['time'] > $time  && $res['tasks_id'] === $id){
+                            if ($res['time'] > $time  && $res['tasks_id'] == $id){
 
                                 $top['current_num'] += 1;
 
