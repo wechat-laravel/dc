@@ -54,7 +54,7 @@ class WechatController extends Controller
                 'share_today' => 0,                                     //分享今天总数
                 'share_yesterday' => 0,                                 //分享昨天总数
                 'share_everyday' => [0, 0, 0, 0, 0, 0, 0],
-                'current_num' => 0,                                        //平均停留时长
+                'current_num' => 0,                                     //当前浏览人数
                 'days' => [],
                 'level' => ['pv'=>[0,0,0,0,0,0,0,0,0,0,0],
                             'uv'=>[0,0,0,0,0,0,0,0,0,0,0],
@@ -62,11 +62,11 @@ class WechatController extends Controller
                 'stay' => ['this'=>[0,0,0,0,0,0,0,0,0,0],
                             'all'=>[0,0,0,0,0,0,0,0,0,0]],              //停留时长统计
                 'browse'=>[
-                            ['value'=>0,'name'=>'单人对话'],
+                            ['value'=>0,'name'=>'微信好友'],
+                            ['value'=>0,'name'=>'QQ好友'],
                             ['value'=>0,'name'=>'朋友圈'],
                             ['value'=>0,'name'=>'微信群'],
-                            ['value'=>0,'name'=>'公众号文章'],
-                            ['value'=>0,'name'=>'其他'],                 //来源统计
+                            ['value'=>0,'name'=>'QQ空间'],                 //来源统计
                 ],
                 'action'=>[
                     ['value'=>0,'name'=>'微信好友'],
@@ -295,28 +295,28 @@ class WechatController extends Controller
                         //统计来源数据
                         switch ($re['source']){
 
-                            //单人对话
+                            //微信来源
                             case 'wechat':
 
                                 $top['browse'][0]['value'] += 1 ;
 
                                 break;
 
-                            //朋友圈
-                            case 'timeline':
+                            //QQ好友
+                            case 'qq':
 
                                 $top['browse'][1]['value'] += 1 ;
 
                                 break;
 
-                            //微信群
-                            case 'wechat_group':
+                            //朋友圈
+                            case 'timeline':
 
                                 $top['browse'][2]['value'] += 1 ;
 
                                 break;
-
-                            case 'article':
+                            //微信群
+                            case 'wechat_group':
 
                                 $top['browse'][3]['value'] += 1 ;
 
@@ -498,19 +498,98 @@ class WechatController extends Controller
                 }
 
             }
+            //数据统计
+            //TOP 数据图头部4个模块的缓存存放
+            Redis::hmset($id.'_top',
+                [
+                    'pv_today'=>$top['pv_today'],'pv_yesterday'=>$top['pv_yesterday'],'pv_num'=>$top['pv_num'],
+                    'uv_today'=>$top['uv_today'],'uv_yesterday'=>$top['uv_yesterday'],'uv_num'=>$top['uv_num'],
+                    'share_today'=>$top['share_today'],'share_yesterday'=>$top['share_yesterday'],'share_num'=>$top['share_num'],
+                    'current_num'=>$top['current_num']
+                ]);
+            //来源统计
+            Redis::hmset($id.'_browse',
+                [
+                    'wechat'=>$top['browse'][0]['value'],'qq'=>$top['browse'][1]['value'],
+                    'timeline'=>$top['browse'][2]['value'],'wechat_group'=>$top['browse'][3]['value'],
+                    'qzone'=>$top['browse'][4]['value']
+                ]);
+            //分享统计
+            Redis::hmset($id.'_action',
+                [
+                    'wechat'=>$top['action'][0]['value'],'qq'=>$top['action'][1]['value'],
+                    'timeline'=>$top['action'][2]['value'],'wechat_group'=>$top['action'][3]['value'],
+                    'qzone'=>$top['action'][4]['value']
+                ]);
+            //PU/UV/SHARE 每日统计
+            Redis::hmset($id.'_pv_day',
+                [
+                    $top['days'][0]=>$top['pv_everyday'][0],$top['days'][1]=>$top['pv_everyday'][1],$top['days'][2]=>$top['pv_everyday'][2],
+                    $top['days'][3]=>$top['pv_everyday'][3],$top['days'][4]=>$top['pv_everyday'][4],$top['days'][5]=>$top['pv_everyday'][5],
+                    $top['days'][6]=>$top['pv_everyday'][6]
+                ]);
+            Redis::hmset($id.'_uv_day',
+                [
+                    $top['days'][0]=>$top['uv_everyday'][0],$top['days'][1]=>$top['uv_everyday'][1],$top['days'][2]=>$top['uv_everyday'][2],
+                    $top['days'][3]=>$top['uv_everyday'][3],$top['days'][4]=>$top['uv_everyday'][4],$top['days'][5]=>$top['uv_everyday'][5],
+                    $top['days'][6]=>$top['uv_everyday'][6]
+                ]);
+            Redis::hmset($id.'_share_day',
+                [
+                    $top['days'][0]=>$top['share_everyday'][0],$top['days'][1]=>$top['share_everyday'][1],$top['days'][2]=>$top['share_everyday'][2],
+                    $top['days'][3]=>$top['share_everyday'][3],$top['days'][4]=>$top['share_everyday'][4],$top['days'][5]=>$top['share_everyday'][5],
+                    $top['days'][6]=>$top['share_everyday'][6]
+                ]);
+            Redis::hmset($id.'_pv_hour',
+                [
+                    0=>$top['current']['pv'][0],1=>$top['current']['pv'][1],2=>$top['current']['pv'][2],3=>$top['current']['pv'][3],
+                    4=>$top['current']['pv'][4],5=>$top['current']['pv'][5],6=>$top['current']['pv'][2],7=>$top['current']['pv'][7],
+                    8=>$top['current']['pv'][8],9=>$top['current']['pv'][9],10=>$top['current']['pv'][10],11=>$top['current']['pv'][11],
+                    12=>$top['current']['pv'][12],13=>$top['current']['pv'][13],14=>$top['current']['pv'][14],15=>$top['current']['pv'][15],
+                    16=>$top['current']['pv'][16],17=>$top['current']['pv'][17],18=>$top['current']['pv'][18],19=>$top['current']['pv'][19],
+                    20=>$top['current']['pv'][20],21=>$top['current']['pv'][21],22=>$top['current']['pv'][22],23=>$top['current']['pv'][23]
+                ]);
+            Redis::hmset($id.'_uv_hour',
+                [
+                    0=>$top['current']['uv'][0],1=>$top['current']['uv'][1],2=>$top['current']['uv'][2],3=>$top['current']['uv'][3],
+                    4=>$top['current']['uv'][4],5=>$top['current']['uv'][5],6=>$top['current']['uv'][2],7=>$top['current']['uv'][7],
+                    8=>$top['current']['uv'][8],9=>$top['current']['uv'][9],10=>$top['current']['uv'][10],11=>$top['current']['uv'][11],
+                    12=>$top['current']['uv'][12],13=>$top['current']['uv'][13],14=>$top['current']['uv'][14],15=>$top['current']['uv'][15],
+                    16=>$top['current']['uv'][16],17=>$top['current']['uv'][17],18=>$top['current']['uv'][18],19=>$top['current']['uv'][19],
+                    20=>$top['current']['uv'][20],21=>$top['current']['uv'][21],22=>$top['current']['uv'][22],23=>$top['current']['uv'][23]
+                ]);
+            Redis::hmset($id.'_share_hour',
+                [
+                    0=>$top['current']['share'][0],1=>$top['current']['share'][1],2=>$top['current']['share'][2],3=>$top['current']['share'][3],
+                    4=>$top['current']['share'][4],5=>$top['current']['share'][5],6=>$top['current']['share'][2],7=>$top['current']['share'][7],
+                    8=>$top['current']['share'][8],9=>$top['current']['share'][9],10=>$top['current']['share'][10],11=>$top['current']['share'][11],
+                    12=>$top['current']['share'][12],13=>$top['current']['share'][13],14=>$top['current']['share'][14],15=>$top['current']['share'][15],
+                    16=>$top['current']['share'][16],17=>$top['current']['share'][17],18=>$top['current']['share'][18],19=>$top['current']['share'][19],
+                    20=>$top['current']['share'][20],21=>$top['current']['share'][21],22=>$top['current']['share'][22],23=>$top['current']['share'][23]
+                ]);
 
-//            //数据图头部4个模块的缓存存放
-//            Redis::hmset($id.'_top',
-//                [
-//                    'pv_today'=>$top['pv_today'],'pv_yesterday'=>$top['pv_yesterday'],'pv_num'=>$top['pv_num'],
-//                    'uv_today'=>$top['uv_today'],'uv_yesterday'=>$top['uv_yesterday'],'uv_num'=>$top['uv_num'],
-//                    'share_today'=>$top['share_today'],'share_yesterday'=>$top['share_yesterday'],'share_num'=>$top['share_num'],
-//                    'current_num'=>$top['current_num']
-//                ]);
-//            //设置过期时间为每天晚上的零点（因为这样可以免去再计算处理昨天的数据量，直接缓存的时候做好）
-//            Redis::expire($id.'_top',259200);
 
+            //设置过期时间为每天晚上的23点59分（因为这样可以免去再计算处理昨天的数据量，直接缓存的时候做好）
+            $expire = strtotime(date('Y-m-d',time()).' 23:59');
 
+            //如果是在59分到零点的这60秒内，这样生成的缓存，设置时间后其实是不存在的。还是过期的。不影响
+            Redis::expireat($id.'_top',$expire);
+
+            Redis::expireat($id.'_browse',$expire);
+
+            Redis::expireat($id.'_action',$expire);
+
+            Redis::expireat($id.'_pv_day',$expire);
+
+            Redis::expireat($id.'_uv_day',$expire);
+
+            Redis::expireat($id.'_share_day',$expire);
+
+            Redis::expireat($id.'_pv_hour',$expire);
+
+            Redis::expireat($id.'_uv_hour',$expire);
+            
+            Redis::expireat($id.'_share_hour',$expire);
 
             return response()->json(['success'=>true,'top'=>$top]);
 

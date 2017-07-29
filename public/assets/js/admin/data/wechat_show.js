@@ -363,7 +363,7 @@ var wxly_data = {
     legend: {
         orient: 'vertical',
         left: 'left',
-        data: ['单人对话','朋友圈','微信群','公众号文章','其他']
+        data: ['微信好友','QQ好友','朋友圈','微信群','QQ空间']
     },
     series : [
         {
@@ -372,11 +372,11 @@ var wxly_data = {
             radius : '55%',
             center: ['50%', '60%'],
             data:[
-                {value:1548, name:'单人对话'},
-                {value:310, name:'朋友圈'},
-                {value:234, name:'微信群'},
-                {value:135, name:'公众号文章'},
-                {value:122, name:'其他'}
+                {value:1548, name:'微信好友'},
+                {value:310, name:'QQ好友'},
+                {value:234, name:'朋友圈'},
+                {value:135, name:'微信群'},
+                {value:122, name:'QQ空间'}
             ],
             itemStyle: {
                 emphasis: {

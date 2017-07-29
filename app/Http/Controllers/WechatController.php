@@ -154,6 +154,13 @@ class WechatController extends Controller
 
         }else{
             //Redis UV : 如果没有浏览记录的话说明新的UV +1
+            $this->toRedis($task->id,'top','uv_today');
+
+            $this->toRedis($task->id,'top','uv_num');
+
+            $this->toRedis($task->id,'uv_day',date('m-d',time()));
+
+            $this->toRedis($task->id,'uv_hour',intval(date('H',time())));
 
             if ($this->openid){
 
@@ -219,7 +226,17 @@ class WechatController extends Controller
 
                                     SpreadPeopleModel::where('tasks_id',$task->id)->where('openid',$upper->openid)->decrement('wechat',1);
 
-                                    SpreadRecordModel::where('tasks_id',$task->id)->where('action','browse')->where('mark',$this->mark)->where('source','wechat')->update(['source'=>'wechat_group']);
+                                    $wnum = SpreadRecordModel::where('tasks_id',$task->id)->where('action','browse')->where('mark',$this->mark)->where('source','wechat')->update(['source'=>'wechat_group']);
+
+                                    //根据返回影响的行数，将原来wechat的浏览数减去 wechat_group对应加 分享方式 wechat -1 wechat_group+1
+
+                                    $this->toRedis($task->id,'browse','wechat',0-$wnum);
+
+                                    $this->toRedis($task->id,'browse','wechat_group',$wnum);
+
+                                    $this->toRedis($task->id,'action','wechat',-1);
+
+                                    $this->toRedis($task->id,'action','wechat_group');
 
                                 }catch (Exception $e){
 
@@ -262,6 +279,16 @@ class WechatController extends Controller
         try{
             //Redis source : 这里可以取record的 source 对应的+1
             $last = SpreadRecordModel::create($record);
+
+            $this->toRedis($task->id,'top','pv_today');
+
+            $this->toRedis($task->id,'top','pv_num');
+
+            $this->toRedis($task->id,'browse',$record['source']);
+
+            $this->toRedis($task->id,'pv_day',date('m-d',time()));
+
+            $this->toRedis($task->id,'pv_hour',intval(date('H',time())));
 
             //记录在用户关系表里
             $people = SpreadPeopleModel::where('openid',$user[0]['id'])->where('tasks_id',$task->id)->first();
@@ -322,6 +349,8 @@ class WechatController extends Controller
             Session::put('now_id',$last->id);
 
             Session::put('tsk_id',intval($id));
+
+
 
         }catch (Exception $e){
 
@@ -455,6 +484,17 @@ class WechatController extends Controller
                 $action = 2;
 
             }
+            //分享的总数加
+            $this->toRedis($input['task_id'],'top','share_today');
+
+            $this->toRedis($input['task_id'],'top','share_num');
+
+            //分享的类别数
+            $this->toRedis($input['task_id'],'action',$record['action']);
+
+            $this->toRedis($input['task_id'],'share_day',date('m-d',time()));
+
+            $this->toRedis($input['task_id'],'share_hour',intval(date('H',time())));
 
             event(new SendRedBagEvent($action,$record['openid'],$record['tasks_id'],1,$user[0]['original']['city'],$user[0]['original']['sex']));
 
@@ -714,6 +754,51 @@ class WechatController extends Controller
         return response()->json(['success'=>true,'msg'=>'ok']);
 
     }
+
+    /**
+     * 如果有对应的缓存，Redis缓存计数
+     * @param $tasks_id  //文章任务ID
+     * @param $position  //要记录的位置
+     * @param $field     //要记录的键
+     * @param $value     //要增加的数
+     * @return bool
+     */
+
+    public function toRedis($tasks_id,$position,$field,$value=1){
+
+        //数据页面的所有数据缓存都是到每天的23:59分过期，所以，如果处于这个时间段到零点的 这60秒时间内，缓存不写入
+        //expire表示的当前请求天的23:59分的时间戳，如果此时的时间戳大于这个表示 处于这一分钟内。
+        $expire = strtotime(date('Y-m-d',time()).' 23:59');
+
+        if (time() > $expire){
+
+            return true;
+
+        }
+
+        //如果有缓存的话记录，没有的话不管
+        if (Redis::hexists($tasks_id.'_'.$position,$field)){
+            
+            if ($position === 'top' || $position === 'browse' || $position === 'action' ){
+
+                if(Redis::hincrby($tasks_id.'_'.$position,$field,$value)){
+
+                    return true;
+
+                }else{
+
+                    return false;
+
+                }
+
+            }
+
+        }
+
+        return true;
+
+    }
+
 
     public function ceshi(Request $request){
 
