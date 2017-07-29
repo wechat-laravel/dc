@@ -778,18 +778,14 @@ class WechatController extends Controller
 
         //如果有缓存的话记录，没有的话不管
         if (Redis::hexists($tasks_id.'_'.$position,$field)){
-            
-            if ($position === 'top' || $position === 'browse' || $position === 'action' ){
 
-                if(Redis::hincrby($tasks_id.'_'.$position,$field,$value)){
+            if(Redis::hincrby($tasks_id.'_'.$position,$field,$value)){
 
-                    return true;
+                return true;
 
-                }else{
+            }else{
 
-                    return false;
-
-                }
+                return false;
 
             }
 
