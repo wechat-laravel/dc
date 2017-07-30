@@ -35,10 +35,6 @@ class WechatController extends Controller
         if (!$task) return response()->json(['success'=>false,'msg'=>'非法的请求！']);
 
         if ($request->ajax()) {
-            //检测是否有缓存
-//            if (!Redis::hexists($id.'_top','pv_today')){
-
-//            }
 
             //数据统计
             $top = [
@@ -102,6 +98,20 @@ class WechatController extends Controller
             for($i=0;$i<24;$i++){
 
                 $top['current']['day'][] = $day.' '.$i.':00';
+
+            }
+
+            //检测是否有缓存
+            if (Redis::hexists($id.'_top','pv_today')){
+
+                $result = $this->returnRedis($top,$task->id);
+
+                if($result['success']){
+
+                    return response()->json($result);
+
+                }
+
 
             }
 
@@ -650,6 +660,149 @@ class WechatController extends Controller
         }
 
         return view('modules.admin.data.wechat_show',['task_id'=>$task->id,'title'=>$task->title]);
+
+    }
+
+    /**
+     * 如果有缓存的话，把缓存的数据装到数组里
+     * @param $top          //初始化的数组
+     * @param  $tasks_id    //文章ID
+     * @return array
+     */
+    public function returnRedis($top,$tasks_id){
+
+        //数据页面的所有数据缓存都是到每天的23:59分过期，过期这时间段不使用缓存
+        //expire表示的当前请求天的23:59分的时间戳，如果此时的时间戳大于这个表示 处于这一分钟内。
+        $expire = strtotime(date('Y-m-d',time()).' 23:59');
+
+        if (time() > $expire){
+
+            $result = ['success'=>false,'msg'=>'该时间段不使用缓存'];
+
+            return  $result;
+
+        }
+
+        //数据统计
+        //***************头部4个*****************************
+        $top['pv_num'] = Redis::hget($tasks_id.'_top','pv_num');
+        $top['pv_today'] = Redis::hget($tasks_id.'_top','pv_today');
+        $top['pv_yesterday'] = Redis::hget($tasks_id.'_top','pv_yesterday');
+        $top['uv_num'] = Redis::hget($tasks_id.'_top','uv_num');
+        $top['uv_today'] = Redis::hget($tasks_id.'_top','uv_today');
+        $top['uv_yesterday'] = Redis::hget($tasks_id.'_top','uv_yesterday');
+        $top['share_num'] = Redis::hget($tasks_id.'_top','share_num');
+        $top['share_today'] = Redis::hget($tasks_id.'_top','share_today');
+        $top['share_yesterday'] = Redis::hget($tasks_id.'_top','share_yesterday');
+
+
+        //过期时间标准，允许有2秒的时差
+        $time = time()-2;
+        //列出所有浏览记录的id索引
+        $list  = Redis::smembers('record_id_list');
+
+        if (empty($list)){
+
+            $top['current_num'] = 0;
+
+        }else{
+
+            foreach ($list as $list_id){
+                //根据ID找对应的HASH表数据
+                $res = Redis::hgetall($list_id);
+
+                if ($res){
+
+                    //小于这个时间，说明页面浏览已经停止了
+                    if ($res['time'] > $time  && $res['tasks_id'] == $tasks_id){
+
+                        $top['current_num'] += 1;
+
+                    }
+
+                }else{
+
+                    continue;
+
+                }
+
+            }
+
+        }
+
+        //**************PU/UV/SHARE 每日走势***********************
+        $top['days'] = Redis::hkeys($tasks_id.'_pv_day');
+        $top['pv_everyday'] = Redis::hvals($tasks_id.'_pv_day');
+        $top['uv_everyday'] = Redis::hvals($tasks_id.'_uv_day');
+        $top['share_everyday'] = Redis::hvals($tasks_id.'_share_day');
+
+        //$top['current']['day']  这个top里已经计算好了
+        $top['current']['pv'] = Redis::hvals($tasks_id.'_pv_hour');
+        $top['current']['uv'] = Redis::hvals($tasks_id.'_uv_hour');
+        $top['current']['share'] = Redis::hvals($tasks_id.'_share_hour');
+
+        //*************层级分布*************************
+        $top['level']['pv'] = Redis::hvals($tasks_id.'_level_pv');
+        $top['level']['uv'] = Redis::hvals($tasks_id.'_level_uv');
+        $top['level']['share'] = Redis::hvals($tasks_id.'_level_share');
+
+        //*************停留时长分布**********************
+        //因为停留时长记录的是数，而不是占比 所以这里需要计算一下
+        $top['stay']['this'] = Redis::hvals($tasks_id.'_stay_this');
+
+        //计算各个时间段的占比
+        for ($i =0 ;$i <10; $i++){
+
+            if ($top['pv_num'] === 0 ) {
+
+                $top['stay']['this'][$i] = 0;
+
+            }else{
+
+                $top['stay']['this'][$i] = round(($top['stay']['this'][$i] * 100) / $top['pv_num']);
+
+            }
+
+        }
+        //**************访问时间分布************************
+        $top['visit']['this'] = Redis::hvals($tasks_id.'_visit_this');
+
+        //计算访问时间的各时间段的占比
+        for ($i =0 ;$i <24; $i++){
+
+            if ($top['pv_num'] === 0){
+
+                $top['visit']['this'][$i] = 0;
+
+            }else{
+
+                $top['visit']['this'][$i] = round(($top['visit']['this'][$i] * 100) / $top['pv_num']);
+
+            }
+
+        }
+
+        //************访问来源************************
+        $browse  = Redis::hvals($tasks_id.'_browse');
+
+        for($i=0; $i<5; $i++){
+
+            $top['browse'][$i]['value'] = $browse[$i];
+
+        }
+
+        //************分享去向************************
+        $action  = Redis::hvals($tasks_id.'_action');
+
+        for($i=0; $i<5; $i++){
+
+            $top['action'][$i]['value'] = $action[$i];
+
+        }
+
+        $result = ['success'=>true,'top'=>$top];
+
+        return $result;
 
     }
 

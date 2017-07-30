@@ -108,7 +108,7 @@
             <section class="col-md-6 col-sm-12 col-xs-12 connectedSortable ui-sortable">
                 <div class="nav-tabs-custom" style="cursor: move;">
                     <ul class="nav nav-tabs pull-right ui-sortable-handle">
-                        <li class="pull-left header"><i class="fa fa-question-circle"></i>PV-微信内来源</li>
+                        <li class="pull-left header"><i class="fa fa-question-circle"></i>PV-访问来源</li>
                     </ul>
                     <div class="tab-content">
                         <div id="wxly" style="width: 100%;height: 400px;"></div>
