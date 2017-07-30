@@ -82,6 +82,7 @@ class WechatController extends Controller
 
     //每个任务的首页
     public function task(Request $request,$id){
+
         //每次新的浏览都要清楚之前的now_id
         Session::forget('now_id');
         //task_id 当前任务id
@@ -93,7 +94,7 @@ class WechatController extends Controller
 
         if (!$task) return response()->json(['success'=>false,'msg'=>'非法的请求！']);
 
-        Session::put('tasks_id',$task->id);
+        Session::put('tsk_id',$task->id);
 
         //先检测是否有openid，有暂时保存下
         if($request->has('openid')){
@@ -347,10 +348,6 @@ class WechatController extends Controller
             }
 
             Session::put('now_id',$last->id);
-
-            Session::put('tsk_id',intval($id));
-
-
 
         }catch (Exception $e){
 
