@@ -153,6 +153,8 @@ class WechatController extends Controller
 
             $record['level'] = $level->level;
 
+            $this->toRedis($task->id,'level_pv',$record['level']);
+
         }else{
             //Redis UV : 如果没有浏览记录的话说明新的UV +1
             $this->toRedis($task->id,'top','uv_today');
@@ -187,6 +189,8 @@ class WechatController extends Controller
                 $record['level'] = 1;
 
             }
+            //记录UV 层级
+            $this->toRedis($task->id,'level_uv',$record['level']);
 
         }
 
@@ -290,6 +294,9 @@ class WechatController extends Controller
             $this->toRedis($task->id,'pv_day',date('m-d',time()));
 
             $this->toRedis($task->id,'pv_hour',intval(date('H',time())));
+
+            //访问时间段计数
+            $this->toRedis($task->id,'visit_this',intval(date('H',time())));
 
             //记录在用户关系表里
             $people = SpreadPeopleModel::where('openid',$user[0]['id'])->where('tasks_id',$task->id)->first();
@@ -492,6 +499,9 @@ class WechatController extends Controller
             $this->toRedis($input['task_id'],'share_day',date('m-d',time()));
 
             $this->toRedis($input['task_id'],'share_hour',intval(date('H',time())));
+
+            //层级分享计数
+            $this->toRedis($input['task_id'],'level_share',$level->level);
 
             event(new SendRedBagEvent($action,$record['openid'],$record['tasks_id'],1,$user[0]['original']['city'],$user[0]['original']['sex']));
 
@@ -699,6 +709,55 @@ class WechatController extends Controller
 
                 //小于这个时间，说明页面浏览已经停止了
                 if ($res['time'] < $time){
+
+                    //该数据过期了， 就检查一下是否有该任务的停留时长统计的缓存，如果有，把过期的数据停留时长对应的记录在里面
+                    if(Redis::hexists($res['tasks_id'].'_stay_this',0)){
+                        //该停留时长
+                        $stay = $res['stay'];
+
+                        if ($stay>=0 && $stay<6){
+
+                            $this->toRedis($res['tasks_id'],'stay_this',0);
+
+                        }elseif($stay >=6 && $stay<11){
+
+                            $this->toRedis($res['tasks_id'],'stay_this',6);
+
+                        }elseif ($stay >=11 && $stay<21 ){
+
+                            $this->toRedis($res['tasks_id'],'stay_this',11);
+
+                        }elseif ($stay >=21 && $stay<41 ){
+
+                            $this->toRedis($res['tasks_id'],'stay_this',21);
+
+                        }elseif ($stay >=41 && $stay<81 ){
+
+                            $this->toRedis($res['tasks_id'],'stay_this',41);
+
+                        }elseif ($stay >=81 && $stay<161 ){
+
+                            $this->toRedis($res['tasks_id'],'stay_this',81);
+
+                        }elseif ($stay >=161 && $stay<321 ){
+
+                            $this->toRedis($res['tasks_id'],'stay_this',161);
+
+                        }elseif ($stay >=321 && $stay<641 ){
+
+                            $this->toRedis($res['tasks_id'],'stay_this',321);
+
+                        }elseif ($stay >=641 && $stay<1281 ){
+
+                            $this->toRedis($res['tasks_id'],'stay_this',641);
+
+                        }elseif ($stay>= 1281){
+
+                            $this->toRedis($res['tasks_id'],'stay_this',1281);
+
+                        }
+
+                    }
 
                     $sql .= ' WHEN '.intval($id).' THEN '.intval($res['stay']);
 

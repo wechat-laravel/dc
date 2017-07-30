@@ -469,6 +469,13 @@ class WechatController extends Controller
 
             array_shift($top['level']['share']);
 
+            //该任务的停留时长统计 （未算占比，方便计数）
+            //键为10个秒段的起始位置，0-5S对应的键名0 6-10s对应的键名6
+            Redis::hmset($id.'_stay_this',
+                [
+                    0=>$top['stay']['this'][0],6=>$top['stay']['this'][1],11=>$top['stay']['this'][2],21=>$top['stay']['this'][3],41=>$top['stay']['this'][4],
+                    81=>$top['stay']['this'][5],161=>$top['stay']['this'][2],321=>$top['stay']['this'][7],641=>$top['stay']['this'][8],1281=>$top['stay']['this'][9]
+                ]);
             //计算各个时间段的占比
             for ($i =0 ;$i <10; $i++){
 
@@ -483,6 +490,16 @@ class WechatController extends Controller
                 }
 
             }
+            //该任务访问时间分布统计 （未算占比，方便计数）
+            Redis::hmset($id.'_visit_this',
+                [
+                    0=>$top['visit']['this'][0],1=>$top['visit']['this'][1],2=>$top['visit']['this'][2],3=>$top['visit']['this'][3],
+                    4=>$top['visit']['this'][4],5=>$top['visit']['this'][5],6=>$top['visit']['this'][2],7=>$top['visit']['this'][7],
+                    8=>$top['visit']['this'][8],9=>$top['visit']['this'][9],10=>$top['visit']['this'][10],11=>$top['visit']['this'][11],
+                    12=>$top['visit']['this'][12],13=>$top['visit']['this'][13],14=>$top['visit']['this'][14],15=>$top['visit']['this'][15],
+                    16=>$top['visit']['this'][16],17=>$top['visit']['this'][17],18=>$top['visit']['this'][18],19=>$top['visit']['this'][19],
+                    20=>$top['visit']['this'][20],21=>$top['visit']['this'][21],22=>$top['visit']['this'][22],23=>$top['visit']['this'][23]
+                ]);
 
             //计算访问时间的各时间段的占比
             for ($i =0 ;$i <24; $i++){
@@ -540,6 +557,7 @@ class WechatController extends Controller
                     $top['days'][3]=>$top['share_everyday'][3],$top['days'][4]=>$top['share_everyday'][4],$top['days'][5]=>$top['share_everyday'][5],
                     $top['days'][6]=>$top['share_everyday'][6]
                 ]);
+            //PU/UV/SHARE 每时统计
             Redis::hmset($id.'_pv_hour',
                 [
                     0=>$top['current']['pv'][0],1=>$top['current']['pv'][1],2=>$top['current']['pv'][2],3=>$top['current']['pv'][3],
@@ -567,6 +585,34 @@ class WechatController extends Controller
                     16=>$top['current']['share'][16],17=>$top['current']['share'][17],18=>$top['current']['share'][18],19=>$top['current']['share'][19],
                     20=>$top['current']['share'][20],21=>$top['current']['share'][21],22=>$top['current']['share'][22],23=>$top['current']['share'][23]
                 ]);
+            Redis::hmset($id.'_share_hour',
+                [
+                    0=>$top['current']['share'][0],1=>$top['current']['share'][1],2=>$top['current']['share'][2],3=>$top['current']['share'][3],
+                    4=>$top['current']['share'][4],5=>$top['current']['share'][5],6=>$top['current']['share'][2],7=>$top['current']['share'][7],
+                    8=>$top['current']['share'][8],9=>$top['current']['share'][9],10=>$top['current']['share'][10],11=>$top['current']['share'][11],
+                    12=>$top['current']['share'][12],13=>$top['current']['share'][13],14=>$top['current']['share'][14],15=>$top['current']['share'][15],
+                    16=>$top['current']['share'][16],17=>$top['current']['share'][17],18=>$top['current']['share'][18],19=>$top['current']['share'][19],
+                    20=>$top['current']['share'][20],21=>$top['current']['share'][21],22=>$top['current']['share'][22],23=>$top['current']['share'][23]
+                ]);
+            //PU/UV/SHARE 层级统计
+            Redis::hmset($id.'_level_pv',
+                [
+                    1=>$top['level']['pv'][0],2=>$top['level']['pv'][1],3=>$top['level']['pv'][2],4=>$top['level']['pv'][3],
+                    5=>$top['level']['pv'][4],6=>$top['level']['pv'][5],7=>$top['level']['pv'][2],8=>$top['level']['pv'][7],
+                    9=>$top['level']['pv'][8],10=>$top['level']['pv'][9]
+                ]);
+            Redis::hmset($id.'_level_uv',
+                [
+                    1=>$top['level']['uv'][0],2=>$top['level']['uv'][1],3=>$top['level']['uv'][2],4=>$top['level']['uv'][3],
+                    5=>$top['level']['uv'][4],6=>$top['level']['uv'][5],7=>$top['level']['uv'][2],8=>$top['level']['uv'][7],
+                    9=>$top['level']['uv'][8],10=>$top['level']['uv'][9]
+                ]);
+            Redis::hmset($id.'_level_share',
+                [
+                    1=>$top['level']['share'][0],2=>$top['level']['share'][1],3=>$top['level']['share'][2],4=>$top['level']['share'][3],
+                    5=>$top['level']['share'][4],6=>$top['level']['share'][5],7=>$top['level']['share'][2],8=>$top['level']['share'][7],
+                    9=>$top['level']['share'][8],10=>$top['level']['share'][9]
+                ]);
 
 
             //设置过期时间为每天晚上的23点59分（因为这样可以免去再计算处理昨天的数据量，直接缓存的时候做好）
@@ -590,6 +636,14 @@ class WechatController extends Controller
             Redis::expireat($id.'_uv_hour',$expire);
             
             Redis::expireat($id.'_share_hour',$expire);
+
+            Redis::expireat($id.'_level_pv',$expire);
+
+            Redis::expireat($id.'_level_uv',$expire);
+
+            Redis::expireat($id.'_level_share',$expire);
+
+            Redis::expireat($id.'_visit_this',$expire);
 
             return response()->json(['success'=>true,'top'=>$top]);
 
