@@ -106,6 +106,13 @@ class TaskController extends Controller
 
             }
 
+            //禁止引用站内的其他任务链接
+            if (preg_match('/www.maidamaida.com/', $input['page_url'])) {
+
+                return response()->json(['success' => false, 'msg' => '禁止使用本站内的链接！']);
+
+            }
+
             try {
 
                 $input['user_id'] = Auth::id();
@@ -163,9 +170,16 @@ class TaskController extends Controller
 
             }
 
+            //禁止引用站内的其他任务链接
+            if (preg_match('/www.maidamaida.com/', $input['page_url'])) {
+
+                return response()->json(['success' => false, 'msg' => '禁止使用本站内的链接！']);
+
+            }
+            //不同的话才去重新修改
             if($task->page_url !== $input['page_url']){
 
-                if (preg_match('/mp.weixin.qq.com/', $task->page_url)){
+                if (preg_match('/mp.weixin.qq.com/',$input['page_url'])){
 
                     $content = wx($input['page_url']);
 
