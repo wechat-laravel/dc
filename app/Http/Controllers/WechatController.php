@@ -421,7 +421,7 @@ class WechatController extends Controller
 
         }
 
-        $tasks_id = Session::get('tasks_id');
+        $tasks_id = Session::get('tsk_id');
         
         return redirect('wechat/task/'.$tasks_id.'?openid='.$this->openid.'&mark='.$this->mark.'&source='.$this->source);
 
