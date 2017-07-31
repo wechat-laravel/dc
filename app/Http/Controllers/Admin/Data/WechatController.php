@@ -689,7 +689,7 @@ class WechatController extends Controller
 
 
         //过期时间标准，允许有2秒的时差
-        $time = time()-2;
+        $time = time()-5;
         //列出所有浏览记录的id索引
         $list  = Redis::smembers('record_id_list');
 
