@@ -655,6 +655,8 @@ class WechatController extends Controller
 
             Redis::expireat($id.'_visit_this',$expire);
 
+            Redis::expireat($id.'_stay_this',$expire);
+
             return response()->json(['success'=>true,'top'=>$top]);
 
         }
