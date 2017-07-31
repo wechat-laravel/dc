@@ -571,7 +571,7 @@ class WechatController extends Controller
             Redis::hmset($id.'_pv_hour',
                 [
                     0=>$top['current']['pv'][0],1=>$top['current']['pv'][1],2=>$top['current']['pv'][2],3=>$top['current']['pv'][3],
-                    4=>$top['current']['pv'][4],5=>$top['current']['pv'][5],6=>$top['current']['pv'][2],7=>$top['current']['pv'][7],
+                    4=>$top['current']['pv'][4],5=>$top['current']['pv'][5],6=>$top['current']['pv'][6],7=>$top['current']['pv'][7],
                     8=>$top['current']['pv'][8],9=>$top['current']['pv'][9],10=>$top['current']['pv'][10],11=>$top['current']['pv'][11],
                     12=>$top['current']['pv'][12],13=>$top['current']['pv'][13],14=>$top['current']['pv'][14],15=>$top['current']['pv'][15],
                     16=>$top['current']['pv'][16],17=>$top['current']['pv'][17],18=>$top['current']['pv'][18],19=>$top['current']['pv'][19],
@@ -580,7 +580,7 @@ class WechatController extends Controller
             Redis::hmset($id.'_uv_hour',
                 [
                     0=>$top['current']['uv'][0],1=>$top['current']['uv'][1],2=>$top['current']['uv'][2],3=>$top['current']['uv'][3],
-                    4=>$top['current']['uv'][4],5=>$top['current']['uv'][5],6=>$top['current']['uv'][2],7=>$top['current']['uv'][7],
+                    4=>$top['current']['uv'][4],5=>$top['current']['uv'][5],6=>$top['current']['uv'][6],7=>$top['current']['uv'][7],
                     8=>$top['current']['uv'][8],9=>$top['current']['uv'][9],10=>$top['current']['uv'][10],11=>$top['current']['uv'][11],
                     12=>$top['current']['uv'][12],13=>$top['current']['uv'][13],14=>$top['current']['uv'][14],15=>$top['current']['uv'][15],
                     16=>$top['current']['uv'][16],17=>$top['current']['uv'][17],18=>$top['current']['uv'][18],19=>$top['current']['uv'][19],
@@ -589,16 +589,7 @@ class WechatController extends Controller
             Redis::hmset($id.'_share_hour',
                 [
                     0=>$top['current']['share'][0],1=>$top['current']['share'][1],2=>$top['current']['share'][2],3=>$top['current']['share'][3],
-                    4=>$top['current']['share'][4],5=>$top['current']['share'][5],6=>$top['current']['share'][2],7=>$top['current']['share'][7],
-                    8=>$top['current']['share'][8],9=>$top['current']['share'][9],10=>$top['current']['share'][10],11=>$top['current']['share'][11],
-                    12=>$top['current']['share'][12],13=>$top['current']['share'][13],14=>$top['current']['share'][14],15=>$top['current']['share'][15],
-                    16=>$top['current']['share'][16],17=>$top['current']['share'][17],18=>$top['current']['share'][18],19=>$top['current']['share'][19],
-                    20=>$top['current']['share'][20],21=>$top['current']['share'][21],22=>$top['current']['share'][22],23=>$top['current']['share'][23]
-                ]);
-            Redis::hmset($id.'_share_hour',
-                [
-                    0=>$top['current']['share'][0],1=>$top['current']['share'][1],2=>$top['current']['share'][2],3=>$top['current']['share'][3],
-                    4=>$top['current']['share'][4],5=>$top['current']['share'][5],6=>$top['current']['share'][2],7=>$top['current']['share'][7],
+                    4=>$top['current']['share'][4],5=>$top['current']['share'][5],6=>$top['current']['share'][6],7=>$top['current']['share'][7],
                     8=>$top['current']['share'][8],9=>$top['current']['share'][9],10=>$top['current']['share'][10],11=>$top['current']['share'][11],
                     12=>$top['current']['share'][12],13=>$top['current']['share'][13],14=>$top['current']['share'][14],15=>$top['current']['share'][15],
                     16=>$top['current']['share'][16],17=>$top['current']['share'][17],18=>$top['current']['share'][18],19=>$top['current']['share'][19],
@@ -608,19 +599,19 @@ class WechatController extends Controller
             Redis::hmset($id.'_level_pv',
                 [
                     1=>$top['level']['pv'][0],2=>$top['level']['pv'][1],3=>$top['level']['pv'][2],4=>$top['level']['pv'][3],
-                    5=>$top['level']['pv'][4],6=>$top['level']['pv'][5],7=>$top['level']['pv'][2],8=>$top['level']['pv'][7],
+                    5=>$top['level']['pv'][4],6=>$top['level']['pv'][5],7=>$top['level']['pv'][6],8=>$top['level']['pv'][7],
                     9=>$top['level']['pv'][8],10=>$top['level']['pv'][9]
                 ]);
             Redis::hmset($id.'_level_uv',
                 [
                     1=>$top['level']['uv'][0],2=>$top['level']['uv'][1],3=>$top['level']['uv'][2],4=>$top['level']['uv'][3],
-                    5=>$top['level']['uv'][4],6=>$top['level']['uv'][5],7=>$top['level']['uv'][2],8=>$top['level']['uv'][7],
+                    5=>$top['level']['uv'][4],6=>$top['level']['uv'][5],7=>$top['level']['uv'][6],8=>$top['level']['uv'][7],
                     9=>$top['level']['uv'][8],10=>$top['level']['uv'][9]
                 ]);
             Redis::hmset($id.'_level_share',
                 [
                     1=>$top['level']['share'][0],2=>$top['level']['share'][1],3=>$top['level']['share'][2],4=>$top['level']['share'][3],
-                    5=>$top['level']['share'][4],6=>$top['level']['share'][5],7=>$top['level']['share'][2],8=>$top['level']['share'][7],
+                    5=>$top['level']['share'][4],6=>$top['level']['share'][5],7=>$top['level']['share'][6],8=>$top['level']['share'][7],
                     9=>$top['level']['share'][8],10=>$top['level']['share'][9]
                 ]);
 
@@ -644,7 +635,7 @@ class WechatController extends Controller
             Redis::expireat($id.'_pv_hour',$expire);
 
             Redis::expireat($id.'_uv_hour',$expire);
-            
+
             Redis::expireat($id.'_share_hour',$expire);
 
             Redis::expireat($id.'_level_pv',$expire);
