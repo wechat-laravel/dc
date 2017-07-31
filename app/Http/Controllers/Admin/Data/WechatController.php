@@ -112,7 +112,6 @@ class WechatController extends Controller
 
                 }
 
-
             }
 
             //最多统计7天
@@ -484,7 +483,7 @@ class WechatController extends Controller
             Redis::hmset($id.'_stay_this',
                 [
                     0=>$top['stay']['this'][0],6=>$top['stay']['this'][1],11=>$top['stay']['this'][2],21=>$top['stay']['this'][3],41=>$top['stay']['this'][4],
-                    81=>$top['stay']['this'][5],161=>$top['stay']['this'][2],321=>$top['stay']['this'][7],641=>$top['stay']['this'][8],1281=>$top['stay']['this'][9]
+                    81=>$top['stay']['this'][5],161=>$top['stay']['this'][6],321=>$top['stay']['this'][7],641=>$top['stay']['this'][8],1281=>$top['stay']['this'][9]
                 ]);
             //计算各个时间段的占比
             for ($i =0 ;$i <10; $i++){
@@ -504,7 +503,7 @@ class WechatController extends Controller
             Redis::hmset($id.'_visit_this',
                 [
                     0=>$top['visit']['this'][0],1=>$top['visit']['this'][1],2=>$top['visit']['this'][2],3=>$top['visit']['this'][3],
-                    4=>$top['visit']['this'][4],5=>$top['visit']['this'][5],6=>$top['visit']['this'][2],7=>$top['visit']['this'][7],
+                    4=>$top['visit']['this'][4],5=>$top['visit']['this'][5],6=>$top['visit']['this'][6],7=>$top['visit']['this'][7],
                     8=>$top['visit']['this'][8],9=>$top['visit']['this'][9],10=>$top['visit']['this'][10],11=>$top['visit']['this'][11],
                     12=>$top['visit']['this'][12],13=>$top['visit']['this'][13],14=>$top['visit']['this'][14],15=>$top['visit']['this'][15],
                     16=>$top['visit']['this'][16],17=>$top['visit']['this'][17],18=>$top['visit']['this'][18],19=>$top['visit']['this'][19],
