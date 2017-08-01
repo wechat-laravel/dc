@@ -3,7 +3,7 @@
     广告栏设置
 @endsection
 @section('menu')
-    服务
+    服务插件
 @endsection
 @section('content')
     <div ms-controller="show">

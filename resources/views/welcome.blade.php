@@ -53,13 +53,8 @@
     <body>
         <div class="container">
             <div class="content">
-                <div class="title" onclick="goUrl()"><img src="{{ URL::asset('green.png') }}" style="width: 500px;height: 300px;"></div>
+                <div class="title"><a href="/admin/task"><img src="{{ URL::asset('green.png') }}" style="width: 500px;height: 300px;"></a></div>
             </div>
         </div>
     </body>
-    <script type="text/javascript">
-        function goUrl(){
-            window.location = "/admin/task"
-        }
-    </script>
 </html>

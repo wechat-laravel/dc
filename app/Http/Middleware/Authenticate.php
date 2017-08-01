@@ -42,6 +42,24 @@ class Authenticate
             }
         }
 
-        return $next($request);
+        if ($this->auth->user()->identity === 'admin' || $this->auth->user()->identity === 'vip'){
+
+            return $next($request);
+
+        }else{
+
+            //游客的话，检测体验时间是否过期
+            if ($this->auth->user()->overdue_at > time()){
+
+                return $next($request);
+
+            }else{
+
+                return redirect('/admin/service/help');
+
+            }
+
+        }
+
     }
 }
