@@ -88,8 +88,8 @@
                             </div>
                             <div class="col-md-9 col-sm-12 col-xs-12">
                                 <div style="margin-bottom: 8px;margin-top: -5px;">
-                                    <button class="btn btn-success" :click="@onTask()">群发消息</button>
-                                    <button class="btn btn-success" style="margin-left: 20px;">选中好友群发</button>
+                                    <button class="btn btn-success" :click="@onTask()">条件式群发</button>
+                                    <button class="btn btn-success" style="margin-left: 20px;">勾选式群发</button>
                                 </div>
                                 <div class="panel panel-default">
                                     <div class="panel-heading">微信好友列表</div>
