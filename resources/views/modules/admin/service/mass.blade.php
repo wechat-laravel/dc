@@ -14,7 +14,7 @@
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                         <h4 class="modal-title">群发任务</h4>
                     </div>
-                    <form class="turn form" enctype="multipart/form-data" id="create">
+                    {{--<form class="turn form" enctype="multipart/form-data" id="create">--}}
                         <div class="modal-body">
                             <div class="form-group">
                                 <label>文字内容：</label>
@@ -61,7 +61,7 @@
                             <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
                             <button type="submit" class="btn btn-primary">提交</button>
                         </div>
-                    </form>
+                    {{--</form>--}}
                 </div>
             </div>
         </div>
@@ -83,17 +83,21 @@
                                 </div>
                                 <div :if="!@login" class="alert alert-success text-center" style="padding:7px 7px;background-color: #3C8DBC; ">@{{ qrmsg }}</div>
                                 <div :if="@login" class="btn btn-block btn-success" :click="@onLogout()">已登录（点击退出）</div>
+                                <p style="margin-top: 10px;"><b>温馨提示：</b> </p>
+                                <p><b>扫码登录后若没有反应，请继续扫码或刷新页面后重试</b></p>
                             </div>
                             <div class="col-md-9 col-sm-12 col-xs-12">
                                 <div style="margin-bottom: 8px;margin-top: -5px;">
                                     <button class="btn btn-success" :click="@onTask()">群发消息</button>
+                                    <button class="btn btn-success" style="margin-left: 20px;">选中好友群发</button>
                                 </div>
                                 <div class="panel panel-default">
                                     <div class="panel-heading">微信好友列表</div>
-                                    <div class="table-responsive">
+                                    <div class="table-responsive" style="overflow: auto;height: 600px;">
                                         <table class="table table-bordered no-margin text-center table-hover">
                                             <thead>
                                             <tr>
+                                                <th width="20px;"><input type="checkbox" style="width: 17px;height: 17px;"></th>
                                                 <th>头像</th>
                                                 <th>名称</th>
                                                 <th>性别</th>
@@ -103,6 +107,9 @@
                                             </thead>
                                             <tbody>
                                                 <tr ms-for="el in @allList">
+                                                    <td>
+                                                        <input type="checkbox" style="width: 17px;height: 17px;">
+                                                    </td>
                                                     <td><img class="lazy" ms-attr="{src : 'http://rzwei.cn:5050/getheadimg?id='+nowId+'&username='+el.UserName}" width="30px;" height="30px;"></td>
                                                     <td>@{{ el.NickName }}</td>
                                                     <td>@{{ el.Sex === 1 ? '男' : '女' }}</td>
