@@ -13,14 +13,21 @@ class MassController extends Controller
 
     public function index(Request $request)
     {
+
+//        $res = $this->qunfa();
+
+//        return $res;
+
         if ($request->ajax()){
+
+            $id = md5(Auth::user()->email);
 
             //获取登录二维码
             if ($request->has('qrcode')){
 
                 $url    = 'http://rzwei.cn:5050/login';
 
-                $data   = ['id'=>md5(Auth::user()->email)];
+                $data   = ['id'=>$id];
 
                 $result = $this->curlGet($url,'POST',$data);
 
@@ -51,7 +58,7 @@ class MassController extends Controller
             //查询登陆状态
             if ($request->has('status')){
 
-                $url    = 'http://rzwei.cn:5050/getstatus?id='.md5(Auth::user()->email);
+                $url    = 'http://rzwei.cn:5050/getstatus?id='.$id;
 
                 $result = $this->curlGet($url,'GET');
 
@@ -70,7 +77,7 @@ class MassController extends Controller
             //查询全部微信好友列表
             if($request->has('all_list')){
 
-                $url    = 'http://rzwei.cn:5050/getcontact?id='.md5(Auth::user()->email);
+                $url    = 'http://rzwei.cn:5050/getcontact?id='.$id;
 
                 $result = $this->curlGet($url,'GET');
 
@@ -78,14 +85,14 @@ class MassController extends Controller
                     //如果返回的是false表示已退出登录了。
                     if ($result['data'] === 'false'){
 
-                        return response()->json(['success'=>false,'msg'=>$result['msg']]);
+                        return response()->json(['success'=>false,'msg'=>'登录已过期，请重新登录']);
 
                     }else{
                         //表示获取到了用户的列表 格式为json,需要转一下
 
                         $data =  json_decode($result['data']);
 
-                        return response()->json(['success'=>true,'data'=>$data]);
+                        return response()->json(['success'=>true,'id'=>$id,'data'=>$data]);
 
                     }
 
@@ -97,7 +104,34 @@ class MassController extends Controller
 
             }
 
-            //设置群发信息
+
+
+            //退出登录
+            if ($request->has('logout')){
+
+                $url    = 'http://rzwei.cn:5050/logout?id='.$id;
+
+                $result =  $this->curlGet($url,'GET');
+
+                if ($result['success']){
+                    //如果返回的是false表示已退出登录了。
+                    if ($result['data'] === 'false'){
+
+                        return response()->json(['success'=>false,'msg'=>'退出失败']);
+
+                    }else{
+
+                        return response()->json(['success'=>true,'msg'=>'退出成功']);
+
+                    }
+
+                }else{
+
+                    return response()->json(['success'=>false,'msg'=>$result['msg']]);
+
+                }
+
+            }
 
 
         }
@@ -106,25 +140,67 @@ class MassController extends Controller
 
     }
 
-    /**
-     *  获取扫码登录的二维码
-     */
-    public function getImg()
-    {
 
+
+    /**
+     * 设置群发信息
+     */
+    public function setmessage()
+    {
+        $url  = 'http://rzwei.cn:5050/setmessage?id='.md5(Auth::user()->email);
+
+        $data = [
+            'message' =>[
+                1=> [
+                        'delay'   => [1,3],
+                        'text'    => '发错了，不好意思',
+                        'picture' => '~/a.png',
+                    ]
+            ]
+
+        ];
+
+        $data = json_encode($data);
+
+        $result = $this->curlGet($url,'POST',$data);
+
+        return $result;
+
+    }
+
+    /**
+     *  设置群发对象的条件
+     *
+     */
+    public function setcondition()
+    {
+        $url = 'http://rzwei.cn:5050/setcondition?id='.md5(Auth::user()->email);
+
+        $data = [
+            'condition' =>[
+                    'NickName' => '张远',
+            ]
+
+        ];
+
+        $data = json_encode($data);
+
+        $result = $this->curlGet($url,'POST',$data);
+
+        return $result;
 
 
     }
 
-
-    /**
-     * 检查登录的状态
-     */
-    public function getStatus()
+    public  function qunfa()
     {
+        $url = 'http://rzwei.cn:5050/qunfa?id='.md5(Auth::user()->email);
 
+        $result = $this->curlGet($url,'GET');
 
+        return $result;
     }
+
 
     /**
      * curl get post
