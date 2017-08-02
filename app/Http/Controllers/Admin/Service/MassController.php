@@ -257,7 +257,10 @@ class MassController extends Controller
 
                     $city  = CityModel::select('city_name')->where('id',intval($input['City']))->first();
 
-                    $data['condition']['City'] = $city->city_name;
+                    //因为该处取出来的 都带有县、区之类的词 得去掉 才行
+                    $len = mb_strlen($city->city_name);
+
+                    $data['condition']['City'] = mb_substr($city->city_name, 0,$len-1,'UTF-8');
 
                 }
 
