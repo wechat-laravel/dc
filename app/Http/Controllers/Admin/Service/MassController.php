@@ -162,7 +162,7 @@ class MassController extends Controller
             $data = [
                 'message' =>[
                     1=> [
-                        'delay'   => [5,10],     //随即时间作为延迟
+                        'delay'   => [2,3],     //随即时间作为延迟
                     ]
                 ]
 
