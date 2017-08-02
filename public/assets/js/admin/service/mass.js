@@ -7,11 +7,13 @@ var show = avalon.define({
     login      : false,         //登录状态
     logout     : false,         //退出按钮是否显示
     cc         : 1,             //定时器ID
+    ss         : 1,
     allList    : [],            //所有的用户列表
     nowId      : '',
     method     : 'all',         //群发的对象
     city       : [],            //城市
     oks        : 0,             //符合条件的数目
+    result     : false,             //发送返回的结果
     tml        : "<div class='alert alert-danger alert-dismissible fade in' role='alert'><button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>×</span></button><p id='errinfo'>123</p></div>",
     onQrcode   : function () {
         $.ajax({
@@ -82,10 +84,22 @@ var show = avalon.define({
                 }
             })
         }
-
+    },
+    onSend   : function () {
+        $('.send').modal('hide');
+        show.ss = window.setInterval(show.toSend,2000);
+    },
+    toSend   : function () {
+        $.ajax({
+            url:'/admin/service/mass/send'
+        }).done(function (ret) {
+            if(!ret.success){
+                window.clearInterval(show.ss);
+            }else{
+                show.result = ret.data;
+            }
+        });
     }
-
-
 });
 show.onQrcode();
 show.cc = window.setInterval(show.onStatus,2000);
@@ -140,13 +154,14 @@ $(function () {
             processData: false,
             contentType: false
         }).done(function(ret){
-            console.log(ret);
-            // if (!ret.success){
-            //     $('#error-show').html(tml);
-            //     $('#errinfo').text(ret.msg);
-            // }else{
-            //     location.href = '/admin/task';
-            // }
+            if(ret.success){
+                show.oks = ret.data;
+                $('.setmessage').modal('hide');
+                $('.send').modal('show');
+            }else{
+                $('#error-show').html(show.tml);
+                $('#errinfo').text(ret.msg);
+            }
         });
 
         $('form').bootstrapValidator('disableSubmitButtons', false);

@@ -7,7 +7,7 @@
 @endsection
 @section('content')
     <div ms-controller="show">
-        <div class="modal setcondition" id="red_turn" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
+        <div class="modal setcondition" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -62,7 +62,7 @@
             </div>
         </div>
 
-        <div class="modal setmessage" id="red_turn" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
+        <div class="modal setmessage" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -93,6 +93,24 @@
             </div>
         </div>
 
+        <div class="modal send" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title">群发任务（ 第三步：确认发送 ）</h4>
+                    </div>
+                    <div class="modal-body">
+                        <p class="text-center"><b>发送的内容设置成功！</b></p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                        <button type="button" class="btn btn-primary" :click="@onSend">开始发送</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <div class="row">
             <section class="col-md-12 col-sm-12 col-xs-12 connectedSortable ui-sortable">
                 <div class="nav-tabs-custom">
@@ -119,7 +137,9 @@
                                     <button class="btn btn-success" :click="@onTask()" style="margin-left: 20px;">条件式群发</button>
                                 </div>
                                 <div class="panel panel-default">
-                                    <div class="panel-heading">微信好友列表</div>
+                                    <div class="panel-heading">微信好友列表
+                                        <span :visible="result" style="margin-left: 20px;"><b>当前发送状态：@{{ result }}</b></span>
+                                    </div>
                                     <div class="table-responsive" style="overflow: auto;height: 600px;">
                                         <table class="table table-bordered no-margin text-center table-hover">
                                             <thead>

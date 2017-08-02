@@ -100,9 +100,7 @@ class MassController extends Controller
                 }
 
             }
-
-
-
+            
             //退出登录
             if ($request->has('logout')){
 
@@ -141,7 +139,6 @@ class MassController extends Controller
 
             }
 
-
         }
 
         $province = ProvinceModel::select('prov_id','prov_name')->get();
@@ -159,11 +156,13 @@ class MassController extends Controller
     {
         if ($request->ajax()){
 
+            $status = false;
+
             //暂时群发设置的人数为50个
             $data = [
                 'message' =>[
                     1=> [
-                        'delay'   => [1,3],     //随即时间作为延迟
+                        'delay'   => [5,10],     //随即时间作为延迟
                     ]
                 ]
 
@@ -171,14 +170,17 @@ class MassController extends Controller
 
             $input = $request->only('text','picture');
 
-
             if ($input['text']){
+
+                $status = true;
 
                 $data['message'][1]['text'] = e($input['text']);
 
             }
 
             if ($request->hasFile('picture')){
+
+                $status = true;
 
                 $file = screenFile($request->file('picture'),2);
 
@@ -188,11 +190,19 @@ class MassController extends Controller
 
             }
 
+            if (!$status)   return response()->json(['success'=>false,'msg'=>'必须填其中一个选项！']);
+
             $url  = 'http://rzwei.cn:5050/setmessage?id='.md5(Auth::user()->email);
 
             $data = json_encode($data);
 
             $result = $this->curlGet($url,'POST',$data);
+
+            if ($result['success'] && $result['data'] === 'false'){
+
+                return response()->json(['success'=>false,'msg'=>'设置内容失败！']);
+
+            }
 
             return $result;
 
@@ -275,11 +285,18 @@ class MassController extends Controller
 
     }
 
-    public  function qunfa()
+    //群发，第一次请求，成功返回true,随后请求返回 群发到第几个，发送完了，转为了false
+    public  function toSend()
     {
         $url = 'http://rzwei.cn:5050/qunfa?id='.md5(Auth::user()->email);
 
         $result = $this->curlGet($url,'GET');
+
+        if ($result['success'] && $result['data'] === 'false'){
+
+            return response()->json(['success'=>false,'msg'=>false]);
+
+        }
 
         return $result;
     }
