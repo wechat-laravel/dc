@@ -7,61 +7,88 @@
 @endsection
 @section('content')
     <div ms-controller="show">
-        <div class="modal fade ontask" id="red_turn" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
+        <div class="modal setcondition" id="red_turn" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                        <h4 class="modal-title">群发任务</h4>
+                        <h4 class="modal-title">群发任务（ 第一步：设置条件 ）</h4>
                     </div>
-                    {{--<form class="turn form" enctype="multipart/form-data" id="create">--}}
+                    <form class="condition form">
+                        {!! csrf_field() !!}
+                        {{--<form class="turn form" enctype="multipart/form-data" id="create">--}}
                         <div class="modal-body">
                             <div class="form-group">
-                                <label>文字内容：</label>
-                                <input type="text" name="red_amount"  class="form-control">
+                                <label>指定发送对象</label>
+                                <select class="form-control" name="ChatRoom">
+                                    <option value="0">不限制</option>
+                                    <option value="false">只发给好友</option>
+                                    <option value="true">只发给群聊</option>
+                                </select>
                             </div>
-                            {{--<div class="form-group">--}}
-                                {{--<label>图片内容</label>--}}
-                                {{--<input type="file" name="img_url"  class="projectfile"  multiple="multiple">--}}
-                                {{--<p class="help-block">请上传大小在2M以内的图片</p>--}}
-                            {{--</div>--}}
                             <div class="form-group">
-                                <label>群发对象</label>
-                                <select class="form-control" name="object" id="method" ms-on-change="@onMethod">
-                                    <option value="all">发送给全部好友与群聊</option>
-                                    <option value="some">发送给部分好友或群聊</option>
-                                </select>
-                            </div>
-                            <div class="form-group" :visible="method === 'some'">
-                                <label>指定好友或群聊</label>
-                                <select class="form-control" name="city">
-                                    <option value="0">不限制</option>
-                                    <option value="1">好友</option>
-                                    <option value="2">群聊</option>
-                                </select>
-                            </div>
-                            <div class="form-group" :visible="method === 'some'">
-                                <label>指定性别</label>
-                                <select class="form-control" name="sex" >
+                                <label>指定性别（ 根据微信资料判断，可能有误差 ）</label>
+                                <select class="form-control" name="Sex">
                                     <option value="0">不限制</option>
                                     <option value="1">男</option>
                                     <option value="2">女</option>
                                 </select>
                             </div>
-                            <div class="form-group" :visible="method === 'some'">
-                                <label>指定地区</label>
-                                <select class="form-control" name="city">
-                                    <option value="0">不限制</option>
-                                    <option value="1">男</option>
-                                    <option value="2">女</option>
-                                </select>
+                            <div class="form-group">
+                                <label>指定区域（ 根据微信资料判断，可能有误差 ） </label>
+                                <div class="form-inline">
+                                    <select class="form-control" name="Province" id='prov' ms-on-change="@onCity">
+                                        <option value="0">不限制</option>
+                                        @foreach( $province as $pro)
+                                            <option value="{{ $pro->prov_id }}">{{ $pro->prov_name }}</option>
+                                        @endforeach
+                                    </select>
+                                    <select class="form-control" name="City" style="margin-left: 10px;">
+                                        <option value="0">不限制</option>
+                                        <option ms-for="ct in @city" ms-attr="{value : ct.id}">@{{ ct.city_name }}</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div id="error-show"></div>
                             </div>
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
                             <button type="submit" class="btn btn-primary">提交</button>
                         </div>
-                    {{--</form>--}}
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal setmessage" id="red_turn" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title">群发任务（ 第二步：设置发送内容 ）</h4>
+                    </div>
+                    <form class="message form" enctype="multipart/form-data">
+                        {!! csrf_field() !!}
+                        <div class="modal-body">
+                            <p><b>符合条件的好友有：<span style="color: red">@{{ oks }}</span>个</b></p>
+                            <hr>
+                            <div class="form-group">
+                                <label>文字内容</label>
+                                <input type="text" name="text" class="form-control">
+                            </div>
+                            <div class="form-group">
+                                <label>图片内容 （ 可选项 ）</label>
+                                <input type="file" name="picture"  multiple="multiple">
+                                <p class="help-block">请上传大小在2M以内的图片</p>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                            <button type="submit" class="btn btn-primary">提交</button>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>
@@ -88,8 +115,8 @@
                             </div>
                             <div class="col-md-9 col-sm-12 col-xs-12">
                                 <div style="margin-bottom: 8px;margin-top: -5px;">
-                                    <button class="btn btn-success" :click="@onTask()">条件式群发</button>
-                                    <button class="btn btn-success" style="margin-left: 20px;">勾选式群发</button>
+                                    <button class="btn btn-success" >勾选式群发</button>
+                                    <button class="btn btn-success" :click="@onTask()" style="margin-left: 20px;">条件式群发</button>
                                 </div>
                                 <div class="panel panel-default">
                                     <div class="panel-heading">微信好友列表</div>
@@ -132,5 +159,6 @@
 @endsection
 @section('afterScript')
     <script src="https://cdn.bootcss.com/jquery_lazyload/1.9.7/jquery.lazyload.js"></script>
+    <script src="{{ URL::asset('assets/js/bootstrapValidator.min.js') }}" type="text/javascript" charset="utf-8"></script>
     <script type="text/javascript" src="{{ URL::asset('assets/js/admin/service/mass.js') }}"></script>
 @endsection

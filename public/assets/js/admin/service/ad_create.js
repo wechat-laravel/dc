@@ -257,7 +257,6 @@ $(function () {
             processData: false,
             contentType: false
         }).done(function(ret){
-            console.log(ret);
             if (!ret.success){
                 $('#error-show').html(tml);
                 $('#errinfo').text(ret.msg);

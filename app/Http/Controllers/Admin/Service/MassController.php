@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers\Admin\Service;
 
+use App\Models\CityModel;
+use App\Models\ProvinceModel;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
@@ -13,11 +15,6 @@ class MassController extends Controller
 
     public function index(Request $request)
     {
-
-//        $res = $this->qunfa();
-
-//        return $res;
-
         if ($request->ajax()){
 
             $id = md5(Auth::user()->email);
@@ -133,10 +130,23 @@ class MassController extends Controller
 
             }
 
+            //获取城市信息
+            if ($request->has('prov_id')){
+
+                $prov_id = intval($request->input('prov_id'));
+
+                $city = CityModel::select('id','city_name')->where('prov_id',$prov_id)->get();
+
+                return response()->json(['success'=>true,'city'=>$city]);
+
+            }
+
 
         }
 
-        return view('modules.admin.service.mass');
+        $province = ProvinceModel::select('prov_id','prov_name')->get();
+
+        return view('modules.admin.service.mass',['province'=>$province]);
 
     }
 
@@ -145,26 +155,52 @@ class MassController extends Controller
     /**
      * 设置群发信息
      */
-    public function setmessage()
+    public function setMessage(Request $request)
     {
-        $url  = 'http://rzwei.cn:5050/setmessage?id='.md5(Auth::user()->email);
+        if ($request->ajax()){
 
-        $data = [
-            'message' =>[
-                1=> [
-                        'delay'   => [1,3],
-                        'text'    => '发错了，不好意思',
-                        'picture' => '~/a.png',
+            //暂时群发设置的人数为50个
+            $data = [
+                'message' =>[
+                    1=> [
+                        'delay'   => [1,3],     //随即时间作为延迟
                     ]
-            ]
+                ]
 
-        ];
+            ];
 
-        $data = json_encode($data);
+            $input = $request->only('text','picture');
 
-        $result = $this->curlGet($url,'POST',$data);
 
-        return $result;
+            if ($input['text']){
+
+                $data['message'][1]['text'] = e($input['text']);
+
+            }
+
+            if ($request->hasFile('picture')){
+
+                $file = screenFile($request->file('picture'),2);
+
+                if(!$file['success'])  return $file;
+
+                $data['message'][1]['picture'] = 'http://www.maidamaida.com'.$file['path'];
+
+            }
+
+            $url  = 'http://rzwei.cn:5050/setmessage?id='.md5(Auth::user()->email);
+
+            $data = json_encode($data);
+
+            $result = $this->curlGet($url,'POST',$data);
+
+            return $result;
+
+        }else{
+
+            return response()->json(['success'=>false,'msg'=>'非法请求！']);
+
+        }
 
     }
 
@@ -172,23 +208,70 @@ class MassController extends Controller
      *  设置群发对象的条件
      *
      */
-    public function setcondition()
+    public function setCondition(Request $request)
     {
-        $url = 'http://rzwei.cn:5050/setcondition?id='.md5(Auth::user()->email);
+        if ($request->ajax()){
 
-        $data = [
-            'condition' =>[
-                    'NickName' => '张远',
-            ]
+            //暂时群发设置的人数为50个
+            $data = ['condition'=>['Count'=>50]];
 
-        ];
+            $input = $request->only('ChatRoom','Sex','Province','City');
 
-        $data = json_encode($data);
+            //如果是群发的话，就不看下面两个条件了。
+            if ($input['ChatRoom'] === 'true'){
 
-        $result = $this->curlGet($url,'POST',$data);
+                $data['condition']['ChatRoom'] = true;
 
-        return $result;
+            }else{
 
+                if ($input['Sex'] === '1'){
+
+                    $data['condition']['Sex'] = 1;
+
+                }
+
+                if($input['Sex'] === '2'){
+
+                    $data['condition']['Sex'] = 2;
+
+                }
+
+                if ($input['Province'] !== '0'){
+
+                    $province = ProvinceModel::select('prov_name')->where('prov_id',intval($input['Province']))->first();
+
+                    $data['condition']['Province'] = $province->prov_name;
+                }
+
+                if ($input['City'] !== '0'){
+
+                    $city  = CityModel::select('city_name')->where('id',intval($input['City']))->first();
+
+                    $data['condition']['City'] = $city->city_name;
+
+                }
+
+            }
+
+            $url = 'http://rzwei.cn:5050/setcondition?id='.md5(Auth::user()->email);
+
+            $data = json_encode($data);
+
+            $result = $this->curlGet($url,'POST',$data);
+
+            if ($result['success'] && $result['data'] === 'false'){
+
+                return response()->json(['success'=>false,'msg'=>'请求失败！']);
+
+            }
+
+            return $result;
+
+        }else{
+
+            return response()->json(['success'=>false,'msg'=>'非法请求！']);
+
+        }
 
     }
 
@@ -200,6 +283,7 @@ class MassController extends Controller
 
         return $result;
     }
+
 
 
     /**
