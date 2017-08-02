@@ -43,10 +43,7 @@ class AuthController extends Controller
 
     public function getLogin()
     {
-        echo env('DB_HOST');
-        $user = UserModel::where('created_at','>',0)->get();
 
-        return response($user);
         return view('modules.auth.login');
 
     }
