@@ -94,6 +94,7 @@ var show = avalon.define({
             url:'/admin/service/mass/send'
         }).done(function (ret) {
             if(!ret.success){
+                show.result = false;
                 window.clearInterval(show.ss);
             }else{
                 show.result = ret.data;
