@@ -20,6 +20,21 @@
                 {{--每次更新日志记录的开始--}}
                 <div class="box box-success">
                     <div class="box-header with-border">
+                        <h3 class="box-title">更新时间：2017-8-3 v2.1.0</h3>
+                    </div>
+                    <div class="box-body">
+                        <p>新增功能：</p>
+                        <ul>
+                            <li>服务插件 > 群发助手 : 添加微信群发功能 </li>
+                            <li>群发方式支持：设置条件，与批量指定好友</li>
+                            <li>可群发文字，或图片，并可以设置每个发送的时长</li>
+                            <li>该功能现为公开测试，群发的数量暂没有上限。如有问题，请反馈，见谅！</li>
+                        </ul>
+                    </div>
+                </div>
+                {{--每次更新日志记录的开始--}}
+                <div class="box box-success">
+                    <div class="box-header with-border">
                         <h3 class="box-title">更新时间：2017-7-24 v2.0.0</h3>
                     </div>
                     <div class="box-body">
@@ -39,7 +54,7 @@
                         <p>新增功能：</p>
                         <ul>
                             <li>个人中心 > 账户充值 :添加 在线微信支付功能、线下打款方式 </li>
-                                <li>使用在线支付接口，收取4%的手续费</li>
+                            <li>使用在线支付接口，收取4%的手续费</li>
                             <li>线下打款免手续费</li>
                         </ul>
                     </div>
