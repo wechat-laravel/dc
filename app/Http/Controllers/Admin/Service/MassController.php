@@ -162,7 +162,7 @@ class MassController extends Controller
             $data = [
                 'message' =>[
                     1=> [
-                        'delay'   => [2,3],     //随即时间作为延迟
+                        'delay'   => [3,8],     //随即时间作为延迟
                     ]
                 ]
 
@@ -192,6 +192,26 @@ class MassController extends Controller
 
             if (!$status)   return response()->json(['success'=>false,'msg'=>'必须填其中一个选项！']);
 
+            if ($request->has('delay')){
+
+                $delay = $request->input('delay');
+
+                if ($delay === '3-5'){
+
+                    $data['message'][1]['delay'] = [3,5];
+
+                }elseif ($delay === '6-11'){
+
+                    $data['message'][1]['delay'] = [6,11];
+
+                }elseif ($delay === '12-20'){
+
+                    $data['message'][1]['delay'] = [12,20];
+
+                }
+
+            }
+            
             $url  = 'http://rzwei.cn:5050/setmessage?id='.md5(Auth::user()->email);
 
             $data = json_encode($data);
