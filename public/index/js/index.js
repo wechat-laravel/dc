@@ -1,0 +1,197 @@
+﻿/**
+ * Created by lizhengquan on 2017/5/11.
+ */
+window.onscroll = function () {
+    if (document.body.scrollTop > document.body.clientWidth * 753 / 1920) {
+        document.getElementById('header').className = 'scrolled';
+    } else {
+        document.getElementById('header').className = '';
+    }
+
+    elementAnimation();
+};
+
+/**
+ * 元素的动画效果
+ */
+function elementAnimation() {
+    var clientHeight = document.documentElement.clientHeight || document.body.clientHeight;
+
+    //console.log(document.body.scrollTop);
+    if(document.body.scrollTop > 620 - clientHeight){
+        $('.page2>.title').addClass('fade-down');
+    }
+    if(document.body.scrollTop > 700 - clientHeight){
+        $($('.turn-before')[0]).addClass('turn');
+        $($('.turn-before')[1]).addClass('turn');
+        $($('.turn-before')[2]).addClass('turn');
+    }
+    if(document.body.scrollTop > 1100 - clientHeight){
+        $($('.turn-before')[3]).addClass('turn');
+        $($('.turn-before')[4]).addClass('turn');
+        $($('.turn-before')[5]).addClass('turn');
+    }
+
+    if(document.body.scrollTop > 1400 - clientHeight){
+        $('.page3>.tip').addClass('fade-down');
+    }
+
+
+
+    if(document.body.scrollTop > 1570 - clientHeight){
+        $('.chanpintedian>img').addClass('fadein')
+        $('.chanpintedian>.page-info').addClass('fadein')
+    }
+    if(document.body.scrollTop > 2070 - clientHeight){
+        $('.shujufenxi>img').addClass('fadein')
+        $('.shujufenxi>.page-info').addClass('fadein')
+    }
+    if(document.body.scrollTop > 2570 - clientHeight){
+        $('.iqiren>img').addClass('fadein')
+        $('.iqiren>.page-info').addClass('fadein')
+    }
+    if(document.body.scrollTop > 3070 - clientHeight){
+        $('.juben>img').addClass('fadein')
+        $('.juben>.page-info').addClass('fadein')
+    }
+    if(document.body.scrollTop > 3670 - clientHeight){
+        $('.zuzhijiegou>img').addClass('fadein')
+        $('.zuzhijiegou>.page-info').addClass('fadein')
+    }
+    if(document.body.scrollTop > 4070 - clientHeight){
+        $('.haoyou>img').addClass('fadein')
+        $('.haoyou>.page-info').addClass('fadein')
+    }
+    if(document.body.scrollTop > 4570 - clientHeight){
+        $('.shujuanquan>img').addClass('fadein')
+        $('.shujuanquan>.page-info').addClass('fadein')
+    }
+    if(document.body.scrollTop > 5070 - clientHeight){
+        $('.yingyong>img').addClass('fadein')
+        $('.yingyong>.page-info').addClass('fadein')
+    }
+}
+// 打开页面一秒后，启动动画
+setTimeout(elementAnimation, 300);
+
+function showQrcode(that) {
+    $('.float-qrcode').css('display', 'none');
+    $(that).find('.float-qrcode').css('display', 'block');
+}
+
+function hideQrcode() {
+    $('.float-qrcode').css('display', 'none');
+}
+
+$(function(){
+    initServiceQrcode();
+    initPcCss();
+    //
+    window.onresize =resizeFun;
+    resizeFun();
+
+    var obj = $('.a-'+location.hash.substring(1))[0];
+    if(!obj){
+        obj = $('.a-home')[0];
+    }
+    anchorClick(obj);
+});
+/**
+ * 小于1000的有滚动条
+ */
+function resizeFun() {
+    var clientWidth = document.body.clientWidth;
+    if(clientWidth > 1098){
+        document.body.style.overflowX = 'hidden';
+    }else{
+        document.body.style.overflowX = 'auto';
+    }
+}
+
+/**
+ * 初始化pc端的css
+ */
+function initPcCss(){
+    if(checkIsPc()){
+        $('.container').css('min-width', '1080px');
+    }
+}
+/**
+ * 随机底部客服信息
+ */
+function initServiceQrcode() {
+    var services =
+        [{  name:'阿志', iconClass:'bayi', qrcode: 'service-bayi.jpg' },
+        {  name:'丁丁', iconClass:'dingding', qrcode: 'service-dingding.jpg?v=1' },
+        {  name:'韩果果', iconClass:'hanguoguo', qrcode: 'service-hanguoguo.jpg?v=1' },
+        {  name:'米勒', iconClass:'xiaoao', qrcode: 'service-xiaoao.jpg' }];
+    var index =[];
+    while(true){
+        var random =parseInt(Math.random() * 10)%4;
+        if(index.indexOf(random) >= 0){
+            continue;
+        }
+        index.push(random);
+
+        if(index.length >= services.length){
+            break;
+        }
+    }
+    console.log(index);
+
+    var doms = '';
+    for(var i=0;i<services.length;i++){
+        var serviceItem = services[index[i]];
+        var iconClass = serviceItem.iconClass;
+        var name = serviceItem.name;
+        var qrcode = 'images/'+serviceItem.qrcode;
+        var smallErweima = 'images/erweima.png';
+
+        var serviceDom = '<li ontouchstart="showQrcode(this)"><i class="head '+iconClass+'"></i><span>'+name+'</span> <img src="'+smallErweima+'" class="small-qrcode"/><i class="float-qrcode"><img src="'+qrcode+'"/><span></span></i></li>';
+        doms += serviceDom;
+    }
+    $('.page12').find('.item').html(doms);
+}
+
+/**
+ * 下载
+ */
+function downloadApp() {
+    if (!checkIsPc()) {
+        alert('请在电脑端打开下载');
+        return;
+    }
+    location.href = 'http://www.maidamaida.com/auth/register';
+}
+/**
+ * 判断是否是电脑
+ * @returns {boolean}
+ */
+function checkIsPc() {
+    var sUserAgent = navigator.userAgent.toLowerCase();
+    var bIsIpad = sUserAgent.match(/ipad/i) == "ipad";
+    var bIsIphoneOs = sUserAgent.match(/iphone os/i) == "iphone os";
+    var bIsMidp = sUserAgent.match(/midp/i) == "midp";
+    var bIsUc7 = sUserAgent.match(/rv:1.2.3.4/i) == "rv:1.2.3.4";
+    var bIsUc = sUserAgent.match(/ucweb/i) == "ucweb";
+    var bIsAndroid = sUserAgent.match(/android/i) == "android";
+    var bIsCE = sUserAgent.match(/windows ce/i) == "windows ce";
+    var bIsWM = sUserAgent.match(/windows mobile/i) == "windows mobile";
+    if (bIsIpad || bIsIphoneOs || bIsMidp || bIsUc7 || bIsUc || bIsAndroid || bIsCE || bIsWM) {
+        return false;
+    } else {
+        return true
+    }
+}
+
+function anchorClick(obj) {
+    var href = $(obj).attr("href");
+    var pos = $(href).offset().top;
+    $("html,body").animate({ scrollTop: pos }, 400);
+
+    var selects = document.getElementsByClassName('selected');
+    if (selects.length > 0) {
+        selects[0].className = '';
+    }
+    $(obj).parent()[0].className = 'selected';
+};
