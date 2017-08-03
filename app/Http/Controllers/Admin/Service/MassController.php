@@ -222,8 +222,8 @@ class MassController extends Controller
     {
         if ($request->ajax()){
 
-            //暂时群发设置的人数为50个
-            $data = ['condition'=>['Count'=>50]];
+            //暂时群发设置的人数为5000个
+            $data = ['condition'=>['Count'=>5000]];
 
             $input = $request->only('ChatRoom','Sex','Province','City');
 
