@@ -145,6 +145,7 @@ var show = avalon.define({
 });
 show.onQrcode();
 show.cc = window.setInterval(show.onStatus,2000);
+show.ss = window.setInterval(show.toSend,2000);
 show.$watch("checkData.length",function () {
    if (show.checkData.length === show.checkAlls.length){
        show.allchecked = true;

@@ -148,7 +148,7 @@
                                 </div>
                                 <div class="panel panel-default">
                                     <div class="panel-heading">微信好友列表
-                                        <span :visible="result" style="margin-left: 20px;color:#3C8DBC"><b>当前发送状态：@{{ result }}</b></span>
+                                        <span :visible="result" style="margin-left: 20px;color:#3C8DBC"><b>当前进行到：@{{ result }}</b></span>
                                     </div>
                                     <div class="table-responsive" style="overflow: auto;height: 600px;">
                                         <table class="table table-bordered no-margin text-center table-hover">
