@@ -13,8 +13,18 @@ var show = avalon.define({
     method     : 'all',         //群发的对象
     city       : [],            //城市
     oks        : 0,             //符合条件的数目
-    result     : false,             //发送返回的结果
+    result     : false,         //发送返回的结果
+    checkData  : [],            //选择框选中的值
+    checkAlls  : [],            //选择框所有的值
+    allchecked : false,
     tml        : "<div class='alert alert-danger alert-dismissible fade in' role='alert'><button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>×</span></button><p id='errinfo'>123</p></div>",
+    checkAll: function () {
+        if(show.allchecked){
+            show.checkData = show.checkAlls;
+        }else{
+            show.checkData = [];
+        }
+    },
     onQrcode   : function () {
         $.ajax({
             url:'/admin/service/mass?qrcode=1'
@@ -53,6 +63,9 @@ var show = avalon.define({
             if(ret.success){
                 show.nowId   = ret.id;
                 show.allList = ret.data;
+                for (var i=0;i<ret.data.length;i++){
+                    show.checkAlls.push(ret.data[i].UserName.toString());
+                }
             }
         });
     },
@@ -104,6 +117,13 @@ var show = avalon.define({
 });
 show.onQrcode();
 show.cc = window.setInterval(show.onStatus,2000);
+show.$watch("checkData.length",function () {
+   if (show.checkData.length === show.checkAlls.length){
+       show.allchecked = true;
+   }else{
+       show.allchecked = false;
+   }
+});
 
 
 $(function () {

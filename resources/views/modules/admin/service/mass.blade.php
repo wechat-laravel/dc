@@ -144,7 +144,7 @@
                                         <table class="table table-bordered no-margin text-center table-hover">
                                             <thead>
                                             <tr>
-                                                <th width="20px;"><input type="checkbox" style="width: 17px;height: 17px;"></th>
+                                                <th width="20px;"><input type="checkbox" ms-duplex-checked="@allchecked"  data-duplex-changed="@checkAll" style="width: 17px;height: 17px;"></th>
                                                 <th>头像</th>
                                                 <th>名称</th>
                                                 <th>性别</th>
@@ -155,7 +155,7 @@
                                             <tbody>
                                                 <tr ms-for="el in @allList">
                                                     <td>
-                                                        <input type="checkbox" style="width: 17px;height: 17px;">
+                                                        <input type="checkbox" name="checks" ms-duplex="@checkData" style="width: 17px;height: 17px;" ms-attr="{value: el.UserName}">
                                                     </td>
                                                     <td><img class="lazy" ms-attr="{src : 'http://rzwei.cn:5050/getheadimg?id='+nowId+'&username='+el.UserName}" width="30px;" height="30px;"></td>
                                                     <td>@{{ el.NickName }}</td>
