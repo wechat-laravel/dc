@@ -130,10 +130,11 @@
                                 <div :if="@login" class="btn btn-block btn-success" :click="@onLogout()">已登录（点击退出）</div>
                                 <p style="margin-top: 10px;"><b>温馨提示：</b> </p>
                                 <p><b>扫码登录后若没有反应，请继续扫码或刷新页面后重试</b></p>
+                                <p><b>登录二维码有效时长为15秒，超过请刷新页面</b></p>
                             </div>
                             <div class="col-md-9 col-sm-12 col-xs-12">
                                 <div style="margin-bottom: 8px;margin-top: -5px;">
-                                    <button class="btn btn-success" >勾选式群发</button>
+                                    <button class="btn btn-success" :click="@checkTo()">勾选式群发</button>
                                     <button class="btn btn-success" :click="@onTask()" style="margin-left: 20px;">条件式群发</button>
                                 </div>
                                 <div class="panel panel-default">

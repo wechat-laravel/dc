@@ -87,7 +87,6 @@ var show = avalon.define({
     },
     onCity    : function () {
         var id = $('#prov').val();
-
         if(id){
             $.ajax({
                 url:'/admin/service/mass?prov_id='+id
@@ -113,6 +112,35 @@ var show = avalon.define({
                 show.result = ret.data;
             }
         });
+    },
+    //勾选后发送
+    checkTo  : function () {
+        if (show.checkData.length === 0){
+            alert('请勾选下列要发送的对象！');
+        }else{
+            var data = { 'username' : show.checkData };
+            $.ajax({
+                url: '/admin/service/mass/condition',
+                type: 'POST',
+                data: data,
+                // data: JSON.stringify(show.checkData),
+                datatype: 'JSON',
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            }).done(function(ret){
+                if(ret.success){
+                    show.oks = ret.data;
+                    if (show.oks === '0'){
+                        alert('没有找到勾选的选项！');
+                    }else{
+                        $('.setmessage').modal('show');
+                    }
+                }else{
+                    alert(ret.msg);
+                }
+            });
+        }
     }
 });
 show.onQrcode();

@@ -22,11 +22,11 @@ class MassController extends Controller
             //获取登录二维码
             if ($request->has('qrcode')){
 
-                $url    = 'http://rzwei.cn:5050/login';
+                $url    = 'http://rzwei.cn:5050/login?id='.$id;
 
                 $data   = ['id'=>$id];
 
-                $result = $this->curlGet($url,'POST',$data);
+                $result = $this->curlGet($url,'GET');
 
                 if ($result['success']){
 
@@ -227,40 +227,58 @@ class MassController extends Controller
 
             $input = $request->only('ChatRoom','Sex','Province','City');
 
-            //如果是群发的话，就不看下面两个条件了。
-            if ($input['ChatRoom'] === 'true'){
+            //勾选人式的发送
+            if ($request->has('username')){
 
-                $data['condition']['ChatRoom'] = true;
+
+                $username = $request->input('username');
+
+                $count    = count($username);
+
+                for ($i=0;$i<$count;$i++){
+
+                    $data['condition']['UserName'][$i] = $username[$i];
+                }
 
             }else{
+                //条件式群发
 
-                if ($input['Sex'] === '1'){
+                //如果是群发的话，就不看下面两个条件了。
+                if ($input['ChatRoom'] === 'true'){
 
-                    $data['condition']['Sex'] = 1;
+                    $data['condition']['ChatRoom'] = true;
 
-                }
+                }else{
 
-                if($input['Sex'] === '2'){
+                    if ($input['Sex'] === '1'){
 
-                    $data['condition']['Sex'] = 2;
+                        $data['condition']['Sex'] = 1;
 
-                }
+                    }
 
-                if ($input['Province'] !== '0'){
+                    if($input['Sex'] === '2'){
 
-                    $province = ProvinceModel::select('prov_name')->where('prov_id',intval($input['Province']))->first();
+                        $data['condition']['Sex'] = 2;
 
-                    $data['condition']['Province'] = $province->prov_name;
-                }
+                    }
 
-                if ($input['City'] !== '0'){
+                    if ($input['Province'] !== '0'){
 
-                    $city  = CityModel::select('city_name')->where('id',intval($input['City']))->first();
+                        $province = ProvinceModel::select('prov_name')->where('prov_id',intval($input['Province']))->first();
 
-                    //因为该处取出来的 都带有县、区之类的词 得去掉 才行
-                    $len = mb_strlen($city->city_name);
+                        $data['condition']['Province'] = $province->prov_name;
+                    }
 
-                    $data['condition']['City'] = mb_substr($city->city_name, 0,$len-1,'UTF-8');
+                    if ($input['City'] !== '0'){
+
+                        $city  = CityModel::select('city_name')->where('id',intval($input['City']))->first();
+
+                        //因为该处取出来的 都带有县、区之类的词 得去掉 才行
+                        $len = mb_strlen($city->city_name);
+
+                        $data['condition']['City'] = mb_substr($city->city_name, 0,$len-1,'UTF-8');
+
+                    }
 
                 }
 
