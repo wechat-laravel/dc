@@ -144,7 +144,7 @@ if (checkIsPc()) {
                 <label class="qrcode-tip">关注公众号分享免费试用3个月</label>
                 <img src="images/qrcode.jpg" class="qrcode" ontouchstart="hideQrcode()"/> </div-->
             <div class="tip">注册限时免费使用5天</div>
-            <div class="download-c"> <a href="javascript:downloadApp();"><img src="{{ URL::asset('index/images/download.png') }}" class=""/></a> </div>
+            <div class="download-c"> <a href="/auth/register" target="_blank"><img src="{{ URL::asset('index/images/download.png') }}" class=""/></a> </div>
         </div>
     </section>
     <footer>
