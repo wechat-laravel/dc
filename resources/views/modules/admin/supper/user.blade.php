@@ -41,87 +41,85 @@
             </div>
         </div>
 
-        <div class="row">
-            <section class="col-md-12 col-sm-12 col-xs-12 connectedSortable ui-sortable">
-                <div class="nav-tabs-custom">
-                    <div class="tab-content">
-                        <div style="width: 100%;">
-                            <div class="page-header">
-                                <h4>用户管理</h4>
-                                {{--<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">添加一个用户</button>--}}
-                            </div>
-                            <div class="panel panel-default">
-                                <div class="panel-heading">用户列表</div>
-                                <div class="table-responsive">
-                                    <table class="table table-bordered no-margin text-center table-hover">
-                                        <thead>
-                                        <tr>
-                                            <th>用户ID</th>
-                                            <th>头像</th>
-                                            <th>用户名</th>
-                                            <th>邮箱</th>
-                                            <th>微信</th>
-                                            <th>QQ</th>
-                                            <th>余额</th>
-                                            <th>消费总额</th>
-                                            <th>身份</th>
-                                            <th>设置</th>
-                                            <th>注册时间</th>
-                                        </tr>
-                                        </thead>
-                                        <tbody>
-                                        <tr ms-for="el in @data" data-for-rendered='@onLoads'>
-                                            <td>@{{ el.id }}</td>
-                                            <td><img ms-attr="{src : el.avatar ? el.avatar : '/assets/images/user.jpg'}" width="30px;" height="30px;"></td>
-                                            <td>@{{ el.name  }}</td>
-                                            <td>@{{ el.email }}</td>
-                                            <td>@{{ el.wechat_id }}</td>
-                                            <td>@{{ el.qq }}</td>
-                                            <td>@{{ el.balance }}</td>
-                                            <td>@{{ el.consume }}</td>
-                                            <td>
-                                                @{{ el.identity_name }}
-                                            </td>
-                                            <td>
-                                                <button class="btn btn-success btn-sm" :click="@editMark(el.id,el.email,el.identity)">修改</button>
-                                            </td>
-                                            <td>@{{ el.created_at*1000 | date("yyyy-MM-dd HH:mm") }}</td>
-                                        </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="tab-content">
-                        <div class="jumbotron text-center" :visible="visible" >
-                            <h4><i class="glyphicon glyphicon-exclamation-sign" style="margin-right: 20px;"></i>抱歉，暂没有数据</h4>
-                        </div>
-                        <nav aria-label="Page navigation" style="text-align: center">
-                            <ul class="pagination">
-                                <li :visible="@curr > 1">
-                                    <a :click="@toPage(curr-1)" href="#" aria-label="Previous">
-                                        <span aria-hidden="true">&laquo;</span>
-                                    </a>
-                                </li>
-                                <li :for="el in @pages" :class="{active : @el===@curr}">
-                                    <a :click="@toPage(el)" href="#">@{{ el }}</a>
-                                </li>
-                                <li :visible="@curr < @last">
-                                    <a :click="@toPage(curr+1)" href="#" aria-label="Next">
-                                        <span aria-hidden="true">&raquo;</span>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="#">共@{{ total }}条数据</a>
-                                </li>
-                            </ul>
-                        </nav>
+        <div class="box box-widget">
+            <div class="box-header">
+                <h3 class="box-title">用户管理</h3>
+            </div>
+            <div class="box-body">
+                <div class="panel panel-default">
+                    <div class="panel-heading">用户列表</div>
+                    <div class="table-responsive">
+                        <table class="table table-bordered no-margin text-center table-hover">
+                            <thead>
+                            <tr>
+                                <th>用户ID</th>
+                                <th>头像</th>
+                                <th>用户名</th>
+                                <th>邮箱</th>
+                                <th>微信</th>
+                                <th>QQ</th>
+                                <th>余额</th>
+                                <th>消费总额</th>
+                                <th>身份</th>
+                                <th>设置</th>
+                                <th>注册时间</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr ms-for="el in @data" data-for-rendered='@onLoads'>
+                                <td>@{{ el.id }}</td>
+                                <td><img ms-attr="{src : el.avatar ? el.avatar : '/assets/images/user.jpg'}" width="30px;" height="30px;"></td>
+                                <td>@{{ el.name  }}</td>
+                                <td>@{{ el.email }}</td>
+                                <td>@{{ el.wechat_id }}</td>
+                                <td>@{{ el.qq }}</td>
+                                <td>@{{ el.balance }}</td>
+                                <td>@{{ el.consume }}</td>
+                                <td>
+                                    @{{ el.identity_name }}
+                                </td>
+                                <td>
+                                    <button class="btn btn-success btn-sm" :click="@editMark(el.id,el.email,el.identity)">修改</button>
+                                </td>
+                                <td>@{{ el.created_at*1000 | date("yyyy-MM-dd HH:mm") }}</td>
+                            </tr>
+                            </tbody>
+                        </table>
                     </div>
                 </div>
-            </section>
+                <div class="tab-content">
+                    <div class="jumbotron text-center" :visible="visible" >
+                        <h4><i class="glyphicon glyphicon-exclamation-sign" style="margin-right: 20px;"></i>抱歉，暂没有数据</h4>
+                    </div>
+                    <nav aria-label="Page navigation" style="text-align: center">
+                        <ul class="pagination">
+                            <li :visible="@curr > 1">
+                                <a :click="@toPage(curr-1)" href="#" aria-label="Previous">
+                                    <span aria-hidden="true">&laquo;</span>
+                                </a>
+                            </li>
+                            <li :for="el in @pages" :class="{active : @el===@curr}">
+                                <a :click="@toPage(el)" href="#">@{{ el }}</a>
+                            </li>
+                            <li :visible="@curr < @last">
+                                <a :click="@toPage(curr+1)" href="#" aria-label="Next">
+                                    <span aria-hidden="true">&raquo;</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#">共@{{ total }}条数据</a>
+                            </li>
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+            <!-- /.box-body -->
+            <!-- Loading (remove the following to stop the loading)-->
+            <div class="overlay" :visible="load">
+                <i class="fa fa-spinner fa-spin"></i>
+            </div>
+            <!-- end loading -->
         </div>
-
     </div>
 
 @endsection

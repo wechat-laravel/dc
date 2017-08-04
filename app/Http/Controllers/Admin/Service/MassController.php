@@ -23,9 +23,7 @@ class MassController extends Controller
             if ($request->has('qrcode')){
 
                 $url    = 'http://rzwei.cn:5050/login?id='.$id;
-
-                $data   = ['id'=>$id];
-
+                
                 $result = $this->curlGet($url,'GET');
 
                 if ($result['success']){

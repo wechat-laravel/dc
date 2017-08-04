@@ -33,9 +33,9 @@ var show = avalon.define({
     user_id  : 0,
     email    : '',
     mark     : '',
-
+    load     : true,
     onLoads  : function () {
-
+        show.load = false;
     },
     getData : function(){
         $.ajax({

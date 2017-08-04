@@ -18,6 +18,10 @@ var show = avalon.define({
     checkAlls  : [],            //选择框所有的值
     allchecked : false,
     tml        : "<div class='alert alert-danger alert-dismissible fade in' role='alert'><button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>×</span></button><p id='errinfo'>123</p></div>",
+    load       : false,
+    onLoads    : function () {
+        show.load = false;
+    },
     checkAll: function () {
         if(show.allchecked){
             show.checkData = show.checkAlls;
@@ -49,6 +53,7 @@ var show = avalon.define({
                 if(ret.msg === 'true'){
                     show.qrmsg  = '已登录';
                     show.login  = true;
+                    show.load   = true;
                     window.clearInterval(show.cc);
                     show.onAllList();
                 }
@@ -66,6 +71,7 @@ var show = avalon.define({
                 for (var i=0;i<ret.data.length;i++){
                     show.checkAlls.push(ret.data[i].UserName.toString());
                 }
+                show.load    = false;
             }
         });
     },

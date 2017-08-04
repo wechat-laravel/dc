@@ -146,37 +146,48 @@
                                     <button class="btn btn-success" :click="@checkTo()">勾选式群发</button>
                                     <button class="btn btn-success" :click="@onTask()" style="margin-left: 20px;">条件式群发</button>
                                 </div>
-                                <div class="panel panel-default">
-                                    <div class="panel-heading">微信好友列表
-                                        <span :visible="result" style="margin-left: 20px;color:#3C8DBC"><b>当前进行到：@{{ result }}</b></span>
+                                <div class="box box-widget">
+                                    <div class="box-body">
+                                        <div class="panel panel-default">
+                                            <div class="panel-heading">微信好友列表
+                                                <span :visible="result" style="margin-left: 20px;color:#3C8DBC"><b>当前进行到：@{{ result }}</b></span>
+                                            </div>
+                                            <div class="table-responsive" style="overflow: auto;height: 600px;">
+                                                <table class="table table-bordered no-margin text-center table-hover">
+                                                    <thead>
+                                                    <tr>
+                                                        <th width="20px;"><input type="checkbox" ms-duplex-checked="@allchecked"  data-duplex-changed="@checkAll" style="width: 17px;height: 17px;"></th>
+                                                        <th>头像</th>
+                                                        <th>名称</th>
+                                                        <th>性别</th>
+                                                        <th>所在地</th>
+                                                        <th>群聊</th>
+                                                    </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                    <tr ms-for="el in @allList">
+                                                        <td>
+                                                            <input type="checkbox" name="checks" ms-duplex="@checkData" style="width: 17px;height: 17px;" ms-attr="{value: el.UserName}">
+                                                        </td>
+                                                        <td><img class="lazy" ms-attr="{src : 'http://rzwei.cn:5050/getheadimg?id='+nowId+'&username='+el.UserName}" width="30px;" height="30px;"></td>
+                                                        <td>@{{ el.NickName }}</td>
+                                                        <td>@{{ el.Sex === 1 ? '男' : '女' }}</td>
+                                                        <td>@{{ el.Province }} - @{{ el.City }}</td>
+                                                        <td>@{{ el.ChatRoom ? '是' : '否' }}</td>
+                                                    </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
                                     </div>
-                                    <div class="table-responsive" style="overflow: auto;height: 600px;">
-                                        <table class="table table-bordered no-margin text-center table-hover">
-                                            <thead>
-                                            <tr>
-                                                <th width="20px;"><input type="checkbox" ms-duplex-checked="@allchecked"  data-duplex-changed="@checkAll" style="width: 17px;height: 17px;"></th>
-                                                <th>头像</th>
-                                                <th>名称</th>
-                                                <th>性别</th>
-                                                <th>所在地</th>
-                                                <th>群聊</th>
-                                            </tr>
-                                            </thead>
-                                            <tbody>
-                                                <tr ms-for="el in @allList">
-                                                    <td>
-                                                        <input type="checkbox" name="checks" ms-duplex="@checkData" style="width: 17px;height: 17px;" ms-attr="{value: el.UserName}">
-                                                    </td>
-                                                    <td><img class="lazy" ms-attr="{src : 'http://rzwei.cn:5050/getheadimg?id='+nowId+'&username='+el.UserName}" width="30px;" height="30px;"></td>
-                                                    <td>@{{ el.NickName }}</td>
-                                                    <td>@{{ el.Sex === 1 ? '男' : '女' }}</td>
-                                                    <td>@{{ el.Province }} - @{{ el.City }}</td>
-                                                    <td>@{{ el.ChatRoom ? '是' : '否' }}</td>
-                                                </tr>
-                                            </tbody>
-                                        </table>
+                                    <!-- /.box-body -->
+                                    <!-- Loading (remove the following to stop the loading)-->
+                                    <div class="overlay" :visible="load">
+                                        <i class="fa fa-spinner fa-spin"></i>
                                     </div>
+                                    <!-- end loading -->
                                 </div>
+
                             </div>
                         </div>
                     </div>
