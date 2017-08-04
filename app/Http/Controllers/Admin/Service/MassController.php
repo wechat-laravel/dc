@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Redis;
 
 class MassController extends Controller
 {
@@ -33,6 +34,13 @@ class MassController extends Controller
                         return response()->json(['success'=>false,'msg'=>'已登录']);
 
                     }else{
+                        //如果没登陆，检测之前是否有缓存，有的话，删除掉
+                        if (Redis::hexists($id,'all_list')){
+
+                            Redis::hdel($id,'all_list');
+
+                        }
+
 
                         //登录的二维码
                         $msg    = base64_encode($result['data']);
@@ -72,30 +80,66 @@ class MassController extends Controller
             //查询全部微信好友列表
             if($request->has('all_list')){
 
-                $url    = 'http://rzwei.cn:5050/getcontact?id='.$id;
+                //页码
+                if ($request->has('page')){
 
-                $result = $this->curlGet($url,'GET');
+                    $current_page = intval($request->input('page'));
 
-                if ($result['success']){
-                    //如果返回的是false表示已退出登录了。
-                    if ($result['data'] === 'false'){
-
-                        return response()->json(['success'=>false,'msg'=>'登录已过期，请重新登录']);
-
-                    }else{
-                        //表示获取到了用户的列表 格式为json,需要转一下
-
-                        $data =  json_decode($result['data']);
-
-                        return response()->json(['success'=>true,'id'=>$id,'data'=>$data]);
-
-                    }
+                    if (!$current_page)  $current_page = 1;
 
                 }else{
 
-                    return response()->json(['success'=>false,'msg'=>$result['msg']]);
+                    $current_page = 1;
+                }
+
+                //如果有的话,直接取出返回（因为都是先查看是否登陆 ，然后才查的这个）
+                if (Redis::hexists($id,'all_list')){
+
+                    //因为存储的是json字符串的数据，需要转
+                    $data   = json_decode(Redis::hget($id,'all_list'));
+
+
+                }else{
+
+                    $url    = 'http://rzwei.cn:5050/getcontact?id='.$id;
+
+                    $result = $this->curlGet($url,'GET');
+
+                    if ($result['success']){
+                        //如果返回的是false表示已退出登录了。
+                        if ($result['data'] === 'false'){
+
+                            return response()->json(['success'=>false,'msg'=>'登录已过期，请重新登录']);
+
+                        }else{
+
+                            //将该数据（JSON格式的字符串）存入缓存
+                            Redis::hset($id,'all_list',$result['data']);
+
+                            //表示获取到了用户的列表 格式为json,需要转一下
+
+                            $data =  json_decode($result['data']);
+
+                        }
+
+                    }else{
+
+                        return response()->json(['success'=>false,'msg'=>$result['msg']]);
+
+                    }
 
                 }
+
+                $res = [
+                    'success'      => true,
+                    'id'           => $id,
+                    'current_page' => $current_page,
+                    'last_page'    => ceil(count($data)/100),
+                    'total'        => count($data),
+                    'data'         => array_slice($data,($current_page-1)*100,100)
+                ];
+
+                return $res;
 
             }
             
@@ -257,6 +301,10 @@ class MassController extends Controller
 
                     $data['condition']['UserName'][$i] = $username[$i];
                 }
+
+            }elseif ($request->has('all')){
+
+                $data = ['condition'=>['Count'=>5000]];
 
             }else{
                 //条件式群发

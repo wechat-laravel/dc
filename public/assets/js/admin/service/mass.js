@@ -1,5 +1,26 @@
 $('.lazy').each(function(){$(this).attr('data-original',$(this).attr('src'))&&$(this).removeAttr("src")});
-
+//分页
+function Pages(current,last){
+    //times 循环的次数
+    var times = last;
+    //起始的页码数
+    var star  = 1;
+    var pages = [];
+    if(times > 10){
+        times = 10;
+        if(current - 5 > 0){
+            star = current - 4;
+            if((star + times) >last){
+                star = last-9;
+            }
+        }
+    }
+    for (var i =1;i<=times;i++){
+        pages.push(star);
+        star+=1;
+    }
+    return pages;
+}
 var show = avalon.define({
     $id        : "show",
     qrcode     : false,         //获取登录二维码返回的状态
@@ -15,19 +36,34 @@ var show = avalon.define({
     oks        : 0,             //符合条件的数目
     result     : false,         //发送返回的结果
     checkData  : [],            //选择框选中的值
-    checkAlls  : [],            //选择框所有的值
-    allchecked : false,
     tml        : "<div class='alert alert-danger alert-dismissible fade in' role='alert'><button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>×</span></button><p id='errinfo'>123</p></div>",
     load       : false,
-    onLoads    : function () {
-        show.load = false;
-    },
-    checkAll: function () {
-        if(show.allchecked){
-            show.checkData = show.checkAlls;
+    pages      : [],
+    curr       : 0,
+    last       : 0,
+    total      : 0,
+    visible    : 'checked',
+    url        : '/admin/service/mass?all_list=1&page=1',
+    //检测是否已经被选中了
+    cad        : function (e) {
+        var num =jQuery.inArray(e,show.checkData);
+        if (num >= 0){
+            return true;
         }else{
-            show.checkData = [];
+            return false;
         }
+    },
+    //点击勾选的，检查是否已经选过了，如果选过就删除，没有就添加
+    orCheck    : function(e){
+        var num =jQuery.inArray(e,show.checkData);
+        if (num >= 0){
+            show.checkData.splice($.inArray(e,show.checkData),1);
+        }else{
+            show.checkData.push(e);
+        }
+    },
+    onLoads    : function () {
+
     },
     onQrcode   : function () {
         $.ajax({
@@ -60,20 +96,33 @@ var show = avalon.define({
             }
         });
     },
-    //获取全部好友列表
+    //获取好友列表
     onAllList   : function (){
         $.ajax({
-            url:'/admin/service/mass?all_list=1'
+            url:show.url
         }).done(function (ret) {
             if(ret.success){
                 show.nowId   = ret.id;
                 show.allList = ret.data;
-                for (var i=0;i<ret.data.length;i++){
-                    show.checkAlls.push(ret.data[i].UserName.toString());
+                show.pages   = Pages(ret.current_page, ret.last_page);
+                show.curr    = ret.current_page;
+                show.last    = ret.last_page;
+                show.data    = ret.data;
+                show.total   = ret.total;
+
+                if (ret.data.length === 0) {
+                    show.visible = true;
+                } else {
+                    show.visible = false;
                 }
                 show.load    = false;
             }
         });
+    },
+    toPage: function (e){
+        var url  = show.url.substr(0, show.url.lastIndexOf('=') + 1);
+        show.url = url + e;
+        show.onAllList();
     },
     //退出登录
     onLogout    : function(){
@@ -129,7 +178,6 @@ var show = avalon.define({
                 url: '/admin/service/mass/condition',
                 type: 'POST',
                 data: data,
-                // data: JSON.stringify(show.checkData),
                 datatype: 'JSON',
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -147,18 +195,34 @@ var show = avalon.define({
                 }
             });
         }
+    },
+    //群发全部
+    onAll   : function(){
+        $.ajax({
+            url: '/admin/service/mass/condition?all=1',
+            type: 'POST',
+            data: {'all':1},
+            datatype: 'JSON',
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        }).done(function(ret){
+            if(ret.success){
+                show.oks = ret.data;
+                if (show.oks === '0'){
+                    alert('获取全部出错！');
+                }else{
+                    $('.setmessage').modal('show');
+                }
+            }else{
+                alert(ret.msg);
+            }
+        });
     }
 });
 show.onQrcode();
 show.cc = window.setInterval(show.onStatus,2000);
 show.ss = window.setInterval(show.toSend,2000);
-show.$watch("checkData.length",function () {
-   if (show.checkData.length === show.checkAlls.length){
-       show.allchecked = true;
-   }else{
-       show.allchecked = false;
-   }
-});
 
 
 $(function () {

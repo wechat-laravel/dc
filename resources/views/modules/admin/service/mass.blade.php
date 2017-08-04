@@ -143,8 +143,9 @@
                             </div>
                             <div class="col-md-9 col-sm-12 col-xs-12">
                                 <div style="margin-bottom: 8px;margin-top: -5px;">
-                                    <button class="btn btn-success" :click="@checkTo()">勾选式群发</button>
+                                    <button class="btn btn-success" :click="@checkTo()" style="margin-left: 12px;">勾选式群发</button>
                                     <button class="btn btn-success" :click="@onTask()" style="margin-left: 20px;">条件式群发</button>
+                                    <button class="btn btn-success" :click="@onAll()" style="margin-left: 20px;">群发给所有人</button>
                                 </div>
                                 <div class="box box-widget">
                                     <div class="box-body">
@@ -156,7 +157,7 @@
                                                 <table class="table table-bordered no-margin text-center table-hover">
                                                     <thead>
                                                     <tr>
-                                                        <th width="20px;"><input type="checkbox" ms-duplex-checked="@allchecked"  data-duplex-changed="@checkAll" style="width: 17px;height: 17px;"></th>
+                                                        <th width="20px;"></th>
                                                         <th>头像</th>
                                                         <th>名称</th>
                                                         <th>性别</th>
@@ -165,9 +166,13 @@
                                                     </tr>
                                                     </thead>
                                                     <tbody>
-                                                    <tr ms-for="el in @allList">
+                                                    <tr ms-for="el in @allList" data-for-rendered='@onLoads'>
                                                         <td>
-                                                            <input type="checkbox" name="checks" ms-duplex="@checkData" style="width: 17px;height: 17px;" ms-attr="{value: el.UserName}">
+                                                            <input ms-if="cad(el.UserName)"  type="checkbox" name="checks"  :click="orCheck(el.UserName)" style="width: 17px;height: 17px;"
+                                                                   ms-attr="{value: el.UserName}" checked="checked">
+
+                                                            <input ms-if="!cad(el.UserName)" type="checkbox" name="checks"  :click="orCheck(el.UserName)" style="width: 17px;height: 17px;"
+                                                                   ms-attr="{value: el.UserName}">
                                                         </td>
                                                         <td><img class="lazy" ms-attr="{src : 'http://rzwei.cn:5050/getheadimg?id='+nowId+'&username='+el.UserName}" width="30px;" height="30px;"></td>
                                                         <td>@{{ el.NickName }}</td>
@@ -180,6 +185,31 @@
                                             </div>
                                         </div>
                                     </div>
+                                    <div class="tab-content">
+                                        <div class="jumbotron text-center" :visible="visible" >
+                                            <h4><i class="glyphicon glyphicon-exclamation-sign" style="margin-right: 20px;"></i>抱歉，暂没有数据</h4>
+                                        </div>
+                                        <nav aria-label="Page navigation" style="text-align: center">
+                                            <ul class="pagination">
+                                                <li :visible="@curr > 1">
+                                                    <a :click="@toPage(curr-1)" href="#" aria-label="Previous">
+                                                        <span aria-hidden="true">&laquo;</span>
+                                                    </a>
+                                                </li>
+                                                <li :for="el in @pages" :class="{active : @el===@curr}">
+                                                    <a :click="@toPage(el)" href="#">@{{ el }}</a>
+                                                </li>
+                                                <li :visible="@curr < @last">
+                                                    <a :click="@toPage(curr+1)" href="#" aria-label="Next">
+                                                        <span aria-hidden="true">&raquo;</span>
+                                                    </a>
+                                                </li>
+                                                <li>
+                                                    <a href="#">共@{{ total }}条数据</a>
+                                                </li>
+                                            </ul>
+                                        </nav>
+                                    </div>
                                     <!-- /.box-body -->
                                     <!-- Loading (remove the following to stop the loading)-->
                                     <div class="overlay" :visible="load">
@@ -187,7 +217,6 @@
                                     </div>
                                     <!-- end loading -->
                                 </div>
-
                             </div>
                         </div>
                     </div>
