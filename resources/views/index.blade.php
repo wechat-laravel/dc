@@ -132,7 +132,7 @@ if (checkIsPc()) {
         <div class="page page11 page-info-c">
             <label class="title">合作客户</label>
             <img src="{{ URL::asset('index/images/hezuokehu.png?v=1') }}" class="hezuokehu"/>
-            <div class="info">等<span>372</span>家企业与红包裂变客服建立合作关系</div>
+            <div class="info">等<span>372</span>家企业与脉达传播建立合作关系</div>
         </div>
         <div class="page page12">
             <div id="contact-us"></div>
