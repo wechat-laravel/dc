@@ -136,6 +136,7 @@
                                 <div :if="!@login" class="alert alert-success text-center" style="padding:7px 7px;background-color: #3C8DBC; ">@{{ qrmsg }}</div>
                                 <div :if="@login" class="btn btn-block btn-success" :click="@onLogout()">已登录（点击退出）</div>
                                 <p style="margin-top: 10px;"><b>温馨提示：</b> </p>
+                                <p><b>2017/8/4 22:50更新，更新详情可到（系统帮助）-（更新日志）中查看，</b></p>
                                 <p><b>扫码登录后若没有反应，请刷新页面后重试</b></p>
                                 <p><b>登录二维码有效时长为15秒，超过请刷新页面</b></p>
                                 <p><b>勾选式发送，默认单个发送时长为3-8秒</b></p>

@@ -20,6 +20,22 @@
                 {{--每次更新日志记录的开始--}}
                 <div class="box box-success">
                     <div class="box-header with-border">
+                        <h3 class="box-title">更新时间：2017-8-4 v2.1.1</h3>
+                    </div>
+                    <div class="box-body">
+                        <p>功能改动：</p>
+                        <ul>
+                            <li>服务插件 > 群发助手 : 界面与程序优化</li>
+                            <li>原功能因为部分用户好友数量较多，出现卡顿，浏览器崩溃卡死等显现，紧急做了优化改动</li>
+                            <li>现增加分页，每页显示100条数据，好友数量较多的可直接选群发全部即可</li>
+                            <li>如果浏览器没有正常显示，请清空浏览器的缓存</li>
+                            <li>另外：群发任务执行后，可以查看其他页面，只要不退出微信的网页版，任务可以一直执行下去</li>
+                        </ul>
+                    </div>
+                </div>
+                {{--每次更新日志记录的开始--}}
+                <div class="box box-success">
+                    <div class="box-header with-border">
                         <h3 class="box-title">更新时间：2017-8-3 v2.1.0</h3>
                     </div>
                     <div class="box-body">
