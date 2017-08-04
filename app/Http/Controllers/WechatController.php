@@ -79,6 +79,52 @@ class WechatController extends Controller
         return $this->wechat->server->serve();
     }
 
+    public function addMenu()
+    {
+        try{
+            $buttons = [
+                [
+                    "name"       => "微问数据",
+                    "sub_button" => [
+                        [
+                            "type" => "view",
+                            "name" => "网站入口",
+                            "url"  => "http://wewen.io/"
+                        ],
+                    ],
+                ],
+                [
+                    "name"       => "脉达传播",
+                    "sub_button" => [
+                        [
+                            "type" => "view",
+                            "name" => "网站登录",
+                            "url"  => "http://www.maidamaida.com/auth/login"
+                        ],
+                        [
+                            "type" => "view",
+                            "name" => "首页介绍",
+                            "url"  => "http://www.maidamaida.com/"
+                        ],
+                    ],
+                ],
+            ];
+
+            $menu = $this->wechat->menu;
+
+            $menu->add($buttons);
+
+            $menus = $menu->all();
+
+        }catch (\Exception $e){
+
+            return response()->json(['success'=>false,'msg'=>$e->getMessage()]);
+
+        }
+
+        return response($menus);
+
+    }
 
     //每个任务的首页
     public function task(Request $request,$id){
