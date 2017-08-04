@@ -26,7 +26,7 @@ class TaskController extends Controller
 
             if ($request->ajax()){
 
-                $res = TasksModel::select('id','user_id','mark','title','qrcode_url','created_at');
+                $res = TasksModel::select('id','user_id','mark','title','qrcode_url','created_at','is_ad');
 
                 if (Auth::user()->identity !== 'admin'){
 

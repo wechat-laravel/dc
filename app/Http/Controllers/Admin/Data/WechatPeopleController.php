@@ -42,10 +42,23 @@ class WechatPeopleController extends Controller
                     'links'   => [],                                                     //阶层链接
             ];
 
-            $res = SpreadPeopleModel::select('id','openid','upper','level','name','people_num')
-                                ->where('tasks_id',intval($id))
-                                ->orderBy('created_at','asc')
-                                ->get();
+            $count = SpreadPeopleModel::select('id')->count();
+
+            if ($count > 2000){
+
+                $res = SpreadPeopleModel::select('id','openid','upper','level','name','people_num')
+                    ->where('tasks_id',intval($id))
+                    ->orderBy('created_at','asc')
+                    ->skip(0)->take(1499)
+                    ->get();
+
+            }else{
+
+                $res = SpreadPeopleModel::select('id','openid','upper','level','name','people_num')
+                    ->where('tasks_id',intval($id))
+                    ->orderBy('created_at','asc')
+                    ->get();
+            }
 
             foreach ($res as $re){
 
