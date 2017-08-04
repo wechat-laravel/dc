@@ -113,20 +113,20 @@ if (checkIsPc()) {
         </div>
         <div class="page page8 page-info-c haoyou">
             <div class="page-info page-info-left">
-                <label class="title">好友精准管理</label>
-                <div class="content"> 给每个好友设置多个标签属性和详细备注，按标签对好友进行分组，实现更快速查找好友，对不同类型的客户使用不同的营销手段，使客服的有效对话越来越多。 </div>
+                <label class="title">服务对象</label>
+                <div class="content"> 1，新媒体运营 活动推广，微营销检测。</br>2，广告主实时查询推广效果，让广告投放更直观。</br>3，实体店老板：活动文章红包嵌入促进高效转发，挖掘客户二度人脉潜在客户</br> 4，销售人员：考核销售人员传播效益，挖掘二度潜在用户，在线报名</div>
             </div>
             <img src="{{ URL::asset('index/images/haoyou.png') }}" class="i-right"/> </div>
         <div class="page page9 page-info-c shujuanquan"> <img src="{{ URL::asset('index/images/shujuanquan2.png') }}" class="i-left"/>
             <div class="page-info page-info-right">
-                <label class="title">聊天记录留痕</label>
-                <div class="content"> 与QQ的聊天记录保存逻辑一致，聊天记录本地加云服务器端双重保存，聊过的客户消息记录随时调出，不用再去拿手机查看历史聊天内容，节省时间，也可以直接将云端部署到阿里云。 </div>
+                <label class="title">人脉圈关系图</label>
+                <div class="content"> 可以清晰查看人脉圈的好友传播途径，层级，另外还可以定向给某个表现优异的人直接发布红包 </div>
             </div>
         </div>
         <div class="page page10 page-info-c yingyong">
             <div class="page-info page-info-left">
-                <label class="title">应用中心</label>
-                <div class="content"> 以客服系统为基础，拓展更多功能，如快速建群拉群，消息批量精准推送，僵尸粉筛选，自动扫码登陆，批量加群组好友，标签管理、剧本市场等，更多实用小功能助力营销更上一层楼。 </div>
+                <label class="title">活动效果汇总</label>
+                <div class="content">可以清晰的查看汇总数据，时段报表数据，传播层级以及传播途径。 </div>
             </div>
             <img src="{{ URL::asset('index/images/yingyong.png') }}" class="i-right"/> </div>
         <div class="page page11 page-info-c">
@@ -136,13 +136,6 @@ if (checkIsPc()) {
         </div>
         <div class="page page12">
             <div id="contact-us"></div>
-            <!--label class="c-title">联系我们</label>
-            <ul class="item">
-            </ul>
-            <div class="clear-both"></div-->
-            <!--div style="font-size: 0;">
-                <label class="qrcode-tip">关注公众号分享免费试用3个月</label>
-                <img src="images/qrcode.jpg" class="qrcode" ontouchstart="hideQrcode()"/> </div-->
             <div class="tip">注册限时免费使用5天</div>
             <div class="download-c"> <a href="/auth/register" target="_blank"><img src="{{ URL::asset('index/images/download.png') }}" class=""/></a> </div>
         </div>
@@ -156,13 +149,6 @@ if (checkIsPc()) {
         <div class="susp-ser1"> <a target="_blank" href="tencent://message/?uin=2905582908&amp;Site=sc.chinaz.com&amp;Menu=yes"></a> </div>
         <div class="susp-ser2"> <a target="_blank" href="tencent://message/?uin=765898961&amp;Site=sc.chinaz.com&amp;Menu=yes"></a> </div>
         <div class="susp-ser2"> <a target="_blank" href="tencent://message/?uin=2905582908&amp;Site=sc.chinaz.com&amp;Menu=yes"></a> </div>
-        <!--div class="susp-wechat"> <a href="javascript:;"></a>
-            <div class="xc-wechat-box">
-                <div class="box-border">
-                    <div class="sev-t"> <img src="images/qrcode.jpg"> <i>脉达传播客服</i> </div>
-                    <span class="arrow-right"></span> </div>
-            </div>
-        </div-->
         <div class="susp-gotop" style="display: block;"> <a href="#home" onclick="anchorClick($('.a-home')[0])"></a> </div>
     </div>
 </div>
