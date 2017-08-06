@@ -49,12 +49,28 @@
                 </div>
             </div>
         </div>
-
         <div class="box box-widget">
             <div class="box-header">
                 <h3 class="box-title">用户管理</h3>
             </div>
             <div class="box-body">
+                <div style="margin-bottom: 10px;">
+                    <form class="form-inline form-group-sm search">
+                        <div class="form-group">
+                            <span>身份：</span>
+                            <select name="identity" class="form-control" id="user_mark">
+                                <option  value="">不限</option>
+                                <option  value="visitor">游客</option>
+                                <option  value="vip">会员</option>
+                            </select>
+                        </div>
+                        <div class="form-group" style="margin-left: 10px;margin-right: 10px;">
+                            <span>邮箱：</span>
+                            <input type="text" class="form-control" name="user_email" placeholder="请输入邮箱">
+                        </div>
+                        <button type="submit" class="btn btn-success btn-sm">搜索</button>
+                    </form>
+                </div>
                 <div class="panel panel-default">
                     <div class="panel-heading">用户列表</div>
                     <div class="table-responsive">
@@ -118,7 +134,7 @@
                                 </a>
                             </li>
                             <li>
-                                <a href="#">共@{{ total }}条数据</a>
+                                <a href="#">共@{{ total }}个用户</a>
                             </li>
                         </ul>
                     </nav>

@@ -118,3 +118,24 @@ $('.edit.form').bootstrapValidator({
         $('form').bootstrapValidator('disableSubmitButtons', false);
     });
 });
+//搜索
+$('.search').bootstrapValidator({
+    feedbackIcons: {
+        valid: 'glyphicon glyphicon-ok',
+        invalid: 'glyphicon glyphicon-remove',
+        validating: 'glyphicon glyphicon-refresh'
+    }
+}).on('success.form.bv', function(e) {
+    e.preventDefault();
+    var url = '/admin/supper/user?screen=1';
+    if($("#user_mark").val()){
+        url = url + '&identity=' + $("#user_mark").val();
+    }
+    if($("input[name='user_email']").val()){
+        url = url + '&email=' + $("input[name='user_email']").val();
+    }
+    url = url + '&page=1';
+    show.url = url;
+    show.getData();
+    $('form').bootstrapValidator('disableSubmitButtons', false);
+});

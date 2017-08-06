@@ -19,8 +19,24 @@ class UserController extends Controller
     {
         if ($request->ajax()){
 
-            $users = UserModel::select('id','name','avatar','email','qq','wechat_id','password','mobile','balance','consume','identity','created_at','overdue_at')
-                ->whereIn('identity',['vip','visitor'])->orderBy('created_at','desc')->paginate(10);
+            $res   = UserModel::select('id','name','avatar','email','qq','wechat_id','password','mobile','balance','consume','identity','created_at','overdue_at')
+                ->whereIn('identity',['vip','visitor']);
+
+            if ($request->has('email')){
+
+                $email = e($request->input('email'));
+
+                $res->where('email',$email);
+
+            }
+
+            if ($request->has('identity')){
+
+                $res->where('identity',e($request->input('identity')));
+
+            }
+
+            $users = $res->orderBy('created_at','desc')->paginate(10);
 
             return response()->json($users);
 
