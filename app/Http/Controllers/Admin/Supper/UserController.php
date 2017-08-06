@@ -19,7 +19,7 @@ class UserController extends Controller
     {
         if ($request->ajax()){
 
-            $users = UserModel::select('id','name','avatar','email','qq','wechat_id','password','mobile','balance','consume','identity','created_at')
+            $users = UserModel::select('id','name','avatar','email','qq','wechat_id','password','mobile','balance','consume','identity','created_at','overdue_at')
                 ->whereIn('identity',['vip','visitor'])->orderBy('created_at','desc')->paginate(10);
 
             return response()->json($users);
@@ -40,6 +40,12 @@ class UserController extends Controller
     {
         $email = e($request->input('email'));
 
+        if (!$email){
+
+            return response()->json(['success'=>false,'msg'=>'因为表单重置，Email为空']);
+
+        }
+
         $identity = e($request->input('identity'));
 
         $user = UserModel::where('email',$email)->first();
@@ -47,6 +53,27 @@ class UserController extends Controller
         if (!$user)  return response()->json(['success'=>false,'msg'=>'非法的请求！']);
 
         if ($identity === 'visitor' || $identity === 'vip'){
+
+            if ($identity === 'vip'){
+
+                if ($request->has('overdue_at')){
+
+                    //有效时长（单位：天）
+                    $time = intval($request->input('overdue_at'));
+                    //一天的秒数为86400
+                    $user->overdue_at = time()+$time*30*86400;
+
+                }else{
+
+                    return response()->json(['success'=>false,'msg'=>'非法的请求！']);
+
+                }
+
+            }else{
+
+                $user->overdue_at = time();
+
+            }
 
             $user->identity = $identity;
 

@@ -80,8 +80,8 @@
                                 <img src="{{ Auth::user()->avatar ? Auth::user()->avatar : URL::asset('assets/images/user.jpg') }}" class="img-circle" alt="User Image">
                                 <p>
                                     身份：{{ Auth::user()->identity_name }}
-                                    @if( Auth::user()->identity === 'visitor' )
-                                        <small>体验过期时间：{{ date('Y-m-d m:i:s',Auth::user()->overdue_at) }}</small>
+                                    @if( Auth::user()->identity !== 'admin' )
+                                        <small>过期时间：{{ date('Y-m-d m:i:s',Auth::user()->overdue_at) }}</small>
                                     @endif
                                 </p>
                             </li>

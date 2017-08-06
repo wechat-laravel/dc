@@ -23,9 +23,18 @@
                             </div>
                             <div class="form-group">
                                 <label>身份标识</label><br>
-                                <select name="identity" id="identity" class="form-control">
+                                <select name="identity" id="identity" class="form-control" ms-on-change="@onSelect">
                                     <option  ms-attr="{selected : mark==='visitor' ? 'selected' : '' }" value="visitor">游客</option>
                                     <option  ms-attr="{selected : mark==='vip' ? 'vip' : '' }" value="vip">会员</option>
+                                </select>
+                            </div>
+                            <div class="form-group" :visible="vipshow">
+                                <label>有效时间</label><br>
+                                <select name="overdue_at" id="overdue_at" class="form-control">
+                                    <option  value="1">一个月</option>
+                                    <option  value="4">一季度</option>
+                                    <option  value="6">半年</option>
+                                    <option  value="12">一年</option>
                                 </select>
                             </div>
                             <div class="row">
@@ -63,6 +72,7 @@
                                 <th>身份</th>
                                 <th>设置</th>
                                 <th>注册时间</th>
+                                <th>到期时间</th>
                             </tr>
                             </thead>
                             <tbody>
@@ -82,6 +92,7 @@
                                     <button class="btn btn-success btn-sm" :click="@editMark(el.id,el.email,el.identity)">修改</button>
                                 </td>
                                 <td>@{{ el.created_at*1000 | date("yyyy-MM-dd HH:mm") }}</td>
+                                <td>@{{ el.overdue_at*1000 | date("yyyy-MM-dd HH:mm") }}</td>
                             </tr>
                             </tbody>
                         </table>

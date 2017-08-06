@@ -34,6 +34,7 @@ var show = avalon.define({
     email    : '',
     mark     : '',
     load     : true,
+    vipshow  : false,
     onLoads  : function () {
         show.load = false;
     },
@@ -58,6 +59,12 @@ var show = avalon.define({
             }
         });
     },
+    onSelect : function(){
+        var  ic = $('#identity').val();
+        if (ic === 'vip'){
+            show.vipshow = true;
+        }
+    },
     //当前Tab
     onCurrentTab: function () {
         show.url = '/admin/supper/user?screen=1&page=1';
@@ -72,6 +79,11 @@ var show = avalon.define({
         show.id = id;
         show.email = email;
         show.mark = mark;
+        if (mark === 'vip'){
+            show.vipshow = true;
+        }else{
+            show.vipshow = false;
+        }
         $(".bs-example-modal-sm").modal('show');
     }
 
@@ -101,7 +113,7 @@ $('.edit.form').bootstrapValidator({
         }else{
             $(".bs-example-modal-sm").modal('hide');
             $('.edit.form')[0].reset();
-            show.getData();
+            window.location.reload();
         }
         $('form').bootstrapValidator('disableSubmitButtons', false);
     });
