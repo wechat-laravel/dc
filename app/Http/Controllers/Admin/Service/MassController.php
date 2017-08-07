@@ -223,8 +223,8 @@ class MassController extends Controller
             if ($request->hasFile('picture')){
 
                 $status = true;
-
-                $file = screenFile($request->file('picture'),2);
+        
+                $file = screenFile($request->file('picture'),1);
 
                 if(!$file['success'])  return $file;
 

@@ -80,7 +80,7 @@
                             <div class="form-group">
                                 <label>图片内容 （ 可选项 ）</label>
                                 <input type="file" name="picture"  multiple="multiple">
-                                <p class="help-block">请上传大小在2M以内的图片</p>
+                                <p class="help-block">请上传大小在1M以内的图片</p>
                             </div>
                             <div class="form-group">
                                 <label>指定发送速度（ 每一个发送的时长 ）</label>
@@ -136,11 +136,11 @@
                                 <div :if="!@login" class="alert alert-success text-center" style="padding:7px 7px;background-color: #3C8DBC; ">@{{ qrmsg }}</div>
                                 <div :if="@login" class="btn btn-block btn-success" :click="@onLogout()">已登录（点击退出）</div>
                                 <p style="margin-top: 10px;"><b>温馨提示：</b> </p>
-                                <p><b>2017/8/4 22:50更新，更新详情可到（系统帮助）-（更新日志）中查看，</b></p>
                                 <p><b>扫码登录后若没有反应，请刷新页面后重试</b></p>
                                 <p><b>登录二维码有效时长为15秒，超过请刷新页面</b></p>
                                 <p><b>勾选式发送，默认单个发送时长为3-8秒</b></p>
                                 <p><b>如有问题，请联系我们的管理员。（公测阶段，暂没有群发数量限制）</b></p>
+                                <p><b>更多详情请到系统帮助-更新日志中查看</b></p>
                             </div>
                             <div class="col-md-9 col-sm-12 col-xs-12">
                                 <div style="margin-bottom: 8px;margin-top: -5px;">
