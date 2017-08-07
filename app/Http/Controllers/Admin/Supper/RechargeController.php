@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin\Supper;
 
+use App\Models\PayWechatModel;
 use App\Models\RechargeRecordModel;
 use App\Models\SpendRecordModel;
 use App\Models\UserModel;
@@ -94,15 +95,41 @@ class RechargeController extends Controller
 
         if ($request->ajax()){
 
-            $records = RechargeRecordModel::select('id','user_id','user_email','auth_id','auth_email','money','remark','created_at')
-                            ->with([
-                                'user'=>function($query){
-                                    $query->select('id','avatar','balance');
-                                }
-                            ])->orderBy('created_at','desc')->paginate(10);
-                
-            return response()->json($records);
+            //当前要查看的类别
+            if ($request->has('current')){
 
+                $current = $request->input('current');
+
+                if ($current === 'admin'){
+
+                    $records = RechargeRecordModel::select('id','user_id','user_email','auth_id','auth_email','money','remark','created_at')
+                        ->with([
+                            'user'=>function($query){
+                                $query->select('id','avatar','balance');
+                            }
+                        ])->orderBy('created_at','desc')->paginate(10);
+
+                    return response()->json($records);
+
+                }else{
+
+                    $records = PayWechatModel::select('id','user_id','out_trade_no','total_fee','status','pay_time','created_at')
+                        ->where('status',1)
+                        ->with([
+                            'user'=>function($query){
+                                $query->select('id','balance','email');
+                            }
+                        ])->orderBy('created_at','desc')->paginate(10);
+
+                    return response()->json($records);
+
+                }
+
+            }else{
+
+                return response()->json(['success'=>false,'msg'=>'非法请求！']);
+
+            }
         }
 
         return view('modules.admin.supper.record');

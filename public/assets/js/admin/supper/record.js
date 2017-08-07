@@ -33,9 +33,14 @@ var show = avalon.define({
     user_id  : 0,
     email    : '',
     mark     : '',
-
+    current  : 'admin',
     onLoads  : function () {
 
+    },
+    onCurr   : function(e){
+        show.current = e;
+        show.url     = '/admin/supper/record?current='+show.current+'&page=1';
+        show.getData();
     },
     getData : function(){
         $.ajax({
@@ -60,7 +65,7 @@ var show = avalon.define({
     },
     //当前Tab
     onCurrentTab: function () {
-        show.url = '/admin/supper/record?screen=1&page=1';
+        show.url = '/admin/supper/record?current='+show.current+'&page=1';
         show.getData();
     },
     toPage: function (e){

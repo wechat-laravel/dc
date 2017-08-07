@@ -43,4 +43,11 @@ class PayWechatModel extends Model
         }
 
     }
+
+    public function user()
+    {
+
+        return $this->hasOne('App\Models\UserModel','id','user_id');
+
+    }
 }
