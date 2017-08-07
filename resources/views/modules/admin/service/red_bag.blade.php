@@ -7,7 +7,7 @@
 @endsection
 @section('content')
     <div ms-controller="red_bag" class="ms-controller">
-
+        <input type="hidden" name="num" value="{{ Auth::user()->balance }}">
         <div class="modal fade bs-example-modal-sm" id="red_turn" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
             <div class="modal-dialog modal-sm" role="document">
                 <div class="modal-content">
@@ -38,8 +38,7 @@
                     <button type="button"
                             class="btn btn-block btn-sm btn-success"
                             style="margin-top: 3%;"
-                            data-toggle="modal"
-                            data-target="#myModal">
+                            :click="@onCreate()">
                         添加配置
                     </button>
                 </h3>
