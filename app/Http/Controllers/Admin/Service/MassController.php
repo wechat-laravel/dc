@@ -35,12 +35,11 @@ class MassController extends Controller
 
                     }else{
                         //如果没登陆，检测之前是否有缓存，有的话，删除掉
-                        if (Redis::hexists($id,'all_list')){
+                        if (Redis::hexists(Auth::user()->email,'all_list')){
 
-                            Redis::hdel($id,'all_list');
+                            Redis::hdel(Auth::user()->email,['all_list','email','prefix']);
 
                         }
-
 
                         //登录的二维码
                         $msg    = base64_encode($result['data']);
@@ -114,7 +113,9 @@ class MassController extends Controller
                         }else{
 
                             //将该数据（JSON格式的字符串）存入缓存
-                            Redis::hset($id,'all_list',$result['data']);
+                            Redis::hmset(Auth::user()->email,['all_list'=>$result['data'],'email'=>Auth::user()->email,'prefix'=>$id]);
+                            //设置有效时长（一天），单位秒
+                            Redis::expire(Auth::user()->email,86400);
 
                             //表示获取到了用户的列表 格式为json,需要转一下
 
@@ -153,6 +154,8 @@ class MassController extends Controller
                 if ($result['success']){
                     //如果返回的是false表示已退出登录了。
                     if ($result['data'] === 'false'){
+
+                        Redis::hdel(Auth::user()->email,['all_list','email','prefix']);
 
                         return response()->json(['success'=>false,'msg'=>'退出失败']);
 

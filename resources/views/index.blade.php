@@ -6,7 +6,7 @@
 <link href="{{ URL::asset('index/css/index.css') }}" rel="stylesheet"/>
 <meta name="keywords" content="脉达传播,红包裂变"/>
 <meta name="description" content="脉达传播是基于微信的二度人脉挖掘传播，红包裂变，广告效果跟踪统计的一款传播营销利器。"/>
-<link rel="shortcut icon" href="{{ URL::asset('index/images/favicon.ico') }}" mce_href="images/favicon.ico" type="image/x-icon">
+<link rel="shortcut icon" href="{{ URL::asset('favicon.ico') }}" mce_href="images/favicon.ico" type="image/x-icon">
 <script src="{{ URL::asset('index/js/jquery-3.2.1.min.js') }}"></script>
 <script src="{{ URL::asset('index/js/index.js') }}"></script>
 <script>
