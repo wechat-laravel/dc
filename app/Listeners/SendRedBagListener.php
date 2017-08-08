@@ -3,6 +3,7 @@
 namespace App\Listeners;
 
 use App\Events\SendRedBagEvent;
+use App\Models\ProvinceModel;
 use App\Models\RedBagModel;
 use App\Models\RedLogModel;
 use App\Models\TasksModel;
@@ -12,6 +13,7 @@ use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Cache;
 use App\Http\Controllers\Admin\Service\WxMchPayHelper;
+use Latrell\QQWry\Facades\QQWry;
 
 class SendRedBagListener implements ShouldQueue
 {
@@ -21,6 +23,7 @@ class SendRedBagListener implements ShouldQueue
     protected $remark;
     protected $total_amount;
     protected $tasks_id;
+    protected $ip;
 
     /**
      * Create the event listener.
@@ -45,9 +48,9 @@ class SendRedBagListener implements ShouldQueue
         $open_id = 'ome0zxMDVimw_OjyYS2rXikLQIKo';
         $tasks_id = 1;
         $offer = 1;//1分享后立即发放 2分享的内容被好友查看后再看
-        $city = '上海';//城市
+        $ip = '';//通过ip来判定是否为指定区域
         $sex = 1;//性别 0未知 1男 2女
-        event(new SendRedBagEvent($action,$open_id,$tasks_id,$offer,$city, $sex));
+        event(new SendRedBagEvent($action,$open_id,$tasks_id,$offer,$ip, $sex));
         1，每次发红包，对dc_red_bag表中的amount--
         2,单个用户24小时内领取一次 领取两次 领取五次
         */
@@ -58,11 +61,60 @@ class SendRedBagListener implements ShouldQueue
             ->select('status', 'amount', 'taxonomy','money', 'begin_at', 'end_at', 'send_name','offer','wishing',
                 'act_name', 'remark', 'get_limit', 'action','sex','area','province','city','total')->first();
 
-        if (!$event->city){
+        if (!$event->ip){
 
-            $event->city = '上海';
+            $event->ip = '127.0.0.1';
 
         }
+
+        //如果有指定地区，先看下是否符合
+        //先给一个值，方便后续判断
+        $place = true;
+
+        if($data->area == 1){
+
+            $prov_name = ProvinceModel::select('prov_name')->where('id',intval($data->province))->first();
+
+            if ($prov_name){
+
+                //根据IP获取地址
+                $record = QQWry::query($event->ip);
+
+                //如果检测到返回值有 success 那就表示异常了。正常的应该直接返回的是 'country' 'area'两个字段
+                if (isset($record['success'])){
+
+                    $place = false;
+
+                }else{
+                    //返回的只取country  该格式为：云南省昆明市... 省市都带的有  已有的部分不会说少个市 省 县的字眼
+                    //先判断第一层（省名）是否相同
+                    if(!strstr($record['country'], $prov_name->prov_name)){
+
+                        $place = false;
+
+                    }else{
+                        //city如果有的话，也判断
+                        if(trim($data->city)){
+
+                            if (!strstr($record['country'],trim($data->city))){
+
+                                $place = false;
+
+                            }
+
+                        }
+
+                    }
+
+                }
+
+            }else{
+
+                $place = false;
+            }
+
+        }
+
 
         //判断这个文章是否有红包功能
         if (!$data) {
@@ -126,11 +178,12 @@ class SendRedBagListener implements ShouldQueue
         }
 
         //判断是否指定城市
-        else if(!($data->area == 0 || strstr($data->city,$event->city))){
+        else if(!($data->area == 0 || $place)){
             //停止
         }
         //判断红包动作，分享朋友圈/分享朋友  如果满足设置的条件开始发红包
         else if (preg_match("/$event->action/", $data->action)) {
+
             //判断用户有没有达到领取上限 没有达到才可以继续领取
             $get_limit = RedLogModel::where('open_id', $event->open_id)
                 ->where('tasks_id', $event->tasks_id)

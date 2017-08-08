@@ -316,11 +316,11 @@ class WechatController extends Controller
 
                 if ($record['source'] === 'timeline' || $record['source'] === 'qzone'){
 
-                    event(new SendRedBagEvent(2,$record['upper'],$task->id,2,$user[0]['original']['city'],$user[0]['original']['sex']));
+                    event(new SendRedBagEvent(2,$record['upper'],$task->id,2,$request->ip(),$user[0]['original']['sex']));
 
                 }else{
 
-                    event(new SendRedBagEvent(1,$record['upper'],$task->id,2,$user[0]['original']['city'],$user[0]['original']['sex']));
+                    event(new SendRedBagEvent(1,$record['upper'],$task->id,2,$request->ip(),$user[0]['original']['sex']));
 
                 }
 
@@ -550,7 +550,7 @@ class WechatController extends Controller
             //层级分享计数
             $this->toRedis($input['task_id'],'level_share',$level->level);
 
-            event(new SendRedBagEvent($action,$record['openid'],$record['tasks_id'],1,$user[0]['original']['city'],$user[0]['original']['sex']));
+            event(new SendRedBagEvent($action,$record['openid'],$record['tasks_id'],1,$request->ip(),$user[0]['original']['sex']));
 
         }catch (Exception $e){
 
