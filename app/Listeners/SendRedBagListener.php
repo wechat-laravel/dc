@@ -73,7 +73,7 @@ class SendRedBagListener implements ShouldQueue
 
         if($data->area == 1){
 
-            $prov_name = ProvinceModel::select('prov_name')->where('id',intval($data->province))->first();
+            $prov_name = ProvinceModel::select('prov_name')->where('prov_id',intval($data->province))->first();
 
             if ($prov_name){
 
