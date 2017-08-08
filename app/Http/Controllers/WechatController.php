@@ -901,8 +901,8 @@ class WechatController extends Controller
 
     public function ceshi(Request $request){
 
-        $ip = '';
-        echo  long2ip($ip);
+//        $ip = '';
+//        echo  long2ip($ip);
 
         //测试用的
 
@@ -913,7 +913,9 @@ class WechatController extends Controller
             return $record;
 
         }catch (Exception $e){
+            
             return response()->json(['success'=>false,'msg'=>$e->getMessage()]);
+            
         }
 
 //        $stay = 1;
