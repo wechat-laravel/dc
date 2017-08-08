@@ -12,7 +12,8 @@
         "barryvdh/laravel-ide-helper": "^2.3",
         "simplesoftwareio/simple-qrcode": "1.5.*",
         "yangqi/htmldom": "^1.0",
-        "predis/predis": "~1.0"
+        "predis/predis": "~1.0",
+        "latrell/qqwry": "dev-master"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",

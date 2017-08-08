@@ -150,6 +150,7 @@ return [
         Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider::class,
         SimpleSoftwareIO\QrCode\QrCodeServiceProvider::class,
         Yangqi\Htmldom\HtmldomServiceProvider::class,
+        Latrell\QQWry\QQWryServiceProvider::class,
 
     ],
 
@@ -203,6 +204,7 @@ return [
         'Captcha'   => Mews\Captcha\Facades\Captcha::class,
         'QrCode'    => SimpleSoftwareIO\QrCode\Facades\QrCode::class,
         'Htmldom'   => Yangqi\Htmldom\Htmldom::class,
+        'QQWry'     => Latrell\QQWry\Facades\QQWry::class,
 
     ],
 

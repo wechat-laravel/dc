@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "e6c20b3d37bdb42fa4e75061ed9b5d46",
-    "content-hash": "2f4cbfd3559879210dc66b2964b16c58",
+    "hash": "97c9954a2670768bd2922143d668502d",
+    "content-hash": "876ca41ee844ae1e6c0850c83d2e1e7b",
     "packages": [
         {
             "name": "bacon/bacon-qr-code",
@@ -964,6 +964,49 @@
                 "laravel"
             ],
             "time": "2017-03-24 16:31:45"
+        },
+        {
+            "name": "latrell/qqwry",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/latrell/QQWry.git",
+                "reference": "9cedb8c2a56dae780b4c1133c2f4fa3299785911"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://files.phpcomposer.com/files/latrell/QQWry/9cedb8c2a56dae780b4c1133c2f4fa3299785911.zip",
+                "reference": "9cedb8c2a56dae780b4c1133c2f4fa3299785911",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/support": "5.*",
+                "php": ">=5.4.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Latrell\\QQWry\\": "src/Latrell/QQWry/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Latrell Chan",
+                    "email": "i@latrell.me"
+                }
+            ],
+            "description": "纯真 IP 库 Laravel 版 。",
+            "keywords": [
+                "l5",
+                "laravel",
+                "laravel 5",
+                "qqwry"
+            ],
+            "time": "2017-07-19 14:04:18"
         },
         {
             "name": "league/flysystem",
@@ -4380,7 +4423,9 @@
     ],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": [],
+    "stability-flags": {
+        "latrell/qqwry": 20
+    },
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {

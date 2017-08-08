@@ -14,6 +14,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Redis;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Validator;
+use Latrell\QQWry\Facades\QQWry;
 use Mockery\CountValidator\Exception;
 use Monolog\Handler\IFTTTHandler;
 use phpDocumentor\Reflection\DocBlock\Tags\See;
@@ -901,6 +902,9 @@ class WechatController extends Controller
     public function ceshi(Request $request){
 
         //测试用的
+        $record = QQWry::query('121.40.112.0'); // 取出IP对应的地址。
+
+        echo $record;
 
 //        $stay = 1;
 //
