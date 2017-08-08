@@ -902,7 +902,7 @@ class WechatController extends Controller
     public function ceshi(Request $request){
 
         //测试用的
-        $record = QQWry::query('121.40.112.0'); // 取出IP对应的地址。
+        $record = QQWry::query('61.136.70.118'); // 取出IP对应的地址。
 
         echo $record;
 
