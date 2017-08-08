@@ -905,9 +905,9 @@ class WechatController extends Controller
 //        echo  long2ip($ip);
 
         //测试用的
+            $ip = $request->ip();
 
-
-            $record = QQWry::query('1.25.70.1'); // 取出IP对应的地址。
+            $record = QQWry::query($ip); // 取出IP对应的地址。
 
             return $record;
 
