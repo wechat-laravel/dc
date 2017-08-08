@@ -901,8 +901,11 @@ class WechatController extends Controller
 
     public function ceshi(Request $request){
 
+        $ip = '';
+        echo  long2ip($ip);
+
         //测试用的
-        $record = QQWry::query('61.136.70.118'); // 取出IP对应的地址。
+        $record = QQWry::query('1.256.70.1'); // 取出IP对应的地址。
 
         echo $record;
 
