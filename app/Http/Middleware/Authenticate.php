@@ -42,7 +42,7 @@ class Authenticate
             }
         }
 
-        if ($this->auth->user()->identity === 'admin' || $this->auth->user()->identity === 'vip'){
+        if ($this->auth->user()->identity === 'admin'){
 
             return $next($request);
 
