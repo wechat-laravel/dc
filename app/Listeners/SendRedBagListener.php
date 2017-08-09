@@ -87,34 +87,37 @@ class SendRedBagListener implements ShouldQueue
         //先给一个值，方便后续判断
         $place = true;
 
-        if($data->area == 1){
+        if (isset($data->area)){
+            if($data->area == 1){
 
-            $prov_name = ProvinceModel::select('prov_name')->where('prov_id',intval($data->province))->first();
+                $prov_name = ProvinceModel::select('prov_name')->where('prov_id',intval($data->province))->first();
 
-            if ($prov_name){
+                if ($prov_name){
 
-                //根据IP获取地址
-                $record = QQWry::query($event->ip);
+                    //根据IP获取地址
+                    $record = QQWry::query($event->ip);
 
-                //如果检测到返回值有 success 那就表示异常了。正常的应该直接返回的是 'country' 'area'两个字段
-                if (isset($record['success'])){
-
-                    $place = false;
-
-                }else{
-                    //返回的只取country  该格式为：云南省昆明市... 省市都带的有  已有的部分不会说少个市 省 县的字眼
-                    //先判断第一层（省名）是否相同
-                    if(!strstr($record['country'], $prov_name->prov_name)){
+                    //如果检测到返回值有 success 那就表示异常了。正常的应该直接返回的是 'country' 'area'两个字段
+                    if (isset($record['success'])){
 
                         $place = false;
 
                     }else{
-                        //city如果有的话，也判断
-                        if(trim($data->city)){
+                        //返回的只取country  该格式为：云南省昆明市... 省市都带的有  已有的部分不会说少个市 省 县的字眼
+                        //先判断第一层（省名）是否相同
+                        if(!strstr($record['country'], $prov_name->prov_name)){
 
-                            if (!strstr($record['country'],trim($data->city))){
+                            $place = false;
 
-                                $place = false;
+                        }else{
+                            //city如果有的话，也判断
+                            if(trim($data->city)){
+
+                                if (!strstr($record['country'],trim($data->city))){
+
+                                    $place = false;
+
+                                }
 
                             }
 
@@ -122,13 +125,12 @@ class SendRedBagListener implements ShouldQueue
 
                     }
 
+                }else{
+
+                    $place = false;
                 }
 
-            }else{
-
-                $place = false;
             }
-
         }
 
         //判断这个活动停止了没有
