@@ -654,6 +654,8 @@
                                             name="get_limit">
                                         <option value="1">一个</option>
                                         <option value="2">两个</option>
+                                        <option value="3">三个</option>
+                                        <option value="4">四个</option>
                                         <option value="5">五个</option>
                                     </select>
                                 </div>
