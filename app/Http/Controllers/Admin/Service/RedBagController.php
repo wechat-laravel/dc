@@ -58,7 +58,7 @@ class RedBagController extends Controller
             //获取用户设置的红包规则
             if($getType == 'redBag'){
                 if(\Auth::user()->identity == 'admin'){
-                    return RedBagModel::with('title')->orderBy('created_at','DESC')->paginate(10);
+                    return RedBagModel::with(['title','prov'])->orderBy('created_at','DESC')->paginate(10);
                 }
                 return RedBagModel::where('user_id', \Auth::id())->with('title')->orderBy('created_at','DESC')->paginate(10);
             }

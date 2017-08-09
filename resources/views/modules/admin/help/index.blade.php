@@ -20,6 +20,22 @@
                 {{--每次更新日志记录的开始--}}
                 <div class="box box-success">
                     <div class="box-header with-border">
+                        <h3 class="box-title">更新时间：2017-8-9 v2.1.2</h3>
+                    </div>
+                    <div class="box-body">
+                        <p>功能改动：</p>
+                        <ul>
+                            <li>服务插件 > 红包工具-红包任务设置 : 指定区域的实现方式改动</li>
+                            <li>原指定区域的功能，是根据用户微信资料中的地区来判断的。然后发现有很多微信用户资料的地区都没设置或者随便设置的。所以导致该功能并没有起到很好的作用</li>
+                            <li>现在功能改为 根据用户的IP来做判断，极大的提高了该功能的作用性</li>
+                            <li>需要注意的是：我们根据IP获取的地理位置 不能精确到区（如：上海、北京。）、可以精确到的范围有:省 市，所以尽量把范围定在市以上！ </li>
+                            <li>使用指定区域的时候，有两个选择框。第二个不选则表示全部，请尽可能的把范围扩大到市级以上，以提高准确率</li>
+                        </ul>
+                    </div>
+                </div>
+                {{--每次更新日志记录的开始--}}
+                <div class="box box-success">
+                    <div class="box-header with-border">
                         <h3 class="box-title">更新时间：2017-8-4 v2.1.1</h3>
                     </div>
                     <div class="box-body">

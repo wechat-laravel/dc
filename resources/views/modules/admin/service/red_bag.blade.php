@@ -277,6 +277,7 @@
                                 </div>
                                 <div class="form-group" id="suiji">
                                     <label>区域</label>
+                                    <span> 注：如使用指定区域，上海北京之类的请不要具体到区。</span>
                                     <div class="radio">
                                         <label>
                                             <input type="radio"
@@ -293,7 +294,7 @@
                                                    name="area"
                                                    ms-click="@area(1)"
                                                    value="1">
-                                            指定区域
+                                            指定区域（ 可以只选第一个选择框，第二个不选则表示全部）
                                         </label>
                                     </div>
                                     <div class="box-body area" style="display:none">
@@ -605,7 +606,8 @@
                                 </div>
                                 <div class="form-group" id="suiji">
                                     <label ms-if="red_bag_data[article_id].area == 0">区域</label>
-                                    <label ms-if="red_bag_data[article_id].area == 1">区域（已选择：@{{ red_bag_data[article_id].city }}）</label>
+                                    <label ms-if="red_bag_data[article_id].area == 1">区域（已选择：@{{ red_bag_data[article_id].city ?  red_bag_data[article_id].city : red_bag_data[article_id].prov.prov_name }}）</label>
+                                    <span> 注：如使用指定区域，上海北京之类的请不要具体到区。</span>
                                     <div class="radio">
                                         <label>
                                             <input type="radio"
@@ -622,7 +624,7 @@
                                                    name="area"
                                                    ms-click="@area(1)"
                                                    value="1">
-                                            指定区域
+                                            指定区域（ 可以只选第一个选择框，第二个不选则表示全部）
                                         </label>
                                     </div>
                                     <div class="box-body area" id="area" style="display:none">

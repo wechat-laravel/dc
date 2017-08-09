@@ -55,6 +55,12 @@ class RedBagModel extends Model
         return $this->hasOne('App\Models\TasksModel','id','tasks_id');
     }
 
+    //省份
+    public function prov()
+    {
+        return $this->hasOne('App\Models\ProvinceModel','prov_id','province');
+    }
+
     public function getTaxonomyNameAttribute()
     {
         $value = $this->getAttribute('taxonomy');
