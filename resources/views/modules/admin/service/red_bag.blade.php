@@ -608,25 +608,49 @@
                                     <label ms-if="red_bag_data[article_id].area == 0">区域</label>
                                     <label ms-if="red_bag_data[article_id].area == 1">区域（已选择：@{{ red_bag_data[article_id].city ?  red_bag_data[article_id].city : red_bag_data[article_id].prov.prov_name }}）</label>
                                     <span> 注：如使用指定区域，上海北京之类的请不要具体到区。</span>
-                                    <div class="radio">
-                                        <label>
-                                            <input type="radio"
-                                                   name="area"
-                                                   checked
-                                                   ms-click="@area(0)"
-                                                   value="0">
-                                            不限
-                                        </label>
+                                    <div ms-if="red_bag_data[article_id].area == 0">
+                                        <div class="radio">
+                                            <label>
+                                                <input type="radio"
+                                                       name="area"
+                                                       checked
+                                                       ms-click="@area(0)"
+                                                       value="0">
+                                                不限
+                                            </label>
+                                        </div>
+                                        <div class="radio">
+                                            <label>
+                                                <input type="radio"
+                                                       name="area"
+                                                       ms-click="@area(1)"
+                                                       value="1">
+                                                指定区域（ 可以只选第一个选择框，第二个不选则表示全部）
+                                            </label>
+                                        </div>
                                     </div>
-                                    <div class="radio">
-                                        <label>
-                                            <input type="radio"
-                                                   name="area"
-                                                   ms-click="@area(1)"
-                                                   value="1">
-                                            指定区域（ 可以只选第一个选择框，第二个不选则表示全部）
-                                        </label>
+                                    <div ms-if="red_bag_data[article_id].area == 1">
+                                        <div class="radio">
+                                            <label>
+                                                <input type="radio"
+                                                       name="area"
+                                                       ms-click="@area(0)"
+                                                       value="0">
+                                                不限
+                                            </label>
+                                        </div>
+                                        <div class="radio">
+                                            <label>
+                                                <input type="radio"
+                                                       name="area"
+                                                       checked
+                                                       ms-click="@area(1)"
+                                                       value="1">
+                                                指定区域（ 可以只选第一个选择框，第二个不选则表示全部）
+                                            </label>
+                                        </div>
                                     </div>
+                                    @{{ red_bag_data[article_id].area == 1 ? area(1) : ''}}
                                     <div class="box-body area" id="area" style="display:none">
                                         <div class="row">
                                             <div class="col-xs-3">

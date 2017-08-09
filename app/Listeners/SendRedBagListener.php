@@ -61,10 +61,26 @@ class SendRedBagListener implements ShouldQueue
             ->select('status', 'amount', 'taxonomy','money', 'begin_at', 'end_at', 'send_name','offer','wishing',
                 'act_name', 'remark', 'get_limit', 'action','sex','area','province','city','total')->first();
 
-        if (!$event->ip){
+
+
+        if (!$event->ip) {
 
             $event->ip = '127.0.0.1';
 
+        }
+
+        //判断这个文章是否有红包功能
+        if (!$data) {
+
+            $mail['email'] = 'hackqy@qq.com';
+            $mail['notice'] = '该文章并没有配置红包功能，但是在调用接口。文章id为' . $this->tasks_id;
+
+            Cache::remember('tasks_id-' . $this->tasks_id . '-not', 60 * 24, function () use ($mail) {
+//                Mail::send('noticeMail', $mail, function ($message) use ($mail) {
+//                    $message->to($mail['email'])->subject("微问数据--通知消息");
+//                });
+                return '该文章并没有配置红包功能';
+            });
         }
 
         //如果有指定地区，先看下是否符合
@@ -113,21 +129,6 @@ class SendRedBagListener implements ShouldQueue
                 $place = false;
             }
 
-        }
-
-
-        //判断这个文章是否有红包功能
-        if (!$data) {
-
-            $mail['email'] = 'hackqy@qq.com';
-            $mail['notice'] = '该文章并没有配置红包功能，但是在调用接口。文章id为' . $this->tasks_id;
-
-            Cache::remember('tasks_id-' . $this->tasks_id . '-not', 60 * 24, function () use ($mail) {
-//                Mail::send('noticeMail', $mail, function ($message) use ($mail) {
-//                    $message->to($mail['email'])->subject("微问数据--通知消息");
-//                });
-                return '该文章并没有配置红包功能';
-            });
         }
 
         //判断这个活动停止了没有
