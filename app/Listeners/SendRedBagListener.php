@@ -56,6 +56,8 @@ class SendRedBagListener implements ShouldQueue
         */
 
         $this->tasks_id = $event->tasks_id;
+        //先给一个值，方便后续判断
+        $place = true;
 
         $data = RedBagModel::where('tasks_id', $this->tasks_id)
             ->select('status', 'amount', 'taxonomy','money', 'begin_at', 'end_at', 'send_name','offer','wishing',
@@ -84,40 +86,35 @@ class SendRedBagListener implements ShouldQueue
         }
 
         //如果有指定地区，先看下是否符合
-        //先给一个值，方便后续判断
-        $place = true;
 
-        if (isset($data->area)){
-            if($data->area == 1){
+        else if($data->area == 1){
 
-                $prov_name = ProvinceModel::select('prov_name')->where('prov_id',intval($data->province))->first();
+            $prov_name = ProvinceModel::select('prov_name')->where('prov_id',intval($data->province))->first();
 
-                if ($prov_name){
+            if ($prov_name){
 
-                    //根据IP获取地址
-                    $record = QQWry::query($event->ip);
+                //根据IP获取地址
+                $record = QQWry::query($event->ip);
 
-                    //如果检测到返回值有 success 那就表示异常了。正常的应该直接返回的是 'country' 'area'两个字段
-                    if (isset($record['success'])){
+                //如果检测到返回值有 success 那就表示异常了。正常的应该直接返回的是 'country' 'area'两个字段
+                if (isset($record['success'])){
+
+                    $place = false;
+
+                }else{
+                    //返回的只取country  该格式为：云南省昆明市... 省市都带的有  已有的部分不会说少个市 省 县的字眼
+                    //先判断第一层（省名）是否相同
+                    if(!strstr($record['country'], $prov_name->prov_name)){
 
                         $place = false;
 
                     }else{
-                        //返回的只取country  该格式为：云南省昆明市... 省市都带的有  已有的部分不会说少个市 省 县的字眼
-                        //先判断第一层（省名）是否相同
-                        if(!strstr($record['country'], $prov_name->prov_name)){
+                        //city如果有的话，也判断
+                        if(trim($data->city)){
 
-                            $place = false;
+                            if (!strstr($record['country'],trim($data->city))){
 
-                        }else{
-                            //city如果有的话，也判断
-                            if(trim($data->city)){
-
-                                if (!strstr($record['country'],trim($data->city))){
-
-                                    $place = false;
-
-                                }
+                                $place = false;
 
                             }
 
@@ -125,12 +122,13 @@ class SendRedBagListener implements ShouldQueue
 
                     }
 
-                }else{
-
-                    $place = false;
                 }
 
+            }else{
+
+                $place = false;
             }
+
         }
 
         //判断这个活动停止了没有
