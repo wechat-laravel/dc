@@ -588,7 +588,8 @@ $('#editConfigModal').bootstrapValidator({
                 $('[type="submit"]').attr('disabled',false);
                 //$("#editConfig").bootstrapValidator('resetForm')[0].reset();
                 alert('修改成功!');
-                red_bag.getRedBag();
+                // red_bag.getRedBag();
+                window.location.reload();
             }else{
                 alert(data.msg);
                 $('[type="submit"]').attr('disabled',false);
