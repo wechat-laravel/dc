@@ -64,10 +64,58 @@ class SendRedBagListener implements ShouldQueue
                 'act_name', 'remark', 'get_limit', 'action','sex','area','province','city','total')->first();
 
 
-
         if (!$event->ip) {
 
             $event->ip = '127.0.0.1';
+
+        }
+
+        //如果有指定地区，先看下是否符合
+
+        if(isset($data) ){
+
+            if($data->area == 1){
+
+                $prov_name = ProvinceModel::select('prov_name')->where('prov_id',intval($data->province))->first();
+
+                if ($prov_name){
+
+                    //根据IP获取地址
+                    $record = QQWry::query($event->ip);
+
+                    //如果检测到返回值有 success 那就表示异常了。正常的应该直接返回的是 'country' 'area'两个字段
+                    if (isset($record['success'])){
+
+                        $place = false;
+
+                    }else{
+                        //返回的只取country  该格式为：云南省昆明市... 省市都带的有  已有的部分不会说少个市 省 县的字眼
+                        //先判断第一层（省名）是否相同
+                        if(!strstr($record['country'], $prov_name->prov_name)){
+
+                            $place = false;
+
+                        }else{
+                            //city如果有的话，也判断
+                            if(trim($data->city)){
+
+                                if (!strstr($record['country'],trim($data->city))){
+
+                                    $place = false;
+
+                                }
+
+                            }
+
+                        }
+
+                    }
+
+                }else{
+
+                    $place = false;
+                }
+            }
 
         }
 
@@ -83,52 +131,6 @@ class SendRedBagListener implements ShouldQueue
 //                });
                 return '该文章并没有配置红包功能';
             });
-        }
-
-        //如果有指定地区，先看下是否符合
-
-        else if($data->area == 1){
-
-            $prov_name = ProvinceModel::select('prov_name')->where('prov_id',intval($data->province))->first();
-
-            if ($prov_name){
-
-                //根据IP获取地址
-                $record = QQWry::query($event->ip);
-
-                //如果检测到返回值有 success 那就表示异常了。正常的应该直接返回的是 'country' 'area'两个字段
-                if (isset($record['success'])){
-
-                    $place = false;
-
-                }else{
-                    //返回的只取country  该格式为：云南省昆明市... 省市都带的有  已有的部分不会说少个市 省 县的字眼
-                    //先判断第一层（省名）是否相同
-                    if(!strstr($record['country'], $prov_name->prov_name)){
-
-                        $place = false;
-
-                    }else{
-                        //city如果有的话，也判断
-                        if(trim($data->city)){
-
-                            if (!strstr($record['country'],trim($data->city))){
-
-                                $place = false;
-
-                            }
-
-                        }
-
-                    }
-
-                }
-
-            }else{
-
-                $place = false;
-            }
-
         }
 
         //判断这个活动停止了没有
@@ -179,7 +181,7 @@ class SendRedBagListener implements ShouldQueue
         }
 
         //判断是否指定城市
-        else if(!($data->area == 0 || $place)){
+        else if(!($data->area === 0 || $place)){
             //停止
         }
         //判断红包动作，分享朋友圈/分享朋友  如果满足设置的条件开始发红包
