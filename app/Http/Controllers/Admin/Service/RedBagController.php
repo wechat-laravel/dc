@@ -80,7 +80,7 @@ class RedBagController extends Controller
                 $modal = RedBagModel::where('id',\Input::get('id'))->select('user_id')->first();
                 $balance = UserModel::where('id', $modal->user_id)->pluck('balance');
                 if($balance < \Input::get('total')){
-                    return response()->json(['success'=>false, 'msg'=>'账户余额不足，在线充值联系管理员线下充值！qq：765898961']);
+                    return response()->json(['success'=>false, 'msg'=>'账户余额不足，在线充值或联系管理员线下充值！qq：765898961']);
                 }else{
 
                     DB::transaction(function() use($request){

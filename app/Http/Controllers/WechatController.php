@@ -526,7 +526,7 @@ class WechatController extends Controller
             //相应的 操作次数+1
             SpreadPeopleModel::where('tasks_id',$record['tasks_id'])->where('openid',$record['openid'])->increment($record['action'],1);
 
-            if ($record['action'] === 'wechat' && $record['action'] === 'qq'){
+            if ($record['action'] === 'wechat' || $record['action'] === 'qq'){
 
                 $action = 1;
 
