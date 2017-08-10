@@ -156,11 +156,11 @@
                                             </td>
                                             <td>
                                                 <a :visible="el.red" class="btn btn-warning btn-sm" :click="onRed(el.id)" target="_blank" type="button">领取查看</a>
-                                                <a :visible="!el.red" class="btn btn-warning btn-sm" href="#">未设置</a>
+                                                <a :visible="!el.red" class="btn btn-warning btn-sm" href="/admin/service/red_bag">未设置</a>
                                             </td>
                                             <td>
                                                 <a :visible="el.is_ad" class="btn btn-danger btn-sm" ms-attr="{href:'/admin/data/entered/'+@el.id}" target="_blank" type="button">留言查看</a>
-                                                <a :visible="!el.is_ad" class="btn btn-danger btn-sm" href="#">未设置</a>
+                                                <a :visible="!el.is_ad" class="btn btn-danger btn-sm" href="/admin/service/ad_column">未设置</a>
                                             </td>
                                             <td>
                                                 <a class="btn btn-primary btn-sm" target="_blank" ms-if="@el.mark==='h5'" ms-attr="{href:'/admin/task/'+@el.id+'/edit'}" role="button">编辑</a>

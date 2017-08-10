@@ -27,10 +27,10 @@ var red_bag = avalon.define({
     },
     onCreate:function(){
         var num = parseInt($('input[name=num]').val());
-        if(num >0){
+        if(num >1){
             $('#myModal').modal('show');
         }else{
-            alert('账户有余额的情况下，才可以创建红包任务！');
+            alert('余额不足1元，无法创建红包任务，请充值');
         }
     },
     //获取我添加的红包配置
