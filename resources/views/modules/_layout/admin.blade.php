@@ -219,7 +219,9 @@
         </div>
         <strong>Copyright &copy; 一问科技 </strong> 版权所有
     </footer>
-    <nav class="navbar navbar-fixed-bottom" style="width: 55px;height: 55px;padding: 0;">
+    <nav class="navbar navbar-fixed-bottom" style="width: 55px;height: 120px;padding: 0;">
+        <a class="btn-warning btn-lg mobile" role="button" data-toggle="popover"  data-placement="left" data-content="021-36213161" title="联系电话"  style="margin-bottom: 50px;padding: 9px 10px 3px;position: fixed;right: 12px;bottom: 90px;" ><i class="fa fa-phone" style="font-size: 22px;"></i></a>
+        <a href="tencent://message/?uin=765898961&Site=sc.chinaz.com&Menu=yes" class="btn-primary btn-lg" style="margin-bottom: 50px;padding: 7px 10px;position: fixed;right: 12px;bottom: 50px;" ><i class="fa fa-qq"></i></a>
         <a href="#top" class="btn-success btn-lg" style="margin-bottom: 50px;padding: 7px 10px;position: fixed;right: 12px;bottom: 10px;" ><i class="fa fa-arrow-up"></i></a>
     </nav>
 </div>

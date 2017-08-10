@@ -5,6 +5,8 @@ var admin = avalon.define({
     three       : ''
 });
 
+$('.btn-warning.btn-lg.mobile').popover();
+
 var pathname = window.location.pathname;
 var path = pathname.split('/');
 path[1] ? admin.one   =  path[1] : '';
