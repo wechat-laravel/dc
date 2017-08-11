@@ -423,7 +423,7 @@ class MassController extends Controller
                 CURLOPT_RETURNTRANSFER => true,
                 CURLOPT_ENCODING => "",         //HTTP请求头中"Accept-Encoding: "的值。 这使得能够解码响应的内容。 支持的编码有"identity"，"deflate"和"gzip"。如果为空字符串""，会发送所有支持的编码类型。
                 CURLOPT_TIMEOUT => 10,          //允许 cURL 函数执行的最长秒数。
-                CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,      //让 cURL 判断使用哪个HTTP版本
+//                CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,      //让 cURL 判断使用哪个HTTP版本
                 CURLOPT_CUSTOMREQUEST => "GET",
             ));
 
@@ -437,7 +437,7 @@ class MassController extends Controller
                 CURLOPT_RETURNTRANSFER => true,
                 CURLOPT_POSTFIELDS => $data,
                 CURLOPT_TIMEOUT => 10,
-                CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+//                CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
             ));
 
         }
