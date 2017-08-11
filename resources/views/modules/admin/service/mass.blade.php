@@ -175,7 +175,7 @@
                                                             <input ms-if="!cad(el.UserName)" type="checkbox" name="checks"  :click="orCheck(el.UserName)" style="width: 17px;height: 17px;"
                                                                    ms-attr="{value: el.UserName}">
                                                         </td>
-                                                        <td><img class="lazy" ms-attr="{src : 'http://43.248.136.5:5000/getheadimg?id='+nowId+'&username='+el.UserName}" width="30px;" height="30px;"></td>
+                                                        <td><img class="lazy" ms-attr="{src : 'http://rzwei.cn:5050/getheadimg?id='+nowId+'&username='+el.UserName}" width="30px;" height="30px;"></td>
                                                         <td>@{{ el.NickName }}</td>
                                                         <td>@{{ el.Sex === 1 ? '男' : '女' }}</td>
                                                         <td>@{{ el.Province }} - @{{ el.City }}</td>
