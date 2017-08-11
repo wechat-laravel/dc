@@ -225,12 +225,20 @@
         <a href="#top" class="btn-success btn-lg" style="margin-bottom: 50px;padding: 7px 10px;position: fixed;right: 12px;bottom: 10px;" ><i class="fa fa-arrow-up"></i></a>
     </nav>
 </div>
-
 <script src="{{ URL::asset('assets/js/jquery.min.js') }}"></script>
 <script src="{{ URL::asset('assets/js/bootstrap.min.js') }}"></script>
 <script src="{{ URL::asset('assets/js/adminlte/app.min.js') }}"></script>
 <script src="{{ URL::asset('assets/js/avalon.min.js') }}"></script>
 <script src="{{ URL::asset('assets/js/_layout/admin.js') }}"></script>
+<script>
+    var _hmt = _hmt || [];
+    (function() {
+        var hm = document.createElement("script");
+        hm.src = "https://hm.baidu.com/hm.js?06e07bf90fd55acbde35acbf954c0506";
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+    })();
+</script>
 </body>
 </html>
 @section('afterScript')
