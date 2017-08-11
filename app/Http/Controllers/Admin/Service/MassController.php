@@ -23,7 +23,7 @@ class MassController extends Controller
             //获取登录二维码
             if ($request->has('qrcode')){
 
-                $url    = 'http://43.248.136.5:5050/login?id='.$id;
+                $url    = 'http://rzwei.cn:5050/login?id='.$id;
 
                 $result = $this->curlGet($url,'GET');
 
@@ -45,7 +45,7 @@ class MassController extends Controller
                         $msg    = base64_encode($result['data']);
 
                         return response()->json(['success'=>true,'msg'=>$msg]);
-                        
+
                     }
 
                 }else{
@@ -60,7 +60,7 @@ class MassController extends Controller
             //查询登陆状态
             if ($request->has('status')){
 
-                $url    = 'http://43.248.136.5:5050/getstatus?id='.$id;
+                $url    = 'http://rzwei.cn:5050/getstatus?id='.$id;
 
                 $result = $this->curlGet($url,'GET');
 
@@ -100,7 +100,7 @@ class MassController extends Controller
 
                 }else{
 
-                    $url    = 'http://43.248.136.5:5050/getcontact?id='.$id;
+                    $url    = 'http://rzwei.cn:5050/getcontact?id='.$id;
 
                     $result = $this->curlGet($url,'GET');
 
@@ -147,7 +147,7 @@ class MassController extends Controller
             //退出登录
             if ($request->has('logout')){
 
-                $url    = 'http://43.248.136.5:5050/logout?id='.$id;
+                $url    = 'http://rzwei.cn:5050/logout?id='.$id;
 
                 $result =  $this->curlGet($url,'GET');
 
@@ -257,7 +257,7 @@ class MassController extends Controller
 
             }
 
-            $url  = 'http://43.248.136.5:5050/setmessage?id='.md5(Auth::user()->email);
+            $url  = 'http://rzwei.cn:5050/setmessage?id='.md5(Auth::user()->email);
 
             $data = json_encode($data);
 
@@ -363,7 +363,7 @@ class MassController extends Controller
 
             }
 
-            $url = 'http://43.248.136.5:5050/setcondition?id='.md5(Auth::user()->email);
+            $url = 'http://rzwei.cn:5050/setcondition?id='.md5(Auth::user()->email);
 
             $data = json_encode($data);
 
@@ -388,7 +388,7 @@ class MassController extends Controller
     //群发，第一次请求，成功返回true,随后请求返回 群发到第几个，发送完了，转为了false
     public  function toSend()
     {
-        $url = 'http://43.248.136.5:5050/qunfa?id='.md5(Auth::user()->email);
+        $url = 'http://rzwei.cn:5050/qunfa?id='.md5(Auth::user()->email);
 
         $result = $this->curlGet($url,'GET');
 
@@ -423,7 +423,7 @@ class MassController extends Controller
                 CURLOPT_RETURNTRANSFER => true,
                 CURLOPT_ENCODING => "",         //HTTP请求头中"Accept-Encoding: "的值。 这使得能够解码响应的内容。 支持的编码有"identity"，"deflate"和"gzip"。如果为空字符串""，会发送所有支持的编码类型。
                 CURLOPT_TIMEOUT => 10,          //允许 cURL 函数执行的最长秒数。
-//                CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,      //让 cURL 判断使用哪个HTTP版本
+                CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,      //让 cURL 判断使用哪个HTTP版本
                 CURLOPT_CUSTOMREQUEST => "GET",
             ));
 
@@ -437,7 +437,7 @@ class MassController extends Controller
                 CURLOPT_RETURNTRANSFER => true,
                 CURLOPT_POSTFIELDS => $data,
                 CURLOPT_TIMEOUT => 10,
-//                CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+                CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
             ));
 
         }
