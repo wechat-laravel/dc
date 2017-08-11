@@ -23,8 +23,8 @@ class MassController extends Controller
             //获取登录二维码
             if ($request->has('qrcode')){
 
-                $url    = 'http://43.248.136.5:5050/login?id='.$id;
-                
+                $url    = 'http://rzwei.cn:5050/login?id='.$id;
+
                 $result = $this->curlGet($url,'GET');
 
                 if ($result['success']){
@@ -60,7 +60,7 @@ class MassController extends Controller
             //查询登陆状态
             if ($request->has('status')){
 
-                $url    = 'http://43.248.136.5:5050/getstatus?id='.$id;
+                $url    = 'http://rzwei.cn:5050/getstatus?id='.$id;
 
                 $result = $this->curlGet($url,'GET');
 
@@ -100,7 +100,7 @@ class MassController extends Controller
 
                 }else{
 
-                    $url    = 'http://43.248.136.5:5050/getcontact?id='.$id;
+                    $url    = 'http://rzwei.cn:5050/getcontact?id='.$id;
 
                     $result = $this->curlGet($url,'GET');
 
@@ -143,11 +143,11 @@ class MassController extends Controller
                 return $res;
 
             }
-            
+
             //退出登录
             if ($request->has('logout')){
 
-                $url    = 'http://43.248.136.5:5050/logout?id='.$id;
+                $url    = 'http://rzwei.cn:5050/logout?id='.$id;
 
                 $result =  $this->curlGet($url,'GET');
 
@@ -226,7 +226,7 @@ class MassController extends Controller
             if ($request->hasFile('picture')){
 
                 $status = true;
-        
+
                 $file = screenFile($request->file('picture'),1);
 
                 if(!$file['success'])  return $file;
@@ -256,8 +256,8 @@ class MassController extends Controller
                 }
 
             }
-            
-            $url  = 'http://43.248.136.5:5050/setmessage?id='.md5(Auth::user()->email);
+
+            $url  = 'http://rzwei.cn:5050/setmessage?id='.md5(Auth::user()->email);
 
             $data = json_encode($data);
 
@@ -363,7 +363,7 @@ class MassController extends Controller
 
             }
 
-            $url = 'http://43.248.136.5:5050/setcondition?id='.md5(Auth::user()->email);
+            $url = 'http://rzwei.cn:5050/setcondition?id='.md5(Auth::user()->email);
 
             $data = json_encode($data);
 
@@ -388,7 +388,7 @@ class MassController extends Controller
     //群发，第一次请求，成功返回true,随后请求返回 群发到第几个，发送完了，转为了false
     public  function toSend()
     {
-        $url = 'http://43.248.136.5:5050/qunfa?id='.md5(Auth::user()->email);
+        $url = 'http://rzwei.cn:5050/qunfa?id='.md5(Auth::user()->email);
 
         $result = $this->curlGet($url,'GET');
 
