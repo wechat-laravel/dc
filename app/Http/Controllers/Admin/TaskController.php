@@ -115,6 +115,8 @@ class TaskController extends Controller
 
             try {
 
+                if (!$input['editorValue']) return response()->json(['success' => false, 'msg' => '抱歉，抓取不到该链接的页面内容！']);
+
                 $input['user_id'] = Auth::id();
 
                 $input['qrcode_url'] = '/assets/images/qrcode/' . $str . '.png';
