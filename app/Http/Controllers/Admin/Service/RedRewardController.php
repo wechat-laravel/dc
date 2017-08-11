@@ -57,8 +57,8 @@ class RedRewardController extends Controller
 
         if ($validator->fails()){
 
-            return response()->json(['success'=>false,'msg'=>$validator->errors()->all()]);
-
+//            return response()->json(['success'=>false,'msg'=>$validator->errors()->all()]);
+                return response($validator->errors()->all());
         }
 
         $exists = GrantUserModel::where('openid',$input['openid'])->exists();

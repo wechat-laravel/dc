@@ -49,7 +49,7 @@
                                 </div>
                                 {{--h5--}}
                                 <div class="form-group" :visible="method === 'h5'">
-                                    <label>H5页面地址 或 微信文章链接地址</label>
+                                    <label>H5页面地址 或 微信文章链接地址 （ 注：不能使用微信门店，或微商城的链接 ）</label>
                                     <input type="text" name="page_url" class="form-control"  placeholder="请输入做好的H5页面地址或微信文章地址">
                                 </div>
                                 {{--自定义编辑--}}
