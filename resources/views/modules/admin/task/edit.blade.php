@@ -37,7 +37,7 @@
                                     <p class="help-block">请上传大小在2M以内的图片</p>
                                 </div>
                                 <div class="form-group">
-                                    <label>H5页面地址 或 微信文章链接地址</label>
+                                    <label>H5页面地址 或 微信文章链接地址 （ 注：不能使用微信门店，或微商城的链接 ）</label>
                                     <input type="text" name="page_url" class="form-control"  placeholder="请输入做好的H5页面地址或微信文章的链接地址" value="{{ $task->page_url }}">
                                 </div>
                                 <div class="form-group">
