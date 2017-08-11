@@ -334,6 +334,14 @@
     });
     $('#icon').attr('class','img-circle center-block');
     $('#wx_qrcode').attr('class','img-rounded center-block');
+    //站长统计
+    var _hmt = _hmt || [];
+    (function() {
+        var hm = document.createElement("script");
+        hm.src = "https://hm.baidu.com/hm.js?06e07bf90fd55acbde35acbf954c0506";
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+    })();
 </script>
 
 </html>
