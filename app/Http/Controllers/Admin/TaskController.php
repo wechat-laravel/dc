@@ -126,7 +126,7 @@ class TaskController extends Controller
 
             } catch (\Exception $e) {
 
-                return response()->json(['success' => false, 'msg' => '操作失败！']);
+                return response()->json(['success' => false, 'msg' => $e->getMessage()]);
 
             }
 
