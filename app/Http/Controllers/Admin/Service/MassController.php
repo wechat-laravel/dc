@@ -383,6 +383,7 @@ class MassController extends Controller
 
         }
 
+        
     }
 
     //群发，第一次请求，成功返回true,随后请求返回 群发到第几个，发送完了，转为了false
