@@ -27,7 +27,7 @@ var red_bag = avalon.define({
     },
     onCreate:function(){
         var num = parseInt($('input[name=num]').val());
-        if(num >1){
+        if(num >= 1){
             $('#myModal').modal('show');
         }else{
             alert('余额不足1元，无法创建红包任务，请充值');
@@ -244,15 +244,10 @@ $('#addConfig').bootstrapValidator({
                 notEmpty: {
                     message: '输入单个红包金额'
                 },
-                lessThan: {
-                    value: 200,
-                    inclusive: true,
-                    message: '单个红包金额最大不能大于200'
-                },
-                greaterThan: {
-                    value:0,
-                    inclusive: false,
-                    message: '红包金额不能小于0'
+                between: {
+                    min: 1,
+                    max: 200,
+                    message: '单个红包金额最小不能小于1，最大不能大于200'
                 }
             }
         },
@@ -347,10 +342,10 @@ $('#addConfig').bootstrapValidator({
     //检测随机红包金额 结束金额不能小于开始金额
     var taxonomy = $('input[name="taxonomy"]:checked').val();
     if(taxonomy == 2){
-        if(parseInt($('[name="money_suiji_end"]').val()) <= parseInt($('[name="money_suiji_begin"]').val())){
+        if(parseFloat($('[name="money_suiji_end"]').val()) <= parseFloat($('[name="money_suiji_begin"]').val())){
             alert('随机红包金额输入有误！');
             return false;
-        }else if(parseInt($('[name="money_suiji_end"]').val()) > parseInt($('[name="amount"]').val())){
+        }else if(parseFloat($('[name="money_suiji_end"]').val()) > parseFloat($('[name="amount"]').val())){
             alert('随机红包不能大于总金额！');
             return false;
         }
@@ -458,15 +453,10 @@ $('#editConfigModal').bootstrapValidator({
                 notEmpty: {
                     message: '输入单个红包金额'
                 },
-                lessThan: {
-                    value: 200,
-                    inclusive: true,
-                    message: '单个红包金额最大不能大于200'
-                },
-                greaterThan: {
-                    value:0,
-                    inclusive: false,
-                    message: '红包金额不能小于0'
+                between: {
+                    min: 1,
+                    max: 200,
+                    message: '单个红包金额最小不能小于1，最大不能大于200'
                 }
             }
         },
@@ -561,10 +551,10 @@ $('#editConfigModal').bootstrapValidator({
     //检测随机红包金额 结束金额不能小于开始金额
     var taxonomy = $('input[name="edit_taxonomy"]:checked').val();
     if(taxonomy == 2){
-        if(parseInt($('[name="edit_money_suiji_end"]').val()) <= parseInt($('[name="edit_money_suiji_begin"]').val())){
+        if(parseFloat($('[name="edit_money_suiji_end"]').val()) <= parseFloat($('[name="edit_money_suiji_begin"]').val())){
             alert('随机红包金额输入有误！');
             return false;
-        }else if(parseInt($('[name="edit_money_suiji_end"]').val()) > parseInt(red_bag.red_bag_data[red_bag.article_id].amount)){
+        }else if(parseFloat($('[name="edit_money_suiji_end"]').val()) > parseFloat(red_bag.red_bag_data[red_bag.article_id].amount)){
             alert('随机红包不能大于余额！');
             return false;
         }

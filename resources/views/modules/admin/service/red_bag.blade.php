@@ -193,7 +193,7 @@
                                 </div>
                                 <div class="form-group guding" id="guding">
                                     <label>红包金额(红包金额不能小于1)</label>
-                                    <input type="number" class="form-control"
+                                    <input type="text" class="form-control"
                                            name="money"
                                            placeholder="请输入红包金额，红包金额最大不超过200">
                                 </div>
@@ -202,13 +202,13 @@
                                     <div class="box-body">
                                         <div class="row">
                                             <div class="col-xs-3">
-                                                <input type="number" class="form-control" name="money_suiji_begin" placeholder="开始">
+                                                <input type="text" class="form-control" name="money_suiji_begin" placeholder="开始">
                                             </div>
                                             <div class="col-xs-1">
                                                 --
                                             </div>
                                             <div class="col-xs-3">
-                                                <input type="number" class="form-control" name="money_suiji_end" placeholder="结束">
+                                                <input type="text" class="form-control" name="money_suiji_end" placeholder="结束">
                                             </div>
                                         </div>
                                     </div>
@@ -511,7 +511,7 @@
                                 </div>
                                 <div class="form-group guding" id="guding">
                                     <label>红包金额(红包金额不能小于1)</label>
-                                    <input type="number" class="form-control"
+                                    <input type="text" class="form-control"
                                            name="money"
                                            ms-attr="{value:red_bag_data[article_id].money}">
                                 </div>
@@ -520,13 +520,13 @@
                                     <div class="box-body">
                                         <div class="row">
                                             <div class="col-xs-3">
-                                                <input type="number" class="form-control" name="edit_money_suiji_begin" placeholder="开始">
+                                                <input type="text" class="form-control" name="edit_money_suiji_begin" placeholder="开始">
                                             </div>
                                             <div class="col-xs-1">
                                                 --
                                             </div>
                                             <div class="col-xs-3">
-                                                <input type="number" class="form-control" name="edit_money_suiji_end" placeholder="结束">
+                                                <input type="text" class="form-control" name="edit_money_suiji_end" placeholder="结束">
                                             </div>
                                         </div>
                                     </div>
