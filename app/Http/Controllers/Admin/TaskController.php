@@ -77,7 +77,7 @@ class TaskController extends Controller
 
             $str = str_random(32);
 
-            $input = $request->only(['title', 'desc', 'page_url', 'is_ad', 'ad_column_id', 'wechat_url', 'wechat_name']);
+            $input = $request->only(['title', 'desc', 'page_url', 'is_ad', 'ad_column_id', 'wechat_url', 'wechat_name','editorValue']);
 
             $validator = Validator::make($input, [
                 'title' => 'required|max:50',
