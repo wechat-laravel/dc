@@ -19,7 +19,7 @@ class MassController extends Controller
      *
      * @var string
      */
-    private $url = 'http://43.248.136.5:5000/';
+    private $url = 'http://rzwei.cn:5050/';
 
     /**
      * @var
@@ -27,11 +27,9 @@ class MassController extends Controller
     private $id;
 
     /**
-     * MassController constructor.
+     * MassController construct.
      */
     public function __construct(){
-
-        parent::__construct();
 
         $this->id  =  md5(Auth::user()->email);
     }
