@@ -347,7 +347,6 @@ class MassController extends Controller
             }
 
             $data['message'][1]['picture'] = 'http://www.maidamaida.com' . $file['path'];
-
         }
 
         if( ! $status)
