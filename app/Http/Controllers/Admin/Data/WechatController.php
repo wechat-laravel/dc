@@ -114,6 +114,7 @@ class WechatController extends Controller
 
             }
 
+            
             //最多统计7天
             $today = date('Y-m-d', time());
 
